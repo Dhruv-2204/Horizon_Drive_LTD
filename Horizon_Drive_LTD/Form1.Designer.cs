@@ -77,7 +77,7 @@
             // 
             // button2
             // 
-            button2.BackColor = Color.PaleTurquoise;
+            button2.BackColor = Color.LightPink;
             button2.Location = new Point(116, 103);
             button2.Name = "button2";
             button2.Size = new Size(186, 83);
@@ -88,7 +88,7 @@
             // button1
             // 
             button1.BackColor = Color.PaleTurquoise;
-            button1.Location = new Point(12, 376);
+            button1.Location = new Point(20, 376);
             button1.Name = "button1";
             button1.Size = new Size(186, 83);
             button1.TabIndex = 0;
@@ -96,24 +96,7 @@
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
-            // checkBox1
-            // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(82, 76);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(101, 24);
-            checkBox1.TabIndex = 0;
-            checkBox1.Text = "checkBox1";
-            checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Location = new Point(334, 188);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(162, 148);
-            pictureBox1.TabIndex = 1;
-            pictureBox1.TabStop = false;
-            // 
+            
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 19F);
