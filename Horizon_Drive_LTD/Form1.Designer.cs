@@ -61,16 +61,16 @@
             splitContainer1.Panel2.BackgroundImage = (Image)resources.GetObject("splitContainer1.Panel2.BackgroundImage");
             splitContainer1.Panel2.BackgroundImageLayout = ImageLayout.Zoom;
             splitContainer1.Panel2.Paint += splitContainer1_Panel2_Paint;
-            splitContainer1.Size = new Size(1218, 565);
+            splitContainer1.Size = new Size(1218, 537);
             splitContainer1.SplitterDistance = 406;
             splitContainer1.TabIndex = 0;
             // 
             // button3
             // 
             button3.BackColor = Color.PaleTurquoise;
-            button3.Location = new Point(110, 385);
+            button3.Location = new Point(217, 245);
             button3.Name = "button3";
-            button3.Size = new Size(186, 87);
+            button3.Size = new Size(186, 83);
             button3.TabIndex = 2;
             button3.Text = "Profile";
             button3.UseVisualStyleBackColor = false;
@@ -78,9 +78,9 @@
             // button2
             // 
             button2.BackColor = Color.PaleTurquoise;
-            button2.Location = new Point(110, 71);
+            button2.Location = new Point(116, 103);
             button2.Name = "button2";
-            button2.Size = new Size(186, 87);
+            button2.Size = new Size(186, 83);
             button2.TabIndex = 1;
             button2.Text = "Search ";
             button2.UseVisualStyleBackColor = false;
@@ -88,9 +88,9 @@
             // button1
             // 
             button1.BackColor = Color.PaleTurquoise;
-            button1.Location = new Point(110, 222);
+            button1.Location = new Point(12, 376);
             button1.Name = "button1";
-            button1.Size = new Size(186, 87);
+            button1.Size = new Size(186, 83);
             button1.TabIndex = 0;
             button1.Text = "Home";
             button1.UseVisualStyleBackColor = false;
@@ -116,9 +116,9 @@
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(8F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1218, 565);
+            ClientSize = new Size(1218, 537);
             Controls.Add(splitContainer1);
             Cursor = Cursors.Cross;
             Name = "Form1";
