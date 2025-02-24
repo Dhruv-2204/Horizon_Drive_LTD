@@ -26,5 +26,10 @@ namespace Horizon_Drive_LTD
         {
 
         }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
