@@ -30,9 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             splitContainer1 = new SplitContainer();
-            button1 = new Button();
-            button2 = new Button();
             button3 = new Button();
+            button2 = new Button();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.SuspendLayout();
@@ -65,27 +65,6 @@
             splitContainer1.SplitterDistance = 406;
             splitContainer1.TabIndex = 0;
             // 
-            // button1
-            // 
-            button1.BackColor = Color.PaleTurquoise;
-            button1.Location = new Point(110, 89);
-            button1.Name = "button1";
-            button1.Size = new Size(186, 87);
-            button1.TabIndex = 0;
-            button1.Text = "Home";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
-            // 
-            // button2
-            // 
-            button2.BackColor = Color.PaleTurquoise;
-            button2.Location = new Point(110, 239);
-            button2.Name = "button2";
-            button2.Size = new Size(186, 87);
-            button2.TabIndex = 1;
-            button2.Text = "Search ";
-            button2.UseVisualStyleBackColor = false;
-            // 
             // button3
             // 
             button3.BackColor = Color.PaleTurquoise;
@@ -95,6 +74,27 @@
             button3.TabIndex = 2;
             button3.Text = "Profile";
             button3.UseVisualStyleBackColor = false;
+            // 
+            // button2
+            // 
+            button2.BackColor = Color.PaleTurquoise;
+            button2.Location = new Point(110, 71);
+            button2.Name = "button2";
+            button2.Size = new Size(186, 87);
+            button2.TabIndex = 1;
+            button2.Text = "Search ";
+            button2.UseVisualStyleBackColor = false;
+            // 
+            // button1
+            // 
+            button1.BackColor = Color.PaleTurquoise;
+            button1.Location = new Point(110, 222);
+            button1.Name = "button1";
+            button1.Size = new Size(186, 87);
+            button1.TabIndex = 0;
+            button1.Text = "Home";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // Form1
             // 
