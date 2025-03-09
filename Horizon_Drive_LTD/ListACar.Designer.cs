@@ -51,15 +51,36 @@ namespace list_your_car_page
                 CornerRadius = 20
             };
 
-            // Add Circular Logo Image
+            // Create and configure the PictureBox
             PictureBox circleLogo = new PictureBox()
             {
-                Size = new Size(125, 125), // Dimensions for a circular logo
-                Location = new Point((sidebar.Width - 100) / 2, 20), // Centered horizontally, 20px from the top
+                Size = new Size(125, 125), // Dimensions for the circular logo
+                Location = new Point((sidebar.Width - 125) / 2, 20), // Centered horizontally, 20px from the top
                 BackColor = Color.Transparent,
-                Image = Image.FromFile("C:\\Users\\Tisha\\Source\\Repos\\Horizon_Drive_LTD\\Horizon_Drive_LTD\\Pictures\\Logo.png"), 
                 SizeMode = PictureBoxSizeMode.StretchImage // Ensures the image fits in the PictureBox
             };
+
+            // Load the logo from the project Pictures folder
+            try
+            {
+                string projectDirectory = Path.GetDirectoryName(Application.ExecutablePath);
+                // Go up three levels from bin\Debug\net9.0-windows to the project root
+                string rootDirectory = Directory.GetParent(Directory.GetParent(Directory.GetParent(projectDirectory).FullName).FullName).FullName;
+                string logoPath = Path.Combine(rootDirectory, "Pictures", "Logo.png");
+
+                if (File.Exists(logoPath))
+                {
+                    circleLogo.Image = Image.FromFile(logoPath);
+                }
+                else
+                {
+                    MessageBox.Show("Logo file not found: " + logoPath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not load logo: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
             // Make the PictureBox circular
             circleLogo.Paint += (s, e) =>
