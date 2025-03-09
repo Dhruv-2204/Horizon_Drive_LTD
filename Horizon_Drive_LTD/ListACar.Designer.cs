@@ -57,7 +57,7 @@ namespace list_your_car_page
                 Size = new Size(125, 125), // Dimensions for a circular logo
                 Location = new Point((sidebar.Width - 100) / 2, 20), // Centered horizontally, 20px from the top
                 BackColor = Color.Transparent,
-                Image = Image.FromFile("C:\\Users\\Tisha\\OneDrive - Middlesex University\\Documents\\horizon-drive.jpg"), 
+                Image = Image.FromFile("C:\\Users\\Tisha\\Source\\Repos\\Horizon_Drive_LTD\\Horizon_Drive_LTD\\Pictures\\Logo.png"), 
                 SizeMode = PictureBoxSizeMode.StretchImage // Ensures the image fits in the PictureBox
             };
 
