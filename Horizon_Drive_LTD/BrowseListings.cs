@@ -21,22 +21,6 @@ namespace Horizon_Drive_LTD
             InitializeComponent();
             this.Size = new Size(1600, 900);
 
-            // Load the logo from the project Pictures folder
-            try
-            {
-                string projectDirectory = Path.GetDirectoryName(Application.ExecutablePath);
-                // Go up three levels from bin\Debug\net9.0-windows to the project root
-                string rootDirectory = Directory.GetParent(Directory.GetParent(Directory.GetParent(projectDirectory).FullName).FullName).FullName;
-                string logoPath = Path.Combine(rootDirectory, "Pictures", "Logo.png");
-
-                pictureBoxLogo.Image = Image.FromFile(logoPath);
-            }
-            catch (Exception ex)
-            {
-                // Handle error if image can't be loaded
-                MessageBox.Show("Could not load logo: " + ex.Message);
-            }
-
             LoadCarListings();
             PopulateCarListings();
         }
@@ -312,6 +296,11 @@ namespace Horizon_Drive_LTD
                 Panel carPanel = CreateCarListingPanel(car);
                 flowLayoutPanelListings.Controls.Add(carPanel);
             }
+        }
+
+        private void pictureBoxLogo_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

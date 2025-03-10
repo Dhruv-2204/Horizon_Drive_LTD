@@ -28,228 +28,246 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panelSidebar = new System.Windows.Forms.Panel();
-            this.btnOptions = new System.Windows.Forms.Button();
-            this.btnManageBooking = new System.Windows.Forms.Button();
-            this.btnListCar = new System.Windows.Forms.Button();
-            this.btnBrowseListings = new System.Windows.Forms.Button();
-            this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
-            this.panelMain = new System.Windows.Forms.Panel();
-            this.panelContent = new System.Windows.Forms.Panel();
-            this.flowLayoutPanelListings = new System.Windows.Forms.FlowLayoutPanel();
-            this.panelHeader = new System.Windows.Forms.Panel();
-            this.buttonFilters = new System.Windows.Forms.Button();
-            this.panelSearch = new System.Windows.Forms.Panel();
-            this.buttonSearch = new System.Windows.Forms.Button();
-            this.textBoxSearch = new System.Windows.Forms.TextBox();
-            this.labelBrowseListings = new System.Windows.Forms.Label();
-            this.panelSidebar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
-            this.panelMain.SuspendLayout();
-            this.panelContent.SuspendLayout();
-            this.panelHeader.SuspendLayout();
-            this.panelSearch.SuspendLayout();
-            this.SuspendLayout();
+            panelSidebar = new Panel();
+            btnOptions = new Button();
+            btnManageBooking = new Button();
+            btnListCar = new Button();
+            btnBrowseListings = new Button();
+            pictureBoxLogo = new PictureBox();
+            panelMain = new Panel();
+            panelContent = new Panel();
+            flowLayoutPanelListings = new FlowLayoutPanel();
+            panelHeader = new Panel();
+            buttonFilters = new Button();
+            panelSearch = new Panel();
+            buttonSearch = new Button();
+            textBoxSearch = new TextBox();
+            labelBrowseListings = new Label();
+            panelSidebar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).BeginInit();
+            panelMain.SuspendLayout();
+            panelContent.SuspendLayout();
+            panelHeader.SuspendLayout();
+            panelSearch.SuspendLayout();
+            SuspendLayout();
             // 
             // panelSidebar
             // 
-            this.panelSidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(30)))), ((int)(((byte)(45)))));
-            this.panelSidebar.Controls.Add(this.btnOptions);
-            this.panelSidebar.Controls.Add(this.btnManageBooking);
-            this.panelSidebar.Controls.Add(this.btnListCar);
-            this.panelSidebar.Controls.Add(this.btnBrowseListings);
-            this.panelSidebar.Controls.Add(this.pictureBoxLogo);
-            this.panelSidebar.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelSidebar.Location = new System.Drawing.Point(0, 0);
-            this.panelSidebar.Name = "panelSidebar";
-            this.panelSidebar.Size = new System.Drawing.Size(250, 700);
-            this.panelSidebar.TabIndex = 0;
+            panelSidebar.BackColor = Color.FromArgb(15, 30, 45);
+            panelSidebar.Controls.Add(btnOptions);
+            panelSidebar.Controls.Add(btnManageBooking);
+            panelSidebar.Controls.Add(btnListCar);
+            panelSidebar.Controls.Add(btnBrowseListings);
+            panelSidebar.Controls.Add(pictureBoxLogo);
+            panelSidebar.Dock = DockStyle.Left;
+            panelSidebar.Location = new Point(0, 0);
+            panelSidebar.Margin = new Padding(4);
+            panelSidebar.Name = "panelSidebar";
+            panelSidebar.Size = new Size(333, 1023);
+            panelSidebar.TabIndex = 0;
             // 
             // btnOptions
             // 
-            this.btnOptions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(85)))), ((int)(((byte)(110)))));
-            this.btnOptions.FlatAppearance.BorderSize = 0;
-            this.btnOptions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOptions.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOptions.ForeColor = System.Drawing.Color.White;
-            this.btnOptions.Location = new System.Drawing.Point(40, 516);
-            this.btnOptions.Name = "btnOptions";
-            this.btnOptions.Size = new System.Drawing.Size(170, 50);
-            this.btnOptions.TabIndex = 4;
-            this.btnOptions.Text = "Options";
-            this.btnOptions.UseVisualStyleBackColor = false;
-            this.btnOptions.Click += new System.EventHandler(this.btnOptions_Click);
+            btnOptions.BackColor = Color.FromArgb(30, 85, 110);
+            btnOptions.FlatAppearance.BorderSize = 0;
+            btnOptions.FlatStyle = FlatStyle.Flat;
+            btnOptions.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnOptions.ForeColor = Color.White;
+            btnOptions.Location = new Point(53, 754);
+            btnOptions.Margin = new Padding(4);
+            btnOptions.Name = "btnOptions";
+            btnOptions.Size = new Size(227, 73);
+            btnOptions.TabIndex = 4;
+            btnOptions.Text = "Options";
+            btnOptions.UseVisualStyleBackColor = false;
+            btnOptions.Click += btnOptions_Click;
             // 
             // btnManageBooking
             // 
-            this.btnManageBooking.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(85)))), ((int)(((byte)(110)))));
-            this.btnManageBooking.FlatAppearance.BorderSize = 0;
-            this.btnManageBooking.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnManageBooking.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnManageBooking.ForeColor = System.Drawing.Color.White;
-            this.btnManageBooking.Location = new System.Drawing.Point(40, 446);
-            this.btnManageBooking.Name = "btnManageBooking";
-            this.btnManageBooking.Size = new System.Drawing.Size(170, 50);
-            this.btnManageBooking.TabIndex = 3;
-            this.btnManageBooking.Text = "Manage Booking";
-            this.btnManageBooking.UseVisualStyleBackColor = false;
-            this.btnManageBooking.Click += new System.EventHandler(this.btnManageBooking_Click);
+            btnManageBooking.BackColor = Color.FromArgb(30, 85, 110);
+            btnManageBooking.FlatAppearance.BorderSize = 0;
+            btnManageBooking.FlatStyle = FlatStyle.Flat;
+            btnManageBooking.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnManageBooking.ForeColor = Color.White;
+            btnManageBooking.Location = new Point(53, 652);
+            btnManageBooking.Margin = new Padding(4);
+            btnManageBooking.Name = "btnManageBooking";
+            btnManageBooking.Size = new Size(227, 73);
+            btnManageBooking.TabIndex = 3;
+            btnManageBooking.Text = "Manage Booking";
+            btnManageBooking.UseVisualStyleBackColor = false;
+            btnManageBooking.Click += btnManageBooking_Click;
             // 
             // btnListCar
             // 
-            this.btnListCar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(85)))), ((int)(((byte)(110)))));
-            this.btnListCar.FlatAppearance.BorderSize = 0;
-            this.btnListCar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnListCar.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnListCar.ForeColor = System.Drawing.Color.White;
-            this.btnListCar.Location = new System.Drawing.Point(40, 376);
-            this.btnListCar.Name = "btnListCar";
-            this.btnListCar.Size = new System.Drawing.Size(170, 50);
-            this.btnListCar.TabIndex = 2;
-            this.btnListCar.Text = "List a car";
-            this.btnListCar.UseVisualStyleBackColor = false;
-            this.btnListCar.Click += new System.EventHandler(this.btnListCar_Click);
+            btnListCar.BackColor = Color.FromArgb(30, 85, 110);
+            btnListCar.FlatAppearance.BorderSize = 0;
+            btnListCar.FlatStyle = FlatStyle.Flat;
+            btnListCar.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnListCar.ForeColor = Color.White;
+            btnListCar.Location = new Point(53, 550);
+            btnListCar.Margin = new Padding(4);
+            btnListCar.Name = "btnListCar";
+            btnListCar.Size = new Size(227, 73);
+            btnListCar.TabIndex = 2;
+            btnListCar.Text = "List a car";
+            btnListCar.UseVisualStyleBackColor = false;
+            btnListCar.Click += btnListCar_Click;
             // 
             // btnBrowseListings
             // 
-            this.btnBrowseListings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(216)))), ((int)(((byte)(230)))));
-            this.btnBrowseListings.FlatAppearance.BorderSize = 0;
-            this.btnBrowseListings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBrowseListings.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBrowseListings.ForeColor = System.Drawing.Color.Black;
-            this.btnBrowseListings.Location = new System.Drawing.Point(40, 306);
-            this.btnBrowseListings.Name = "btnBrowseListings";
-            this.btnBrowseListings.Size = new System.Drawing.Size(170, 50);
-            this.btnBrowseListings.TabIndex = 1;
-            this.btnBrowseListings.Text = "Browse listings";
-            this.btnBrowseListings.UseVisualStyleBackColor = false;
-            this.btnBrowseListings.Click += new System.EventHandler(this.btnBrowseListings_Click);
+            btnBrowseListings.BackColor = Color.FromArgb(173, 216, 230);
+            btnBrowseListings.FlatAppearance.BorderSize = 0;
+            btnBrowseListings.FlatStyle = FlatStyle.Flat;
+            btnBrowseListings.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnBrowseListings.ForeColor = Color.Black;
+            btnBrowseListings.Location = new Point(53, 447);
+            btnBrowseListings.Margin = new Padding(4);
+            btnBrowseListings.Name = "btnBrowseListings";
+            btnBrowseListings.Size = new Size(227, 73);
+            btnBrowseListings.TabIndex = 1;
+            btnBrowseListings.Text = "Browse listings";
+            btnBrowseListings.UseVisualStyleBackColor = false;
+            btnBrowseListings.Click += btnBrowseListings_Click;
             // 
             // pictureBoxLogo
             // 
-            this.pictureBoxLogo.Location = new System.Drawing.Point(50, 50);
-            this.pictureBoxLogo.Name = "pictureBoxLogo";
-            this.pictureBoxLogo.Size = new System.Drawing.Size(150, 150);
-            this.pictureBoxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxLogo.TabIndex = 0;
-            this.pictureBoxLogo.TabStop = false;
+            pictureBoxLogo.Image = Properties.Resources.Logo;
+            pictureBoxLogo.Location = new Point(67, 73);
+            pictureBoxLogo.Margin = new Padding(4);
+            pictureBoxLogo.Name = "pictureBoxLogo";
+            pictureBoxLogo.Size = new Size(200, 219);
+            pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxLogo.TabIndex = 0;
+            pictureBoxLogo.TabStop = false;
+            pictureBoxLogo.Click += pictureBoxLogo_Click;
             // 
             // panelMain
             // 
-            this.panelMain.BackColor = System.Drawing.Color.White;
-            this.panelMain.Controls.Add(this.panelContent);
-            this.panelMain.Controls.Add(this.panelHeader);
-            this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMain.Location = new System.Drawing.Point(250, 0);
-            this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(950, 700);
-            this.panelMain.TabIndex = 1;
+            panelMain.BackColor = Color.White;
+            panelMain.Controls.Add(panelContent);
+            panelMain.Controls.Add(panelHeader);
+            panelMain.Dock = DockStyle.Fill;
+            panelMain.Location = new Point(333, 0);
+            panelMain.Margin = new Padding(4);
+            panelMain.Name = "panelMain";
+            panelMain.Size = new Size(1267, 1023);
+            panelMain.TabIndex = 1;
             // 
             // panelContent
             // 
-            this.panelContent.Controls.Add(this.flowLayoutPanelListings);
-            this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContent.Location = new System.Drawing.Point(0, 100);
-            this.panelContent.Name = "panelContent";
-            this.panelContent.Padding = new System.Windows.Forms.Padding(20);
-            this.panelContent.Size = new System.Drawing.Size(950, 600);
-            this.panelContent.TabIndex = 1;
+            panelContent.Controls.Add(flowLayoutPanelListings);
+            panelContent.Dock = DockStyle.Fill;
+            panelContent.Location = new Point(0, 146);
+            panelContent.Margin = new Padding(4);
+            panelContent.Name = "panelContent";
+            panelContent.Padding = new Padding(27, 29, 27, 29);
+            panelContent.Size = new Size(1267, 877);
+            panelContent.TabIndex = 1;
             // 
             // flowLayoutPanelListings
             // 
-            this.flowLayoutPanelListings.AutoScroll = true;
-            this.flowLayoutPanelListings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanelListings.Location = new System.Drawing.Point(20, 20);
-            this.flowLayoutPanelListings.Name = "flowLayoutPanelListings";
-            this.flowLayoutPanelListings.Size = new System.Drawing.Size(910, 560);
-            this.flowLayoutPanelListings.TabIndex = 0;
+            flowLayoutPanelListings.AutoScroll = true;
+            flowLayoutPanelListings.Dock = DockStyle.Fill;
+            flowLayoutPanelListings.Location = new Point(27, 29);
+            flowLayoutPanelListings.Margin = new Padding(4);
+            flowLayoutPanelListings.Name = "flowLayoutPanelListings";
+            flowLayoutPanelListings.Size = new Size(1213, 819);
+            flowLayoutPanelListings.TabIndex = 0;
             // 
             // panelHeader
             // 
-            this.panelHeader.Controls.Add(this.buttonFilters);
-            this.panelHeader.Controls.Add(this.panelSearch);
-            this.panelHeader.Controls.Add(this.labelBrowseListings);
-            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelHeader.Location = new System.Drawing.Point(0, 0);
-            this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(950, 100);
-            this.panelHeader.TabIndex = 0;
+            panelHeader.Controls.Add(buttonFilters);
+            panelHeader.Controls.Add(panelSearch);
+            panelHeader.Controls.Add(labelBrowseListings);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Margin = new Padding(4);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(1267, 146);
+            panelHeader.TabIndex = 0;
             // 
             // buttonFilters
             // 
-            this.buttonFilters.BackColor = System.Drawing.Color.White;
-            this.buttonFilters.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.buttonFilters.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonFilters.Location = new System.Drawing.Point(826, 35);
-            this.buttonFilters.Name = "buttonFilters";
-            this.buttonFilters.Size = new System.Drawing.Size(40, 30);
-            this.buttonFilters.TabIndex = 2;
-            this.buttonFilters.Text = "≡";
-            this.buttonFilters.UseVisualStyleBackColor = false;
+            buttonFilters.BackColor = Color.White;
+            buttonFilters.FlatAppearance.BorderColor = Color.FromArgb(192, 192, 192);
+            buttonFilters.FlatStyle = FlatStyle.Flat;
+            buttonFilters.Location = new Point(1101, 51);
+            buttonFilters.Margin = new Padding(4);
+            buttonFilters.Name = "buttonFilters";
+            buttonFilters.Size = new Size(53, 44);
+            buttonFilters.TabIndex = 2;
+            buttonFilters.Text = "≡";
+            buttonFilters.UseVisualStyleBackColor = false;
             // 
             // panelSearch
             // 
-            this.panelSearch.BackColor = System.Drawing.Color.White;
-            this.panelSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelSearch.Controls.Add(this.buttonSearch);
-            this.panelSearch.Controls.Add(this.textBoxSearch);
-            this.panelSearch.Location = new System.Drawing.Point(621, 35);
-            this.panelSearch.Name = "panelSearch";
-            this.panelSearch.Size = new System.Drawing.Size(200, 30);
-            this.panelSearch.TabIndex = 1;
+            panelSearch.BackColor = Color.White;
+            panelSearch.BorderStyle = BorderStyle.FixedSingle;
+            panelSearch.Controls.Add(buttonSearch);
+            panelSearch.Controls.Add(textBoxSearch);
+            panelSearch.Location = new Point(828, 51);
+            panelSearch.Margin = new Padding(4);
+            panelSearch.Name = "panelSearch";
+            panelSearch.Size = new Size(266, 43);
+            panelSearch.TabIndex = 1;
             // 
             // buttonSearch
             // 
-            this.buttonSearch.BackColor = System.Drawing.Color.White;
-            this.buttonSearch.FlatAppearance.BorderSize = 0;
-            this.buttonSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonSearch.Font = new System.Drawing.Font("Segoe MDL2 Assets", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonSearch.Location = new System.Drawing.Point(168, 0);
-            this.buttonSearch.Name = "buttonSearch";
-            this.buttonSearch.Size = new System.Drawing.Size(30, 28);
-            this.buttonSearch.TabIndex = 1;
-            this.buttonSearch.Text = "🔍";
-            this.buttonSearch.UseVisualStyleBackColor = false;
+            buttonSearch.BackColor = Color.White;
+            buttonSearch.FlatAppearance.BorderSize = 0;
+            buttonSearch.FlatStyle = FlatStyle.Flat;
+            buttonSearch.Font = new Font("Segoe MDL2 Assets", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            buttonSearch.Location = new Point(224, 0);
+            buttonSearch.Margin = new Padding(4);
+            buttonSearch.Name = "buttonSearch";
+            buttonSearch.Size = new Size(40, 41);
+            buttonSearch.TabIndex = 1;
+            buttonSearch.Text = "🔍";
+            buttonSearch.UseVisualStyleBackColor = false;
             // 
             // textBoxSearch
             // 
-            this.textBoxSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxSearch.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxSearch.Location = new System.Drawing.Point(5, 5);
-            this.textBoxSearch.Name = "textBoxSearch";
-            this.textBoxSearch.Size = new System.Drawing.Size(160, 18);
-            this.textBoxSearch.TabIndex = 0;
-            this.textBoxSearch.TextChanged += new System.EventHandler(this.textBoxSearch_TextChanged);
+            textBoxSearch.BorderStyle = BorderStyle.None;
+            textBoxSearch.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBoxSearch.Location = new Point(7, 7);
+            textBoxSearch.Margin = new Padding(4);
+            textBoxSearch.Name = "textBoxSearch";
+            textBoxSearch.Size = new Size(213, 20);
+            textBoxSearch.TabIndex = 0;
+            textBoxSearch.TextChanged += textBoxSearch_TextChanged;
             // 
             // labelBrowseListings
             // 
-            this.labelBrowseListings.AutoSize = true;
-            this.labelBrowseListings.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelBrowseListings.Location = new System.Drawing.Point(35, 35);
-            this.labelBrowseListings.Name = "labelBrowseListings";
-            this.labelBrowseListings.Size = new System.Drawing.Size(187, 32);
-            this.labelBrowseListings.TabIndex = 0;
-            this.labelBrowseListings.Text = "Browse Listings";
+            labelBrowseListings.AutoSize = true;
+            labelBrowseListings.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelBrowseListings.Location = new Point(47, 51);
+            labelBrowseListings.Margin = new Padding(4, 0, 4, 0);
+            labelBrowseListings.Name = "labelBrowseListings";
+            labelBrowseListings.Size = new Size(212, 38);
+            labelBrowseListings.TabIndex = 0;
+            labelBrowseListings.Text = "Browse Listings";
             // 
-            // MainForm
+            // BrowseListings
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1200, 700);
-            this.Controls.Add(this.panelMain);
-            this.Controls.Add(this.panelSidebar);
-            this.Name = "MainForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Horizon Drive - Car Rental";
-            this.panelSidebar.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).EndInit();
-            this.panelMain.ResumeLayout(false);
-            this.panelContent.ResumeLayout(false);
-            this.panelHeader.ResumeLayout(false);
-            this.panelHeader.PerformLayout();
-            this.panelSearch.ResumeLayout(false);
-            this.panelSearch.PerformLayout();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(8F, 19F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1600, 1023);
+            Controls.Add(panelMain);
+            Controls.Add(panelSidebar);
+            Margin = new Padding(4);
+            Name = "BrowseListings";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Horizon Drive - Car Rental";
+            panelSidebar.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).EndInit();
+            panelMain.ResumeLayout(false);
+            panelContent.ResumeLayout(false);
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            panelSearch.ResumeLayout(false);
+            panelSearch.PerformLayout();
+            ResumeLayout(false);
         }
 
         #endregion
