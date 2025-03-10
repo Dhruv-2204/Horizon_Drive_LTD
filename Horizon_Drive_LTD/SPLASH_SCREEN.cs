@@ -23,7 +23,7 @@ namespace splashscreen
         {
             try
             {
-                // Locate the Horizon_Drive_LTD directory dynamically
+                // Locating the Horizon_Drive_LTD directory dynamically
                 DirectoryInfo currentDir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
 
                 while (currentDir != null && currentDir.Name != "Horizon_Drive_LTD")
@@ -55,7 +55,7 @@ namespace splashscreen
                 // Create SoundPlayer instance and play the sound
                 using (SoundPlayer player = new SoundPlayer(soundPath))
                 {
-                    player.Play(); // Play once (use player.PlayLooping() for continuous play)
+                    player.Play(); // Play once 
                 }
             }
             catch (Exception ex)
@@ -110,6 +110,9 @@ namespace splashscreen
             this.Hide(); // Hide splash screen instead of closing
         }
 
-       
+        private void pictureBox1_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }
