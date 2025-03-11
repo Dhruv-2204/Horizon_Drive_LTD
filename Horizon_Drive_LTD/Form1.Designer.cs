@@ -1,14 +1,14 @@
-﻿namespace Horizon_Drive_LTD
+﻿namespace WindowsFormsApp1
 {
     partial class Form1
     {
         /// <summary>
-        ///  Required designer variable.
+        /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        ///  Clean up any resources being used.
+        /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
@@ -23,101 +23,101 @@
         #region Windows Form Designer generated code
 
         /// <summary>
-        ///  Required method for Designer support - do not modify
-        ///  the contents of this method with the code editor.
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            splitContainer1 = new SplitContainer();
-            button3 = new Button();
-            button2 = new Button();
-            button1 = new Button();
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
-            splitContainer1.Panel1.SuspendLayout();
-            splitContainer1.SuspendLayout();
-            SuspendLayout();
+            this.Addbtn = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.UsersTable = new System.Windows.Forms.DataGridView();
+            this.Editbtn = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.UsersTable)).BeginInit();
+            this.SuspendLayout();
             // 
-            // splitContainer1
+            // Addbtn
             // 
-            splitContainer1.Dock = DockStyle.Fill;
-            splitContainer1.Location = new Point(0, 0);
-            splitContainer1.Name = "splitContainer1";
+            this.Addbtn.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.Addbtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.Addbtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Addbtn.Location = new System.Drawing.Point(27, 98);
+            this.Addbtn.Name = "Addbtn";
+            this.Addbtn.Size = new System.Drawing.Size(135, 43);
+            this.Addbtn.TabIndex = 6;
+            this.Addbtn.Text = " Add";
+            this.Addbtn.UseVisualStyleBackColor = false;
+            this.Addbtn.Click += new System.EventHandler(this.Addbtn_Click);
             // 
-            // splitContainer1.Panel1
+            // label4
             // 
-            splitContainer1.Panel1.AccessibleName = "";
-            splitContainer1.Panel1.BackColor = Color.DarkCyan;
-            splitContainer1.Panel1.Controls.Add(button3);
-            splitContainer1.Panel1.Controls.Add(button2);
-            splitContainer1.Panel1.Controls.Add(button1);
-            splitContainer1.Panel1.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            splitContainer1.Panel1.ForeColor = Color.Coral;
-            splitContainer1.Panel1.Paint += splitContainer1_Panel1_Paint;
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.label4.Location = new System.Drawing.Point(29, 20);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(998, 49);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "List of Users";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // splitContainer1.Panel2
+            // UsersTable
             // 
-            splitContainer1.Panel2.BackColor = SystemColors.ActiveCaptionText;
-            splitContainer1.Panel2.BackgroundImage = (Image)resources.GetObject("splitContainer1.Panel2.BackgroundImage");
-            splitContainer1.Panel2.BackgroundImageLayout = ImageLayout.Zoom;
-            splitContainer1.Panel2.Paint += splitContainer1_Panel2_Paint;
-            splitContainer1.Size = new Size(1218, 537);
-            splitContainer1.SplitterDistance = 406;
-            splitContainer1.TabIndex = 0;
+            this.UsersTable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UsersTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.UsersTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.UsersTable.Location = new System.Drawing.Point(27, 158);
+            this.UsersTable.MultiSelect = false;
+            this.UsersTable.Name = "UsersTable";
+            this.UsersTable.RowHeadersVisible = false;
+            this.UsersTable.RowHeadersWidth = 62;
+            this.UsersTable.RowTemplate.Height = 28;
+            this.UsersTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.UsersTable.Size = new System.Drawing.Size(1000, 358);
+            this.UsersTable.TabIndex = 8;
             // 
-            // button3
+            // Editbtn
             // 
-            button3.BackColor = Color.PaleTurquoise;
-            button3.Location = new Point(217, 245);
-            button3.Name = "button3";
-            button3.Size = new Size(186, 83);
-            button3.TabIndex = 2;
-            button3.Text = "Profile";
-            button3.UseVisualStyleBackColor = false;
+            this.Editbtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Editbtn.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.Editbtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.Editbtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Editbtn.Location = new System.Drawing.Point(929, 98);
+            this.Editbtn.Name = "Editbtn";
+            this.Editbtn.Size = new System.Drawing.Size(98, 43);
+            this.Editbtn.TabIndex = 9;
+            this.Editbtn.Text = "Edit \r\n";
+            this.Editbtn.UseVisualStyleBackColor = false;
+            this.Editbtn.Click += new System.EventHandler(this.Editbtn_Click);
             // 
-            // button2
-            // 
-            button2.BackColor = Color.LightPink;
-            button2.Location = new Point(116, 103);
-            button2.Name = "button2";
-            button2.Size = new Size(186, 83);
-            button2.TabIndex = 1;
-            button2.Text = "Search ";
-            button2.UseVisualStyleBackColor = false;
-            // 
-            // button1
-            // 
-            button1.BackColor = Color.PaleTurquoise;
-            button1.Location = new Point(20, 376);
-            button1.Name = "button1";
-            button1.Size = new Size(186, 83);
-            button1.TabIndex = 0;
-            button1.Text = "Home";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
-            // 
-            
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 19F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1218, 537);
-            Controls.Add(splitContainer1);
-            Cursor = Cursors.Cross;
-            Name = "Form1";
-            Text = "Horizon Drive LTD";
-            Load += Form1_Load;
-            splitContainer1.Panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
-            splitContainer1.ResumeLayout(false);
-            ResumeLayout(false);
+            this.AllowDrop = true;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
+            this.AutoSize = true;
+            this.BackColor = System.Drawing.SystemColors.Info;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.ClientSize = new System.Drawing.Size(1050, 528);
+            this.Controls.Add(this.Editbtn);
+            this.Controls.Add(this.UsersTable);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.Addbtn);
+            this.Name = "Form1";
+            this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.UsersTable)).EndInit();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
-
-        private SplitContainer splitContainer1;
-        private Button button1;
-        private Button button3;
-        private Button button2;
+        private System.Windows.Forms.Button Addbtn;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DataGridView UsersTable;
+        private System.Windows.Forms.Button Editbtn;
     }
 }
+
