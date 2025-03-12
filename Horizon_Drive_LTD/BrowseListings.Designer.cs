@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             panelSidebar = new Panel();
-            btnOptions = new Button();
-            btnManageBooking = new Button();
-            btnListCar = new Button();
-            btnBrowseListings = new Button();
+            btnOptions = new RoundedButton();
+            btnManageBooking = new RoundedButton();
+            btnListCar = new RoundedButton();
+            btnBrowseListings = new RoundedButton();
             pictureBoxLogo = new PictureBox();
             panelMain = new Panel();
             panelContent = new Panel();
@@ -73,7 +73,7 @@
             btnOptions.FlatStyle = FlatStyle.Flat;
             btnOptions.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnOptions.ForeColor = Color.White;
-            btnOptions.Location = new Point(53, 754);
+            btnOptions.Location = new Point(53, 631);
             btnOptions.Margin = new Padding(4);
             btnOptions.Name = "btnOptions";
             btnOptions.Size = new Size(227, 73);
@@ -89,7 +89,7 @@
             btnManageBooking.FlatStyle = FlatStyle.Flat;
             btnManageBooking.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnManageBooking.ForeColor = Color.White;
-            btnManageBooking.Location = new Point(53, 652);
+            btnManageBooking.Location = new Point(53, 529);
             btnManageBooking.Margin = new Padding(4);
             btnManageBooking.Name = "btnManageBooking";
             btnManageBooking.Size = new Size(227, 73);
@@ -105,7 +105,7 @@
             btnListCar.FlatStyle = FlatStyle.Flat;
             btnListCar.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnListCar.ForeColor = Color.White;
-            btnListCar.Location = new Point(53, 550);
+            btnListCar.Location = new Point(53, 427);
             btnListCar.Margin = new Padding(4);
             btnListCar.Name = "btnListCar";
             btnListCar.Size = new Size(227, 73);
@@ -121,7 +121,7 @@
             btnBrowseListings.FlatStyle = FlatStyle.Flat;
             btnBrowseListings.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnBrowseListings.ForeColor = Color.Black;
-            btnBrowseListings.Location = new Point(53, 447);
+            btnBrowseListings.Location = new Point(53, 324);
             btnBrowseListings.Margin = new Padding(4);
             btnBrowseListings.Name = "btnBrowseListings";
             btnBrowseListings.Size = new Size(227, 73);
@@ -174,6 +174,7 @@
             flowLayoutPanelListings.Name = "flowLayoutPanelListings";
             flowLayoutPanelListings.Size = new Size(1213, 819);
             flowLayoutPanelListings.TabIndex = 0;
+            flowLayoutPanelListings.Paint += flowLayoutPanelListings_Paint;
             // 
             // panelHeader
             // 
@@ -199,6 +200,7 @@
             buttonFilters.TabIndex = 2;
             buttonFilters.Text = "≡";
             buttonFilters.UseVisualStyleBackColor = false;
+            buttonFilters.Click += buttonFilters_Click;
             // 
             // panelSearch
             // 
@@ -274,10 +276,10 @@
 
         private System.Windows.Forms.Panel panelSidebar;
         private System.Windows.Forms.PictureBox pictureBoxLogo;
-        private System.Windows.Forms.Button btnOptions;
-        private System.Windows.Forms.Button btnManageBooking;
-        private System.Windows.Forms.Button btnListCar;
-        private System.Windows.Forms.Button btnBrowseListings;
+        private RoundedButton btnOptions;
+        private RoundedButton btnManageBooking;
+        private RoundedButton btnListCar;
+        private RoundedButton btnBrowseListings;
         private System.Windows.Forms.Panel panelMain;
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label labelBrowseListings;
