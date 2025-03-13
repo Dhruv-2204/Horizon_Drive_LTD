@@ -2,6 +2,8 @@
 using System.Data;
 using System.Drawing.Drawing2D;
 
+//BrowseListings.cs
+
 namespace Horizon_Drive_LTD
 {
     public partial class BrowseListings : Form
@@ -12,15 +14,14 @@ namespace Horizon_Drive_LTD
         public BrowseListings()
         {
             InitializeComponent();
-            this.Size = new Size(1600, 900);
+            this.ClientSize = new Size(1280, 720);
+            this.MinimumSize = new Size(1000, 700);
 
 
             LoadCarListings();
             PopulateCarListings();
 
-
         }
-
         private void LoadCarListings()
         {
             // Sample car data - in a real app, this would come from a database
@@ -243,6 +244,19 @@ namespace Horizon_Drive_LTD
             // }
         }
 
+        private void btnManageYourListings_Click(object sender, EventArgs e)
+        {
+            // Open form to manage user's listings
+            MessageBox.Show("Manage Your Listings functionality would open a form to view and manage your car listings.",
+                           "Manage Your Listings",
+                           MessageBoxButtons.OK,
+                           MessageBoxIcon.Information);
+
+            // In a real application, you would open a form here
+            // ManageYourListingsForm manageYourListingsForm = new ManageYourListingsForm();
+            // manageYourListingsForm.ShowDialog();
+        }
+
         private void btnManageBooking_Click(object sender, EventArgs e)
         {
             // Open form to manage bookings
@@ -268,6 +282,28 @@ namespace Horizon_Drive_LTD
             // OptionsForm optionsForm = new OptionsForm();
             // optionsForm.ShowDialog();
         }
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            // Log out functionality
+            DialogResult result = MessageBox.Show("Are you sure you want to log out?",
+                           "Log Out",
+                           MessageBoxButtons.YesNo,
+                           MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                // In a real application, you would handle logout here
+                // Example: Reset authentication state, close the form, show login form
+                MessageBox.Show("You have been logged out successfully.",
+                               "Log Out",
+                               MessageBoxButtons.OK,
+                               MessageBoxIcon.Information);
+
+                // Application.Restart(); // Uncomment to restart application
+                // this.Close(); // Uncomment to close current form
+            }
+        }
+
 
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
         {
@@ -304,7 +340,34 @@ namespace Horizon_Drive_LTD
 
         }
 
-        private void buttonFilters_Click(object sender, EventArgs e)
+        private void buttonFilter_Click(object sender, EventArgs e)
+        {
+            // Filter functionality
+            MessageBox.Show("Filter functionality would open filter options for car listings.",
+                           "Filter Cars",
+                           MessageBoxButtons.OK,
+                           MessageBoxIcon.Information);
+        }
+
+        private void buttonCart_Click(object sender, EventArgs e)
+        {
+            // Shopping cart functionality
+            MessageBox.Show("Shopping cart functionality would display selected cars and reservation details.",
+                           "Shopping Cart",
+                           MessageBoxButtons.OK,
+                           MessageBoxIcon.Information);
+        }
+
+        private void buttonProfile_Click(object sender, EventArgs e)
+        {
+            // Profile functionality
+            MessageBox.Show("Profile functionality would display user information and settings.",
+                           "User Profile",
+                           MessageBoxButtons.OK,
+                           MessageBoxIcon.Information);
+        }
+
+        private void labelBrowseListings_Click(object sender, EventArgs e)
         {
 
         }

@@ -1,4 +1,6 @@
 ﻿namespace Horizon_Drive_LTD
+
+//BrowseListings.Designer.cs
 {
     partial class BrowseListings
     {
@@ -20,6 +22,7 @@
             base.Dispose(disposing);
         }
 
+
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -29,20 +32,24 @@
         private void InitializeComponent()
         {
             panelSidebar = new Panel();
-            btnOptions = new RoundedButton();
             btnManageBooking = new RoundedButton();
+            btnManageYourListings = new RoundedButton();
+            btnOptions = new RoundedButton();
             btnListCar = new RoundedButton();
             btnBrowseListings = new RoundedButton();
             pictureBoxLogo = new PictureBox();
+            btnLogout = new RoundedButton();
             panelMain = new Panel();
             panelContent = new Panel();
             flowLayoutPanelListings = new FlowLayoutPanel();
             panelHeader = new Panel();
-            buttonFilters = new Button();
             panelSearch = new Panel();
             buttonSearch = new Button();
             textBoxSearch = new TextBox();
             labelBrowseListings = new Label();
+            buttonFilter = new Button();
+            buttonCart = new Button();
+            buttonProfile = new Button();
             panelSidebar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).BeginInit();
             panelMain.SuspendLayout();
@@ -54,33 +61,19 @@
             // panelSidebar
             // 
             panelSidebar.BackColor = Color.FromArgb(15, 30, 45);
-            panelSidebar.Controls.Add(btnOptions);
             panelSidebar.Controls.Add(btnManageBooking);
+            panelSidebar.Controls.Add(btnManageYourListings);
+            panelSidebar.Controls.Add(btnOptions);
             panelSidebar.Controls.Add(btnListCar);
             panelSidebar.Controls.Add(btnBrowseListings);
             panelSidebar.Controls.Add(pictureBoxLogo);
+            panelSidebar.Controls.Add(btnLogout);
             panelSidebar.Dock = DockStyle.Left;
             panelSidebar.Location = new Point(0, 0);
             panelSidebar.Margin = new Padding(4);
             panelSidebar.Name = "panelSidebar";
-            panelSidebar.Size = new Size(333, 1023);
+            panelSidebar.Size = new Size(333, 1005);
             panelSidebar.TabIndex = 0;
-            // 
-            // btnOptions
-            // 
-            btnOptions.BackColor = Color.FromArgb(30, 85, 110);
-            btnOptions.FlatAppearance.BorderSize = 0;
-            btnOptions.FlatStyle = FlatStyle.Flat;
-            btnOptions.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnOptions.ForeColor = Color.White;
-            btnOptions.Location = new Point(53, 631);
-            btnOptions.Margin = new Padding(4);
-            btnOptions.Name = "btnOptions";
-            btnOptions.Size = new Size(227, 73);
-            btnOptions.TabIndex = 4;
-            btnOptions.Text = "Options";
-            btnOptions.UseVisualStyleBackColor = false;
-            btnOptions.Click += btnOptions_Click;
             // 
             // btnManageBooking
             // 
@@ -89,14 +82,44 @@
             btnManageBooking.FlatStyle = FlatStyle.Flat;
             btnManageBooking.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnManageBooking.ForeColor = Color.White;
-            btnManageBooking.Location = new Point(53, 529);
+            btnManageBooking.Location = new Point(72, 400);
             btnManageBooking.Margin = new Padding(4);
             btnManageBooking.Name = "btnManageBooking";
-            btnManageBooking.Size = new Size(227, 73);
-            btnManageBooking.TabIndex = 3;
+            btnManageBooking.Size = new Size(195, 62);
+            btnManageBooking.TabIndex = 8;
             btnManageBooking.Text = "Manage Booking";
             btnManageBooking.UseVisualStyleBackColor = false;
-            btnManageBooking.Click += btnManageBooking_Click;
+            // 
+            // btnManageYourListings
+            // 
+            btnManageYourListings.BackColor = Color.FromArgb(30, 85, 110);
+            btnManageYourListings.FlatAppearance.BorderSize = 0;
+            btnManageYourListings.FlatStyle = FlatStyle.Flat;
+            btnManageYourListings.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnManageYourListings.ForeColor = Color.White;
+            btnManageYourListings.Location = new Point(72, 568);
+            btnManageYourListings.Margin = new Padding(4);
+            btnManageYourListings.Name = "btnManageYourListings";
+            btnManageYourListings.Size = new Size(195, 62);
+            btnManageYourListings.TabIndex = 7;
+            btnManageYourListings.Text = "Manage your Listings";
+            btnManageYourListings.UseVisualStyleBackColor = false;
+            // 
+            // btnOptions
+            // 
+            btnOptions.BackColor = Color.FromArgb(30, 85, 110);
+            btnOptions.FlatAppearance.BorderSize = 0;
+            btnOptions.FlatStyle = FlatStyle.Flat;
+            btnOptions.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnOptions.ForeColor = Color.White;
+            btnOptions.Location = new Point(72, 652);
+            btnOptions.Margin = new Padding(4);
+            btnOptions.Name = "btnOptions";
+            btnOptions.Size = new Size(195, 62);
+            btnOptions.TabIndex = 4;
+            btnOptions.Text = "Options";
+            btnOptions.UseVisualStyleBackColor = false;
+            btnOptions.Click += btnOptions_Click;
             // 
             // btnListCar
             // 
@@ -105,10 +128,10 @@
             btnListCar.FlatStyle = FlatStyle.Flat;
             btnListCar.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnListCar.ForeColor = Color.White;
-            btnListCar.Location = new Point(53, 427);
+            btnListCar.Location = new Point(72, 484);
             btnListCar.Margin = new Padding(4);
             btnListCar.Name = "btnListCar";
-            btnListCar.Size = new Size(227, 73);
+            btnListCar.Size = new Size(195, 62);
             btnListCar.TabIndex = 2;
             btnListCar.Text = "List a car";
             btnListCar.UseVisualStyleBackColor = false;
@@ -121,10 +144,10 @@
             btnBrowseListings.FlatStyle = FlatStyle.Flat;
             btnBrowseListings.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnBrowseListings.ForeColor = Color.Black;
-            btnBrowseListings.Location = new Point(53, 324);
+            btnBrowseListings.Location = new Point(72, 316);
             btnBrowseListings.Margin = new Padding(4);
             btnBrowseListings.Name = "btnBrowseListings";
-            btnBrowseListings.Size = new Size(227, 73);
+            btnBrowseListings.Size = new Size(195, 62);
             btnBrowseListings.TabIndex = 1;
             btnBrowseListings.Text = "Browse listings";
             btnBrowseListings.UseVisualStyleBackColor = false;
@@ -133,14 +156,30 @@
             // pictureBoxLogo
             // 
             pictureBoxLogo.Image = Properties.Resources.Logo;
-            pictureBoxLogo.Location = new Point(67, 73);
+            pictureBoxLogo.Location = new Point(62, 59);
             pictureBoxLogo.Margin = new Padding(4);
             pictureBoxLogo.Name = "pictureBoxLogo";
-            pictureBoxLogo.Size = new Size(200, 219);
+            pictureBoxLogo.Size = new Size(215, 233);
             pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxLogo.TabIndex = 0;
             pictureBoxLogo.TabStop = false;
             pictureBoxLogo.Click += pictureBoxLogo_Click;
+            // 
+            // btnLogout
+            // 
+            btnLogout.BackColor = Color.FromArgb(30, 85, 110);
+            btnLogout.FlatAppearance.BorderSize = 0;
+            btnLogout.FlatStyle = FlatStyle.Flat;
+            btnLogout.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnLogout.ForeColor = Color.White;
+            btnLogout.Location = new Point(72, 736);
+            btnLogout.Margin = new Padding(4);
+            btnLogout.Name = "btnLogout";
+            btnLogout.Size = new Size(195, 62);
+            btnLogout.TabIndex = 6;
+            btnLogout.Text = "Log out";
+            btnLogout.UseVisualStyleBackColor = false;
+            btnLogout.Click += btnLogout_Click;
             // 
             // panelMain
             // 
@@ -151,7 +190,7 @@
             panelMain.Location = new Point(333, 0);
             panelMain.Margin = new Padding(4);
             panelMain.Name = "panelMain";
-            panelMain.Size = new Size(1267, 1023);
+            panelMain.Size = new Size(1267, 1005);
             panelMain.TabIndex = 1;
             // 
             // panelContent
@@ -162,25 +201,28 @@
             panelContent.Margin = new Padding(4);
             panelContent.Name = "panelContent";
             panelContent.Padding = new Padding(27, 29, 27, 29);
-            panelContent.Size = new Size(1267, 877);
+            panelContent.Size = new Size(1267, 859);
             panelContent.TabIndex = 1;
             // 
             // flowLayoutPanelListings
             // 
             flowLayoutPanelListings.AutoScroll = true;
             flowLayoutPanelListings.Dock = DockStyle.Fill;
+            flowLayoutPanelListings.ForeColor = Color.FromArgb(15, 30, 45);
             flowLayoutPanelListings.Location = new Point(27, 29);
             flowLayoutPanelListings.Margin = new Padding(4);
             flowLayoutPanelListings.Name = "flowLayoutPanelListings";
-            flowLayoutPanelListings.Size = new Size(1213, 819);
+            flowLayoutPanelListings.Size = new Size(1213, 801);
             flowLayoutPanelListings.TabIndex = 0;
             flowLayoutPanelListings.Paint += flowLayoutPanelListings_Paint;
             // 
             // panelHeader
             // 
-            panelHeader.Controls.Add(buttonFilters);
             panelHeader.Controls.Add(panelSearch);
             panelHeader.Controls.Add(labelBrowseListings);
+            panelHeader.Controls.Add(buttonFilter);
+            panelHeader.Controls.Add(buttonCart);
+            panelHeader.Controls.Add(buttonProfile);
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(0, 0);
             panelHeader.Margin = new Padding(4);
@@ -188,30 +230,17 @@
             panelHeader.Size = new Size(1267, 146);
             panelHeader.TabIndex = 0;
             // 
-            // buttonFilters
-            // 
-            buttonFilters.BackColor = Color.White;
-            buttonFilters.FlatAppearance.BorderColor = Color.FromArgb(192, 192, 192);
-            buttonFilters.FlatStyle = FlatStyle.Flat;
-            buttonFilters.Location = new Point(1101, 51);
-            buttonFilters.Margin = new Padding(4);
-            buttonFilters.Name = "buttonFilters";
-            buttonFilters.Size = new Size(53, 44);
-            buttonFilters.TabIndex = 2;
-            buttonFilters.Text = "≡";
-            buttonFilters.UseVisualStyleBackColor = false;
-            buttonFilters.Click += buttonFilters_Click;
-            // 
             // panelSearch
             // 
+            panelSearch.AutoSize = true;
             panelSearch.BackColor = Color.White;
             panelSearch.BorderStyle = BorderStyle.FixedSingle;
             panelSearch.Controls.Add(buttonSearch);
             panelSearch.Controls.Add(textBoxSearch);
-            panelSearch.Location = new Point(828, 51);
+            panelSearch.Location = new Point(623, 58);
             panelSearch.Margin = new Padding(4);
             panelSearch.Name = "panelSearch";
-            panelSearch.Size = new Size(266, 43);
+            panelSearch.Size = new Size(270, 47);
             panelSearch.TabIndex = 1;
             // 
             // buttonSearch
@@ -242,19 +271,69 @@
             // labelBrowseListings
             // 
             labelBrowseListings.AutoSize = true;
-            labelBrowseListings.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelBrowseListings.Location = new Point(47, 51);
+            labelBrowseListings.Font = new Font("Bahnschrift SemiCondensed", 28.1454544F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelBrowseListings.ForeColor = Color.FromArgb(15, 30, 45);
+            labelBrowseListings.Location = new Point(27, 47);
             labelBrowseListings.Margin = new Padding(4, 0, 4, 0);
             labelBrowseListings.Name = "labelBrowseListings";
-            labelBrowseListings.Size = new Size(212, 38);
+            labelBrowseListings.Size = new Size(287, 52);
             labelBrowseListings.TabIndex = 0;
             labelBrowseListings.Text = "Browse Listings";
+            labelBrowseListings.Click += labelBrowseListings_Click;
+            // 
+            // buttonFilter
+            // 
+            buttonFilter.AutoSize = true;
+            buttonFilter.BackColor = Color.White;
+            buttonFilter.FlatAppearance.BorderColor = Color.FromArgb(192, 192, 192);
+            buttonFilter.FlatStyle = FlatStyle.Flat;
+            buttonFilter.Font = new Font("Segoe UI Symbol", 12F);
+            buttonFilter.Location = new Point(911, 57);
+            buttonFilter.Margin = new Padding(4);
+            buttonFilter.Name = "buttonFilter";
+            buttonFilter.Size = new Size(44, 44);
+            buttonFilter.TabIndex = 2;
+            buttonFilter.Text = "🔍";
+            buttonFilter.UseVisualStyleBackColor = false;
+            buttonFilter.Click += buttonFilter_Click;
+            // 
+            // buttonCart
+            // 
+            buttonCart.AutoSize = true;
+            buttonCart.BackColor = Color.White;
+            buttonCart.FlatAppearance.BorderColor = Color.FromArgb(192, 192, 192);
+            buttonCart.FlatStyle = FlatStyle.Flat;
+            buttonCart.Font = new Font("Segoe UI Symbol", 12F);
+            buttonCart.Location = new Point(963, 57);
+            buttonCart.Margin = new Padding(4);
+            buttonCart.Name = "buttonCart";
+            buttonCart.Size = new Size(44, 44);
+            buttonCart.TabIndex = 3;
+            buttonCart.Text = "\U0001f6d2";
+            buttonCart.UseVisualStyleBackColor = false;
+            buttonCart.Click += buttonCart_Click;
+            // 
+            // buttonProfile
+            // 
+            buttonProfile.AutoSize = true;
+            buttonProfile.BackColor = Color.White;
+            buttonProfile.FlatAppearance.BorderColor = Color.FromArgb(192, 192, 192);
+            buttonProfile.FlatStyle = FlatStyle.Flat;
+            buttonProfile.Font = new Font("Segoe UI Symbol", 12F);
+            buttonProfile.Location = new Point(1013, 57);
+            buttonProfile.Margin = new Padding(4);
+            buttonProfile.Name = "buttonProfile";
+            buttonProfile.Size = new Size(44, 44);
+            buttonProfile.TabIndex = 4;
+            buttonProfile.Text = "👤";
+            buttonProfile.UseVisualStyleBackColor = false;
+            buttonProfile.Click += buttonProfile_Click;
             // 
             // BrowseListings
             // 
             AutoScaleDimensions = new SizeF(8F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1600, 1023);
+            ClientSize = new Size(1600, 1005);
             Controls.Add(panelMain);
             Controls.Add(panelSidebar);
             Margin = new Padding(4);
@@ -277,9 +356,12 @@
         private System.Windows.Forms.Panel panelSidebar;
         private System.Windows.Forms.PictureBox pictureBoxLogo;
         private RoundedButton btnOptions;
-        private RoundedButton btnManageBooking;
         private RoundedButton btnListCar;
         private RoundedButton btnBrowseListings;
+        private RoundedButton btnLogout;
+        private Button buttonFilter;
+        private Button buttonCart;
+        private Button buttonProfile;
         private System.Windows.Forms.Panel panelMain;
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label labelBrowseListings;
@@ -288,6 +370,8 @@
         private System.Windows.Forms.Panel panelSearch;
         private System.Windows.Forms.TextBox textBoxSearch;
         private System.Windows.Forms.Button buttonSearch;
-        private System.Windows.Forms.Button buttonFilters;
+        private RoundedButton btnManageYourListings;
+        private RoundedButton btnManageBooking;
     }
+
 }
