@@ -14,7 +14,7 @@ namespace Horizon_Drive_LTD
         public BrowseListings()
         {
             InitializeComponent();
-            this.ClientSize = new Size(1280, 720);
+            this.ClientSize = new Size(1600, 900);
             this.MinimumSize = new Size(1000, 700);
 
 

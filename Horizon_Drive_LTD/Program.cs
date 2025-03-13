@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Horizon_Drive_LTD
@@ -13,10 +11,11 @@ namespace Horizon_Drive_LTD
         [STAThread]
         static void Main()
         {
+            // Enable high-DPI awareness
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new BrowseListings());
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
         }
     }
 }
