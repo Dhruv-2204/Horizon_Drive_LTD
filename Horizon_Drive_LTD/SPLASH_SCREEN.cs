@@ -105,7 +105,7 @@ namespace splashscreen
 
         private void OpensignUp()
         {
-            SignUp signup = new SignUp();
+            Login signup = new Login();
             signup.Show();
             this.Hide(); // Hide splash screen instead of closing
         }

@@ -10,14 +10,24 @@ using System.Windows.Forms;
 
 namespace splashscreen
 {
-    public partial class SignUp : Form
+    public partial class Login : Form
     {
-        public SignUp()
+        public Login()
         {
             InitializeComponent();
         }
 
         private void Form2_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }
