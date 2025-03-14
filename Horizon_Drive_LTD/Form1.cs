@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Horizon_Drive_LTD;
 using WindowsFormsApp1.Repositories;
 
 namespace WindowsFormsApp1
@@ -16,9 +17,23 @@ namespace WindowsFormsApp1
         public Form1()
         {
             InitializeComponent();
-            ReadUsers();
+            
+           // ReadUsers();
         }
 
+        private void Addbtn_Click(object sender, EventArgs e)
+        {
+            var dbConnection = new DatabaseConnection();
+            string result = dbConnection.TestConnection();
+            MessageBox.Show(result, "Connection Test", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void Editbtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /*
         private void ReadUsers()
 
         {
@@ -48,16 +63,8 @@ namespace WindowsFormsApp1
 
         }
 
-       
+       */
 
-        private void Addbtn_Click(object sender, EventArgs e)
-        {
 
-        }
-
-        private void Editbtn_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
