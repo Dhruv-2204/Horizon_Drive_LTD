@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Horizon_Drive_LTD
 {
     class DataStructure
     {
-        
-
         public class HashTable<T>
         {
             private int _capacity; // Total number of slots in the table
             private int _size; // Number of elements currently stored
             private float _loadFactor; // Load factor threshold for resizing
-            private T[] _buckets; // Array to store the keys
-            private bool[] _deleted; // Track deleted slots for open addressing
+            private LinkedList<T>[] _buckets; // Array of linked lists for separate chaining
 
             public HashTable(int capacity, float loadFactor = 0.75f)
             {
@@ -28,8 +22,7 @@ namespace Horizon_Drive_LTD
                 _capacity = GetNextPrime(capacity); // Ensure capacity is a prime number
                 _loadFactor = loadFactor;
                 _size = 0;
-                _buckets = new T[_capacity];
-                _deleted = new bool[_capacity];
+                _buckets = new LinkedList<T>[_capacity];
             }
 
             private int GetHash(T key)
@@ -44,36 +37,26 @@ namespace Horizon_Drive_LTD
                     Resize();
 
                 int index = GetHash(key);
-                int originalIndex = index;
-                int i = 1;
 
-                // Linear probing to handle collisions
-                while (_buckets[index] != null && !_buckets[index].Equals(default(T))
-                       && !_deleted[index])
+                // Initialize the linked list if the bucket is empty
+                if (_buckets[index] == null)
                 {
-                    index = (originalIndex + i) % _capacity; // Wrap around if necessary
-                    i++;
+                    _buckets[index] = new LinkedList<T>();
                 }
 
-                _buckets[index] = key;
-                _deleted[index] = false; // Mark as not deleted
+                // Add the key to the linked list
+                _buckets[index].AddLast(key);
                 _size++;
             }
 
             public bool Search(T key)
             {
                 int index = GetHash(key);
-                int originalIndex = index;
-                int i = 1;
 
-                // Linear probing to find the key
-                while (_buckets[index] != null || _deleted[index])
+                // Check if the bucket exists and contains the key
+                if (_buckets[index] != null)
                 {
-                    if (_buckets[index] != null && _buckets[index].Equals(key))
-                        return true;
-
-                    index = (originalIndex + i) % _capacity; // Wrap around if necessary
-                    i++;
+                    return _buckets[index].Contains(key);
                 }
 
                 return false; // Key not found
@@ -82,22 +65,12 @@ namespace Horizon_Drive_LTD
             public bool Remove(T key)
             {
                 int index = GetHash(key);
-                int originalIndex = index;
-                int i = 1;
 
-                // Linear probing to find the key
-                while (_buckets[index] != null || _deleted[index])
+                // Check if the bucket exists and contains the key
+                if (_buckets[index] != null && _buckets[index].Remove(key))
                 {
-                    if (_buckets[index] != null && _buckets[index].Equals(key))
-                    {
-                        _buckets[index] = default(T); // Mark as deleted
-                        _deleted[index] = true;
-                        _size--;
-                        return true;
-                    }
-
-                    index = (originalIndex + i) % _capacity; // Wrap around if necessary
-                    i++;
+                    _size--;
+                    return true;
                 }
 
                 return false; // Key not found
@@ -106,30 +79,30 @@ namespace Horizon_Drive_LTD
             private void Resize()
             {
                 int newCapacity = GetNextPrime(_capacity * 2); // Double the capacity
-                var newBuckets = new T[newCapacity];
-                var newDeleted = new bool[newCapacity];
+                var newBuckets = new LinkedList<T>[newCapacity];
 
                 // Rehash all existing keys into the new table
                 for (int i = 0; i < _capacity; i++)
                 {
-                    if (_buckets[i] != null && !_buckets[i].Equals(default(T)) && !_deleted[i])
+                    if (_buckets[i] != null)
                     {
-                        int newIndex = Math.Abs(_buckets[i].GetHashCode() % newCapacity);
-                        int j = 1;
-
-                        // Handle collisions in the new table
-                        while (newBuckets[newIndex] != null)
+                        foreach (var key in _buckets[i])
                         {
-                            newIndex = (newIndex + j) % newCapacity;
-                            j++;
-                        }
+                            int newIndex = Math.Abs(key.GetHashCode() % newCapacity);
 
-                        newBuckets[newIndex] = _buckets[i];
+                            // Initialize the linked list if the bucket is empty
+                            if (newBuckets[newIndex] == null)
+                            {
+                                newBuckets[newIndex] = new LinkedList<T>();
+                            }
+
+                            // Add the key to the linked list in the new bucket
+                            newBuckets[newIndex].AddLast(key);
+                        }
                     }
                 }
 
                 _buckets = newBuckets;
-                _deleted = newDeleted;
                 _capacity = newCapacity;
             }
 
