@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Horizon_Drive_LTD;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,7 +20,7 @@ namespace splashscreen
 
         private void Form2_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -50,6 +51,23 @@ namespace splashscreen
         private void button1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Signup signup = new Signup();// Calls signup constructor
+            signup.Show();//Shows the signup window
+            this.Close();//closes the login window
         }
     }
 }

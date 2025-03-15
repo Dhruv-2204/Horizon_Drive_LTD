@@ -71,7 +71,7 @@
             checkBox1.BackColor = Color.Transparent;
             checkBox1.Font = new Font("Segoe UI Light", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             checkBox1.ForeColor = SystemColors.GrayText;
-            checkBox1.Location = new Point(535, 262);
+            checkBox1.Location = new Point(535, 280);
             checkBox1.Name = "checkBox1";
             checkBox1.Size = new Size(104, 19);
             checkBox1.TabIndex = 8;
@@ -88,7 +88,7 @@
             button1.FlatAppearance.MouseOverBackColor = Color.FromArgb(128, 128, 255);
             button1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.White;
-            button1.Location = new Point(416, 357);
+            button1.Location = new Point(414, 357);
             button1.Name = "button1";
             button1.Size = new Size(131, 37);
             button1.TabIndex = 7;
@@ -102,17 +102,18 @@
             textBox2.BackColor = Color.Silver;
             textBox2.BorderStyle = BorderStyle.FixedSingle;
             textBox2.Font = new Font("Segoe UI Light", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox2.Location = new Point(312, 223);
+            textBox2.Location = new Point(312, 241);
             textBox2.Name = "textBox2";
             textBox2.PlaceholderText = "Enter Password";
             textBox2.Size = new Size(327, 33);
             textBox2.TabIndex = 6;
+            textBox2.TextChanged += textBox2_TextChanged;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Bahnschrift", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(312, 184);
+            label2.Location = new Point(310, 211);
             label2.Name = "label2";
             label2.Size = new Size(78, 18);
             label2.TabIndex = 5;
@@ -125,17 +126,18 @@
             textBox1.BackColor = Color.Silver;
             textBox1.BorderStyle = BorderStyle.FixedSingle;
             textBox1.Font = new Font("Segoe UI Light", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox1.Location = new Point(312, 118);
+            textBox1.Location = new Point(312, 146);
             textBox1.Name = "textBox1";
             textBox1.PlaceholderText = "Enter Username";
             textBox1.Size = new Size(327, 33);
             textBox1.TabIndex = 4;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Bahnschrift", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(312, 83);
+            label4.Location = new Point(310, 115);
             label4.Name = "label4";
             label4.Size = new Size(80, 18);
             label4.TabIndex = 3;
@@ -147,7 +149,7 @@
             label3.AutoSize = true;
             label3.Font = new Font("Microsoft YaHei UI", 15F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label3.ForeColor = Color.FromArgb(1, 24, 100);
-            label3.Location = new Point(439, 9);
+            label3.Location = new Point(442, 19);
             label3.Name = "label3";
             label3.Size = new Size(75, 27);
             label3.TabIndex = 2;
@@ -179,6 +181,7 @@
             button2.TabIndex = 3;
             button2.Text = "SIGN UP";
             button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
             // 
             // label5
             // 
@@ -195,7 +198,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Book Antiqua", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.FromArgb(255, 128, 0);
-            label1.Location = new Point(56, 184);
+            label1.Location = new Point(55, 193);
             label1.Name = "label1";
             label1.Size = new Size(184, 23);
             label1.TabIndex = 1;
@@ -206,9 +209,9 @@
             // 
             pictureBox1.Anchor = AnchorStyles.Left;
             pictureBox1.Image = Horizon_Drive_LTD.Properties.Resources.HORIZONDRIVE_LOGO;
-            pictureBox1.Location = new Point(67, 32);
+            pictureBox1.Location = new Point(51, 31);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(155, 137);
+            pictureBox1.Size = new Size(184, 159);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -224,7 +227,7 @@
             Margin = new Padding(4, 3, 4, 3);
             Name = "Login";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "SignUp";
+            Text = "Login Page";
             Load += Form2_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Horizon_Drive_LTD;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -105,8 +106,10 @@ namespace splashscreen
 
         private void OpensignUp()
         {
-            Login signup = new Login();
+            Signup signup = new Signup();
             signup.Show();
+            //Login login = new Login();
+            //login.Show();
             this.Hide(); // Hide splash screen instead of closing
         }
 
