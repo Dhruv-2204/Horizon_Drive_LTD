@@ -123,6 +123,11 @@ namespace Horizon_Drive_LTD
         {
 
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
     // Sample CarListing class, adjust according to your model

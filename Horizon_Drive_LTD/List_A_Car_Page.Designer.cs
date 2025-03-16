@@ -63,12 +63,17 @@ namespace Horizon_Drive_LTD
             pbCarImage = new PictureBox();
             btnUploadImage = new Button();
             panelHeader = new Panel();
+            pictureBox2 = new PictureBox();
+            pictureBox1 = new PictureBox();
             sidebar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).BeginInit();
             panelMain.SuspendLayout();
             panelContent.SuspendLayout();
             contentPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbCarImage).BeginInit();
+            panelHeader.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // sidebar
@@ -87,7 +92,7 @@ namespace Horizon_Drive_LTD
             // 
             // pictureBoxLogo
             // 
-           
+            pictureBoxLogo.Image = Properties.Resources.Logo__1_;
             pictureBoxLogo.Location = new Point(25, 13);
             pictureBoxLogo.Name = "pictureBoxLogo";
             pictureBoxLogo.Size = new Size(200, 156);
@@ -390,11 +395,29 @@ namespace Horizon_Drive_LTD
             // panelHeader
             // 
             panelHeader.BackColor = Color.FromArgb(240, 240, 240);
+            panelHeader.Controls.Add(pictureBox1);
+            panelHeader.Controls.Add(pictureBox2);
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(0, 0);
             panelHeader.Name = "panelHeader";
             panelHeader.Size = new Size(1924, 100);
             panelHeader.TabIndex = 1;
+            // 
+            // pictureBox2
+            // 
+            pictureBox2.Location = new Point(1613, 23);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(125, 62);
+            pictureBox2.TabIndex = 1;
+            pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(1767, 23);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(125, 62);
+            pictureBox1.TabIndex = 2;
+            pictureBox1.TabStop = false;
             // 
             // List_A_Car_Page
             // 
@@ -412,6 +435,9 @@ namespace Horizon_Drive_LTD
             contentPanel.ResumeLayout(false);
             contentPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pbCarImage).EndInit();
+            panelHeader.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -463,5 +489,8 @@ namespace Horizon_Drive_LTD
                 }
             }
         }
+
+        private PictureBox pictureBox2;
+        private PictureBox pictureBox1;
     }
 }
