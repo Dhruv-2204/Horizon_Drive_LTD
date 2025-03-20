@@ -33,7 +33,7 @@
             button1 = new Button();
             textBox2 = new TextBox();
             label2 = new Label();
-            textBox1 = new TextBox();
+            Enter_Username_login = new TextBox();
             label4 = new Label();
             label3 = new Label();
             panel2 = new Panel();
@@ -55,7 +55,7 @@
             panel1.Controls.Add(button1);
             panel1.Controls.Add(textBox2);
             panel1.Controls.Add(label2);
-            panel1.Controls.Add(textBox1);
+            panel1.Controls.Add(Enter_Username_login);
             panel1.Controls.Add(label4);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(panel2);
@@ -64,6 +64,7 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(686, 483);
             panel1.TabIndex = 0;
+            panel1.Paint += panel1_Paint;
             // 
             // checkBox1
             // 
@@ -107,6 +108,7 @@
             textBox2.PlaceholderText = "Enter Password";
             textBox2.Size = new Size(327, 33);
             textBox2.TabIndex = 6;
+            textBox2.UseSystemPasswordChar = true;
             textBox2.TextChanged += textBox2_TextChanged;
             // 
             // label2
@@ -120,18 +122,18 @@
             label2.Text = "Password:";
             label2.Click += label2_Click;
             // 
-            // textBox1
+            // Enter_Username_login
             // 
-            textBox1.AutoCompleteMode = AutoCompleteMode.Suggest;
-            textBox1.BackColor = Color.Silver;
-            textBox1.BorderStyle = BorderStyle.FixedSingle;
-            textBox1.Font = new Font("Segoe UI Light", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox1.Location = new Point(312, 146);
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "Enter Username";
-            textBox1.Size = new Size(327, 33);
-            textBox1.TabIndex = 4;
-            textBox1.TextChanged += textBox1_TextChanged;
+            Enter_Username_login.AutoCompleteMode = AutoCompleteMode.Suggest;
+            Enter_Username_login.BackColor = Color.Silver;
+            Enter_Username_login.BorderStyle = BorderStyle.FixedSingle;
+            Enter_Username_login.Font = new Font("Segoe UI Light", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Enter_Username_login.Location = new Point(312, 146);
+            Enter_Username_login.Name = "Enter_Username_login";
+            Enter_Username_login.PlaceholderText = "Enter Username";
+            Enter_Username_login.Size = new Size(327, 33);
+            Enter_Username_login.TabIndex = 4;
+            Enter_Username_login.TextChanged += textBox1_TextChanged;
             // 
             // label4
             // 
@@ -247,7 +249,7 @@
         private Label label3;
         private Label label2;
         private Label label4;
-        private TextBox textBox1;
+        private TextBox Enter_Username_login;
         private TextBox textBox2;
         private Button button1;
         private CheckBox checkBox1;

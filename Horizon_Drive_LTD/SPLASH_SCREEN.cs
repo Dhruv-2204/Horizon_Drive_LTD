@@ -14,7 +14,7 @@ namespace splashscreen
 {
     public partial class SPLASH_SCREEN : Form
     {
-        public SPLASH_SCREEN()
+        public  SPLASH_SCREEN()
         {
             InitializeComponent();
             PlaySound();
