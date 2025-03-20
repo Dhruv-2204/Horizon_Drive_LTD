@@ -31,17 +31,17 @@ namespace Horizon_Drive_LTD.models
 
 
 
-        public Car(string carID, string carMake, string model, string color, int seatCapacity, decimal engineCapacity, string fuelType, string status, string transmissionType)
+        public Car(string carID, string carMake, string model, string color, string seatCapacity, string engineCapacity, string fuelType, string status, string transmissionType)
         {
             CarID = carID;
             Make = carMake;
             Model = model;
             Color = color;
             carMake = seatCapacity;
-            EngineCapacity = engineCapacity;
+            EngineSize = engineCapacity;
             FuelType = fuelType;
-            Status = status;
-            TransmissionType = transmissionType;
+            Condition = status;
+            Transmission = transmissionType;
         }
     }
 
