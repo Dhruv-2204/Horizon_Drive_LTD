@@ -22,6 +22,10 @@ namespace Horizon_Drive_LTD
         private Panel contentPanel;
         private FlowLayoutPanel flowLayoutPanelListings;
         private Panel panelHeader;
+        private Label lblTitle; // Title label
+        private Panel panelYourListings;
+        private Panel panelCurrentReservations;
+        private Panel panelTotalEarnings;
 
         protected override void Dispose(bool disposing)
         {
@@ -48,6 +52,10 @@ namespace Horizon_Drive_LTD
             pictureBox1 = new PictureBox();
             pictureBox2 = new PictureBox();
             pictureBox3 = new PictureBox();
+            lblTitle = new Label(); // Title Label
+            panelYourListings = new Panel(); // Dynamic Box 1
+            panelCurrentReservations = new Panel(); // Dynamic Box 2
+            panelTotalEarnings = new Panel(); // Dynamic Box 3
             sidebar.SuspendLayout();
             panelMain.SuspendLayout();
             panelContent.SuspendLayout();
@@ -73,71 +81,39 @@ namespace Horizon_Drive_LTD
             sidebar.Size = new Size(250, 662);
             sidebar.TabIndex = 1;
             // 
-            // btnBrowseListings
+            // Title Label
             // 
-            btnBrowseListings.BackColor = Color.FromArgb(30, 85, 110);
-            btnBrowseListings.FlatStyle = FlatStyle.Flat;
-            btnBrowseListings.Font = new Font("Segoe UI", 12F);
-            btnBrowseListings.ForeColor = Color.White;
-            btnBrowseListings.Location = new Point(25, 191);
-            btnBrowseListings.Name = "btnBrowseListings";
-            btnBrowseListings.Size = new Size(200, 50);
-            btnBrowseListings.TabIndex = 0;
-            btnBrowseListings.Text = "Browse Listings";
-            btnBrowseListings.UseVisualStyleBackColor = false;
+            lblTitle.Text = "Manage Listings";
+            lblTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            lblTitle.Location = new Point(30, 20);
+            lblTitle.Size = new Size(300, 40);
+            lblTitle.ForeColor = Color.Black;
+            contentPanel.Controls.Add(lblTitle);
+
             // 
-            // btnListCar
+            // panelYourListings
             // 
-            btnListCar.BackColor = Color.FromArgb(30, 85, 110);
-            btnListCar.FlatStyle = FlatStyle.Flat;
-            btnListCar.Font = new Font("Segoe UI", 12F);
-            btnListCar.ForeColor = Color.White;
-            btnListCar.Location = new Point(25, 265);
-            btnListCar.Name = "btnListCar";
-            btnListCar.Size = new Size(200, 50);
-            btnListCar.TabIndex = 1;
-            btnListCar.Text = "List a Car";
-            btnListCar.UseVisualStyleBackColor = false;
+            panelYourListings.BackColor = Color.LightBlue;
+            panelYourListings.Location = new Point(30, 80);
+            panelYourListings.Size = new Size(300, 150);
+            contentPanel.Controls.Add(CreateDynamicBox("Your Listings", "2", panelYourListings));
+
             // 
-            // btnManageBooking
+            // panelCurrentReservations
             // 
-            btnManageBooking.BackColor = Color.FromArgb(30, 85, 110);
-            btnManageBooking.FlatStyle = FlatStyle.Flat;
-            btnManageBooking.Font = new Font("Segoe UI", 12F);
-            btnManageBooking.ForeColor = Color.White;
-            btnManageBooking.Location = new Point(25, 353);
-            btnManageBooking.Name = "btnManageBooking";
-            btnManageBooking.Size = new Size(200, 50);
-            btnManageBooking.TabIndex = 2;
-            btnManageBooking.Text = "Manage Booking";
-            btnManageBooking.UseVisualStyleBackColor = false;
+            panelCurrentReservations.BackColor = Color.LightGreen;
+            panelCurrentReservations.Location = new Point(360, 80);
+            panelCurrentReservations.Size = new Size(300, 150);
+            contentPanel.Controls.Add(CreateDynamicBox("Current Reservations", "1", panelCurrentReservations));
+
             // 
-            // btnOptions
+            // panelTotalEarnings
             // 
-            btnOptions.BackColor = Color.FromArgb(30, 85, 110);
-            btnOptions.FlatStyle = FlatStyle.Flat;
-            btnOptions.Font = new Font("Segoe UI", 12F);
-            btnOptions.ForeColor = Color.White;
-            btnOptions.Location = new Point(25, 514);
-            btnOptions.Name = "btnOptions";
-            btnOptions.Size = new Size(200, 50);
-            btnOptions.TabIndex = 3;
-            btnOptions.Text = "Options";
-            btnOptions.UseVisualStyleBackColor = false;
-            // 
-            // btnManageYourListings
-            // 
-            btnManageYourListings.BackColor = Color.FromArgb(30, 85, 110);
-            btnManageYourListings.FlatStyle = FlatStyle.Flat;
-            btnManageYourListings.Font = new Font("Segoe UI", 10F);
-            btnManageYourListings.ForeColor = Color.White;
-            btnManageYourListings.Location = new Point(25, 439);
-            btnManageYourListings.Name = "btnManageYourListings";
-            btnManageYourListings.Size = new Size(200, 50);
-            btnManageYourListings.TabIndex = 4;
-            btnManageYourListings.Text = "Manage Your Listings";
-            btnManageYourListings.UseVisualStyleBackColor = false;
-            btnManageYourListings.Click += btnManageYourListings_Click_1;
+            panelTotalEarnings.BackColor = Color.LightPink;
+            panelTotalEarnings.Location = new Point(690, 80);
+            panelTotalEarnings.Size = new Size(300, 150);
+            contentPanel.Controls.Add(CreateDynamicBox("Total Earnings", "MUR 150000", panelTotalEarnings));
+
             // 
             // panelMain
             // 
@@ -164,20 +140,38 @@ namespace Horizon_Drive_LTD
             // 
             contentPanel.BackColor = Color.White;
             contentPanel.BorderStyle = BorderStyle.FixedSingle;
-            contentPanel.Controls.Add(flowLayoutPanelListings);
             contentPanel.Location = new Point(42, 24);
             contentPanel.Name = "contentPanel";
             contentPanel.Size = new Size(1767, 748);
             contentPanel.TabIndex = 0;
             // 
-            // flowLayoutPanelListings
+            // CreateDynamicBox Method
             // 
-            flowLayoutPanelListings.AutoScroll = true;
-            flowLayoutPanelListings.Dock = DockStyle.Fill;
-            flowLayoutPanelListings.Location = new Point(0, 0);
-            flowLayoutPanelListings.Name = "flowLayoutPanelListings";
-            flowLayoutPanelListings.Size = new Size(1765, 746);
-            flowLayoutPanelListings.TabIndex = 0;
+            Panel CreateDynamicBox(string title, string value, Panel panel)
+            {
+                Label titleLabel = new Label
+                {
+                    Text = title,
+                    Font = new Font("Segoe UI", 12F, FontStyle.Regular),
+                    Location = new Point(20, 20),
+                    Size = new Size(260, 30),
+                    ForeColor = Color.Black
+                };
+
+                Label valueLabel = new Label
+                {
+                    Text = value,
+                    Font = new Font("Segoe UI", 24F, FontStyle.Bold),
+                    Location = new Point(20, 60),
+                    Size = new Size(260, 50),
+                    ForeColor = Color.Black
+                };
+
+                panel.Controls.Add(titleLabel);
+                panel.Controls.Add(valueLabel);
+                return panel;
+            }
+
             // 
             // panelHeader
             // 
