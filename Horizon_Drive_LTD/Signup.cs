@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace Horizon_Drive_LTD
+﻿namespace Horizon_Drive_LTD
 {
     //Using the splashcreen namespace to summon the Login window
     using splashscreen;
@@ -25,7 +15,7 @@ namespace Horizon_Drive_LTD
             if (isClosing) return; // Prevent duplicate message box
             isClosing = true;
 
-            DialogResult result = MessageBox.Show("Do you want to close the window?", "Confirm Exit",
+            DialogResult result = MessageBox.Show("Do you want to close the Car Hire Application?", "Confirm Exit",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.No)
@@ -39,79 +29,63 @@ namespace Horizon_Drive_LTD
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Login_button(object sender, EventArgs e)
         {
-
             Login login = new Login(); // Calls login constructor
             login.Show(); //Shows the login window
             this.Dispose();//closes the signup window
         }
 
-        private void label4_Click(object sender, EventArgs e)
-        {
 
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label10_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox1.Checked == true)
             {
-                textBox7.UseSystemPasswordChar = false;
+                Password.UseSystemPasswordChar = false;
             }
             else
             {
-                textBox7.UseSystemPasswordChar = true;
+                Password.UseSystemPasswordChar = true;
             }
         }
 
-        private void label9_Click(object sender, EventArgs e)
-        {
 
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
 
         private void Signup_Load(object sender, EventArgs e)
         {
             this.FormClosing += new FormClosingEventHandler(Closing_form);
         }
 
-        private void textBox7_TextChanged(object sender, EventArgs e)
+        private void username(object sender, EventArgs e)
+        {
+
+        }
+
+        private void email(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Phone_number(object sender, EventArgs e)
+        {
+
+        }
+
+        private void address(object sender, EventArgs e)
+        {
+
+        }
+
+        private void password(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel4_Paint(object sender, PaintEventArgs e)
         {
 
         }
     }
 }
+

@@ -40,7 +40,7 @@ namespace splashscreen
                 }
 
                 // Construct the path to the sound file directly inside Horizon_Drive_LTD
-                string soundPath = Path.Combine(currentDir.FullName, "Sound\\Engine_Start-Slash_Screen.wav");
+                string soundPath = Path.Combine(currentDir.FullName, "Sound\\fast-car-sound.wav");
 
                 // Debugging - Print the path to verify correctness
                 Console.WriteLine($"Sound Path: {soundPath}");
@@ -95,11 +95,10 @@ namespace splashscreen
         private void timer1_Tick(object sender, EventArgs e)
         {
             panel2.Width += 3;
-            if (panel2.Width >= 585)
+            if (panel2.Width >= 688)
             {
                 timer1.Stop();
-                OpensignUp();
-
+                OpensignUp();//Calls the procedure to open the sign up page
 
             }
         }

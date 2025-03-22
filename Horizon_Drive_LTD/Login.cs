@@ -28,7 +28,7 @@ namespace splashscreen
             if (isClosing) return; // Prevent duplicate message box
             isClosing = true;
 
-            DialogResult result = MessageBox.Show("Do you want to close the window?", "Confirm Exit",
+            DialogResult result = MessageBox.Show("Do you want to close the Car Hire Application?", "Confirm Exit",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.No)
@@ -66,25 +66,15 @@ namespace splashscreen
         {
             if (checkBox1.Checked == true)
             {
-                textBox2.UseSystemPasswordChar = false;
+                Password.UseSystemPasswordChar = false;
             }
             else
             {
-                textBox2.UseSystemPasswordChar = true;
+                Password.UseSystemPasswordChar = true;
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
@@ -97,6 +87,31 @@ namespace splashscreen
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void username(object sender, EventArgs e)
+        {
+
+        }
+
+        private void password(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Login_btn(object sender, EventArgs e)
+        {
+
+        }
+
+        private void signup_btn(object sender, EventArgs e)
         {
 
         }

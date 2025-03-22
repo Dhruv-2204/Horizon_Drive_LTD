@@ -43,10 +43,10 @@
             label1.AutoSize = true;
             label1.Font = new Font("Calibri", 15.7090912F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.ButtonHighlight;
-            label1.Location = new Point(260, 576);
-            label1.Margin = new Padding(5, 0, 5, 0);
+            label1.Location = new Point(233, 460);
+            label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(272, 29);
+            label1.Size = new Size(239, 26);
             label1.TabIndex = 0;
             label1.Text = "Loading Car Hire System...";
             label1.UseWaitCursor = true;
@@ -55,10 +55,10 @@
             // panel1
             // 
             panel1.Controls.Add(panel2);
-            panel1.Location = new Point(2, 619);
-            panel1.Margin = new Padding(5, 4, 5, 4);
+            panel1.Location = new Point(2, 489);
+            panel1.Margin = new Padding(4, 3, 4, 3);
             panel1.Name = "panel1";
-            panel1.Size = new Size(782, 53);
+            panel1.Size = new Size(684, 42);
             panel1.TabIndex = 2;
             panel1.UseWaitCursor = true;
             panel1.Paint += panel1_Paint;
@@ -67,19 +67,19 @@
             // 
             panel2.BackColor = Color.FromArgb(200, 247, 223);
             panel2.Location = new Point(0, 0);
-            panel2.Margin = new Padding(5, 4, 5, 4);
+            panel2.Margin = new Padding(4, 3, 4, 3);
             panel2.Name = "panel2";
-            panel2.Size = new Size(74, 61);
+            panel2.Size = new Size(18, 48);
             panel2.TabIndex = 3;
             panel2.UseWaitCursor = true;
             // 
             // pictureBox1
             // 
             pictureBox1.Image = Horizon_Drive_LTD.Properties.Resources.HORIZONDRIVE_LOGO;
-            pictureBox1.Location = new Point(141, 15);
-            pictureBox1.Margin = new Padding(5, 4, 5, 4);
+            pictureBox1.Location = new Point(123, 12);
+            pictureBox1.Margin = new Padding(4, 3, 4, 3);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(515, 574);
+            pictureBox1.Size = new Size(451, 453);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 3;
             pictureBox1.TabStop = false;
@@ -89,22 +89,22 @@
             // timer1
             // 
             timer1.Enabled = true;
-            timer1.Interval = 14;
+            timer1.Interval = 4;
             timer1.Tick += timer1_Tick;
             // 
             // SPLASH_SCREEN
             // 
             AccessibleRole = AccessibleRole.None;
-            AutoScaleDimensions = new SizeF(8F, 19F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(1, 24, 30);
             BackgroundImageLayout = ImageLayout.Zoom;
-            ClientSize = new Size(786, 670);
+            ClientSize = new Size(688, 529);
             Controls.Add(panel1);
             Controls.Add(label1);
             Controls.Add(pictureBox1);
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(5, 4, 5, 4);
+            Margin = new Padding(4, 3, 4, 3);
             Name = "SPLASH_SCREEN";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";

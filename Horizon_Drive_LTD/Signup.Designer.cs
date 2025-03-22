@@ -29,83 +29,181 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            button1 = new Button();
+            panel5 = new Panel();
+            label3 = new Label();
+            panel4 = new Panel();
+            Last_Name = new TextBox();
+            label2 = new Label();
+            panel3 = new Panel();
+            First_Name = new TextBox();
+            label4 = new Label();
+            signup_btn = new Button();
             checkBox1 = new CheckBox();
             label11 = new Label();
             label10 = new Label();
-            textBox7 = new TextBox();
-            textBox6 = new TextBox();
-            textBox5 = new TextBox();
+            Password = new TextBox();
+            Address = new TextBox();
+            Phone_Number = new TextBox();
             label9 = new Label();
-            dateTimePicker1 = new DateTimePicker();
+            DOB_date = new DateTimePicker();
             label8 = new Label();
-            textBox4 = new TextBox();
+            Email = new TextBox();
             label7 = new Label();
-            textBox3 = new TextBox();
+            Username = new TextBox();
             label6 = new Label();
-            textBox2 = new TextBox();
-            textBox1 = new TextBox();
-            label2 = new Label();
-            label4 = new Label();
-            label3 = new Label();
             panel2 = new Panel();
-            button2 = new Button();
             label5 = new Label();
+            Login_Button = new Button();
             label1 = new Label();
             pictureBox1 = new PictureBox();
             panel1.SuspendLayout();
+            panel5.SuspendLayout();
+            panel4.SuspendLayout();
+            panel3.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
-            panel1.Anchor = AnchorStyles.None;
+            panel1.AutoSize = true;
             panel1.BackColor = Color.White;
-            panel1.Controls.Add(button1);
+            panel1.Controls.Add(panel5);
+            panel1.Controls.Add(panel4);
+            panel1.Controls.Add(panel3);
+            panel1.Controls.Add(signup_btn);
             panel1.Controls.Add(checkBox1);
             panel1.Controls.Add(label11);
             panel1.Controls.Add(label10);
-            panel1.Controls.Add(textBox7);
-            panel1.Controls.Add(textBox6);
-            panel1.Controls.Add(textBox5);
+            panel1.Controls.Add(Password);
+            panel1.Controls.Add(Address);
+            panel1.Controls.Add(Phone_Number);
             panel1.Controls.Add(label9);
-            panel1.Controls.Add(dateTimePicker1);
+            panel1.Controls.Add(DOB_date);
             panel1.Controls.Add(label8);
-            panel1.Controls.Add(textBox4);
+            panel1.Controls.Add(Email);
             panel1.Controls.Add(label7);
-            panel1.Controls.Add(textBox3);
+            panel1.Controls.Add(Username);
             panel1.Controls.Add(label6);
-            panel1.Controls.Add(textBox2);
-            panel1.Controls.Add(textBox1);
-            panel1.Controls.Add(label2);
-            panel1.Controls.Add(label4);
-            panel1.Controls.Add(label3);
             panel1.Controls.Add(panel2);
+            panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(686, 483);
+            panel1.Size = new Size(684, 479);
             panel1.TabIndex = 0;
-            panel1.Paint += panel1_Paint;
             // 
-            // button1
+            // panel5
             // 
-            button1.BackColor = Color.FromArgb(1, 24, 30);
-            button1.Cursor = Cursors.Hand;
-            button1.FlatAppearance.BorderColor = Color.Navy;
-            button1.FlatAppearance.BorderSize = 9;
-            button1.FlatAppearance.MouseOverBackColor = Color.FromArgb(128, 128, 255);
-            button1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(432, 433);
-            button1.Name = "button1";
-            button1.Size = new Size(131, 37);
-            button1.TabIndex = 21;
-            button1.Text = " SIGN UP";
-            button1.UseVisualStyleBackColor = false;
+            panel5.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel5.AutoSize = true;
+            panel5.Controls.Add(label3);
+            panel5.Location = new Point(288, 0);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(398, 28);
+            panel5.TabIndex = 26;
+            // 
+            // label3
+            // 
+            label3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label3.AutoSize = true;
+            label3.Font = new Font("Microsoft YaHei UI", 15F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.ForeColor = Color.FromArgb(1, 24, 100);
+            label3.Location = new Point(144, -1);
+            label3.Name = "label3";
+            label3.Size = new Size(91, 27);
+            label3.TabIndex = 3;
+            label3.Text = "Sign Up";
+            // 
+            // panel4
+            // 
+            panel4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            panel4.AutoSize = true;
+            panel4.Controls.Add(Last_Name);
+            panel4.Controls.Add(label2);
+            panel4.Location = new Point(476, 29);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(210, 53);
+            panel4.TabIndex = 24;
+            panel4.Paint += panel4_Paint;
+            // 
+            // Last_Name
+            // 
+            Last_Name.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            Last_Name.AutoCompleteMode = AutoCompleteMode.Suggest;
+            Last_Name.BackColor = Color.Silver;
+            Last_Name.BorderStyle = BorderStyle.FixedSingle;
+            Last_Name.Font = new Font("Segoe UI Semilight", 12F);
+            Last_Name.Location = new Point(6, 21);
+            Last_Name.Name = "Last_Name";
+            Last_Name.PlaceholderText = "Enter Last Name";
+            Last_Name.Size = new Size(190, 29);
+            Last_Name.TabIndex = 7;
+            // 
+            // label2
+            // 
+            label2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label2.AutoSize = true;
+            label2.Font = new Font("Bahnschrift", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Location = new Point(15, 2);
+            label2.Name = "label2";
+            label2.Size = new Size(85, 18);
+            label2.TabIndex = 5;
+            label2.Text = "Last Name:";
+            // 
+            // panel3
+            // 
+            panel3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel3.AutoSize = true;
+            panel3.Controls.Add(First_Name);
+            panel3.Controls.Add(label4);
+            panel3.Location = new Point(288, 29);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(189, 53);
+            panel3.TabIndex = 25;
+            // 
+            // First_Name
+            // 
+            First_Name.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            First_Name.BackColor = Color.Silver;
+            First_Name.BorderStyle = BorderStyle.FixedSingle;
+            First_Name.Font = new Font("Segoe UI Semilight", 12F);
+            First_Name.Location = new Point(3, 21);
+            First_Name.Name = "First_Name";
+            First_Name.PlaceholderText = "Enter First Name";
+            First_Name.Size = new Size(179, 29);
+            First_Name.TabIndex = 22;
+            // 
+            // label4
+            // 
+            label4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            label4.AutoSize = true;
+            label4.Font = new Font("Bahnschrift", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4.Location = new Point(3, 2);
+            label4.Name = "label4";
+            label4.Size = new Size(86, 18);
+            label4.TabIndex = 4;
+            label4.Text = "First Name:";
+            // 
+            // signup_btn
+            // 
+            signup_btn.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            signup_btn.BackColor = Color.FromArgb(1, 24, 30);
+            signup_btn.Cursor = Cursors.Hand;
+            signup_btn.FlatAppearance.BorderColor = Color.Navy;
+            signup_btn.FlatAppearance.BorderSize = 9;
+            signup_btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(128, 128, 255);
+            signup_btn.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            signup_btn.ForeColor = Color.White;
+            signup_btn.Location = new Point(432, 433);
+            signup_btn.Name = "signup_btn";
+            signup_btn.Size = new Size(131, 37);
+            signup_btn.TabIndex = 21;
+            signup_btn.Text = " SIGN UP";
+            signup_btn.UseVisualStyleBackColor = false;
             // 
             // checkBox1
             // 
+            checkBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             checkBox1.AutoSize = true;
             checkBox1.BackColor = Color.Transparent;
             checkBox1.Font = new Font("Segoe UI Light", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -127,7 +225,6 @@
             label11.Size = new Size(67, 18);
             label11.TabIndex = 19;
             label11.Text = "Address:";
-            label11.Click += label11_Click;
             // 
             // label10
             // 
@@ -138,45 +235,49 @@
             label10.Size = new Size(78, 18);
             label10.TabIndex = 18;
             label10.Text = "Password:";
-            label10.Click += label10_Click;
             // 
-            // textBox7
+            // Password
             // 
-            textBox7.AutoCompleteMode = AutoCompleteMode.Suggest;
-            textBox7.BackColor = Color.Silver;
-            textBox7.BorderStyle = BorderStyle.FixedSingle;
-            textBox7.Font = new Font("Segoe UI Semilight", 12F);
-            textBox7.Location = new Point(294, 357);
-            textBox7.Name = "textBox7";
-            textBox7.PlaceholderText = "Enter Email Address";
-            textBox7.Size = new Size(378, 29);
-            textBox7.TabIndex = 17;
-            textBox7.UseSystemPasswordChar = true;
-            textBox7.TextChanged += textBox7_TextChanged;
+            Password.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            Password.AutoCompleteMode = AutoCompleteMode.Suggest;
+            Password.BackColor = Color.Silver;
+            Password.BorderStyle = BorderStyle.FixedSingle;
+            Password.Font = new Font("Segoe UI Semilight", 12F);
+            Password.Location = new Point(294, 357);
+            Password.Name = "Password";
+            Password.PlaceholderText = "Enter Password";
+            Password.Size = new Size(378, 29);
+            Password.TabIndex = 17;
+            Password.UseSystemPasswordChar = true;
+            Password.TextChanged += password;
             // 
-            // textBox6
+            // Address
             // 
-            textBox6.AutoCompleteMode = AutoCompleteMode.Suggest;
-            textBox6.BackColor = Color.Silver;
-            textBox6.BorderStyle = BorderStyle.FixedSingle;
-            textBox6.Font = new Font("Segoe UI Semilight", 12F);
-            textBox6.Location = new Point(294, 304);
-            textBox6.Name = "textBox6";
-            textBox6.PlaceholderText = "Enter Address";
-            textBox6.Size = new Size(378, 29);
-            textBox6.TabIndex = 16;
+            Address.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            Address.AutoCompleteMode = AutoCompleteMode.Suggest;
+            Address.BackColor = Color.Silver;
+            Address.BorderStyle = BorderStyle.FixedSingle;
+            Address.Font = new Font("Segoe UI Semilight", 12F);
+            Address.Location = new Point(294, 304);
+            Address.Name = "Address";
+            Address.PlaceholderText = "Enter Address";
+            Address.Size = new Size(378, 29);
+            Address.TabIndex = 16;
+            Address.TextChanged += address;
             // 
-            // textBox5
+            // Phone_Number
             // 
-            textBox5.AutoCompleteMode = AutoCompleteMode.Suggest;
-            textBox5.BackColor = Color.Silver;
-            textBox5.BorderStyle = BorderStyle.FixedSingle;
-            textBox5.Font = new Font("Segoe UI Semilight", 12F);
-            textBox5.Location = new Point(294, 251);
-            textBox5.Name = "textBox5";
-            textBox5.PlaceholderText = "Enter Phone Number";
-            textBox5.Size = new Size(378, 29);
-            textBox5.TabIndex = 15;
+            Phone_Number.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            Phone_Number.AutoCompleteMode = AutoCompleteMode.Suggest;
+            Phone_Number.BackColor = Color.Silver;
+            Phone_Number.BorderStyle = BorderStyle.FixedSingle;
+            Phone_Number.Font = new Font("Segoe UI Semilight", 12F);
+            Phone_Number.Location = new Point(294, 251);
+            Phone_Number.Name = "Phone_Number";
+            Phone_Number.PlaceholderText = "Enter Phone Number";
+            Phone_Number.Size = new Size(378, 29);
+            Phone_Number.TabIndex = 15;
+            Phone_Number.TextChanged += Phone_number;
             // 
             // label9
             // 
@@ -187,19 +288,19 @@
             label9.Size = new Size(109, 18);
             label9.TabIndex = 14;
             label9.Text = "Phone Number:";
-            label9.Click += label9_Click;
             // 
-            // dateTimePicker1
+            // DOB_date
             // 
-            dateTimePicker1.Font = new Font("Arial Black", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dateTimePicker1.Format = DateTimePickerFormat.Custom;
-            dateTimePicker1.Location = new Point(432, 199);
-            dateTimePicker1.MaxDate = new DateTime(2007, 12, 31, 0, 0, 0, 0);
-            dateTimePicker1.MinDate = new DateTime(1900, 1, 1, 0, 0, 0, 0);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(200, 26);
-            dateTimePicker1.TabIndex = 13;
-            dateTimePicker1.Value = new DateTime(2007, 12, 31, 0, 0, 0, 0);
+            DOB_date.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            DOB_date.Font = new Font("Arial Black", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            DOB_date.Format = DateTimePickerFormat.Custom;
+            DOB_date.Location = new Point(432, 199);
+            DOB_date.MaxDate = new DateTime(2007, 12, 31, 0, 0, 0, 0);
+            DOB_date.MinDate = new DateTime(1900, 1, 1, 0, 0, 0, 0);
+            DOB_date.Name = "DOB_date";
+            DOB_date.Size = new Size(200, 26);
+            DOB_date.TabIndex = 13;
+            DOB_date.Value = new DateTime(2007, 12, 31, 0, 0, 0, 0);
             // 
             // label8
             // 
@@ -210,19 +311,20 @@
             label8.Size = new Size(98, 18);
             label8.TabIndex = 12;
             label8.Text = "Date Of Birth:";
-            label8.Click += label8_Click;
             // 
-            // textBox4
+            // Email
             // 
-            textBox4.AutoCompleteMode = AutoCompleteMode.Suggest;
-            textBox4.BackColor = Color.Silver;
-            textBox4.BorderStyle = BorderStyle.FixedSingle;
-            textBox4.Font = new Font("Segoe UI Semilight", 12F);
-            textBox4.Location = new Point(294, 161);
-            textBox4.Name = "textBox4";
-            textBox4.PlaceholderText = "Enter Email";
-            textBox4.Size = new Size(378, 29);
-            textBox4.TabIndex = 11;
+            Email.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            Email.AutoCompleteMode = AutoCompleteMode.Suggest;
+            Email.BackColor = Color.Silver;
+            Email.BorderStyle = BorderStyle.FixedSingle;
+            Email.Font = new Font("Segoe UI Semilight", 12F);
+            Email.Location = new Point(294, 161);
+            Email.Name = "Email";
+            Email.PlaceholderText = "Enter Email";
+            Email.Size = new Size(378, 29);
+            Email.TabIndex = 11;
+            Email.TextChanged += email;
             // 
             // label7
             // 
@@ -234,17 +336,19 @@
             label7.TabIndex = 10;
             label7.Text = "Email:";
             // 
-            // textBox3
+            // Username
             // 
-            textBox3.AutoCompleteMode = AutoCompleteMode.Suggest;
-            textBox3.BackColor = Color.Silver;
-            textBox3.BorderStyle = BorderStyle.FixedSingle;
-            textBox3.Font = new Font("Segoe UI Semilight", 12F);
-            textBox3.Location = new Point(294, 106);
-            textBox3.Name = "textBox3";
-            textBox3.PlaceholderText = "Enter Username";
-            textBox3.Size = new Size(378, 29);
-            textBox3.TabIndex = 9;
+            Username.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            Username.AutoCompleteMode = AutoCompleteMode.Suggest;
+            Username.BackColor = Color.Silver;
+            Username.BorderStyle = BorderStyle.FixedSingle;
+            Username.Font = new Font("Segoe UI Semilight", 12F);
+            Username.Location = new Point(294, 106);
+            Username.Name = "Username";
+            Username.PlaceholderText = "Enter Username";
+            Username.Size = new Size(378, 29);
+            Username.TabIndex = 9;
+            Username.TextChanged += username;
             // 
             // label6
             // 
@@ -256,102 +360,47 @@
             label6.TabIndex = 8;
             label6.Text = "Username:";
             // 
-            // textBox2
-            // 
-            textBox2.AutoCompleteMode = AutoCompleteMode.Suggest;
-            textBox2.BackColor = Color.Silver;
-            textBox2.BorderStyle = BorderStyle.FixedSingle;
-            textBox2.Font = new Font("Segoe UI Semilight", 12F);
-            textBox2.Location = new Point(493, 52);
-            textBox2.Name = "textBox2";
-            textBox2.PlaceholderText = "Enter Last Name";
-            textBox2.Size = new Size(179, 29);
-            textBox2.TabIndex = 7;
-            textBox2.TextChanged += textBox2_TextChanged;
-            // 
-            // textBox1
-            // 
-            textBox1.AutoCompleteMode = AutoCompleteMode.Suggest;
-            textBox1.BackColor = Color.Silver;
-            textBox1.BorderStyle = BorderStyle.FixedSingle;
-            textBox1.Font = new Font("Segoe UI Semilight", 12F);
-            textBox1.Location = new Point(294, 53);
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "Enter First Name";
-            textBox1.Size = new Size(179, 29);
-            textBox1.TabIndex = 6;
-            textBox1.TextChanged += textBox1_TextChanged;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Bahnschrift", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(493, 31);
-            label2.Name = "label2";
-            label2.Size = new Size(85, 18);
-            label2.TabIndex = 5;
-            label2.Text = "Last Name:";
-            label2.Click += label2_Click;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Bahnschrift", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(294, 31);
-            label4.Name = "label4";
-            label4.Size = new Size(86, 18);
-            label4.TabIndex = 4;
-            label4.Text = "First Name:";
-            label4.Click += label4_Click;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Microsoft YaHei UI", 15F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.ForeColor = Color.FromArgb(1, 24, 100);
-            label3.Location = new Point(446, 0);
-            label3.Name = "label3";
-            label3.Size = new Size(91, 27);
-            label3.TabIndex = 3;
-            label3.Text = "Sign Up";
-            // 
             // panel2
             // 
+            panel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            panel2.AutoSize = true;
             panel2.BackColor = Color.FromArgb(1, 24, 30);
-            panel2.Controls.Add(button2);
             panel2.Controls.Add(label5);
+            panel2.Controls.Add(Login_Button);
             panel2.Controls.Add(label1);
             panel2.Controls.Add(pictureBox1);
             panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(288, 480);
+            panel2.Size = new Size(286, 476);
             panel2.TabIndex = 1;
-            // 
-            // button2
-            // 
-            button2.BackColor = Color.FromArgb(128, 255, 255);
-            button2.Cursor = Cursors.Hand;
-            button2.FlatAppearance.BorderSize = 9;
-            button2.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 192, 255);
-            button2.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.ForeColor = SystemColors.ControlText;
-            button2.Location = new Point(88, 401);
-            button2.Name = "button2";
-            button2.Size = new Size(107, 29);
-            button2.TabIndex = 3;
-            button2.Text = "LOGIN";
-            button2.UseVisualStyleBackColor = false;
-            button2.Click += button2_Click;
             // 
             // label5
             // 
+            label5.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             label5.AutoSize = true;
             label5.ForeColor = Color.FromArgb(255, 128, 0);
-            label5.Location = new Point(106, 433);
+            label5.Location = new Point(101, 388);
             label5.Name = "label5";
             label5.Size = new Size(71, 15);
             label5.TabIndex = 2;
             label5.Text = "Log In Now!";
+            // 
+            // Login_Button
+            // 
+            Login_Button.AutoSize = true;
+            Login_Button.BackColor = Color.FromArgb(128, 255, 255);
+            Login_Button.Cursor = Cursors.Hand;
+            Login_Button.FlatAppearance.BorderSize = 9;
+            Login_Button.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 192, 255);
+            Login_Button.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Login_Button.ForeColor = SystemColors.ControlText;
+            Login_Button.Location = new Point(82, 356);
+            Login_Button.Name = "Login_Button";
+            Login_Button.Size = new Size(107, 30);
+            Login_Button.TabIndex = 3;
+            Login_Button.Text = "LOGIN";
+            Login_Button.UseVisualStyleBackColor = false;
+            Login_Button.Click += Login_button;
             // 
             // label1
             // 
@@ -366,9 +415,8 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Anchor = AnchorStyles.Left;
             pictureBox1.Image = Properties.Resources.HORIZONDRIVE_LOGO;
-            pictureBox1.Location = new Point(51, 31);
+            pictureBox1.Location = new Point(51, 29);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(184, 159);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -387,38 +435,48 @@
             Load += Signup_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            panel5.ResumeLayout(false);
+            panel5.PerformLayout();
+            panel4.ResumeLayout(false);
+            panel4.PerformLayout();
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private Panel panel1;
         private Panel panel2;
-        private Button button2;
+        private Button Login_Button;
         private Label label5;
         private Label label1;
         private PictureBox pictureBox1;
         private Label label3;
         private Label label4;
         private Label label2;
-        private TextBox textBox1;
-        private TextBox textBox2;
+        private TextBox Last_Name;
         private Label label6;
-        private TextBox textBox3;
-        private TextBox textBox4;
+        private TextBox Username;
+        private TextBox Email;
         private Label label7;
         private Label label8;
-        private DateTimePicker dateTimePicker1;
+        private DateTimePicker DOB_date;
         private Label label11;
         private Label label10;
-        private TextBox textBox7;
-        private TextBox textBox6;
-        private TextBox textBox5;
+        private TextBox Password;
+        private TextBox Address;
+        private TextBox Phone_Number;
         private Label label9;
         private CheckBox checkBox1;
-        private Button button1;
+        private Button signup_btn;
+        private TextBox First_Name;
+        private Panel panel4;
+        private Panel panel3;
+        private Panel panel5;
     }
 }
