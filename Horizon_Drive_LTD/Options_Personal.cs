@@ -6,20 +6,49 @@ using System.Drawing.Drawing2D;
 
 namespace Horizon_Drive_LTD
 {
-    public partial class Options : Form
+    public partial class Options_Personal : Form
     {
         private string profileImagePath = string.Empty;
+        private FormWindowState lastWindowState;
+        private Size originalSize;
+        private bool isInitializing = true;
 
-        public Options()
+        public Options_Personal()
         {
             InitializeComponent();
             this.ClientSize = new Size(1280, 800);
             this.MinimumSize = new Size(1000, 700);
+
+            // Store original form size to help with restore
+            originalSize = this.Size;
+            lastWindowState = this.WindowState;
+
             SetupTabButtons();
-            //AdjustControlPositions();
+            SetupControlAnchoring();
+
+            // Handle resize and state change events
+            this.Resize += Options_Resize;
+            this.SizeChanged += Options_SizeChanged;
+
+            // Initialize control positions
+            PerformLayout();
+            isInitializing = false;
+            AdjustControlPositions();
         }
 
+        private void Options_SizeChanged(object sender, EventArgs e)
+        {
+            // Check if we're going from maximized to normal state
+            if (lastWindowState == FormWindowState.Maximized && this.WindowState == FormWindowState.Normal)
+            {
+                // Force a complete relayout using the original form size as reference
+                this.SuspendLayout();
+                AdjustControlPositions();
+                this.ResumeLayout(true);
+            }
 
+            lastWindowState = this.WindowState;
+        }
 
         private void SetupTabButtons()
         {
@@ -31,42 +60,131 @@ namespace Horizon_Drive_LTD
             btnPreferences.ForeColor = Color.White;
         }
 
-        //private void Options_Resize(object sender, EventArgs e)
-        //{
-        //    AdjustControlPositions();
-        //}
+        private void SetupControlAnchoring()
+        {
+            // Main container panel
+            mainScrollPanel.Dock = DockStyle.Fill;
 
-        //private void AdjustControlPositions()
-        //{
-        //    // Center the profile image panel
-        //    int mainWidth = mainScrollPanel.ClientSize.Width;
-        //    panelProfileImage.Left = (mainWidth - panelProfileImage.Width) / 2;
+            // Main content panel - anchor to top, left, right but NOT bottom
+            // This allows it to scroll when content is larger than the visible area
+            panelMain.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 
-        //    // Reposition camera button
-        //    buttonCamera.Left = panelProfileImage.Left + panelProfileImage.Width - 32;
-        //    buttonCamera.Top = panelProfileImage.Top + panelProfileImage.Height - 34;
+            // Profile section - only anchor to top (center horizontally)
+            panelProfileImage.Anchor = AnchorStyles.Top;
 
-        //    // Center the Save Changes button
-        //    btnSaveChanges.Left = (mainWidth - btnSaveChanges.Width) / 2;
+            // Form fields - stretch horizontally
+            panelNameFields.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBoxEmail.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panelPhone.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBoxPassword.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBoxAddress.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 
-        //    // Make text boxes fill available width with proper margins
-        //    int textBoxWidth = mainWidth - 120; // 60px margin on each side
+            // First name field - anchor left side only, width adjusted programmatically
+            textBoxFirstName.Anchor = AnchorStyles.Top | AnchorStyles.Left;
 
-        //    // Adjust the width of text boxes and panels
-        //    textBoxEmail.Width = textBoxWidth;
-        //    textBoxPassword.Width = textBoxWidth;
-        //    textBoxAddress.Width = textBoxWidth;
-        //    panelPhone.Width = textBoxWidth;
-        //    panelNameFields.Width = textBoxWidth;
+            // Last name field - remove right anchor, position/width adjusted programmatically
+            labelLastName.Anchor = AnchorStyles.Top;
+            textBoxLastName.Anchor = AnchorStyles.Top;
 
-        //    // Update the first and last name text box widths
-        //    int halfWidth = (textBoxWidth - 40) / 2; // 40px gap between fields
-        //    textBoxFirstName.Width = halfWidth;
-        //    textBoxLastName.Width = halfWidth;
-        //    textBoxLastName.Left = halfWidth + 40;
-        //    labelLastName.Left = textBoxLastName.Left;
-        //}
+            // Save button - anchor to bottom
+            btnSaveChanges.Anchor = AnchorStyles.Bottom;
 
+            // NO anchoring for camera button - positioned programmatically
+            buttonCamera.Anchor = AnchorStyles.None;
+
+            // Store the name fields split ratio
+            panelNameFields.Tag = 0.5; // 50% split
+        }
+
+        private void Options_Resize(object sender, EventArgs e)
+        {
+            if (!isInitializing && this.IsHandleCreated && !this.Disposing && this.Visible)
+            {
+                AdjustControlPositions();
+            }
+        }
+
+        private void AdjustControlPositions()
+        {
+            try
+            {
+                this.SuspendLayout();
+
+                AdjustProfileImagePosition();
+                CenterSaveButton();
+                AdjustNameFields();
+
+                this.ResumeLayout(true);
+            }
+            catch (Exception ex)
+            {
+                // Error handling for layout adjustments
+                Console.WriteLine($"Layout adjustment error: {ex.Message}");
+            }
+        }
+
+        private void AdjustProfileImagePosition()
+        {
+            // Center the profile image panel horizontally
+            if (panelMain.Width > 0)
+            {
+                // Use client area for positioning to avoid layout issues
+                int centerX = panelMain.ClientSize.Width / 2;
+                int profileCenterX = panelProfileImage.Width / 2;
+
+                panelProfileImage.Left = centerX - profileCenterX;
+
+                // Position the camera button relative to the profile image
+                buttonCamera.Left = panelProfileImage.Left + panelProfileImage.Width - 32;
+                buttonCamera.Top = panelProfileImage.Top + panelProfileImage.Height - 34;
+            }
+        }
+
+        private void CenterSaveButton()
+        {
+            // Center the save button horizontally
+            if (panelMain.Width > 0)
+            {
+                int centerX = panelMain.ClientSize.Width / 2;
+                int buttonCenterX = btnSaveChanges.Width / 2;
+
+                btnSaveChanges.Left = centerX - buttonCenterX;
+            }
+        }
+
+        private void AdjustNameFields()
+        {
+            if (panelNameFields.Width > 0)
+            {
+                // Get available width
+                int totalWidth = panelNameFields.Width;
+                int gap = 40;
+
+                // Split based on stored ratio or default to 50%
+                double splitRatio = panelNameFields.Tag != null ?
+                    Convert.ToDouble(panelNameFields.Tag) : 0.5;
+
+                // Calculate widths
+                int firstNameWidth = (int)((totalWidth - gap) * splitRatio);
+                int lastNameWidth = totalWidth - gap - firstNameWidth;
+
+                // Prevent negative or tiny widths
+                if (firstNameWidth < 50) firstNameWidth = 50;
+                if (lastNameWidth < 50) lastNameWidth = 50;
+
+                // Apply calculated dimensions
+                textBoxFirstName.Width = firstNameWidth;
+
+                // Position and size last name field
+                textBoxLastName.Left = firstNameWidth + gap;
+                textBoxLastName.Width = lastNameWidth;
+
+                // Ensure label is aligned with text box
+                labelLastName.Left = textBoxLastName.Left;
+            }
+        }
+
+        // Original event handlers remain unchanged
         private void pictureBoxProfile_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -101,7 +219,6 @@ namespace Horizon_Drive_LTD
             if (string.IsNullOrWhiteSpace(textBoxFirstName.Text) ||
                 string.IsNullOrWhiteSpace(textBoxLastName.Text) ||
                 string.IsNullOrWhiteSpace(textBoxEmail.Text) ||
-                string.IsNullOrWhiteSpace(textBoxEmail.Text) ||
                 string.IsNullOrWhiteSpace(textBoxPhone.Text) ||
                 string.IsNullOrWhiteSpace(textBoxPassword.Text) ||
                 string.IsNullOrWhiteSpace(textBoxAddress.Text))
@@ -128,14 +245,19 @@ namespace Horizon_Drive_LTD
 
         private void btnPreferences_Click(object sender, EventArgs e)
         {
+            // Update button colors for visual feedback
             btnPreferences.BackColor = Color.FromArgb(173, 216, 230);
             btnPreferences.ForeColor = Color.Black;
 
             btnPersonal.BackColor = Color.FromArgb(30, 85, 110);
             btnPersonal.ForeColor = Color.White;
 
-            // In a real application, you would show the preferences panel/content here
-            MessageBox.Show("Preferences panel would be shown here.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Create and show the Preferences form
+            Options_Preferences preferencesForm = new Options_Preferences();
+            preferencesForm.Show();
+
+            // Hide the current Personal form
+            this.Hide();
         }
 
         private void btnManageBooking_Click(object sender, EventArgs e)
@@ -200,46 +322,46 @@ namespace Horizon_Drive_LTD
 
         private void btnBrowseListings_Click(object sender, EventArgs e)
         {
-
+            // Browse listings functionality
         }
 
         private void panelTabs_Paint(object sender, PaintEventArgs e)
         {
-
+            // Panel tabs paint event
         }
 
         private void textBoxPhone_TextChanged(object sender, EventArgs e)
         {
-
+            // Phone text changed event
         }
 
         private void panelMain_Paint(object sender, PaintEventArgs e)
         {
-
+            // Panel main paint event
         }
 
         private void textBoxEmail_TextChanged(object sender, EventArgs e)
         {
-
+            // Email text changed event
         }
 
         private void labelPassword_Click(object sender, EventArgs e)
         {
-
+            // Password label click event
         }
 
         private void textBoxLastName_TextChanged(object sender, EventArgs e)
         {
-
+            // Last name text changed event
         }
 
         private void textBoxLastName_TextChanged_1(object sender, EventArgs e)
         {
-
+            // Duplicate last name text changed event
         }
     }
 
-    // Include the RoundedButton class in the same file
+    // RoundedButton class remains unchanged
     public class RoundedButton : Button
     {
         private int borderRadius = 26;

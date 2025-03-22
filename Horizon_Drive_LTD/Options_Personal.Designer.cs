@@ -1,6 +1,6 @@
 ﻿namespace Horizon_Drive_LTD
 {
-    partial class Options
+    partial class Options_Personal
     {
         /// <summary>
         /// Required designer variable.
@@ -84,8 +84,9 @@
             panelSidebar.Controls.Add(pictureBoxLogo);
             panelSidebar.Dock = DockStyle.Left;
             panelSidebar.Location = new Point(0, 0);
+            panelSidebar.Margin = new Padding(3, 4, 3, 4);
             panelSidebar.Name = "panelSidebar";
-            panelSidebar.Size = new Size(255, 715);
+            panelSidebar.Size = new Size(291, 953);
             panelSidebar.TabIndex = 0;
             // 
             // btnLogout
@@ -95,9 +96,10 @@
             btnLogout.FlatStyle = FlatStyle.Flat;
             btnLogout.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnLogout.ForeColor = Color.White;
-            btnLogout.Location = new Point(55, 545);
+            btnLogout.Location = new Point(63, 727);
+            btnLogout.Margin = new Padding(3, 4, 3, 4);
             btnLogout.Name = "btnLogout";
-            btnLogout.Size = new Size(150, 46);
+            btnLogout.Size = new Size(171, 61);
             btnLogout.TabIndex = 6;
             btnLogout.Text = "Log out";
             btnLogout.UseVisualStyleBackColor = false;
@@ -110,9 +112,10 @@
             btnOptions.FlatStyle = FlatStyle.Flat;
             btnOptions.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnOptions.ForeColor = Color.Black;
-            btnOptions.Location = new Point(55, 483);
+            btnOptions.Location = new Point(63, 644);
+            btnOptions.Margin = new Padding(3, 4, 3, 4);
             btnOptions.Name = "btnOptions";
-            btnOptions.Size = new Size(150, 46);
+            btnOptions.Size = new Size(171, 61);
             btnOptions.TabIndex = 4;
             btnOptions.Text = "Options";
             btnOptions.UseVisualStyleBackColor = false;
@@ -125,9 +128,10 @@
             btnManageYourListings.FlatStyle = FlatStyle.Flat;
             btnManageYourListings.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnManageYourListings.ForeColor = Color.White;
-            btnManageYourListings.Location = new Point(55, 420);
+            btnManageYourListings.Location = new Point(63, 560);
+            btnManageYourListings.Margin = new Padding(3, 4, 3, 4);
             btnManageYourListings.Name = "btnManageYourListings";
-            btnManageYourListings.Size = new Size(150, 46);
+            btnManageYourListings.Size = new Size(171, 61);
             btnManageYourListings.TabIndex = 7;
             btnManageYourListings.Text = "Manage your Listings";
             btnManageYourListings.UseVisualStyleBackColor = false;
@@ -140,9 +144,10 @@
             btnListCar.FlatStyle = FlatStyle.Flat;
             btnListCar.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnListCar.ForeColor = Color.White;
-            btnListCar.Location = new Point(55, 358);
+            btnListCar.Location = new Point(63, 477);
+            btnListCar.Margin = new Padding(3, 4, 3, 4);
             btnListCar.Name = "btnListCar";
-            btnListCar.Size = new Size(150, 46);
+            btnListCar.Size = new Size(171, 61);
             btnListCar.TabIndex = 2;
             btnListCar.Text = "List a car";
             btnListCar.UseVisualStyleBackColor = false;
@@ -155,9 +160,10 @@
             btnManageBooking.FlatStyle = FlatStyle.Flat;
             btnManageBooking.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnManageBooking.ForeColor = Color.White;
-            btnManageBooking.Location = new Point(55, 296);
+            btnManageBooking.Location = new Point(63, 395);
+            btnManageBooking.Margin = new Padding(3, 4, 3, 4);
             btnManageBooking.Name = "btnManageBooking";
-            btnManageBooking.Size = new Size(150, 46);
+            btnManageBooking.Size = new Size(171, 61);
             btnManageBooking.TabIndex = 8;
             btnManageBooking.Text = "Manage Booking";
             btnManageBooking.UseVisualStyleBackColor = false;
@@ -170,9 +176,10 @@
             btnBrowseListings.FlatStyle = FlatStyle.Flat;
             btnBrowseListings.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnBrowseListings.ForeColor = Color.White;
-            btnBrowseListings.Location = new Point(55, 234);
+            btnBrowseListings.Location = new Point(63, 312);
+            btnBrowseListings.Margin = new Padding(3, 4, 3, 4);
             btnBrowseListings.Name = "btnBrowseListings";
-            btnBrowseListings.Size = new Size(150, 46);
+            btnBrowseListings.Size = new Size(171, 61);
             btnBrowseListings.TabIndex = 1;
             btnBrowseListings.Text = "Browse listings";
             btnBrowseListings.UseVisualStyleBackColor = false;
@@ -181,9 +188,10 @@
             // pictureBoxLogo
             // 
             pictureBoxLogo.Image = Properties.Resources.Logo;
-            pictureBoxLogo.Location = new Point(47, 44);
+            pictureBoxLogo.Location = new Point(54, 59);
+            pictureBoxLogo.Margin = new Padding(3, 4, 3, 4);
             pictureBoxLogo.Name = "pictureBoxLogo";
-            pictureBoxLogo.Size = new Size(164, 172);
+            pictureBoxLogo.Size = new Size(187, 229);
             pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxLogo.TabIndex = 0;
             pictureBoxLogo.TabStop = false;
@@ -194,9 +202,10 @@
             mainScrollPanel.AutoScroll = true;
             mainScrollPanel.Controls.Add(panelMain);
             mainScrollPanel.Dock = DockStyle.Fill;
-            mainScrollPanel.Location = new Point(255, 0);
+            mainScrollPanel.Location = new Point(291, 0);
+            mainScrollPanel.Margin = new Padding(3, 4, 3, 4);
             mainScrollPanel.Name = "mainScrollPanel";
-            mainScrollPanel.Size = new Size(778, 715);
+            mainScrollPanel.Size = new Size(890, 953);
             mainScrollPanel.TabIndex = 2;
             // 
             // panelMain
@@ -219,9 +228,10 @@
             panelMain.Controls.Add(labelAccountSettings);
             panelMain.Controls.Add(panelProfileImage);
             panelMain.Location = new Point(0, 0);
+            panelMain.Margin = new Padding(3, 4, 3, 4);
             panelMain.Name = "panelMain";
-            panelMain.Padding = new Padding(35, 38, 35, 38);
-            panelMain.Size = new Size(757, 715);
+            panelMain.Padding = new Padding(40, 51, 40, 51);
+            panelMain.Size = new Size(890, 953);
             panelMain.TabIndex = 1;
             panelMain.Paint += panelMain_Paint;
             // 
@@ -231,9 +241,10 @@
             buttonCamera.FlatAppearance.BorderColor = Color.Silver;
             buttonCamera.FlatStyle = FlatStyle.Flat;
             buttonCamera.Font = new Font("Segoe UI Symbol", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            buttonCamera.Location = new Point(414, 253);
+            buttonCamera.Location = new Point(473, 337);
+            buttonCamera.Margin = new Padding(3, 4, 3, 4);
             buttonCamera.Name = "buttonCamera";
-            buttonCamera.Size = new Size(32, 34);
+            buttonCamera.Size = new Size(37, 45);
             buttonCamera.TabIndex = 1;
             buttonCamera.Text = "📷";
             buttonCamera.UseVisualStyleBackColor = false;
@@ -247,9 +258,10 @@
             btnSaveChanges.FlatStyle = FlatStyle.Flat;
             btnSaveChanges.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSaveChanges.ForeColor = Color.White;
-            btnSaveChanges.Location = new Point(304, 646);
+            btnSaveChanges.Location = new Point(360, 861);
+            btnSaveChanges.Margin = new Padding(3, 4, 3, 4);
             btnSaveChanges.Name = "btnSaveChanges";
-            btnSaveChanges.Size = new Size(150, 46);
+            btnSaveChanges.Size = new Size(171, 61);
             btnSaveChanges.TabIndex = 9;
             btnSaveChanges.Text = "Save Changes";
             btnSaveChanges.UseVisualStyleBackColor = false;
@@ -260,20 +272,21 @@
             textBoxAddress.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             textBoxAddress.BorderStyle = BorderStyle.FixedSingle;
             textBoxAddress.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBoxAddress.Location = new Point(58, 597);
-            textBoxAddress.MinimumSize = new Size(660, 33);
+            textBoxAddress.Location = new Point(66, 796);
+            textBoxAddress.Margin = new Padding(3, 4, 3, 4);
+            textBoxAddress.MinimumSize = new Size(754, 43);
             textBoxAddress.Multiline = true;
             textBoxAddress.Name = "textBoxAddress";
-            textBoxAddress.Size = new Size(660, 33);
+            textBoxAddress.Size = new Size(779, 43);
             textBoxAddress.TabIndex = 17;
             // 
             // labelAddress
             // 
             labelAddress.AutoSize = true;
             labelAddress.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelAddress.Location = new Point(58, 574);
+            labelAddress.Location = new Point(66, 765);
             labelAddress.Name = "labelAddress";
-            labelAddress.Size = new Size(65, 20);
+            labelAddress.Size = new Size(83, 25);
             labelAddress.TabIndex = 16;
             labelAddress.Text = "Address:";
             // 
@@ -282,20 +295,21 @@
             textBoxPassword.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             textBoxPassword.BorderStyle = BorderStyle.FixedSingle;
             textBoxPassword.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBoxPassword.Location = new Point(58, 531);
-            textBoxPassword.MinimumSize = new Size(660, 33);
+            textBoxPassword.Location = new Point(66, 708);
+            textBoxPassword.Margin = new Padding(3, 4, 3, 4);
+            textBoxPassword.MinimumSize = new Size(754, 33);
             textBoxPassword.Name = "textBoxPassword";
             textBoxPassword.PasswordChar = '•';
-            textBoxPassword.Size = new Size(660, 33);
+            textBoxPassword.Size = new Size(779, 33);
             textBoxPassword.TabIndex = 17;
             // 
             // labelPassword
             // 
             labelPassword.AutoSize = true;
             labelPassword.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelPassword.Location = new Point(58, 509);
+            labelPassword.Location = new Point(66, 679);
             labelPassword.Name = "labelPassword";
-            labelPassword.Size = new Size(127, 20);
+            labelPassword.Size = new Size(165, 25);
             labelPassword.TabIndex = 14;
             labelPassword.Text = "Change Password:";
             labelPassword.Click += labelPassword_Click;
@@ -305,9 +319,10 @@
             panelPhone.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelPhone.Controls.Add(buttonCountryCode);
             panelPhone.Controls.Add(textBoxPhone);
-            panelPhone.Location = new Point(61, 465);
+            panelPhone.Location = new Point(70, 620);
+            panelPhone.Margin = new Padding(3, 4, 3, 4);
             panelPhone.Name = "panelPhone";
-            panelPhone.Size = new Size(656, 33);
+            panelPhone.Size = new Size(775, 44);
             panelPhone.TabIndex = 13;
             // 
             // buttonCountryCode
@@ -318,8 +333,9 @@
             buttonCountryCode.FlatStyle = FlatStyle.Flat;
             buttonCountryCode.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             buttonCountryCode.Location = new Point(0, 0);
+            buttonCountryCode.Margin = new Padding(3, 4, 3, 4);
             buttonCountryCode.Name = "buttonCountryCode";
-            buttonCountryCode.Size = new Size(62, 33);
+            buttonCountryCode.Size = new Size(71, 44);
             buttonCountryCode.TabIndex = 1;
             buttonCountryCode.Text = "Country";
             buttonCountryCode.UseVisualStyleBackColor = false;
@@ -331,9 +347,10 @@
             textBoxPhone.Dock = DockStyle.Fill;
             textBoxPhone.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBoxPhone.Location = new Point(0, 0);
+            textBoxPhone.Margin = new Padding(3, 4, 3, 4);
             textBoxPhone.Multiline = true;
             textBoxPhone.Name = "textBoxPhone";
-            textBoxPhone.Size = new Size(656, 33);
+            textBoxPhone.Size = new Size(775, 44);
             textBoxPhone.TabIndex = 0;
             textBoxPhone.TextChanged += textBoxPhone_TextChanged;
             // 
@@ -341,9 +358,9 @@
             // 
             labelPhone.AutoSize = true;
             labelPhone.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelPhone.Location = new Point(61, 442);
+            labelPhone.Location = new Point(70, 589);
             labelPhone.Name = "labelPhone";
-            labelPhone.Size = new Size(111, 20);
+            labelPhone.Size = new Size(144, 25);
             labelPhone.TabIndex = 12;
             labelPhone.Text = "Phone Number:";
             // 
@@ -352,10 +369,11 @@
             textBoxEmail.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             textBoxEmail.BorderStyle = BorderStyle.FixedSingle;
             textBoxEmail.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBoxEmail.Location = new Point(61, 393);
-            textBoxEmail.MinimumSize = new Size(657, 33);
+            textBoxEmail.Location = new Point(70, 524);
+            textBoxEmail.Margin = new Padding(3, 4, 3, 4);
+            textBoxEmail.MinimumSize = new Size(751, 33);
             textBoxEmail.Name = "textBoxEmail";
-            textBoxEmail.Size = new Size(657, 33);
+            textBoxEmail.Size = new Size(776, 33);
             textBoxEmail.TabIndex = 11;
             textBoxEmail.TextChanged += textBoxEmail_TextChanged;
             // 
@@ -363,9 +381,9 @@
             // 
             labelEmail.AutoSize = true;
             labelEmail.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelEmail.Location = new Point(58, 372);
+            labelEmail.Location = new Point(66, 496);
             labelEmail.Name = "labelEmail";
-            labelEmail.Size = new Size(49, 20);
+            labelEmail.Size = new Size(62, 25);
             labelEmail.TabIndex = 10;
             labelEmail.Text = "Email:";
             // 
@@ -376,20 +394,22 @@
             panelNameFields.Controls.Add(labelLastName);
             panelNameFields.Controls.Add(textBoxFirstName);
             panelNameFields.Controls.Add(labelFirstName);
-            panelNameFields.Location = new Point(61, 296);
+            panelNameFields.Location = new Point(70, 395);
+            panelNameFields.Margin = new Padding(3, 4, 3, 4);
             panelNameFields.Name = "panelNameFields";
-            panelNameFields.Size = new Size(656, 66);
+            panelNameFields.Size = new Size(775, 88);
             panelNameFields.TabIndex = 4;
             // 
             // textBoxLastName
             // 
             textBoxLastName.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             textBoxLastName.BorderStyle = BorderStyle.FixedSingle;
-            textBoxLastName.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBoxLastName.Location = new Point(350, 28);
-            textBoxLastName.MinimumSize = new Size(0, 33);
+            textBoxLastName.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBoxLastName.Location = new Point(425, 37);
+            textBoxLastName.Margin = new Padding(3, 4, 3, 4);
+            textBoxLastName.MinimumSize = new Size(2, 33);
             textBoxLastName.Name = "textBoxLastName";
-            textBoxLastName.Size = new Size(303, 33);
+            textBoxLastName.Size = new Size(346, 33);
             textBoxLastName.TabIndex = 3;
             textBoxLastName.TextChanged += textBoxLastName_TextChanged_1;
             // 
@@ -398,9 +418,9 @@
             labelLastName.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             labelLastName.AutoSize = true;
             labelLastName.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelLastName.Location = new Point(350, 7);
+            labelLastName.Location = new Point(425, 9);
             labelLastName.Name = "labelLastName";
-            labelLastName.Size = new Size(82, 20);
+            labelLastName.Size = new Size(104, 25);
             labelLastName.TabIndex = 2;
             labelLastName.Text = "Last Name:";
             // 
@@ -408,19 +428,20 @@
             // 
             textBoxFirstName.BorderStyle = BorderStyle.FixedSingle;
             textBoxFirstName.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBoxFirstName.Location = new Point(0, 28);
-            textBoxFirstName.MinimumSize = new Size(0, 33);
+            textBoxFirstName.Location = new Point(0, 37);
+            textBoxFirstName.Margin = new Padding(3, 4, 3, 4);
+            textBoxFirstName.MinimumSize = new Size(2, 33);
             textBoxFirstName.Name = "textBoxFirstName";
-            textBoxFirstName.Size = new Size(307, 33);
+            textBoxFirstName.Size = new Size(351, 33);
             textBoxFirstName.TabIndex = 1;
             // 
             // labelFirstName
             // 
             labelFirstName.AutoSize = true;
             labelFirstName.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelFirstName.Location = new Point(-3, 7);
+            labelFirstName.Location = new Point(-3, 9);
             labelFirstName.Name = "labelFirstName";
-            labelFirstName.Size = new Size(83, 20);
+            labelFirstName.Size = new Size(106, 25);
             labelFirstName.TabIndex = 0;
             labelFirstName.Text = "First Name:";
             // 
@@ -428,9 +449,10 @@
             // 
             panelTabs.Controls.Add(btnPreferences);
             panelTabs.Controls.Add(btnPersonal);
-            panelTabs.Location = new Point(58, 87);
+            panelTabs.Location = new Point(66, 116);
+            panelTabs.Margin = new Padding(3, 4, 3, 4);
             panelTabs.Name = "panelTabs";
-            panelTabs.Size = new Size(282, 56);
+            panelTabs.Size = new Size(322, 75);
             panelTabs.TabIndex = 2;
             panelTabs.Paint += panelTabs_Paint;
             // 
@@ -441,9 +463,10 @@
             btnPreferences.FlatStyle = FlatStyle.Flat;
             btnPreferences.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnPreferences.ForeColor = Color.White;
-            btnPreferences.Location = new Point(134, 3);
+            btnPreferences.Location = new Point(153, 4);
+            btnPreferences.Margin = new Padding(3, 4, 3, 4);
             btnPreferences.Name = "btnPreferences";
-            btnPreferences.Size = new Size(122, 42);
+            btnPreferences.Size = new Size(139, 56);
             btnPreferences.TabIndex = 1;
             btnPreferences.Text = "Preferences";
             btnPreferences.UseVisualStyleBackColor = false;
@@ -456,9 +479,10 @@
             btnPersonal.FlatStyle = FlatStyle.Flat;
             btnPersonal.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnPersonal.ForeColor = Color.Black;
-            btnPersonal.Location = new Point(3, 3);
+            btnPersonal.Location = new Point(3, 4);
+            btnPersonal.Margin = new Padding(3, 4, 3, 4);
             btnPersonal.Name = "btnPersonal";
-            btnPersonal.Size = new Size(122, 42);
+            btnPersonal.Size = new Size(139, 56);
             btnPersonal.TabIndex = 0;
             btnPersonal.Text = "Personal";
             btnPersonal.UseVisualStyleBackColor = false;
@@ -469,9 +493,9 @@
             labelAccountSettings.AutoSize = true;
             labelAccountSettings.Font = new Font("Bahnschrift SemiCondensed", 22F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelAccountSettings.ForeColor = Color.FromArgb(33, 79, 95);
-            labelAccountSettings.Location = new Point(51, 44);
+            labelAccountSettings.Location = new Point(58, 59);
             labelAccountSettings.Name = "labelAccountSettings";
-            labelAccountSettings.Size = new Size(213, 36);
+            labelAccountSettings.Size = new Size(262, 45);
             labelAccountSettings.TabIndex = 1;
             labelAccountSettings.Text = "Account Settings";
             // 
@@ -479,17 +503,19 @@
             // 
             panelProfileImage.Anchor = AnchorStyles.Top;
             panelProfileImage.Controls.Add(pictureBoxProfile);
-            panelProfileImage.Location = new Point(310, 143);
+            panelProfileImage.Location = new Point(367, 191);
+            panelProfileImage.Margin = new Padding(3, 4, 3, 4);
             panelProfileImage.Name = "panelProfileImage";
-            panelProfileImage.Size = new Size(156, 147);
+            panelProfileImage.Size = new Size(178, 196);
             panelProfileImage.TabIndex = 3;
             // 
             // pictureBoxProfile
             // 
             pictureBoxProfile.BackColor = Color.Gainsboro;
-            pictureBoxProfile.Location = new Point(13, 6);
+            pictureBoxProfile.Location = new Point(15, 8);
+            pictureBoxProfile.Margin = new Padding(3, 4, 3, 4);
             pictureBoxProfile.Name = "pictureBoxProfile";
-            pictureBoxProfile.Size = new Size(131, 141);
+            pictureBoxProfile.Size = new Size(150, 188);
             pictureBoxProfile.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxProfile.TabIndex = 0;
             pictureBoxProfile.TabStop = false;
@@ -497,12 +523,13 @@
             // 
             // Options
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1033, 715);
+            ClientSize = new Size(1181, 953);
             Controls.Add(mainScrollPanel);
             Controls.Add(panelSidebar);
-            MinimumSize = new Size(877, 659);
+            Margin = new Padding(3, 4, 3, 4);
+            MinimumSize = new Size(1000, 863);
             Name = "Options";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Horizon Drive - Account Settings";
@@ -557,6 +584,8 @@
         private Panel panelProfileImage;
         private PictureBox pictureBoxProfile;
         private Panel mainScrollPanel;
+
+
 
     }
 }

@@ -17,7 +17,7 @@ namespace Horizon_Drive_LTD
             Application.SetCompatibleTextRenderingDefault(false);
 
             
-             Application.Run(new Options());
+             Application.Run(new Options_Personal());
 
             
         }
