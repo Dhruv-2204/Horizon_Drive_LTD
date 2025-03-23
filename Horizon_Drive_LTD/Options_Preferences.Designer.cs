@@ -332,7 +332,7 @@
             btnPreferences.FlatStyle = FlatStyle.Flat;
             btnPreferences.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnPreferences.ForeColor = Color.Black;
-            btnPreferences.Location = new Point(153, 4);
+            btnPreferences.Location = new Point(159, 4);
             btnPreferences.Margin = new Padding(3, 4, 3, 4);
             btnPreferences.Name = "btnPreferences";
             btnPreferences.Size = new Size(139, 56);
