@@ -1,103 +1,135 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace Horizon_Drive_LTD
 {
     public partial class Manage_Listings : Form
     {
-        private List<CarListing> carListings;
+        private List<CarListing> carListings; // List of cars to display
 
         public Manage_Listings()
         {
             InitializeComponent();
-            this.Size = new Size(1920, 1080);
 
-            // Dynamic boxes for displaying information
-            CreateDynamicBox("Your Listings", "2", new Point(30, 80), Color.LightBlue);
-            CreateDynamicBox("Current Reservations", "1", new Point(360, 80), Color.LightBlue);
-            CreateDynamicBox("Total Earnings", "MUR 150000", new Point(690, 80), Color.LightBlue);
+            // Sample car data
+            carListings = new List<CarListing>
+            {
+                new CarListing { Id = 1, Make = "Ford", Model = "Raptor (2023)", PricePerDay = 15000, Status = "Active" },
+                new CarListing { Id = 2, Make = "BMW", Model = "XM (2025)", PricePerDay = 20000, Status = "Reserved" }
+            };
 
-            // Sidebar buttons
-            var btnBrowseListings = CreateRoundedButton("Browse Listings", 80, Color.Green, Color.White);
-            btnBrowseListings.Click += BtnBrowseListings_Click;
-            this.Controls.Add(btnBrowseListings);
-
-            var btnManageBooking = CreateRoundedButton("Manage Booking", 200, Color.Purple, Color.White);
-            btnManageBooking.Click += BtnManageBooking_Click;
-            this.Controls.Add(btnManageBooking);
-
-            var btnListCar = CreateRoundedButton("List a Car", 140, Color.Orange, Color.White);
-            btnListCar.Click += BtnListCar_Click;
-            this.Controls.Add(btnListCar);
-
-            var btnManageYourListings = CreateRoundedButton("Manage Your Listings", 320, Color.Red, Color.White);
-            btnManageYourListings.Click += BtnManageYourListings_Click;
-            this.Controls.Add(btnManageYourListings);
-
-            var btnOptions = CreateRoundedButton("Options", 260, Color.Gray, Color.White);
-            btnOptions.Click += BtnOptions_Click;
-            this.Controls.Add(btnOptions);
+            // Create the dynamic car list under the summary boxes
+            CreateDynamicCarList();
         }
 
-        private RoundedButton CreateRoundedButton(string text, int yPosition, Color backColor, Color textColor)
+        private void CreateDynamicCarList()
         {
-            return new RoundedButton
+            // Set up the FlowLayoutPanel for vertical stacking
+            flowLayoutPanelListings.FlowDirection = FlowDirection.TopDown; // Ensure vertical stacking
+            flowLayoutPanelListings.WrapContents = false; // Prevent horizontal wrapping
+            flowLayoutPanelListings.AutoScroll = true; // Allow scrolling
+
+            foreach (var car in carListings)
             {
-                Size = new Size(200, 50),
-                Location = new Point(25, yPosition),
-                Text = text,
-                BackColor = backColor,
-                ForeColor = textColor,
-                FlatStyle = FlatStyle.Flat,
-                Font = new Font("Segoe UI", 12, FontStyle.Regular),
-                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
-            };
+                // Create a panel for each car
+                Panel carPanel = new Panel
+                {
+                    Size = new Size(400, 100),
+                    Margin = new Padding(10),
+                    BackColor = Color.LightGray,
+                    BorderStyle = BorderStyle.FixedSingle
+                };
+
+                // Create the status square box
+                Panel statusBox = new Panel
+                {
+                    Size = new Size(70, 20),
+                    Location = new Point(320, 5), // Top-right corner
+                    BackColor = car.Status == "Active" ? Color.LightGreen : Color.LightBlue // Pastel colors
+                };
+
+                // Add status text inside the box
+                Label statusLabel = new Label
+                {
+                    Text = car.Status == "Active" ? "Active" : "Reserved",
+                    Font = new Font("Segoe UI", 7F, FontStyle.Regular),
+                    ForeColor = Color.Black,
+                    Location = new Point(2, 2), // Center the text inside the box
+                    AutoSize = true,
+                    TextAlign = ContentAlignment.MiddleCenter
+                };
+
+                statusBox.Controls.Add(statusLabel);
+
+                // Add car title label
+                Label carTitleLabel = new Label
+                {
+                    Text = $"{car.Make} {car.Model}",
+                    Font = new Font("Segoe UI", 12F, FontStyle.Bold),
+                    Location = new Point(10, 10),
+                    Size = new Size(360, 30)
+                };
+
+                // Add car price per day
+                Label carPriceLabel = new Label
+                {
+                    Text = $"MUR {car.PricePerDay}/day",
+                    Font = new Font("Segoe UI", 10F, FontStyle.Regular),
+                    Location = new Point(10, 40),
+                    Size = new Size(180, 30)
+                };
+
+                // Add "Delete" button if status is "Active"
+                if (car.Status == "Active")
+                {
+                    Button deleteButton = new Button
+                    {
+                        Text = "Delete",
+                        Font = new Font("Segoe UI", 8F, FontStyle.Bold),
+                        BackColor = Color.Red,
+                        ForeColor = Color.White,
+                        Location = new Point(300, 60), // Bottom-right corner
+                        Size = new Size(80, 30),
+                        FlatStyle = FlatStyle.Flat
+                    };
+
+                    deleteButton.Click += (sender, e) => DeleteCar(car, carPanel);
+
+                    carPanel.Controls.Add(deleteButton);
+                }
+
+                // Add components to the car panel
+                carPanel.Controls.Add(statusBox);
+                carPanel.Controls.Add(carTitleLabel);
+                carPanel.Controls.Add(carPriceLabel);
+
+                // Add car panel to the FlowLayoutPanel
+                flowLayoutPanelListings.Controls.Add(carPanel);
+            }
         }
 
-        private void CreateDynamicBox(string title, string value, Point location, Color backColor)
+        // Method to handle car deletion
+        private void DeleteCar(CarListing car, Panel carPanel)
         {
-            Panel panel = new Panel
-            {
-                Location = location,
-                Size = new Size(300, 150),
-                BackColor = backColor,
-                BorderStyle = BorderStyle.FixedSingle,
-                Anchor = AnchorStyles.Top | AnchorStyles.Left
-            };
+            // Confirm deletion
+            var confirmResult = MessageBox.Show(
+                $"Are you sure you want to delete {car.Make} {car.Model}?",
+                "Confirm Deletion",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
 
-            Label titleLabel = new Label
+            if (confirmResult == DialogResult.Yes)
             {
-                Text = title,
-                Font = new Font("Segoe UI", 12F, FontStyle.Regular),
-                Location = new Point(20, 20),
-                Size = new Size(260, 30),
-                ForeColor = Color.Black
-            };
+                // Remove the car from the list and panel
+                carListings.Remove(car);
+                flowLayoutPanelListings.Controls.Remove(carPanel);
 
-            Label valueLabel = new Label
-            {
-                Text = value,
-                Font = new Font("Segoe UI", 24F, FontStyle.Bold),
-                Location = new Point(20, 60),
-                Size = new Size(260, 50),
-                ForeColor = Color.Black
-            };
-
-            panel.Controls.Add(titleLabel);
-            panel.Controls.Add(valueLabel);
-            this.Controls.Add(panel);
+                MessageBox.Show($"{car.Make} {car.Model} has been deleted.", "Car Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
-
-        private void BtnBrowseListings_Click(object sender, EventArgs e) => PopulateCarListings();
-        private void BtnManageBooking_Click(object sender, EventArgs e) => MessageBox.Show("Open booking management form.", "Manage Bookings", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        private void BtnListCar_Click(object sender, EventArgs e) => MessageBox.Show("Open form to add a new listing.", "List a Car", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        private void BtnManageYourListings_Click(object sender, EventArgs e) => MessageBox.Show("Open your listings management form.", "Manage Your Listings", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        private void BtnOptions_Click(object sender, EventArgs e) => MessageBox.Show("Open settings.", "Options", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        private void PopulateCarListings() { }
 
         public class CarListing
         {
@@ -105,32 +137,7 @@ namespace Horizon_Drive_LTD
             public string Make { get; set; }
             public string Model { get; set; }
             public decimal PricePerDay { get; set; }
-        }
-
-        public class RoundedButton : Button
-        {
-            private int borderRadius = 26;
-
-            public RoundedButton()
-            {
-                this.FlatStyle = FlatStyle.Flat;
-                this.FlatAppearance.BorderSize = 0;
-            }
-
-            protected override void OnPaint(PaintEventArgs e)
-            {
-                e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                GraphicsPath path = new GraphicsPath();
-                Rectangle rect = new Rectangle(0, 0, this.Width, this.Height);
-                int diameter = borderRadius * 2;
-                path.AddArc(rect.X, rect.Y, diameter, diameter, 180, 90);
-                path.AddArc(rect.Width - diameter, rect.Y, diameter, diameter, 270, 90);
-                path.AddArc(rect.Width - diameter, rect.Height - diameter, diameter, diameter, 0, 90);
-                path.AddArc(rect.X, rect.Height - diameter, diameter, diameter, 90, 90);
-                path.CloseAllFigures();
-                this.Region = new Region(path);
-                base.OnPaint(e);
-            }
+            public string Status { get; set; }
         }
     }
 }

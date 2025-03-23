@@ -8,24 +8,13 @@ namespace Horizon_Drive_LTD
     {
         private System.ComponentModel.IContainer components = null;
 
-        // Sidebar components
-        private Panel sidebar;
-        private RoundedButton btnOptions;
-        private RoundedButton btnManageBooking;
-        private RoundedButton btnListCar;
-        private RoundedButton btnBrowseListings;
-        private RoundedButton btnManageYourListings;
-
-        // Main panel components
-        private Panel panelMain;
-        private Panel panelContent;
-        private Panel contentPanel;
-        private FlowLayoutPanel flowLayoutPanelListings;
+        // UI Components
         private Panel panelHeader;
-        private Label lblTitle; // Title label
+        private Label lblTitle;
         private Panel panelYourListings;
         private Panel panelCurrentReservations;
         private Panel panelTotalEarnings;
+        private FlowLayoutPanel flowLayoutPanelListings;
 
         protected override void Dispose(bool disposing)
         {
@@ -38,200 +27,99 @@ namespace Horizon_Drive_LTD
 
         private void InitializeComponent()
         {
-            sidebar = new Panel();
-            btnBrowseListings = new RoundedButton();
-            btnListCar = new RoundedButton();
-            btnManageBooking = new RoundedButton();
-            btnOptions = new RoundedButton();
-            btnManageYourListings = new RoundedButton();
-            panelMain = new Panel();
-            panelContent = new Panel();
-            contentPanel = new Panel();
-            flowLayoutPanelListings = new FlowLayoutPanel();
-            panelHeader = new Panel();
-            pictureBox1 = new PictureBox();
-            pictureBox2 = new PictureBox();
-            pictureBox3 = new PictureBox();
-            lblTitle = new Label(); // Title Label
-            panelYourListings = new Panel(); // Dynamic Box 1
-            panelCurrentReservations = new Panel(); // Dynamic Box 2
-            panelTotalEarnings = new Panel(); // Dynamic Box 3
-            sidebar.SuspendLayout();
-            panelMain.SuspendLayout();
-            panelContent.SuspendLayout();
-            contentPanel.SuspendLayout();
-            panelHeader.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
-            SuspendLayout();
-            // 
-            // sidebar
-            // 
-            sidebar.BackColor = Color.FromArgb(15, 30, 45);
-            sidebar.Controls.Add(pictureBox1);
-            sidebar.Controls.Add(btnBrowseListings);
-            sidebar.Controls.Add(btnListCar);
-            sidebar.Controls.Add(btnManageBooking);
-            sidebar.Controls.Add(btnOptions);
-            sidebar.Controls.Add(btnManageYourListings);
-            sidebar.Dock = DockStyle.Left;
-            sidebar.Location = new Point(0, 0);
-            sidebar.Name = "sidebar";
-            sidebar.Size = new Size(250, 662);
-            sidebar.TabIndex = 1;
-            // 
-            // Title Label
-            // 
-            lblTitle.Text = "Manage Listings";
-            lblTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
-            lblTitle.Location = new Point(30, 20);
-            lblTitle.Size = new Size(300, 40);
-            lblTitle.ForeColor = Color.Black;
-            contentPanel.Controls.Add(lblTitle);
+            this.panelHeader = new Panel();
+            this.lblTitle = new Label();
+            this.panelYourListings = new Panel();
+            this.panelCurrentReservations = new Panel();
+            this.panelTotalEarnings = new Panel();
+            this.flowLayoutPanelListings = new FlowLayoutPanel();
 
-            // 
-            // panelYourListings
-            // 
-            panelYourListings.BackColor = Color.LightBlue;
-            panelYourListings.Location = new Point(30, 80);
-            panelYourListings.Size = new Size(300, 150);
-            contentPanel.Controls.Add(CreateDynamicBox("Your Listings", "2", panelYourListings));
-
-            // 
-            // panelCurrentReservations
-            // 
-            panelCurrentReservations.BackColor = Color.LightGreen;
-            panelCurrentReservations.Location = new Point(360, 80);
-            panelCurrentReservations.Size = new Size(300, 150);
-            contentPanel.Controls.Add(CreateDynamicBox("Current Reservations", "1", panelCurrentReservations));
-
-            // 
-            // panelTotalEarnings
-            // 
-            panelTotalEarnings.BackColor = Color.LightPink;
-            panelTotalEarnings.Location = new Point(690, 80);
-            panelTotalEarnings.Size = new Size(300, 150);
-            contentPanel.Controls.Add(CreateDynamicBox("Total Earnings", "MUR 150000", panelTotalEarnings));
-
-            // 
-            // panelMain
-            // 
-            panelMain.BackColor = Color.White;
-            panelMain.Controls.Add(panelContent);
-            panelMain.Controls.Add(panelHeader);
-            panelMain.Dock = DockStyle.Fill;
-            panelMain.Location = new Point(250, 0);
-            panelMain.Name = "panelMain";
-            panelMain.Size = new Size(1197, 662);
-            panelMain.TabIndex = 0;
-            // 
-            // panelContent
-            // 
-            panelContent.BackColor = Color.WhiteSmoke;
-            panelContent.Controls.Add(contentPanel);
-            panelContent.Dock = DockStyle.Fill;
-            panelContent.Location = new Point(0, 100);
-            panelContent.Name = "panelContent";
-            panelContent.Size = new Size(1197, 562);
-            panelContent.TabIndex = 0;
-            // 
-            // contentPanel
-            // 
-            contentPanel.BackColor = Color.White;
-            contentPanel.BorderStyle = BorderStyle.FixedSingle;
-            contentPanel.Location = new Point(42, 24);
-            contentPanel.Name = "contentPanel";
-            contentPanel.Size = new Size(1767, 748);
-            contentPanel.TabIndex = 0;
-            // 
-            // CreateDynamicBox Method
-            // 
-            Panel CreateDynamicBox(string title, string value, Panel panel)
-            {
-                Label titleLabel = new Label
-                {
-                    Text = title,
-                    Font = new Font("Segoe UI", 12F, FontStyle.Regular),
-                    Location = new Point(20, 20),
-                    Size = new Size(260, 30),
-                    ForeColor = Color.Black
-                };
-
-                Label valueLabel = new Label
-                {
-                    Text = value,
-                    Font = new Font("Segoe UI", 24F, FontStyle.Bold),
-                    Location = new Point(20, 60),
-                    Size = new Size(260, 50),
-                    ForeColor = Color.Black
-                };
-
-                panel.Controls.Add(titleLabel);
-                panel.Controls.Add(valueLabel);
-                return panel;
-            }
+            this.SuspendLayout();
 
             // 
             // panelHeader
             // 
-            panelHeader.BackColor = Color.FromArgb(30, 85, 110);
-            panelHeader.Controls.Add(pictureBox3);
-            panelHeader.Controls.Add(pictureBox2);
-            panelHeader.Dock = DockStyle.Top;
-            panelHeader.Location = new Point(0, 0);
-            panelHeader.Name = "panelHeader";
-            panelHeader.Size = new Size(1197, 100);
-            panelHeader.TabIndex = 1;
+            this.panelHeader.BackColor = Color.FromArgb(30, 85, 110);
+            this.panelHeader.Dock = DockStyle.Top;
+            this.panelHeader.Size = new Size(1200, 100);
+
             // 
-            // pictureBox1
+            // lblTitle
             // 
-            pictureBox1.Image = Properties.Resources.Logo__1_;
-            pictureBox1.Location = new Point(25, 27);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(213, 130);
-            pictureBox1.TabIndex = 5;
-            pictureBox1.TabStop = false;
+            this.lblTitle.Text = "Manage Listings";
+            this.lblTitle.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            this.lblTitle.ForeColor = Color.White;
+            this.lblTitle.Location = new Point(20, 30);
+
+            this.panelHeader.Controls.Add(this.lblTitle);
+
             // 
-            // pictureBox2
+            // panelYourListings
             // 
-            pictureBox2.Image = Properties.Resources.shop_removebg_preview;
-            pictureBox2.Location = new Point(908, 27);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(125, 62);
-            pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox2.TabIndex = 4;
-            pictureBox2.TabStop = false;
+            this.panelYourListings.Size = new Size(300, 100);
+            this.panelYourListings.Location = new Point(20, 120);
+            this.panelYourListings.BackColor = Color.LightBlue;
+            CreateDynamicBox(this.panelYourListings, "Your Listings", "2");
+
             // 
-            // pictureBox3
+            // panelCurrentReservations
             // 
-            pictureBox3.Image = Properties.Resources.icon_removebg_preview;
-            pictureBox3.Location = new Point(1060, 27);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(125, 62);
-            pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox3.TabIndex = 5;
-            pictureBox3.TabStop = false;
+            this.panelCurrentReservations.Size = new Size(300, 100);
+            this.panelCurrentReservations.Location = new Point(340, 120);
+            this.panelCurrentReservations.BackColor = Color.LightGreen;
+            CreateDynamicBox(this.panelCurrentReservations, "Current Reservations", "1");
+
+            // 
+            // panelTotalEarnings
+            // 
+            this.panelTotalEarnings.Size = new Size(300, 100);
+            this.panelTotalEarnings.Location = new Point(660, 120);
+            this.panelTotalEarnings.BackColor = Color.LightPink;
+            CreateDynamicBox(this.panelTotalEarnings, "Total Earnings", "MUR 150000");
+
+            // 
+            // flowLayoutPanelListings
+            // 
+            this.flowLayoutPanelListings.Size = new Size(1140, 400);
+            this.flowLayoutPanelListings.Location = new Point(20, 240);
+            this.flowLayoutPanelListings.AutoScroll = true;
+            this.flowLayoutPanelListings.BackColor = Color.White;
+            this.flowLayoutPanelListings.FlowDirection = FlowDirection.TopDown; // Ensures vertical stacking
+            this.flowLayoutPanelListings.WrapContents = false; // Prevent horizontal wrapping
+
             // 
             // Manage_Listings
             // 
-            ClientSize = new Size(1447, 662);
-            Controls.Add(panelMain);
-            Controls.Add(sidebar);
-            Name = "Manage_Listings";
-            sidebar.ResumeLayout(false);
-            panelMain.ResumeLayout(false);
-            panelContent.ResumeLayout(false);
-            contentPanel.ResumeLayout(false);
-            panelHeader.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
-            ResumeLayout(false);
+            this.ClientSize = new Size(1200, 700);
+            this.Controls.Add(this.panelHeader);
+            this.Controls.Add(this.panelYourListings);
+            this.Controls.Add(this.panelCurrentReservations);
+            this.Controls.Add(this.panelTotalEarnings);
+            this.Controls.Add(this.flowLayoutPanelListings);
+
+            this.ResumeLayout(false);
         }
 
-        private PictureBox pictureBox1;
-        private PictureBox pictureBox3;
-        private PictureBox pictureBox2;
+        private void CreateDynamicBox(Panel panel, string title, string value)
+        {
+            Label titleLabel = new Label
+            {
+                Text = title,
+                Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                Location = new Point(10, 10),
+                Size = new Size(280, 20)
+            };
+
+            Label valueLabel = new Label
+            {
+                Text = value,
+                Font = new Font("Segoe UI", 16F, FontStyle.Bold),
+                Location = new Point(10, 40),
+                Size = new Size(280, 40)
+            };
+
+            panel.Controls.Add(titleLabel);
+            panel.Controls.Add(valueLabel);
+        }
     }
 }
