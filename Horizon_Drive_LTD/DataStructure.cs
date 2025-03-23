@@ -137,26 +137,6 @@ namespace Horizon_Drive_LTD
                 }
                 return true;
             }
-
-            public void PrintAllItems()
-            {
-                for (int i = 0; i < _capacity; i++)
-                {
-                    Console.Write($"Index {i}: ");
-                    if (_buckets[i] != null)
-                    {
-                        foreach (var item in _buckets[i])
-                        {
-                            Console.Write($"[{item}] -> ");
-                        }
-                        Console.WriteLine("null"); // Indicates the end of the linked list
-                    }
-                    else
-                    {
-                        Console.WriteLine("null"); // Empty bucket
-                    }
-                }
-            }
         }
     }
 }
