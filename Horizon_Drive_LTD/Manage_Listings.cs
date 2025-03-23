@@ -41,7 +41,7 @@ namespace Horizon_Drive_LTD
                     BackColor = Color.LightGray,
                     BorderStyle = BorderStyle.FixedSingle
                 };
-
+                 
                 // Create the status square box
                 Panel statusBox = new Panel
                 {
