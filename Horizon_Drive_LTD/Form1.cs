@@ -1,6 +1,7 @@
 using Microsoft.Win32;
 using System.Data.SqlClient;
 using System.Reflection;
+using Microsoft.Data.SqlClient;
 
 namespace Horizon_Drive_LTD
 {
@@ -63,11 +64,11 @@ namespace Horizon_Drive_LTD
         {
             var car = new Car
             {
-                RegistrationNumber = Register.Text,
+                RegistrationNumber = CarRegistor.Text,
                 Make = Make.Text,
                 Model = Model.Text,
                 Year = int.Parse(Year.Text),
-                IsAvailable = checkBox1.Checked
+                //IsAvailable = checkBox1.Checked
             };
 
             InsertCarIntoDatabase(car);
@@ -134,19 +135,42 @@ namespace Horizon_Drive_LTD
 
             return carTable;
         }
+
+        private void buuton1_Click(object sender, EventArgs e)
+        {
+            var car = new Car
+            {
+                RegistrationNumber = CarRegistor.Text,
+                Make = Make.Text,
+                Model = Model.Text,
+                Year = int.Parse(Year.Text),
+                //IsAvailable = checkBox1.Checked
+            };
+
+            InsertCarIntoDatabase(car);
+            MessageBox.Show("Car added successfully!");
+        }
+
+        private void RetriveButton_Click(object sender, EventArgs e)
+        {
+            var carTable = RetrieveCarsFromDatabase();
+            dataGridView1.DataSource = carTable.GetAllItems().Select(kvp => kvp.Value).ToList();
+        }
     }
 
     public class Car
-    {
-        public string RegistrationNumber { get; set; }
-        public string Make { get; set; }
-        public string Model { get; set; }
-        public int Year { get; set; }
-        public bool IsAvailable { get; set; }
+{
+    public string RegistrationNumber { get; set; }
+    public string Make { get; set; }
+    public string Model { get; set; }
+    public int Year { get; set; }
+    public bool IsAvailable { get; set; }
 
-        public override string ToString()
-        {
-            return $"{RegistrationNumber} - {Make} {Model} ({Year}) - Available: {IsAvailable}";
-        }
+    public override string ToString()
+    {
+        return $"{RegistrationNumber} - {Make} {Model} ({Year}) - Available: {IsAvailable}";
     }
+}
+
+
 }
