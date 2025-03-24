@@ -125,7 +125,7 @@
             // RetriveButton
             // 
             RetriveButton.Font = new Font("Verdana", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            RetriveButton.Location = new Point(571, 435);
+            RetriveButton.Location = new Point(552, 461);
             RetriveButton.Name = "RetriveButton";
             RetriveButton.Size = new Size(229, 92);
             RetriveButton.TabIndex = 12;
@@ -136,7 +136,7 @@
             // buuton1
             // 
             buuton1.Font = new Font("Verdana", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            buuton1.Location = new Point(203, 435);
+            buuton1.Location = new Point(164, 461);
             buuton1.Name = "buuton1";
             buuton1.Size = new Size(165, 92);
             buuton1.TabIndex = 11;
@@ -147,10 +147,10 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(131, 176);
+            dataGridView1.Location = new Point(53, 162);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(652, 188);
+            dataGridView1.Size = new Size(809, 267);
             dataGridView1.TabIndex = 10;
             // 
             // Price
