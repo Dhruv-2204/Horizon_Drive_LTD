@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Repositoriess\**" />
+    <EmbeddedResource Remove="Repositoriess\**" />
+    <None Remove="Repositoriess\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
   </ItemGroup>
 
@@ -30,7 +36,6 @@
   <ItemGroup>
     <Folder Include="BusinessLogic\" />
     <Folder Include="Domain\Interfaces\" />
-    <Folder Include="Repositoriess\" />
   </ItemGroup>
 
 </Project>
