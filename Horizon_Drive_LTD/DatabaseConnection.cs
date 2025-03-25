@@ -40,7 +40,30 @@ namespace Horizon_Drive_LTD
             }
         }
 
+        public void FetchAndStoreCars(HashTable<string, Car> carHashTable)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT CarID, CarBrand, Model FROM Car"; 
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Car car = new Car(
+                            reader.GetString(0),  // CarId
+                            reader.GetString(1), // Make
+                            reader.GetString(2) // Model
+                          
+                        );
 
+                        // Insert the car directly into the hash table
+                        carHashTable.Insert(car.CarId, car);
+                    }
+                }
+            }
+        }
 
     }
 }

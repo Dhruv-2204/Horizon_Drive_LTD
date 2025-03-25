@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,77 +7,60 @@ using System.Threading.Tasks;
 
 namespace Horizon_Drive_LTD
 {
-    
+
     public class LinkedListNode<TKey, TValue>
     {
-        public TKey Key { get; set; }
-        public TValue Value { get; set; }
+        public KeyValuePair<TKey, TValue> Data { get; set; }
         public LinkedListNode<TKey, TValue> Next { get; set; }
 
         public LinkedListNode(TKey key, TValue value)
         {
-            Key = key;
-            Value = value;
+            Data = new KeyValuePair<TKey, TValue>(key, value);
             Next = null;
         }
     }
 
-    public class LinkedList<TKey, TValue>
+    public class LinkedList<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
     {
-        private LinkedListNode<TKey, TValue> _head;
+        private LinkedListNode<TKey, TValue> head;
 
-        public void Add(TKey key, TValue value)
+        public LinkedList()
         {
-            var newNode = new LinkedListNode<TKey, TValue>(key, value);
-            if (_head == null)
-            {
-                _head = newNode;
-            }
-            else
-            {
-                var current = _head;
-                while (current.Next != null)
-                {
-                    current = current.Next;
-                }
-                current.Next = newNode;
-            }
+            head = null;
         }
 
-        public bool TryGetValue(TKey key, out TValue value)
+        // Add a key-value pair to the end of the list
+        public void AddLast(TKey key, TValue value)
         {
-            var current = _head;
-            while (current != null)
+            if (head == null)
             {
-                if (current.Key.Equals(key))
-                {
-                    value = current.Value;
-                    return true;
-                }
+                head = new LinkedListNode<TKey, TValue>(key, value);
+                return;
+            }
+
+            LinkedListNode<TKey, TValue> current = head;
+            while (current.Next != null)
+            {
                 current = current.Next;
             }
-
-            value = default;
-            return false;
+            current.Next = new LinkedListNode<TKey, TValue>(key, value);
         }
 
+        // Remove a node with a matching key
         public bool Remove(TKey key)
         {
-            if (_head == null)
-            {
-                return false;
-            }
+            if (head == null) return false;
 
-            if (_head.Key.Equals(key))
+            if (head.Data.Key.Equals(key))
             {
-                _head = _head.Next;
+                head = head.Next;
                 return true;
             }
 
-            var current = _head;
+            LinkedListNode<TKey, TValue> current = head;
             while (current.Next != null)
             {
-                if (current.Next.Key.Equals(key))
+                if (current.Next.Data.Key.Equals(key))
                 {
                     current.Next = current.Next.Next;
                     return true;
@@ -85,6 +69,37 @@ namespace Horizon_Drive_LTD
             }
 
             return false;
+        }
+
+        // Find a node by key
+        public KeyValuePair<TKey, TValue>? Find(TKey key)
+        {
+            LinkedListNode<TKey, TValue> current = head;
+            while (current != null)
+            {
+                if (current.Data.Key.Equals(key))
+                {
+                    return current.Data;
+                }
+                current = current.Next;
+            }
+            return null;
+        }
+
+        // Get an enumerator to iterate through all key-value pairs
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+        {
+            LinkedListNode<TKey, TValue> current = head;
+            while (current != null)
+            {
+                yield return current.Data;
+                current = current.Next;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Horizon_Drive_LTD
 {
-    class HashTable<TKey, TValue>
+    public class HashTable<TKey, TValue>
     {
         private int _capacity;
         private int _size;
@@ -185,6 +185,42 @@ namespace Horizon_Drive_LTD
                     return false;
             }
             return true;
+        }
+    }
+
+
+    public class Car
+    {
+        public string CarId { get; set; }
+        public string Make { get; set; }
+        public string Model { get; set; }
+     
+
+        public Car(string carId, string make, string model)
+        {
+            CarId = carId;
+            Make = make;
+            Model = model;
+           
+        }
+    }
+
+
+    public class User
+    {
+        public string UserId { get; set; }      
+        public string Username { get; set; }    
+        public string PasswordHash { get; set; } 
+        public string Role { get; set; }        
+        public string Email { get; set; }
+
+        public User(string userId, string username, string passwordHash, string role, string email)
+        {
+            UserId = userId;
+            Username = username;
+            PasswordHash = passwordHash;
+            Role = role;
+            Email = email;
         }
     }
 }

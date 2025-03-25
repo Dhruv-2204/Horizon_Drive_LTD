@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Horizon_Drive_LTD;
-using WindowsFormsApp1.Repositories;
 
 namespace WindowsFormsApp1
 {
@@ -17,18 +16,53 @@ namespace WindowsFormsApp1
         public Form1()
         {
             InitializeComponent();
-            
-           // ReadUsers();
+            DatabaseConnection db = new DatabaseConnection();
+            string result = db.TestConnection();
+            MessageBox.Show(result, "Connection Test", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+            HashTable<string, Car> carHashTable = new HashTable<string, Car>(50);
+
+
+            db.FetchAndStoreCars(carHashTable);
+
+
+            string searchCarId = "C004";
+            Car foundCar = carHashTable.Search(searchCarId);
+
+            if (foundCar != null)
+            {
+                MessageBox.Show($"Car Found: {foundCar.Make} {foundCar.Model} ",
+                                "Car Search Result",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Car not found.",
+                                "Car Search Result",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+            }
+            // ReadUsers();
         }
 
         private void Addbtn_Click(object sender, EventArgs e)
         {
-            var dbConnection = new DatabaseConnection();
-            string result = dbConnection.TestConnection();
-            MessageBox.Show(result, "Connection Test", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
         }
 
         private void Editbtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
         {
 
         }
