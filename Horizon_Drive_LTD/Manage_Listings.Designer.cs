@@ -15,6 +15,7 @@ namespace Horizon_Drive_LTD
         private Panel panelCurrentReservations;
         private Panel panelTotalEarnings;
         private FlowLayoutPanel flowLayoutPanelListings;
+        private FlowLayoutPanel flowLayoutPanelTransactions; // Added missing transactions panel
 
         protected override void Dispose(bool disposing)
         {
@@ -33,6 +34,7 @@ namespace Horizon_Drive_LTD
             this.panelCurrentReservations = new Panel();
             this.panelTotalEarnings = new Panel();
             this.flowLayoutPanelListings = new FlowLayoutPanel();
+            this.flowLayoutPanelTransactions = new FlowLayoutPanel();
 
             this.SuspendLayout();
 
@@ -50,7 +52,6 @@ namespace Horizon_Drive_LTD
             this.lblTitle.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             this.lblTitle.ForeColor = Color.White;
             this.lblTitle.Location = new Point(20, 30);
-
             this.panelHeader.Controls.Add(this.lblTitle);
 
             // 
@@ -84,18 +85,29 @@ namespace Horizon_Drive_LTD
             this.flowLayoutPanelListings.Location = new Point(20, 240);
             this.flowLayoutPanelListings.AutoScroll = true;
             this.flowLayoutPanelListings.BackColor = Color.White;
-            this.flowLayoutPanelListings.FlowDirection = FlowDirection.TopDown; // Ensures vertical stacking
-            this.flowLayoutPanelListings.WrapContents = false; // Prevent horizontal wrapping
+            this.flowLayoutPanelListings.FlowDirection = FlowDirection.TopDown;
+            this.flowLayoutPanelListings.WrapContents = false;
+
+            // 
+            // flowLayoutPanelTransactions
+            // 
+            this.flowLayoutPanelTransactions.Size = new Size(1140, 200);
+            this.flowLayoutPanelTransactions.Location = new Point(20, 650);
+            this.flowLayoutPanelTransactions.AutoScroll = true;
+            this.flowLayoutPanelTransactions.BackColor = Color.White;
+            this.flowLayoutPanelTransactions.FlowDirection = FlowDirection.TopDown;
+            this.flowLayoutPanelTransactions.WrapContents = false;
 
             // 
             // Manage_Listings
             // 
-            this.ClientSize = new Size(1200, 700);
+            this.ClientSize = new Size(1200, 900);
             this.Controls.Add(this.panelHeader);
             this.Controls.Add(this.panelYourListings);
             this.Controls.Add(this.panelCurrentReservations);
             this.Controls.Add(this.panelTotalEarnings);
             this.Controls.Add(this.flowLayoutPanelListings);
+            this.Controls.Add(this.flowLayoutPanelTransactions);
 
             this.ResumeLayout(false);
         }

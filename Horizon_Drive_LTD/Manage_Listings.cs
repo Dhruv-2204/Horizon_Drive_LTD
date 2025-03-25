@@ -8,6 +8,7 @@ namespace Horizon_Drive_LTD
     public partial class Manage_Listings : Form
     {
         private List<CarListing> carListings; // List of cars to display
+        private List<Transaction> transactions;
 
         public Manage_Listings()
         {
@@ -20,20 +21,26 @@ namespace Horizon_Drive_LTD
                 new CarListing { Id = 2, Make = "BMW", Model = "XM (2025)", PricePerDay = 20000, Status = "Reserved" }
             };
 
+            // Sample car transactions data
+            transactions = new List<Transaction>
+            {
+                new Transaction { CarModel = "Ford Raptor (2023)", RatePerDay = 15000, BookingPeriod = "Mar 15, 2025 - Jun 15, 2025", Status = "Finished" },
+                new Transaction { CarModel = "BMW XM (2025)", RatePerDay = 30000, BookingPeriod = "Feb 15, 2025 - Feb 22, 2025", Status = "Finished" }
+            };
+
             // Create the dynamic car list under the summary boxes
             CreateDynamicCarList();
+            CreateDynamicTransactionList();
         }
 
         private void CreateDynamicCarList()
         {
-            // Set up the FlowLayoutPanel for vertical stacking
-            flowLayoutPanelListings.FlowDirection = FlowDirection.TopDown; // Ensure vertical stacking
-            flowLayoutPanelListings.WrapContents = false; // Prevent horizontal wrapping
-            flowLayoutPanelListings.AutoScroll = true; // Allow scrolling
+            flowLayoutPanelListings.FlowDirection = FlowDirection.TopDown;
+            flowLayoutPanelListings.WrapContents = false;
+            flowLayoutPanelListings.AutoScroll = true;
 
             foreach (var car in carListings)
             {
-                // Create a panel for each car
                 Panel carPanel = new Panel
                 {
                     Size = new Size(400, 100),
@@ -41,29 +48,25 @@ namespace Horizon_Drive_LTD
                     BackColor = Color.LightGray,
                     BorderStyle = BorderStyle.FixedSingle
                 };
-                 
-                // Create the status square box
+
                 Panel statusBox = new Panel
                 {
                     Size = new Size(70, 20),
-                    Location = new Point(320, 5), // Top-right corner
-                    BackColor = car.Status == "Active" ? Color.LightGreen : Color.LightBlue // Pastel colors
+                    Location = new Point(320, 5),
+                    BackColor = car.Status == "Active" ? Color.LightGreen : Color.LightBlue
                 };
 
-                // Add status text inside the box
                 Label statusLabel = new Label
                 {
-                    Text = car.Status == "Active" ? "Active" : "Reserved",
+                    Text = car.Status,
                     Font = new Font("Segoe UI", 7F, FontStyle.Regular),
                     ForeColor = Color.Black,
-                    Location = new Point(2, 2), // Center the text inside the box
+                    Location = new Point(2, 2),
                     AutoSize = true,
                     TextAlign = ContentAlignment.MiddleCenter
                 };
-
                 statusBox.Controls.Add(statusLabel);
 
-                // Add car title label
                 Label carTitleLabel = new Label
                 {
                     Text = $"{car.Make} {car.Model}",
@@ -72,7 +75,6 @@ namespace Horizon_Drive_LTD
                     Size = new Size(360, 30)
                 };
 
-                // Add car price per day
                 Label carPriceLabel = new Label
                 {
                     Text = $"MUR {car.PricePerDay}/day",
@@ -81,7 +83,6 @@ namespace Horizon_Drive_LTD
                     Size = new Size(180, 30)
                 };
 
-                // Add "Delete" button if status is "Active"
                 if (car.Status == "Active")
                 {
                     Button deleteButton = new Button
@@ -90,45 +91,100 @@ namespace Horizon_Drive_LTD
                         Font = new Font("Segoe UI", 8F, FontStyle.Bold),
                         BackColor = Color.Red,
                         ForeColor = Color.White,
-                        Location = new Point(300, 60), // Bottom-right corner
+                        Location = new Point(300, 60),
                         Size = new Size(80, 30),
                         FlatStyle = FlatStyle.Flat
                     };
 
                     deleteButton.Click += (sender, e) => DeleteCar(car, carPanel);
-
                     carPanel.Controls.Add(deleteButton);
                 }
 
-                // Add components to the car panel
                 carPanel.Controls.Add(statusBox);
                 carPanel.Controls.Add(carTitleLabel);
                 carPanel.Controls.Add(carPriceLabel);
-
-                // Add car panel to the FlowLayoutPanel
                 flowLayoutPanelListings.Controls.Add(carPanel);
             }
         }
 
-        // Method to handle car deletion
+        private void CreateDynamicTransactionList()
+        {
+            foreach (var transaction in transactions)
+            {
+                Panel transactionPanel = new Panel
+                {
+                    Size = new Size(1140, 100),
+                    Margin = new Padding(10),
+                    BackColor = Color.LightGray,
+                    BorderStyle = BorderStyle.FixedSingle
+                };
+
+                Label carModelLabel = new Label
+                {
+                    Text = transaction.CarModel,
+                    Font = new Font("Segoe UI", 12F, FontStyle.Bold),
+                    Location = new Point(10, 10),
+                    Size = new Size(400, 30)
+                };
+
+                Label ratePerDayLabel = new Label
+                {
+                    Text = $"MUR {transaction.RatePerDay} / day",
+                    Font = new Font("Segoe UI", 10F, FontStyle.Regular),
+                    Location = new Point(10, 40),
+                    Size = new Size(200, 30)
+                };
+
+                Label bookingPeriodLabel = new Label
+                {
+                    Text = $"Booking Period: {transaction.BookingPeriod}",
+                    Font = new Font("Segoe UI", 10F, FontStyle.Regular),
+                    Location = new Point(10, 70),
+                    Size = new Size(400, 30)
+                };
+
+                Label statusLabel = new Label
+                {
+                    Text = transaction.Status,
+                    Font = new Font("Segoe UI", 10F, FontStyle.Regular),
+                    ForeColor = Color.Blue,
+                    Location = new Point(900, 10),
+                    Size = new Size(100, 30)
+                };
+
+                Button deleteButton = new Button
+                {
+                    Text = "Delete",
+                    Font = new Font("Segoe UI", 8F, FontStyle.Bold),
+                    BackColor = Color.Red,
+                    ForeColor = Color.White,
+                    Location = new Point(900, 60),
+                    Size = new Size(80, 30),
+                    FlatStyle = FlatStyle.Flat
+                };
+
+                deleteButton.Click += (sender, e) => DeleteTransaction(transaction, transactionPanel);
+
+                transactionPanel.Controls.Add(carModelLabel);
+                transactionPanel.Controls.Add(ratePerDayLabel);
+                transactionPanel.Controls.Add(bookingPeriodLabel);
+                transactionPanel.Controls.Add(statusLabel);
+                transactionPanel.Controls.Add(deleteButton);
+
+                flowLayoutPanelTransactions.Controls.Add(transactionPanel);
+            }
+        }
+
         private void DeleteCar(CarListing car, Panel carPanel)
         {
-            // Confirm deletion
-            var confirmResult = MessageBox.Show(
-                $"Are you sure you want to delete {car.Make} {car.Model}?",
-                "Confirm Deletion",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning
-            );
+            carListings.Remove(car);
+            flowLayoutPanelListings.Controls.Remove(carPanel);
+        }
 
-            if (confirmResult == DialogResult.Yes)
-            {
-                // Remove the car from the list and panel
-                carListings.Remove(car);
-                flowLayoutPanelListings.Controls.Remove(carPanel);
-
-                MessageBox.Show($"{car.Make} {car.Model} has been deleted.", "Car Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+        private void DeleteTransaction(Transaction transaction, Panel transactionPanel)
+        {
+            transactions.Remove(transaction);
+            flowLayoutPanelTransactions.Controls.Remove(transactionPanel);
         }
 
         public class CarListing
@@ -137,6 +193,14 @@ namespace Horizon_Drive_LTD
             public string Make { get; set; }
             public string Model { get; set; }
             public decimal PricePerDay { get; set; }
+            public string Status { get; set; }
+        }
+
+        public class Transaction
+        {
+            public string CarModel { get; set; }
+            public int RatePerDay { get; set; }
+            public string BookingPeriod { get; set; }
             public string Status { get; set; }
         }
     }
