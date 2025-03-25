@@ -113,7 +113,9 @@ namespace splashscreen
 
         private void signup_btn(object sender, EventArgs e)
         {
-
+            Signup signup = new Signup();// Calls signup constructor
+            signup.Show();//Shows the signup window
+            this.Dispose();//closes the login window
         }
     }
 }

@@ -42,10 +42,7 @@ namespace splashscreen
                 // Construct the path to the sound file directly inside Horizon_Drive_LTD
                 string soundPath = Path.Combine(currentDir.FullName, "Sound\\fast-car-sound.wav");
 
-                // Debugging - Print the path to verify correctness
-                Console.WriteLine($"Sound Path: {soundPath}");
-
-                // Check if the sound file exists before playing
+                // Checking if the sound file exists before playing
                 if (!File.Exists(soundPath))
                 {
                     MessageBox.Show($"Error: Sound file not found!\nPath: {soundPath}", "File Not Found",
@@ -53,10 +50,10 @@ namespace splashscreen
                     return;
                 }
 
-                // Create SoundPlayer instance and play the sound
+                // Creating SoundPlayer instance and play the sound
                 using (SoundPlayer player = new SoundPlayer(soundPath))
                 {
-                    player.Play(); // Play once 
+                    player.Play(); // Play sound once 
                 }
             }
             catch (Exception ex)
@@ -65,33 +62,7 @@ namespace splashscreen
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
+               
         private void timer1_Tick(object sender, EventArgs e)
         {
             panel2.Width += 3;
@@ -105,10 +76,10 @@ namespace splashscreen
 
         private void OpensignUp()
         {
-            Signup signup = new Signup();
-            signup.Show();
-            //Login login = new Login();
-            //login.Show();
+            //Signup signup = new Signup();
+            //signup.Show();
+            Login login = new Login();
+            login.Show();
             this.Hide(); // Hide splash screen instead of closing
         }
 
