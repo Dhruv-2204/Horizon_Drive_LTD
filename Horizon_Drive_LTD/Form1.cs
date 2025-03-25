@@ -2,6 +2,8 @@ using Microsoft.Win32;
 using System.Data.SqlClient;
 using System.Reflection;
 using Microsoft.Data.SqlClient;
+using Horizon_Drive_LTD.DataStructure;
+
 
 namespace Horizon_Drive_LTD
 {

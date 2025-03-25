@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Horizon_Drive_LTD
+namespace Horizon_Drive_LTD.DataStructure
 {
     class HashTable<TKey, TValue>
     {
@@ -80,7 +80,7 @@ namespace Horizon_Drive_LTD
                 }
             }
 
-            return default(TValue); // Key not found
+            return default; // Key not found
         }
 
         public bool Remove(TKey key)
