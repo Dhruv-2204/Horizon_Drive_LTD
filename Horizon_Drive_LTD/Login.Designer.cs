@@ -63,7 +63,7 @@
             panel1.Font = new Font("Segoe UI Semilight", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(684, 479);
+            panel1.Size = new Size(656, 467);
             panel1.TabIndex = 0;
             panel1.Paint += panel1_Paint;
             // 
@@ -86,7 +86,7 @@
             checkBox1.BackColor = Color.Transparent;
             checkBox1.Font = new Font("Segoe UI Light", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             checkBox1.ForeColor = SystemColors.GrayText;
-            checkBox1.Location = new Point(535, 280);
+            checkBox1.Location = new Point(507, 280);
             checkBox1.Name = "checkBox1";
             checkBox1.Size = new Size(104, 19);
             checkBox1.TabIndex = 8;
@@ -106,7 +106,7 @@
             LOGIN_btn.ForeColor = Color.White;
             LOGIN_btn.Location = new Point(414, 357);
             LOGIN_btn.Name = "LOGIN_btn";
-            LOGIN_btn.Size = new Size(131, 37);
+            LOGIN_btn.Size = new Size(103, 37);
             LOGIN_btn.TabIndex = 7;
             LOGIN_btn.Text = "LOGIN";
             LOGIN_btn.UseVisualStyleBackColor = false;
@@ -119,10 +119,10 @@
             Password.BackColor = Color.Silver;
             Password.BorderStyle = BorderStyle.FixedSingle;
             Password.Font = new Font("Segoe UI Light", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Password.Location = new Point(312, 241);
+            Password.Location = new Point(310, 232);
             Password.Name = "Password";
             Password.PlaceholderText = "Enter Password";
-            Password.Size = new Size(323, 33);
+            Password.Size = new Size(309, 33);
             Password.TabIndex = 6;
             Password.UseSystemPasswordChar = true;
             Password.TextChanged += password;
@@ -131,7 +131,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Bahnschrift", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(310, 211);
+            label2.Location = new Point(310, 194);
             label2.Name = "label2";
             label2.Size = new Size(78, 18);
             label2.TabIndex = 5;
@@ -144,10 +144,10 @@
             Username.BackColor = Color.Silver;
             Username.BorderStyle = BorderStyle.FixedSingle;
             Username.Font = new Font("Segoe UI Light", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Username.Location = new Point(312, 146);
+            Username.Location = new Point(310, 130);
             Username.Name = "Username";
             Username.PlaceholderText = "Enter Username";
-            Username.Size = new Size(323, 33);
+            Username.Size = new Size(309, 33);
             Username.TabIndex = 4;
             Username.TextChanged += username;
             // 
@@ -155,7 +155,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Bahnschrift", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(310, 115);
+            label4.Location = new Point(310, 93);
             label4.Name = "label4";
             label4.Size = new Size(80, 18);
             label4.TabIndex = 3;
@@ -174,7 +174,7 @@
             panel2.Controls.Add(pictureBox1);
             panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(288, 484);
+            panel2.Size = new Size(288, 496);
             panel2.TabIndex = 0;
             panel2.Paint += panel2_Paint;
             // 
@@ -187,7 +187,7 @@
             Signup_btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 192, 255);
             Signup_btn.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Signup_btn.ForeColor = SystemColors.ControlText;
-            Signup_btn.Location = new Point(89, 379);
+            Signup_btn.Location = new Point(77, 314);
             Signup_btn.Name = "Signup_btn";
             Signup_btn.Size = new Size(107, 30);
             Signup_btn.TabIndex = 3;
@@ -199,7 +199,7 @@
             // 
             label5.AutoSize = true;
             label5.ForeColor = Color.FromArgb(255, 128, 0);
-            label5.Location = new Point(78, 411);
+            label5.Location = new Point(66, 356);
             label5.Name = "label5";
             label5.Size = new Size(128, 15);
             label5.TabIndex = 2;
@@ -221,7 +221,7 @@
             // 
             pictureBox1.Anchor = AnchorStyles.Left;
             pictureBox1.Image = Horizon_Drive_LTD.Properties.Resources.HORIZONDRIVE_LOGO;
-            pictureBox1.Location = new Point(51, 32);
+            pictureBox1.Location = new Point(51, 38);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(184, 159);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -233,7 +233,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(684, 479);
+            ClientSize = new Size(656, 467);
             Controls.Add(panel1);
             Margin = new Padding(4, 3, 4, 3);
             Name = "Login";

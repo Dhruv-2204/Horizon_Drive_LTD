@@ -394,7 +394,7 @@
             Login_Button.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 192, 255);
             Login_Button.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Login_Button.ForeColor = SystemColors.ControlText;
-            Login_Button.Location = new Point(82, 356);
+            Login_Button.Location = new Point(84, 346);
             Login_Button.Name = "Login_Button";
             Login_Button.Size = new Size(107, 30);
             Login_Button.TabIndex = 3;
