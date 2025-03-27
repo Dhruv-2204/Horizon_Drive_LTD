@@ -369,7 +369,7 @@
             panel2.Controls.Add(Login_Button);
             panel2.Controls.Add(label1);
             panel2.Controls.Add(pictureBox1);
-            panel2.Location = new Point(0, 0);
+            panel2.Location = new Point(0, -1);
             panel2.Name = "panel2";
             panel2.Size = new Size(286, 480);
             panel2.TabIndex = 1;

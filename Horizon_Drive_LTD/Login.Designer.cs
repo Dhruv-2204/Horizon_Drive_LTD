@@ -50,7 +50,6 @@
             // 
             panel1.AutoSize = true;
             panel1.BackColor = Color.White;
-            panel1.BorderStyle = BorderStyle.FixedSingle;
             panel1.Controls.Add(label3);
             panel1.Controls.Add(checkBox1);
             panel1.Controls.Add(LOGIN_btn);
@@ -86,7 +85,7 @@
             checkBox1.BackColor = Color.Transparent;
             checkBox1.Font = new Font("Segoe UI Light", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             checkBox1.ForeColor = SystemColors.GrayText;
-            checkBox1.Location = new Point(507, 280);
+            checkBox1.Location = new Point(509, 280);
             checkBox1.Name = "checkBox1";
             checkBox1.Size = new Size(104, 19);
             checkBox1.TabIndex = 8;
@@ -106,7 +105,7 @@
             LOGIN_btn.ForeColor = Color.White;
             LOGIN_btn.Location = new Point(414, 357);
             LOGIN_btn.Name = "LOGIN_btn";
-            LOGIN_btn.Size = new Size(103, 37);
+            LOGIN_btn.Size = new Size(105, 37);
             LOGIN_btn.TabIndex = 7;
             LOGIN_btn.Text = "LOGIN";
             LOGIN_btn.UseVisualStyleBackColor = false;
@@ -122,7 +121,7 @@
             Password.Location = new Point(310, 232);
             Password.Name = "Password";
             Password.PlaceholderText = "Enter Password";
-            Password.Size = new Size(309, 33);
+            Password.Size = new Size(311, 33);
             Password.TabIndex = 6;
             Password.UseSystemPasswordChar = true;
             Password.TextChanged += password;
@@ -147,7 +146,7 @@
             Username.Location = new Point(310, 130);
             Username.Name = "Username";
             Username.PlaceholderText = "Enter Username";
-            Username.Size = new Size(309, 33);
+            Username.Size = new Size(311, 33);
             Username.TabIndex = 4;
             Username.TextChanged += username;
             // 
@@ -167,14 +166,13 @@
             panel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             panel2.AutoSize = true;
             panel2.BackColor = Color.FromArgb(1, 24, 30);
-            panel2.BorderStyle = BorderStyle.FixedSingle;
             panel2.Controls.Add(Signup_btn);
             panel2.Controls.Add(label5);
             panel2.Controls.Add(label1);
             panel2.Controls.Add(pictureBox1);
             panel2.Location = new Point(0, -1);
             panel2.Name = "panel2";
-            panel2.Size = new Size(288, 468);
+            panel2.Size = new Size(288, 470);
             panel2.TabIndex = 0;
             panel2.Paint += panel2_Paint;
             // 
@@ -221,7 +219,7 @@
             // 
             pictureBox1.Anchor = AnchorStyles.Left;
             pictureBox1.Image = Horizon_Drive_LTD.Properties.Resources.HORIZONDRIVE_LOGO;
-            pictureBox1.Location = new Point(51, 24);
+            pictureBox1.Location = new Point(51, 26);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(184, 159);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
