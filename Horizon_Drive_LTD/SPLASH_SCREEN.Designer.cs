@@ -50,18 +50,16 @@
             label1.TabIndex = 0;
             label1.Text = "Loading Car Hire System...";
             label1.UseWaitCursor = true;
-           
             // 
             // panel1
             // 
             panel1.Controls.Add(panel2);
-            panel1.Location = new Point(2, 489);
+            panel1.Location = new Point(-1, 489);
             panel1.Margin = new Padding(4, 3, 4, 3);
             panel1.Name = "panel1";
-            panel1.Size = new Size(684, 42);
+            panel1.Size = new Size(687, 42);
             panel1.TabIndex = 2;
             panel1.UseWaitCursor = true;
-            
             // 
             // panel2
             // 
@@ -108,7 +106,7 @@
             Name = "SPLASH_SCREEN";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
-            UseWaitCursor = true;            
+            UseWaitCursor = true;
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);

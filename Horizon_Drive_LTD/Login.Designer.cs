@@ -172,9 +172,9 @@
             panel2.Controls.Add(label5);
             panel2.Controls.Add(label1);
             panel2.Controls.Add(pictureBox1);
-            panel2.Location = new Point(0, 0);
+            panel2.Location = new Point(0, -1);
             panel2.Name = "panel2";
-            panel2.Size = new Size(288, 496);
+            panel2.Size = new Size(288, 468);
             panel2.TabIndex = 0;
             panel2.Paint += panel2_Paint;
             // 
@@ -221,7 +221,7 @@
             // 
             pictureBox1.Anchor = AnchorStyles.Left;
             pictureBox1.Image = Horizon_Drive_LTD.Properties.Resources.HORIZONDRIVE_LOGO;
-            pictureBox1.Location = new Point(51, 38);
+            pictureBox1.Location = new Point(51, 24);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(184, 159);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
