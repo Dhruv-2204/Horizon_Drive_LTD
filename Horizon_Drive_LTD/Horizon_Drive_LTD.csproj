@@ -23,4 +23,11 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+    <Folder Include="Resources\NewFolder1\" />
+    <Folder Include="Resources\NewFolder2\" />
+    <Folder Include="Resources\NewFolder\NewFolder\" />
+  </ItemGroup>
+
 </Project>

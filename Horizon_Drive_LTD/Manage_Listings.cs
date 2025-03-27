@@ -43,11 +43,50 @@ namespace Horizon_Drive_LTD
             {
                 Panel carPanel = new Panel
                 {
-                    Size = new Size(400, 100),
+                    Size = new Size(420, 120), // Adjusted size for PictureBox
                     Margin = new Padding(10),
                     BackColor = Color.LightGray,
                     BorderStyle = BorderStyle.FixedSingle
                 };
+
+                PictureBox carPictureBox = new PictureBox
+                {
+                    Size = new Size(80, 80),
+                    Location = new Point(10, 20),
+                    BorderStyle = BorderStyle.FixedSingle,
+                    SizeMode = PictureBoxSizeMode.StretchImage
+                };
+
+                // Load image or use placeholder
+                try
+                {
+                    string imagePath = $"Images/{car.Id}.jpg"; // Assuming images are named by car ID
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        carPictureBox.Image = Image.FromFile(imagePath);
+                    }
+                    else
+                    {
+                        string placeholderPath = "Images/placeholder.jpg"; // Path to a default placeholder image
+                        if (System.IO.File.Exists(placeholderPath))
+                        {
+                            carPictureBox.Image = Image.FromFile(placeholderPath);
+                        }
+                        else
+                        {
+                            // Optional: Set a background color or display a default UI if no placeholder is found
+                            carPictureBox.BackColor = Color.Gray;
+                            carPictureBox.BorderStyle = BorderStyle.FixedSingle;
+                        }
+                    }
+                }
+                catch
+                {
+                    // Handle any unforeseen exceptions by providing a default setup
+                    carPictureBox.BackColor = Color.Gray;
+                    carPictureBox.BorderStyle = BorderStyle.FixedSingle;
+                }
+
 
                 Panel statusBox = new Panel
                 {
@@ -71,15 +110,15 @@ namespace Horizon_Drive_LTD
                 {
                     Text = $"{car.Make} {car.Model}",
                     Font = new Font("Segoe UI", 12F, FontStyle.Bold),
-                    Location = new Point(10, 10),
-                    Size = new Size(360, 30)
+                    Location = new Point(100, 10),
+                    Size = new Size(310, 30)
                 };
 
                 Label carPriceLabel = new Label
                 {
                     Text = $"MUR {car.PricePerDay}/day",
                     Font = new Font("Segoe UI", 10F, FontStyle.Regular),
-                    Location = new Point(10, 40),
+                    Location = new Point(100, 50),
                     Size = new Size(180, 30)
                 };
 
@@ -91,7 +130,7 @@ namespace Horizon_Drive_LTD
                         Font = new Font("Segoe UI", 8F, FontStyle.Bold),
                         BackColor = Color.Red,
                         ForeColor = Color.White,
-                        Location = new Point(300, 60),
+                        Location = new Point(300, 80),
                         Size = new Size(80, 30),
                         FlatStyle = FlatStyle.Flat
                     };
@@ -100,6 +139,7 @@ namespace Horizon_Drive_LTD
                     carPanel.Controls.Add(deleteButton);
                 }
 
+                carPanel.Controls.Add(carPictureBox);
                 carPanel.Controls.Add(statusBox);
                 carPanel.Controls.Add(carTitleLabel);
                 carPanel.Controls.Add(carPriceLabel);
