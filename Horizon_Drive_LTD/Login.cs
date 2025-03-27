@@ -79,13 +79,6 @@ namespace splashscreen
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            Signup signup = new Signup();// Calls signup constructor
-            signup.Show();//Shows the signup window
-            this.Dispose();//closes the login window
-        }
-
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
@@ -116,6 +109,11 @@ namespace splashscreen
             Signup signup = new Signup();// Calls signup constructor
             signup.Show();//Shows the signup window
             this.Dispose();//closes the login window
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

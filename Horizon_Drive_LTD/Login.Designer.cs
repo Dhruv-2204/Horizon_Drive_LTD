@@ -176,8 +176,9 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(288, 484);
             panel2.TabIndex = 0;
+            panel2.Paint += panel2_Paint;
             // 
-            // signup_btn
+            // Signup_btn
             // 
             Signup_btn.AutoSize = true;
             Signup_btn.BackColor = Color.FromArgb(128, 255, 255);
@@ -187,12 +188,12 @@
             Signup_btn.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Signup_btn.ForeColor = SystemColors.ControlText;
             Signup_btn.Location = new Point(89, 379);
-            Signup_btn.Name = "signup_btn";
+            Signup_btn.Name = "Signup_btn";
             Signup_btn.Size = new Size(107, 30);
             Signup_btn.TabIndex = 3;
             Signup_btn.Text = "SIGN UP";
             Signup_btn.UseVisualStyleBackColor = false;
-            Signup_btn.Click += this.signup_btn;
+            Signup_btn.Click += signup_btn;
             // 
             // label5
             // 
