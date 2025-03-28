@@ -42,6 +42,7 @@ namespace Horizon_Drive_LTD
             panelMain = new Panel();
             panelContent = new Panel();
             contentPanel = new Panel();
+            SubmitButton = new Button();
             lblMake = new Label();
             cmbMake = new ComboBox();
             lblModel = new Label();
@@ -65,6 +66,7 @@ namespace Horizon_Drive_LTD
             panelHeader = new Panel();
             pictureBox1 = new PictureBox();
             pictureBox2 = new PictureBox();
+            SaveImage = new Button();
             sidebar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).BeginInit();
             panelMain.SuspendLayout();
@@ -177,6 +179,8 @@ namespace Horizon_Drive_LTD
             // 
             contentPanel.BackColor = Color.White;
             contentPanel.BorderStyle = BorderStyle.FixedSingle;
+            contentPanel.Controls.Add(SaveImage);
+            contentPanel.Controls.Add(SubmitButton);
             contentPanel.Controls.Add(lblMake);
             contentPanel.Controls.Add(cmbMake);
             contentPanel.Controls.Add(lblModel);
@@ -202,6 +206,18 @@ namespace Horizon_Drive_LTD
             contentPanel.Size = new Size(1498, 724);
             contentPanel.TabIndex = 0;
             contentPanel.Paint += contentPanel_Paint;
+            // 
+            // SubmitButton
+            // 
+            SubmitButton.BackColor = Color.PaleTurquoise;
+            SubmitButton.Font = new Font("Stencil", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            SubmitButton.Location = new Point(415, 540);
+            SubmitButton.Name = "SubmitButton";
+            SubmitButton.Size = new Size(167, 59);
+            SubmitButton.TabIndex = 15;
+            SubmitButton.Text = "Submit";
+            SubmitButton.UseVisualStyleBackColor = false;
+            SubmitButton.Click += SubmitButton_Click;
             // 
             // lblMake
             // 
@@ -330,9 +346,9 @@ namespace Horizon_Drive_LTD
             txtCarDescription.Location = new Point(30, 278);
             txtCarDescription.Multiline = true;
             txtCarDescription.Name = "txtCarDescription";
+            txtCarDescription.PlaceholderText = "Describe your car, including condition, special features, etc.";
             txtCarDescription.Size = new Size(700, 100);
             txtCarDescription.TabIndex = 5;
-            txtCarDescription.Text = "Describe your car, including condition, special features, etc.";
             // 
             // lblDailyRate
             // 
@@ -385,7 +401,7 @@ namespace Horizon_Drive_LTD
             // 
             // btnUploadImage
             // 
-            btnUploadImage.Location = new Point(939, 511);
+            btnUploadImage.Location = new Point(854, 511);
             btnUploadImage.Name = "btnUploadImage";
             btnUploadImage.Size = new Size(200, 30);
             btnUploadImage.TabIndex = 14;
@@ -422,6 +438,16 @@ namespace Horizon_Drive_LTD
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 1;
             pictureBox2.TabStop = false;
+            // 
+            // SaveImage
+            // 
+            SaveImage.Location = new Point(1075, 512);
+            SaveImage.Name = "SaveImage";
+            SaveImage.Size = new Size(94, 29);
+            SaveImage.TabIndex = 16;
+            SaveImage.Text = "Save";
+            SaveImage.UseVisualStyleBackColor = true;
+            SaveImage.Click += SaveImage_Click;
             // 
             // List_A_Car_Page
             // 
@@ -496,5 +522,7 @@ namespace Horizon_Drive_LTD
 
         private PictureBox pictureBox2;
         private PictureBox pictureBox1;
+        private Button SubmitButton;
+        private Button SaveImage;
     }
 }

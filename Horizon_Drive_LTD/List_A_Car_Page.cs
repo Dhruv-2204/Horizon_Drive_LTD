@@ -128,6 +128,16 @@ namespace Horizon_Drive_LTD
         {
 
         }
+
+        private void SaveImage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SubmitButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
     // Sample CarListing class, adjust according to your model
