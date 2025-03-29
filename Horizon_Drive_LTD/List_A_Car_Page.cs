@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Horizon_Drive_LTD.DataStructure;
+using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace Horizon_Drive_LTD
@@ -11,6 +14,9 @@ namespace Horizon_Drive_LTD
     {
         // Assuming CarListing is a model class for car listings
         private List<CarListing> carListings;
+
+        private string connectionString = "Data Source=LAPTOP-VKDU1VH3\\SQLEXPRESS;Initial Catalog=DummyCars;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+
 
         public List_A_Car_Page()
         {
@@ -119,25 +125,118 @@ namespace Horizon_Drive_LTD
 
         }
 
-        private void contentPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void SaveImage_Click(object sender, EventArgs e)
         {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.bmp",
+                Title = "Select a Car Image"
+            };
 
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    // Load image into PictureBox
+                    pbCarImage.Image = new Bitmap(openFileDialog.FileName);
+
+                    // Convert image to byte array for database storage
+                    byte[] imageData = File.ReadAllBytes(openFileDialog.FileName);
+
+                    // Store the byte array in your Car object
+                    // (You'll need to add a byte[] property to your Car class)
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error loading image: {ex.Message}", "Error",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void SubmitButton_Click(object sender, EventArgs e)
         {
+            var car = new Car
+            {
+                RegistrationNumber = txtLicensePlate.Text,
+                Make = cmbMake.Text,
+                Model = cmbModel.Text,
+                Year = int.Parse(cmbYear.Text),
+                Type = cmbType.Text,
+                Color = cmbColor.Text,
+                Price = decimal.Parse(txtDailyRate.Text),
+                picture = pbCarImage.Text,
+                Description = txtCarDescription.Text
+                //IsAvailable = checkBox1.Checked
+            };
 
+            InsertCarIntoDatabase(car);
+            MessageBox.Show("Car added successfully!");
         }
+
+        private void InsertCarIntoDatabase(Car car)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = "INSERT INTO CARS2 (CarID, LicensePlate, Make, Model, Year, Type, Color, Description, DailyRate) " +
+                                "VALUES (@CarID, @LicensePlate, @Make, @Model, @Year, @Type, @Color, @Description, @DailyRate)";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@CarID", car.RegistrationNumber);
+                    command.Parameters.AddWithValue("@LicensePlate", car.RegistrationNumber);
+                    command.Parameters.AddWithValue("@Make", car.Make);
+                    command.Parameters.AddWithValue("@Model", car.Model);
+                    command.Parameters.AddWithValue("@Year", car.Year);
+                    command.Parameters.AddWithValue("@Type", car.Type);
+                    command.Parameters.AddWithValue("@Color", car.Color);
+                    command.Parameters.AddWithValue("@Description", car.Description);
+                    command.Parameters.AddWithValue("@DailyRate", car.Price);
+                    //command.Parameters.AddWithValue("@Photo", car.picture);
+                    //command.Parameters.AddWithValue("@IsAvailable", car.IsAvailable);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private HashTable<string, Car> RetrieveCarsFromDatabase()
+        {
+            var carTable = new HashTable<string, Car>(7);
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = "SELECT * FROM Cars";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var car = new Car
+                            {
+                                RegistrationNumber = reader["RegistrationNumber"].ToString(),
+                                Make = reader["Make"].ToString(),
+                                Model = reader["Model"].ToString(),
+                                Year = Convert.ToInt32(reader["Year"]),
+                                //IsAvailable = Convert.ToBoolean(reader["IsAvailable"])
+                            };
+
+                            carTable.Insert(car.RegistrationNumber, car);
+                        }
+                    }
+                }
+            }
+
+            return carTable;
+        }
+
+
     }
 
     // Sample CarListing class, adjust according to your model
@@ -182,5 +281,23 @@ namespace Horizon_Drive_LTD
             // Draw the button
             base.OnPaint(e);
         }
+    }
+
+
+    public class Car
+    {
+        public string RegistrationNumber { get; set; }
+        public string Make { get; set; }
+        public string Model { get; set; }
+        public string Type { get; set; }
+        public string Color { get; set; }
+        public int Year { get; set; }
+        public string Description { get; set; }
+        public decimal Price { get; set; }
+        public string picture { get; set; }
+        public byte[] actualPicture { get; set; }
+
+
+        
     }
 }

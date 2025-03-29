@@ -42,6 +42,7 @@ namespace Horizon_Drive_LTD
             panelMain = new Panel();
             panelContent = new Panel();
             contentPanel = new Panel();
+            SaveImage = new Button();
             SubmitButton = new Button();
             lblMake = new Label();
             cmbMake = new ComboBox();
@@ -66,8 +67,7 @@ namespace Horizon_Drive_LTD
             panelHeader = new Panel();
             pictureBox1 = new PictureBox();
             pictureBox2 = new PictureBox();
-            SaveImage = new Button();
-            sidebar.SuspendLayout();
+            //sidebar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).BeginInit();
             panelMain.SuspendLayout();
             panelContent.SuspendLayout();
@@ -205,7 +205,16 @@ namespace Horizon_Drive_LTD
             contentPanel.Name = "contentPanel";
             contentPanel.Size = new Size(1498, 724);
             contentPanel.TabIndex = 0;
-            contentPanel.Paint += contentPanel_Paint;
+            // 
+            // SaveImage
+            // 
+            SaveImage.Location = new Point(1075, 512);
+            SaveImage.Name = "SaveImage";
+            SaveImage.Size = new Size(94, 29);
+            SaveImage.TabIndex = 16;
+            SaveImage.Text = "Save";
+            SaveImage.UseVisualStyleBackColor = true;
+            SaveImage.Click += SaveImage_Click;
             // 
             // SubmitButton
             // 
@@ -251,6 +260,7 @@ namespace Horizon_Drive_LTD
             // cmbModel
             // 
             cmbModel.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbModel.Items.AddRange(new object[] { "Sedan", "M4", "A6" });
             cmbModel.Location = new Point(310, 56);
             cmbModel.Name = "cmbModel";
             cmbModel.Size = new Size(200, 28);
@@ -398,6 +408,7 @@ namespace Horizon_Drive_LTD
             pbCarImage.SizeMode = PictureBoxSizeMode.StretchImage;
             pbCarImage.TabIndex = 13;
             pbCarImage.TabStop = false;
+            
             // 
             // btnUploadImage
             // 
@@ -438,19 +449,7 @@ namespace Horizon_Drive_LTD
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 1;
             pictureBox2.TabStop = false;
-            // 
-            // SaveImage
-            // 
-            SaveImage.Location = new Point(1075, 512);
-            SaveImage.Name = "SaveImage";
-            SaveImage.Size = new Size(94, 29);
-            SaveImage.TabIndex = 16;
-            SaveImage.Text = "Save";
-            SaveImage.UseVisualStyleBackColor = true;
-            SaveImage.Click += SaveImage_Click;
-            // 
-            // List_A_Car_Page
-            // 
+            
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1924, 760);
