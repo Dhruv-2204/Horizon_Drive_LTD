@@ -67,7 +67,7 @@ namespace Horizon_Drive_LTD
             panelHeader = new Panel();
             pictureBox1 = new PictureBox();
             pictureBox2 = new PictureBox();
-            //sidebar.SuspendLayout();
+            sidebar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).BeginInit();
             panelMain.SuspendLayout();
             panelContent.SuspendLayout();
@@ -408,7 +408,7 @@ namespace Horizon_Drive_LTD
             pbCarImage.SizeMode = PictureBoxSizeMode.StretchImage;
             pbCarImage.TabIndex = 13;
             pbCarImage.TabStop = false;
-            
+            pbCarImage.Click += pbCarImage_Click;
             // 
             // btnUploadImage
             // 
@@ -449,7 +449,9 @@ namespace Horizon_Drive_LTD
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 1;
             pictureBox2.TabStop = false;
-            
+            // 
+            // List_A_Car_Page
+            // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1924, 760);
@@ -515,6 +517,7 @@ namespace Horizon_Drive_LTD
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     pictureBox.Image = Image.FromFile(openFileDialog.FileName);
+                    
                 }
             }
         }

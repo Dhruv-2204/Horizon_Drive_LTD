@@ -35,7 +35,7 @@
 
   <ItemGroup>
     <Folder Include="BusinessLogic\" />
-    <Folder Include="Domain\Interfaces\" />
+    <Folder Include="Pictures\img\" />
   </ItemGroup>
 
 </Project>

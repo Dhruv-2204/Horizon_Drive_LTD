@@ -7,6 +7,7 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Windows.Forms.Design;
 
 namespace Horizon_Drive_LTD
 {
@@ -125,35 +126,47 @@ namespace Horizon_Drive_LTD
 
         }
 
-        
+
 
         private void SaveImage_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog
-            {
-                Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.bmp",
-                Title = "Select a Car Image"
-            };
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            //{
+            //    Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.bmp",
+            //    Title = "Select a Car Image"
+            //};
 
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    // Load image into PictureBox
-                    pbCarImage.Image = new Bitmap(openFileDialog.FileName);
+            //if (openFileDialog.ShowDialog() == DialogResult.OK)
+            //{
+            //    try
+            //    {
+            //        // Load image into PictureBox
+            //        pbCarImage.Image = new Bitmap(openFileDialog.FileName);
 
-                    // Convert image to byte array for database storage
-                    byte[] imageData = File.ReadAllBytes(openFileDialog.FileName);
+            //        // Convert image to byte array for database storage
+            //        byte[] imageData = File.ReadAllBytes(openFileDialog.FileName);
 
-                    // Store the byte array in your Car object
-                    // (You'll need to add a byte[] property to your Car class)
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error loading image: {ex.Message}", "Error",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            //        // Store the byte array in your Car object
+            //        // (You'll need to add a byte[] property to your Car class)
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show($"Error loading image: {ex.Message}", "Error",
+            //                      MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    }
+            //}
+
+            //openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.bmp";
+
+            //if(openFileDialog.ShowDialog() == DialogResult.OK) {
+            //    openFileDialog.Filter = openFileDialog.FileName; 
+            //    pbCarImage.Image = new Bitmap(openFileDialog.FileName);
+
+            //}
+            string FileName1 = openFileDialog.FileName;
+            pbCarImage.Image = new Bitmap(openFileDialog.FileName);
+            File.Copy(FileName1, Path.Combine("C:\\Users\\HP\\Source\\Repos\\Horizon_Drive_LTD\\Horizon_Drive_LTD\\Pictures\\img\\", Path.GetFileName(FileName1)), true);
+            MessageBox.Show("Image saved");
         }
 
         private void SubmitButton_Click(object sender, EventArgs e)
@@ -236,7 +249,10 @@ namespace Horizon_Drive_LTD
             return carTable;
         }
 
+        private void pbCarImage_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 
     // Sample CarListing class, adjust according to your model

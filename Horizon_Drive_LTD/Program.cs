@@ -1,3 +1,4 @@
+using Horizon_Drive_LTD.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Horizon_Drive_LTD
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new List_A_Car_Page());
+            Application.Run(new DummyWindow());
         }
     }
 }
