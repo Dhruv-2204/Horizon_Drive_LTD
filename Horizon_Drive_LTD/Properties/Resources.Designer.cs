@@ -59,5 +59,25 @@ namespace Horizon_Drive_LTD.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap HORIZONDRIVE_LOGO {
+            get {
+                object obj = ResourceManager.GetObject("HORIZONDRIVE_LOGO", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap HORIZONDRIVE_LOGO1 {
+            get {
+                object obj = ResourceManager.GetObject("HORIZONDRIVE_LOGO1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
