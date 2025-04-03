@@ -1,176 +1,273 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Horizon_Drive_LTD
 {
     public partial class List_A_Car_Page : Form
     {
-        // Assuming CarListing is a model class for car listings
-        private List<CarListing> carListings;
+        private List<string> uploadedImagePaths = new List<string>();
+        private PictureBox[] imagePreviews;
 
         public List_A_Car_Page()
         {
             InitializeComponent();
-            this.Size = new Size(1920, 1080);
-
-            // Create buttons dynamically and add them to the form
-            var btnViewDeal = CreateRoundedButton("View Deal", 20, Color.Blue, Color.White);
-            btnViewDeal.Click += BtnViewDeal_Click;
-            btnViewDeal.Tag = 1;  // Example carId
-            this.Controls.Add(btnViewDeal);
-
-            var btnBrowseListings = CreateRoundedButton("Browse Listings", 80, Color.Green, Color.White);
-            btnBrowseListings.Click += btnBrowseListings_Click;
-            this.Controls.Add(btnBrowseListings);
-
-            var btnListCar = CreateRoundedButton("List a Car", 140, Color.Orange, Color.White);
-            btnListCar.Click += btnListCar_Click;
-            this.Controls.Add(btnListCar);
-
-            var btnManageBooking = CreateRoundedButton("Manage Booking", 200, Color.Purple, Color.White);
-            btnManageBooking.Click += btnManageBooking_Click;
-            this.Controls.Add(btnManageBooking);
-
-            var btnOptions = CreateRoundedButton("Options", 260, Color.Gray, Color.White);
-            btnOptions.Click += btnOptions_Click;
-            this.Controls.Add(btnOptions);
+            SetupImageUploadArea();
         }
 
-        private RoundedButton CreateRoundedButton(string text, int yPosition, Color backColor, Color textColor)
+        private void SetupImageUploadArea()
         {
-            return new RoundedButton
+            // Create array of PictureBoxes for image previews
+            imagePreviews = new PictureBox[]
             {
-                Size = new Size(200, 50),
-                Location = new Point(25, yPosition),
-                Text = text,
-                BackColor = backColor,
-                ForeColor = textColor,
-                FlatStyle = FlatStyle.Flat,
-                Font = new Font("Segoe UI", 12, FontStyle.Regular)
+                pictureBox1, pictureBox2, pictureBox3, pictureBox4, pictureBox5
             };
-        }
 
-        // Event handler for the "View Deal" button
-        private void BtnViewDeal_Click(object sender, EventArgs e)
-        {
-            Button btn = (Button)sender;
-            int carId = (int)btn.Tag;
+            // Setup drag and drop for the upload area
+            panelImageUpload.AllowDrop = true;
+            panelImageUpload.DragEnter += PanelImageUpload_DragEnter;
+            panelImageUpload.DragDrop += PanelImageUpload_DragDrop;
+            panelImageUpload.Click += PanelImageUpload_Click;
 
-            // Find the car
-            CarListing selectedCar = carListings.FirstOrDefault(c => c.Id == carId);
-
-            if (selectedCar != null)
+            // Reset image previews
+            foreach (var preview in imagePreviews)
             {
-                // Open the booking form or show details
-                MessageBox.Show($"You selected: {selectedCar.Make} {selectedCar.Model}\n" +
-                               $"Price: Rs {selectedCar.PricePerDay}/day",
-                               "View Deal",
-                               MessageBoxButtons.OK,
-                               MessageBoxIcon.Information);
+                preview.Image = null;
+                preview.Tag = null;
+                preview.Click += ImagePreview_Click;
             }
         }
 
-        // Event handler for browsing listings
-        private void btnBrowseListings_Click(object sender, EventArgs e)
+        private void PanelImageUpload_DragEnter(object sender, DragEventArgs e)
         {
-            // Already on the listings page, could refresh or apply filters
-            PopulateCarListings();
+            // Check if the dragged data contains file drops
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
         }
 
-        // Event handler for listing a new car
-        private void btnListCar_Click(object sender, EventArgs e)
+        private void PanelImageUpload_DragDrop(object sender, DragEventArgs e)
         {
-            MessageBox.Show("List a Car functionality would open a form to add a new listing.",
-                            "List a Car",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            ProcessImageFiles(files);
         }
 
-        // Event handler for managing bookings
-        private void btnManageBooking_Click(object sender, EventArgs e)
+        private void PanelImageUpload_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Manage Booking functionality would open a form to view and manage bookings.",
-                            "Manage Bookings",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
+                openFileDialog.Multiselect = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    ProcessImageFiles(openFileDialog.FileNames);
+                }
+            }
         }
 
-        // Event handler for options/settings
-        private void btnOptions_Click(object sender, EventArgs e)
+        private void ProcessImageFiles(string[] files)
         {
-            MessageBox.Show("Options functionality would open settings for the application.",
-                            "Options",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
+            // Limit to 5 images
+            int availableSlots = imagePreviews.Length - uploadedImagePaths.Count;
+            int filesToProcess = Math.Min(files.Length, availableSlots);
+
+            for (int i = 0; i < filesToProcess; i++)
+            {
+                string file = files[i];
+                // Find first empty preview slot
+                for (int j = 0; j < imagePreviews.Length; j++)
+                {
+                    if (imagePreviews[j].Image == null)
+                    {
+                        try
+                        {
+                            using (Image img = Image.FromFile(file))
+                            {
+                                imagePreviews[j].Image = new Bitmap(img, imagePreviews[j].Size);
+                                imagePreviews[j].Tag = file;
+                                uploadedImagePaths.Add(file);
+                            }
+                            break;
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Error loading image: {ex.Message}", "Image Upload Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+
+            UpdateUploadButtonVisibility();
         }
 
-        // Method to populate car listings (example placeholder)
-        private void PopulateCarListings()
+        private void ImagePreview_Click(object sender, EventArgs e)
         {
-            // Logic to populate car listings goes here
+            PictureBox clickedPictureBox = (PictureBox)sender;
+
+            // If image exists, allow removal
+            if (clickedPictureBox.Image != null)
+            {
+                DialogResult result = MessageBox.Show("Remove this image?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    // Remove the image path from the list
+                    if (clickedPictureBox.Tag != null)
+                    {
+                        uploadedImagePaths.Remove(clickedPictureBox.Tag.ToString());
+                    }
+
+                    // Clear the image and tag
+                    clickedPictureBox.Image = null;
+                    clickedPictureBox.Tag = null;
+
+                    UpdateUploadButtonVisibility();
+                }
+            }
         }
 
-        private void txtLicensePlate_TextChanged(object sender, EventArgs e)
+        private void UpdateUploadButtonVisibility()
         {
-
+            // Hide upload area if 5 images are uploaded
+            panelImageUpload.Visible = uploadedImagePaths.Count < 5;
         }
 
-        private void contentPanel_Paint(object sender, PaintEventArgs e)
+        private void btnListMyCar_Click(object sender, EventArgs e)
         {
+            // Validate form inputs before submission
+            if (ValidateForm())
+            {
+                // Collect and process car listing data
+                CarListing newListing = new CarListing
+                {
+                    Make = cmbMake.SelectedItem?.ToString(),
+                    Model = cmbModel.SelectedItem?.ToString(),
+                    Year = cmbYear.SelectedItem?.ToString(),
+                    Type = cmbType.SelectedItem?.ToString(),
+                    Color = cmbColor.SelectedItem?.ToString(),
+                    LicensePlate = txtLicensePlate.Text,
+                    Description = txtCarDescription.Text,
+                    DailyRate = decimal.Parse(txtDailyRate.Text),
+                    ImagePaths = uploadedImagePaths
+                };
 
+                // Save or process the listing
+                SaveCarListing(newListing);
+            }
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private bool ValidateForm()
         {
+            // Add comprehensive form validation
+            List<string> errors = new List<string>();
 
+            if (cmbMake.SelectedItem == null) errors.Add("Please select a car make.");
+            if (cmbModel.SelectedItem == null) errors.Add("Please select a model.");
+            if (cmbYear.SelectedItem == null) errors.Add("Please select a year.");
+            if (cmbType.SelectedItem == null) errors.Add("Please select a car type.");
+            if (cmbColor.SelectedItem == null) errors.Add("Please select a color.");
+            if (string.IsNullOrWhiteSpace(txtLicensePlate.Text)) errors.Add("Please enter a license plate.");
+            if (string.IsNullOrWhiteSpace(txtCarDescription.Text)) errors.Add("Please provide a car description.");
+            if (!decimal.TryParse(txtDailyRate.Text, out _)) errors.Add("Please enter a valid daily rate.");
+            if (uploadedImagePaths.Count == 0) errors.Add("Please upload at least one car image.");
+
+            if (errors.Count > 0)
+            {
+                MessageBox.Show(string.Join("\n", errors), "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            return true;
+        }
+
+        private void SaveCarListing(CarListing listing)
+        {
+            // Implement actual save logic - could be database, file, API call, etc.
+            MessageBox.Show("Car listing saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            // Optional: Clear form after successful submission
+            ResetForm();
+        }
+
+        private void ResetForm()
+        {
+            // Reset all form controls
+            cmbMake.SelectedIndex = -1;
+            cmbModel.SelectedIndex = -1;
+            cmbYear.SelectedIndex = -1;
+            cmbType.SelectedIndex = -1;
+            cmbColor.SelectedIndex = -1;
+            txtLicensePlate.Clear();
+            txtCarDescription.Clear();
+            txtDailyRate.Text = "7500.00";
+
+            // Clear image previews
+            foreach (var preview in imagePreviews)
+            {
+                preview.Image = null;
+                preview.Tag = null;
+            }
+            uploadedImagePaths.Clear();
+            UpdateUploadButtonVisibility();
+        }
+
+        // Populate Models based on selected Make
+        private void cmbMake_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cmbModel.Items.Clear();
+            switch (cmbMake.SelectedItem?.ToString())
+            {
+                case "Toyota":
+                    cmbModel.Items.AddRange(new string[] { "Corolla", "Camry", "RAV4", "Highlander" });
+                    break;
+                case "Honda":
+                    cmbModel.Items.AddRange(new string[] { "Civic", "Accord", "CR-V", "Pilot" });
+                    break;
+                case "BMW":
+                    cmbModel.Items.AddRange(new string[] { "3 Series", "5 Series", "X3", "X5" });
+                    break;
+                case "Mercedes":
+                    cmbModel.Items.AddRange(new string[] { "C-Class", "E-Class", "GLC", "GLE" });
+                    break;
+                case "Ford":
+                    cmbModel.Items.AddRange(new string[] { "Mustang", "F-150", "Explorer", "Escape" });
+                    break;
+            }
         }
     }
 
-    // Sample CarListing class, adjust according to your model
+    // Extended CarListing class to include image paths
     public class CarListing
     {
-        public int Id { get; set; }
         public string Make { get; set; }
         public string Model { get; set; }
-        public decimal PricePerDay { get; set; }
+        public string Year { get; set; }
+        public string Type { get; set; }
+        public string Color { get; set; }
+        public string LicensePlate { get; set; }
+        public string Description { get; set; }
+        public decimal DailyRate { get; set; }
+        public List<string> ImagePaths { get; set; } = new List<string>();
     }
 
-    // Custom button class with rounded corners
+    // Added RoundedButton Class
     public class RoundedButton : Button
     {
-        private int borderRadius = 26;
-
-        public RoundedButton()
+        protected override void OnPaint(PaintEventArgs pevent)
         {
-            this.FlatStyle = FlatStyle.Flat;
-            this.FlatAppearance.BorderSize = 0;
-        }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            // Enable anti-aliasing for smooth edges
-            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-
-            GraphicsPath path = new GraphicsPath();
-            Rectangle rect = new Rectangle(0, 0, this.Width, this.Height);
-
-            // Create rounded rectangle with the specified corner radius
-            int diameter = borderRadius * 2;
-            path.AddArc(rect.X, rect.Y, diameter, diameter, 180, 90);
-            path.AddArc(rect.Width - diameter, rect.Y, diameter, diameter, 270, 90);
-            path.AddArc(rect.Width - diameter, rect.Height - diameter, diameter, diameter, 0, 90);
-            path.AddArc(rect.X, rect.Height - diameter, diameter, diameter, 90, 90);
-            path.CloseAllFigures();
-
-            // Set the button's region to our rounded rectangle
-            this.Region = new Region(path);
-
-            // Draw the button
-            base.OnPaint(e);
+            base.OnPaint(pevent);
+            // Create rounded edges
+            var graphicsPath = new System.Drawing.Drawing2D.GraphicsPath();
+            graphicsPath.AddEllipse(0, 0, this.Width, this.Height);
+            this.Region = new Region(graphicsPath);
         }
     }
 }
