@@ -33,7 +33,13 @@ namespace Horizon_Drive_LTD
                 Year = 2023,
                 Description = "A powerful off-road pickup built for performance and adventure. Rent now for a rugged and thrilling ride!",
                 PricePerDay = 15000,
-                ImagePath = "ford_raptor.jpg"
+                ImagePath = "Fordraptor.jpg",
+                AdditionalImages = new List<string>
+        {
+            "Fordraptor1.jpg",
+            "Fordraptor2.jpg",
+            "Fordraptor3.jpg"
+        }
             });
 
             carListings.Add(new CarListing
@@ -44,7 +50,13 @@ namespace Horizon_Drive_LTD
                 Year = 2023,
                 Description = "A luxury high-performance SUV with bold design and powerful hybrid technology. Rent now for an elite driving experience!",
                 PricePerDay = 30000,
-                ImagePath = "bmw_x4.jpg"
+                ImagePath = "bmw_x4.jpg",
+                AdditionalImages = new List<string>
+        {
+            "bmw_x4_1.jpg",
+            "bmw_x4_2.jpg",
+            "bmw_x4_3.jpg"
+        }
             });
 
             carListings.Add(new CarListing
@@ -55,7 +67,13 @@ namespace Horizon_Drive_LTD
                 Year = 2023,
                 Description = "A sleek, mid-engine sports car with thrilling performance and sharp handling. Rent now for an unforgettable drive!",
                 PricePerDay = 20000,
-                ImagePath = "corvette_c8.jpg"
+                ImagePath = "corvette_c8.jpg",
+                AdditionalImages = new List<string>
+        {
+            "corvette_c8_1.jpg",
+            "corvette_c8_2.jpg",
+            "corvette_c8_3.jpg"
+        }
             });
 
             carListings.Add(new CarListing
@@ -66,7 +84,13 @@ namespace Horizon_Drive_LTD
                 Year = 2023,
                 Description = "A modern muscle car with bold design and powerful performance. Rent now for an exhilarating ride!",
                 PricePerDay = 25000,
-                ImagePath = "ford_mustang.jpg"
+                ImagePath = "ford_mustang.jpg",
+                AdditionalImages = new List<string>
+        {
+            "ford_mustang_1.jpg",
+            "ford_mustang_2.jpg",
+            "ford_mustang_3.jpg"
+        }
             });
 
             // Add more cars for the bottom row
@@ -78,7 +102,13 @@ namespace Horizon_Drive_LTD
                 Year = 2023,
                 Description = "Performance luxury at its finest with distinctive styling and remarkable power.",
                 PricePerDay = 28000,
-                ImagePath = "mercedes_amg.jpg"
+                ImagePath = "mercedes_amg.jpg",
+                AdditionalImages = new List<string>
+        {
+            "mercedes_amg_1.jpg",
+            "mercedes_amg_2.jpg",
+            "mercedes_amg_3.jpg"
+        }
             });
 
             carListings.Add(new CarListing
@@ -89,7 +119,13 @@ namespace Horizon_Drive_LTD
                 Year = 2022,
                 Description = "Reliable, efficient and perfect for city driving with excellent fuel economy.",
                 PricePerDay = 8000,
-                ImagePath = "honda_civic.jpg"
+                ImagePath = "honda_civic.jpg",
+                AdditionalImages = new List<string>
+        {
+            "honda_civic_1.jpg",
+            "honda_civic_2.jpg",
+            "honda_civic_3.jpg"
+        }
             });
 
             carListings.Add(new CarListing
@@ -100,7 +136,13 @@ namespace Horizon_Drive_LTD
                 Year = 2023,
                 Description = "Elegance meets performance in this luxury SUV coupe with cutting-edge technology.",
                 PricePerDay = 32000,
-                ImagePath = "mercedes_gle.jpg"
+                ImagePath = "mercedes_gle.jpg",
+                AdditionalImages = new List<string>
+        {
+            "mercedes_gle_1.jpg",
+            "mercedes_gle_2.jpg",
+            "mercedes_gle_3.jpg"
+        }
             });
 
             carListings.Add(new CarListing
@@ -111,7 +153,13 @@ namespace Horizon_Drive_LTD
                 Year = 2023,
                 Description = "The pinnacle of Mercedes performance with breathtaking design and power.",
                 PricePerDay = 35000,
-                ImagePath = "mercedes_amg_gt.jpg"
+                ImagePath = "mercedes_amg_gt.jpg",
+                AdditionalImages = new List<string>
+        {
+            "mercedes_amg_gt_1.jpg",
+            "mercedes_amg_gt_2.jpg",
+            "mercedes_amg_gt_3.jpg"
+        }
             });
         }
 
@@ -208,16 +256,9 @@ namespace Horizon_Drive_LTD
 
             if (selectedCar != null)
             {
-                // Open the booking form or show details
-                MessageBox.Show($"You selected: {selectedCar.Make} {selectedCar.Model}\n" +
-                               $"Price: Rs {selectedCar.PricePerDay}/day",
-                               "View Deal",
-                               MessageBoxButtons.OK,
-                               MessageBoxIcon.Information);
-
-                // In a real application, you would open a booking form here
-                // BookingForm bookingForm = new BookingForm(selectedCar);
-                // bookingForm.ShowDialog();
+                // Open the booking form
+                CarBookingForm bookingForm = new CarBookingForm(selectedCar);
+                bookingForm.ShowDialog();
             }
         }
 
@@ -413,12 +454,13 @@ namespace Horizon_Drive_LTD
 
 
 public class CarListing
-    {
-        public int Id { get; set; }
-        public string Make { get; set; }
-        public string Model { get; set; }
-        public int Year { get; set; }
-        public string Description { get; set; }
-        public decimal PricePerDay { get; set; }
-        public string ImagePath { get; set; }
-    }
+{
+    public int Id { get; set; }
+    public string Make { get; set; }
+    public string Model { get; set; }
+    public int Year { get; set; }
+    public string Description { get; set; }
+    public decimal PricePerDay { get; set; }
+    public string ImagePath { get; set; }
+    public List<string> AdditionalImages { get; set; } = new List<string>();
+}
