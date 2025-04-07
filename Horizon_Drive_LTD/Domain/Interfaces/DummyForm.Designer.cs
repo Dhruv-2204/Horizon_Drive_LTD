@@ -114,7 +114,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Elephant", 18F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
-            label3.Location = new Point(878, 74);
+            label3.Location = new Point(891, 19);
             label3.Margin = new Padding(8, 0, 8, 0);
             label3.Name = "label3";
             label3.Size = new Size(318, 38);
@@ -124,9 +124,9 @@
             // 
             // pictureBox2
             // 
-            pictureBox2.Location = new Point(891, 384);
+            pictureBox2.Location = new Point(891, 337);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(337, 162);
+            pictureBox2.Size = new Size(337, 288);
             pictureBox2.TabIndex = 7;
             pictureBox2.TabStop = false;
             // 
@@ -155,7 +155,7 @@
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Font = new Font("Tahoma", 8F);
-            dataGridView1.Location = new Point(835, 147);
+            dataGridView1.Location = new Point(860, 74);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.Size = new Size(393, 231);
