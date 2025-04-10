@@ -38,6 +38,7 @@
 
   <ItemGroup>
     <Folder Include="Domain\Interfaces\" />
+    <Folder Include="Media\Images\" />
     <Folder Include="Tests\" />
   </ItemGroup>
 

@@ -44,7 +44,7 @@ namespace splashscreen
                 }
 
                 // Construct the path to the sound file directly inside Horizon_Drive_LTD
-                string soundPath = Path.Combine(currentDir.FullName, "Sound\\fast-car-sound.wav");
+                string soundPath = Path.Combine(currentDir.FullName, "Media\\Sound\\fast-car-sound.wav");
 
                 // Checking if the sound file exists before playing
                 if (!File.Exists(soundPath))

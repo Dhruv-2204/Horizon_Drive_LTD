@@ -3,11 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Horizon_Drive_LTD.BusinessLogic.Repositories;
-using Horizon_Drive_LTD.BusinessLogic.Services;
-using Horizon_Drive_LTD.BusinessLogic;
-using Horizon_Drive_LTD.DataStructure;
-using Horizon_Drive_LTD.Domain.Entities;
+
 
 namespace splashscreen
 {
