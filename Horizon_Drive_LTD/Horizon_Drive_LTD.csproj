@@ -10,8 +10,11 @@
 
   <ItemGroup>
     <Compile Remove="Repositoriess\**" />
+    <Compile Remove="Sound\**" />
     <EmbeddedResource Remove="Repositoriess\**" />
+    <EmbeddedResource Remove="Sound\**" />
     <None Remove="Repositoriess\**" />
+    <None Remove="Sound\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,7 +38,7 @@
 
   <ItemGroup>
     <Folder Include="Domain\Interfaces\" />
-    <Folder Include="UI\" />
+    <Folder Include="Tests\" />
   </ItemGroup>
 
 </Project>
