@@ -39,11 +39,17 @@
 
         private void Login_button(object sender, EventArgs e)
         {
-            Login login = new Login(_authService); // Pass existing auth service to Login
+            Login login = new Login(); // Pass existing auth service to Login
             login.Show();
             this.Dispose();
         }
 
+        private void sign_btn(object sender, EventArgs e)
+        {
+            Login login = new Login(); // Pass existing auth service to Login
+            login.Show();
+            this.Dispose();
+        }
 
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -65,35 +71,7 @@
             this.FormClosing += new FormClosingEventHandler(Closing_form);
         }
 
-        private void username(object sender, EventArgs e)
-        {
-
-        }
-
-        private void email(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Phone_number(object sender, EventArgs e)
-        {
-
-        }
-
-        private void address(object sender, EventArgs e)
-        {
-
-        }
-
-        private void password(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel4_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+        
     }
 }
 

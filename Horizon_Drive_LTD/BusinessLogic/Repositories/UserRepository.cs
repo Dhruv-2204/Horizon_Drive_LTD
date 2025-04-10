@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             _dbConnection = dbConnection;
         }
 
-        public HashTable<string, User> LoadUsersIntoHashTable()
+        internal HashTable<string, User> LoadUsersIntoHashTable()
         {
             var userTable = new HashTable<string, User>(1000);
 
@@ -49,5 +50,29 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
 
             return userTable;
         }
+
+        public void InsertUser(User user)
+        {
+            using (SqlConnection conn = _dbConnection.GetConnection())
+            {
+                conn.Open();
+                string query = @"INSERT INTO Users (UserId, FirstName, LastName, Username, Email, DOB, PhoneNumber, Address, PasswordHash)
+                         VALUES (@UserId, @FirstName, @LastName, @Username, @Email, @DOB, @PhoneNumber, @Address, @PasswordHash)";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@UserId", user.UserId);
+                cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
+                cmd.Parameters.AddWithValue("@LastName", user.LastName);
+                cmd.Parameters.AddWithValue("@Username", user.Username);
+                cmd.Parameters.AddWithValue("@Email", user.Email);
+                cmd.Parameters.AddWithValue("@DOB", user.DOB);
+                cmd.Parameters.AddWithValue("@PhoneNumber", user.PhoneNumber);
+                cmd.Parameters.AddWithValue("@Address", user.Address);
+                cmd.Parameters.AddWithValue("@PasswordHash", user.Password); 
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
     }
 }

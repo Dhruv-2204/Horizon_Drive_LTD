@@ -200,6 +200,7 @@
             signup_btn.TabIndex = 21;
             signup_btn.Text = " SIGN UP";
             signup_btn.UseVisualStyleBackColor = false;
+            signup_btn.Click += new EventHandler(signup_btn_Click);
             // 
             // checkBox1
             // 
@@ -448,6 +449,13 @@
             PerformLayout();
         }
 
+        private void signup_btn_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
         #endregion
 
         private Panel panel1;
@@ -478,5 +486,6 @@
         private Panel panel4;
         private Panel panel3;
         private Panel panel5;
+        
     }
 }

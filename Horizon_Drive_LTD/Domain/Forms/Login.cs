@@ -65,7 +65,7 @@ namespace splashscreen
             }
         }
 
-        private void Login_btn(object sender, EventArgs e)
+        private void LOGIN_btn_Click(object sender, EventArgs e)
         {
             string enteredUsername = Username.Text.Trim();
             string enteredPassword = Password.Text;
@@ -83,11 +83,12 @@ namespace splashscreen
             }
         }
 
-        private void signup_btn(object sender, EventArgs e)
+
+        private void Signup_btn_Click(object sender, EventArgs e)
         {
-            Signup signup = new Signup();// Calls signup constructor
-            signup.Show();//Shows the signup window
-            this.Dispose();//closes the login window
+            Signup signup = new Signup(); // Calls signup constructor
+            signup.Show(); //Shows the signup window
+            this.Dispose(); //closes the login window
         }
 
        
