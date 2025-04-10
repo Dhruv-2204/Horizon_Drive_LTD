@@ -19,14 +19,14 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             _dbConnection = dbConnection;
         }
 
-        public HashTable<string, User> LoadUsersIntoHashTable()
+        internal HashTable<string, User> LoadUsersIntoHashTable()
         {
             var userTable = new HashTable<string, User>(1000);
 
             using (SqlConnection conn = _dbConnection.GetConnection())
             {
                 conn.Open();
-                string query = "SELECT UserId, Username, PasswordHash, Role, Email FROM Users"; 
+                string query = "SELECT UserId, username, PasswordHash, Role, TheEmailId FROM Users"; 
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 using (SqlDataReader reader = cmd.ExecuteReader())
