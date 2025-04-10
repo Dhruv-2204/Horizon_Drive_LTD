@@ -124,7 +124,7 @@
             panel4.Name = "panel4";
             panel4.Size = new Size(210, 53);
             panel4.TabIndex = 24;
-            panel4.Paint += panel4_Paint;
+          
             // 
             // Last_Name
             // 
@@ -249,7 +249,7 @@
             Password.Size = new Size(378, 29);
             Password.TabIndex = 17;
             Password.UseSystemPasswordChar = true;
-            Password.TextChanged += password;
+           
             // 
             // Address
             // 
@@ -263,7 +263,7 @@
             Address.PlaceholderText = "Enter Address";
             Address.Size = new Size(378, 29);
             Address.TabIndex = 16;
-            Address.TextChanged += address;
+          
             // 
             // Phone_Number
             // 
@@ -277,7 +277,7 @@
             Phone_Number.PlaceholderText = "Enter Phone Number";
             Phone_Number.Size = new Size(378, 29);
             Phone_Number.TabIndex = 15;
-            Phone_Number.TextChanged += Phone_number;
+           
             // 
             // label9
             // 
@@ -324,7 +324,7 @@
             Email.PlaceholderText = "Enter Email";
             Email.Size = new Size(378, 29);
             Email.TabIndex = 11;
-            Email.TextChanged += email;
+          
             // 
             // label7
             // 
@@ -348,7 +348,7 @@
             Username.PlaceholderText = "Enter Username";
             Username.Size = new Size(378, 29);
             Username.TabIndex = 9;
-            Username.TextChanged += username;
+        
             // 
             // label6
             // 

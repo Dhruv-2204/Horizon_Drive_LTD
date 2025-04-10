@@ -1,10 +1,18 @@
 ﻿namespace Horizon_Drive_LTD
 {
+    using Horizon_Drive_LTD.BusinessLogic.Services;
     //Using the splashcreen namespace to summon the Login window
     using splashscreen;
     public partial class Signup : Form
     {
         private bool isClosing = false;
+        private AuthenticationService _authService;
+        public Signup(AuthenticationService authService)
+        {
+            InitializeComponent();
+            _authService = authService;
+        }
+
         public Signup()
         {
             InitializeComponent();
@@ -31,9 +39,9 @@
 
         private void Login_button(object sender, EventArgs e)
         {
-            Login login = new Login(); // Calls login constructor
-            login.Show(); //Shows the login window
-            this.Dispose();//closes the signup window
+            Login login = new Login(_authService); // Pass existing auth service to Login
+            login.Show();
+            this.Dispose();
         }
 
 

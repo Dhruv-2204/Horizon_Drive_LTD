@@ -8,12 +8,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Horizon_Drive_LTD.BusinessLogic.Services;
+using Horizon_Drive_LTD.Domain.Entities;
 namespace splashscreen
 {
     public partial class Login : Form
     {
         private bool isClosing = false;
+        private AuthenticationService _authService;
+
+        public Login(AuthenticationService authService)
+        {
+            InitializeComponent();
+           _authService = authService ?? throw new ArgumentNullException(nameof(authService));
+        }
+
         public Login()
         {
             InitializeComponent();
@@ -42,25 +51,7 @@ namespace splashscreen
             }
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
@@ -74,34 +65,22 @@ namespace splashscreen
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void username(object sender, EventArgs e)
-        {
-
-        }
-
-        private void password(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void Login_btn(object sender, EventArgs e)
         {
+            string enteredUsername = Username.Text.Trim();
+            string enteredPassword = Password.Text;
 
+            if (_authService.Login(enteredUsername, enteredPassword, out User loggedInUser))
+            {
+                MessageBox.Show($"Welcome, {loggedInUser.Username}!", "Login Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Proceed to next form/dashboard
+                // e.g. new DashboardForm(loggedInUser).Show(); this.Hide();
+            }
+            else
+            {
+                MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void signup_btn(object sender, EventArgs e)
@@ -111,9 +90,6 @@ namespace splashscreen
             this.Dispose();//closes the login window
         }
 
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+       
     }
 }

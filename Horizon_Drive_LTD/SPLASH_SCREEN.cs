@@ -1,4 +1,7 @@
 ﻿using Horizon_Drive_LTD;
+using Horizon_Drive_LTD.BusinessLogic.Repositories;
+using Horizon_Drive_LTD.BusinessLogic;
+using Horizon_Drive_LTD.BusinessLogic.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +17,7 @@ namespace splashscreen
 {
     public partial class SPLASH_SCREEN : Form
     {
+       
         public  SPLASH_SCREEN()
         {
             InitializeComponent();
@@ -69,18 +73,24 @@ namespace splashscreen
             if (panel2.Width >= 688)
             {
                 timer1.Stop();
-                OpensignUp();//Calls the procedure to open the sign up page
+                OpenLoginUp();  //Calls the procedure to open the login up page
 
             }
         }
 
-        private void OpensignUp()
+        private void OpenLoginUp()
         {
-            //Signup signup = new Signup();
-            //signup.Show();
-            Login login = new Login();
-            login.Show();
-            this.Hide(); // Hide splash screen instead of closing
+
+            var userRepo = new UserRepository(new DatabaseConnection());
+            var userHashTable = userRepo.LoadUsersIntoHashTable();
+            var authService = new AuthenticationService(userHashTable);
+
+            // Create and show the Login form, passing the authService instance
+            Login loginForm = new Login(authService);
+            loginForm.Show();
+
+          
+            this.Hide();
         }
 
         private void pictureBox1_Click_1(object sender, EventArgs e)

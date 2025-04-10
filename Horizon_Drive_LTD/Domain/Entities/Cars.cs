@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Horizon_Drive_LTD.Domain.Entities
 {
-    class Cars
+   public class Cars
     {
     }
 }

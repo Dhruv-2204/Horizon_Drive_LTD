@@ -65,7 +65,7 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(656, 467);
             panel1.TabIndex = 0;
-            panel1.Paint += panel1_Paint;
+          
             // 
             // label3
             // 
@@ -77,7 +77,7 @@
             label3.TabIndex = 2;
             label3.Text = "Log In";
             label3.TextAlign = ContentAlignment.MiddleCenter;
-            label3.Click += label3_Click;
+           
             // 
             // checkBox1
             // 
@@ -125,7 +125,7 @@
             Password.Size = new Size(309, 33);
             Password.TabIndex = 6;
             Password.UseSystemPasswordChar = true;
-            Password.TextChanged += password;
+         
             // 
             // label2
             // 
@@ -136,7 +136,7 @@
             label2.Size = new Size(78, 18);
             label2.TabIndex = 5;
             label2.Text = "Password:";
-            label2.Click += label2_Click;
+          
             // 
             // Username
             // 
@@ -149,7 +149,7 @@
             Username.PlaceholderText = "Enter Username";
             Username.Size = new Size(309, 33);
             Username.TabIndex = 4;
-            Username.TextChanged += username;
+        
             // 
             // label4
             // 
@@ -160,7 +160,7 @@
             label4.Size = new Size(80, 18);
             label4.TabIndex = 3;
             label4.Text = "Username:";
-            label4.Click += label4_Click;
+        
             // 
             // panel2
             // 
@@ -176,7 +176,7 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(288, 468);
             panel2.TabIndex = 0;
-            panel2.Paint += panel2_Paint;
+           
             // 
             // Signup_btn
             // 
@@ -215,7 +215,7 @@
             label1.Size = new Size(184, 23);
             label1.TabIndex = 1;
             label1.Text = "Horizon Drive LTD";
-            label1.Click += label1_Click;
+          
             // 
             // pictureBox1
             // 
@@ -227,7 +227,7 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click;
+          
             // 
             // Login
             // 

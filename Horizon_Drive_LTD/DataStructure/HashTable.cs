@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Horizon_Drive_LTD.DataStructure
 {
-    class HashTable<TKey, TValue>
+   public class HashTable<TKey, TValue>
     {
         private int _capacity;
         private int _size;
