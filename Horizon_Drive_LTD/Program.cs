@@ -1,3 +1,4 @@
+using splashscreen;
 using System;
 using System.Windows.Forms;
 
@@ -17,7 +18,7 @@ namespace Horizon_Drive_LTD
             Application.SetCompatibleTextRenderingDefault(false);
 
             
-             Application.Run(new Options_Personal());
+             Application.Run(new SPLASH_SCREEN());
 
             
         }

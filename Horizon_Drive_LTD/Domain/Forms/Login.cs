@@ -72,10 +72,22 @@ namespace splashscreen
 
             if (_authService.Login(enteredUsername, enteredPassword, out User loggedInUser))
             {
-                MessageBox.Show($"Welcome, {loggedInUser.Username}!", "Login Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DialogResult result = MessageBox.Show(
+                    $"Welcome, {loggedInUser.Username}!",
+                    "Login Successful",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
 
-                // Proceed to next form/dashboard
-                // e.g. new DashboardForm(loggedInUser).Show(); this.Hide();
+                if (result == DialogResult.OK)
+                {
+                    Options_Personal dashboard = new Options_Personal();
+                    dashboard.FormClosed += (s, args) => this.Close(); // Close the login form when the dashboard is closed
+                    dashboard.Show();
+
+                    // Hide the current form (Login form)
+                    this.Hide();
+                }
             }
             else
             {
