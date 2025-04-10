@@ -300,15 +300,10 @@ namespace Horizon_Drive_LTD
 
         private void btnManageBooking_Click(object sender, EventArgs e)
         {
-            // Open form to manage bookings
-            MessageBox.Show("Manage Booking functionality would open a form to view and manage bookings.",
-                           "Manage Bookings",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
-
-            // In a real application, you would open a form here
-            // ManageBookingsForm manageBookingsForm = new ManageBookingsForm();
-            // manageBookingsForm.ShowDialog();
+            // Open the Manage Bookings form
+            ManageBookings manageBookingsForm = new ManageBookings();
+            manageBookingsForm.Show();
+            this.Hide();
         }
 
         private void btnOptions_Click(object sender, EventArgs e)
