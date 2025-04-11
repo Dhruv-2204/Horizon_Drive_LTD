@@ -17,31 +17,11 @@ namespace Horizon_Drive_LTD
         {
             InitializeComponent();
 
-            // Set the form size to match BrowseListings
-            this.ClientSize = new Size(1600, 900);
-            this.MinimumSize = new Size(1000, 700);
-
-            // Center panel layout adjustments
-            this.panelMain.Dock = DockStyle.Fill;
-            this.panelContent.Dock = DockStyle.None;
-            this.panelContent.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            this.panelContent.AutoSize = false;
-            this.panelContent.Location = new Point(20, 127);
-            this.panelContent.Width = this.panelMain.Width - 40; // 20px margin on each side
-
-            // Adjust scrolling behavior
-            this.panelContent.AutoScroll = true;
-            this.panelContent.HorizontalScroll.Enabled = false;
-            this.panelContent.HorizontalScroll.Visible = false;
-
-            // Add resize handler
-            this.Resize += ListCarForm_Resize;
+            // Initialize photo placeholders
+            InitializePhotoPlaceholders();
 
             // Set the plus icon for upload
             pictureBoxUpload.Image = CreatePlusIcon(30, 30);
-
-            // Initialize photo placeholders
-            InitializePhotoPlaceholders();
 
             // Set date pickers to current date + 1 day and + 30 days
             dateTimePickerStart.Value = DateTime.Today.AddDays(1);
@@ -49,28 +29,6 @@ namespace Horizon_Drive_LTD
 
             // Set up drag and drop functionality
             SetupDragAndDrop();
-
-            // Adjust control widths to fit
-            AdjustControlWidths();
-        }
-
-        private void ListCarForm_Resize(object sender, EventArgs e)
-        {
-            // Adjust panelContent width when form is resized
-            this.panelContent.Width = this.panelMain.Width - 40;
-
-            // Readjust control widths when form is resized
-            AdjustControlWidths();
-        }
-
-        private void AdjustControlWidths()
-        {
-            // Adjust the width of wider controls to fit within the panel
-            txtDescription.Width = panelContent.Width - txtDescription.Left - 30;
-            txtDailyRate.Width = panelContent.Width - txtDailyRate.Left - 30;
-            txtLicensePlate.Width = Math.Min(364, panelContent.Width - txtLicensePlate.Left - 30);
-            panelUploadPhotos.Width = panelContent.Width - panelUploadPhotos.Left - 30;
-            panelPhotoContainer.Width = panelContent.Width - panelPhotoContainer.Left - 30;
         }
 
         private void ListCarForm_Load(object sender, EventArgs e)
@@ -395,6 +353,20 @@ namespace Horizon_Drive_LTD
             }
         }
 
+        private void PanelUploadPhotos_Paint(object sender, PaintEventArgs e)
+        {
+            Panel panel = (Panel)sender;
+
+            // Create dashed pen
+            using (System.Drawing.Pen dashedPen = new System.Drawing.Pen(Color.Gray, 1))
+            {
+                dashedPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+
+                // Draw dashed rectangle
+                e.Graphics.DrawRectangle(dashedPen, 0, 0, panel.Width - 1, panel.Height - 1);
+            }
+        }
+
         #endregion
 
         #region Helper Methods
@@ -433,7 +405,7 @@ namespace Horizon_Drive_LTD
             using (Graphics g = Graphics.FromImage(bitmap))
             {
                 g.Clear(Color.Transparent);
-                using (Pen pen = new Pen(Color.Gray, 2))
+                using (System.Drawing.Pen pen = new System.Drawing.Pen(Color.Gray, 2))
                 {
                     // Draw a plus sign
                     g.DrawLine(pen, width / 2, 5, width / 2, height - 5);
@@ -459,16 +431,17 @@ namespace Horizon_Drive_LTD
                         break;
                     }
 
-                    // Check file size (5MB limit)
+                    // Check file size (10MB limit)
                     FileInfo fileInfo = new FileInfo(fileName);
-                    if (fileInfo.Length > 5 * 1024 * 1024) // 5MB in bytes
+                    if (fileInfo.Length > 10 * 1024 * 1024) // 10MB in bytes
                     {
-                        MessageBox.Show($"The file {Path.GetFileName(fileName)} exceeds the 5MB size limit.",
+                        MessageBox.Show($"The file {Path.GetFileName(fileName)} exceeds the 10MB size limit.",
                                       "File Too Large",
                                       MessageBoxButtons.OK,
                                       MessageBoxIcon.Warning);
                         continue;
                     }
+
 
                     // Add the photo path to our list
                     uploadedPhotoPaths.Add(fileName);
@@ -622,20 +595,6 @@ namespace Horizon_Drive_LTD
             return true;
         }
 
-        private void PanelUploadPhotos_Paint(object sender, PaintEventArgs e)
-        {
-            Panel panel = (Panel)sender;
-
-            // Create dashed pen
-            using (Pen dashedPen = new Pen(Color.Gray, 1))
-            {
-                dashedPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-
-                // Draw dashed rectangle
-                e.Graphics.DrawRectangle(dashedPen, 0, 0, panel.Width - 1, panel.Height - 1);
-            }
-        }
-
         private void SaveCarListing()
         {
             // In a real application, this would save to a database
@@ -668,7 +627,7 @@ namespace Horizon_Drive_LTD
             // 1. Copy to application's image directory
             // 2. Save paths in database
 
-            // For demo purposes, just log to console what would be saved
+            // For demo purposes, just log to console
             Console.WriteLine($"Car Listed: {carListing.Year} {carListing.Make} {carListing.Model}");
             Console.WriteLine($"Type: {carType}, Color: {color}, License: {licensePlate}");
             Console.WriteLine($"Daily Rate: {carListing.PricePerDay:C}");
@@ -678,5 +637,18 @@ namespace Horizon_Drive_LTD
         }
 
         #endregion
+    }
+
+    // CarListing class embedded in this file as requested
+    public class CarListing
+    {
+        public int Id { get; set; }
+        public string Make { get; set; }
+        public string Model { get; set; }
+        public int Year { get; set; }
+        public string Description { get; set; }
+        public decimal PricePerDay { get; set; }
+        public string ImagePath { get; set; }
+        public List<string> AdditionalImages { get; set; } = new List<string>();
     }
 }
