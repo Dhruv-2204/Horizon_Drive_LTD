@@ -30,7 +30,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Services
 
             foreach (var kvp in userHashTable.GetAllItems())
             {
-                if (kvp.Value.Username == username && kvp.Value.Password == password)
+                if (kvp.Value.UserName == username && kvp.Value.Password == password)
                 {
                     loggedInUser = kvp.Value;
                     return true;
@@ -42,7 +42,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Services
 
         public bool SignUp(User newUser)
         {
-            var existingUser = userHashTable.Search(newUser.Username);
+            var existingUser = userHashTable.Search(newUser.UserName);
             if (existingUser != null)
             {
 

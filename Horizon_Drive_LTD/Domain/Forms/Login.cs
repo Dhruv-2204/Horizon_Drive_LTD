@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Horizon_Drive_LTD.BusinessLogic.Services;
 using Horizon_Drive_LTD.Domain.Entities;
+using Horizon_Drive_LTD.BusinessLogic.Repositories;
+using Horizon_Drive_LTD.BusinessLogic;
 namespace splashscreen
 {
     public partial class Login : Form
@@ -72,7 +74,7 @@ namespace splashscreen
 
             if (_authService.Login(enteredUsername, enteredPassword, out User loggedInUser))
             {
-                MessageBox.Show($"Welcome, {loggedInUser.Username}!", "Login Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Welcome, {loggedInUser.UserName}!", "Login Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Proceed to next form/dashboard
                 // e.g. new DashboardForm(loggedInUser).Show(); this.Hide();
@@ -86,7 +88,11 @@ namespace splashscreen
 
         private void Signup_btn_Click(object sender, EventArgs e)
         {
-            Signup signup = new Signup(); // Calls signup constructor
+            var userRepo = new UserRepository(new DatabaseConnection());
+            var userHashTable = userRepo.LoadUsersIntoHashTable();
+            var authService = new AuthenticationService(userHashTable, userRepo);
+
+            Signup signup = new Signup(authService); // Calls signup constructor
             signup.Show(); //Shows the signup window
             this.Dispose(); //closes the login window
         }
