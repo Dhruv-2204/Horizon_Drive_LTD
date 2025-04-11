@@ -98,6 +98,8 @@
             // 
             LOGIN_btn.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             LOGIN_btn.BackColor = Color.FromArgb(1, 24, 30);
+           
+          
             LOGIN_btn.Cursor = Cursors.Hand;
             LOGIN_btn.FlatAppearance.BorderColor = Color.Navy;
             LOGIN_btn.FlatAppearance.BorderSize = 9;
@@ -111,7 +113,7 @@
             LOGIN_btn.TabIndex = 7;
             LOGIN_btn.Text = "LOGIN";
             LOGIN_btn.UseVisualStyleBackColor = false;
-            LOGIN_btn.Click += Login_btn;
+            LOGIN_btn.Click += new EventHandler(LOGIN_btn_Click);
             // 
             // Password
             // 
@@ -179,7 +181,7 @@
             // 
             // Signup_btn
             // 
-            Signup_btn.AutoSize = true;
+            Signup_btn.Click += new EventHandler(Signup_btn_Click);
             Signup_btn.BackColor = Color.FromArgb(128, 255, 255);
             Signup_btn.Cursor = Cursors.Hand;
             Signup_btn.FlatAppearance.BorderSize = 9;
@@ -193,7 +195,8 @@
             Signup_btn.TabIndex = 3;
             Signup_btn.Text = "SIGN UP";
             Signup_btn.UseVisualStyleBackColor = false;
-            Signup_btn.Click += signup_btn;
+            
+
             // 
             // label5
             // 
