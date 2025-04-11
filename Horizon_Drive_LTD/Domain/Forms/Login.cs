@@ -64,7 +64,7 @@ namespace splashscreen
             if (_authService.Login(enteredUsername, enteredPassword, out User loggedInUser))
             {
                 DialogResult result = MessageBox.Show(
-                    $"Welcome, {loggedInUser.Username}!",
+                    $"Welcome, {loggedInUser.UserName}!",
                     "Login Successful",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information
