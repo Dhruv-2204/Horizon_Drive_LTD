@@ -3,6 +3,8 @@ using Horizon_Drive_LTD.BusinessLogic.Repositories;
 using Horizon_Drive_LTD.BusinessLogic;
 using Horizon_Drive_LTD.BusinessLogic.Services;
 using Horizon_Drive_LTD.Domain.Entities;
+using System.Text;
+using System.Security.Cryptography;
 namespace splashscreen
 {
     public partial class Login : Form
@@ -58,10 +60,28 @@ namespace splashscreen
             }
         }
 
+        public static string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                StringBuilder builder = new StringBuilder();
+                foreach (var b in bytes)
+                {
+                    builder.Append(b.ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
+
         private void LOGIN_btn_Click(object sender, EventArgs e)
         {
             string enteredUsername = Username.Text.Trim();
             string enteredPassword = Password.Text;
+
+            enteredPassword = HashPassword(enteredPassword); // Hash the entered password
+
+
 
             if (_authService.Login(enteredUsername, enteredPassword, out User loggedInUser))
             {
