@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Horizon_Drive_LTD;
 using Horizon_Drive_LTD.BusinessLogic;
 using Horizon_Drive_LTD.BusinessLogic.Repositories;
 using Horizon_Drive_LTD.BusinessLogic.Services;
@@ -25,7 +26,8 @@ namespace splashscreen
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SPLASH_SCREEN());
+            //Application.Run(new SPLASH_SCREEN());
+            Application.Run(new ManageYourListings());
 
         }
     }
