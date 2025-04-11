@@ -74,9 +74,9 @@ namespace splashscreen
 
                 if (result == DialogResult.OK)
                 {
-                    Options_Personal dashboard = new Options_Personal();
-                    dashboard.FormClosed += (s, args) => this.Close(); // Close the login form when the dashboard is closed
-                    dashboard.Show();
+                    BrowseListings browseListing = new BrowseListings();
+                    browseListing.FormClosed += (s, args) => this.Close();
+                    browseListing.Show();
 
                     // Hide the current form (Login form)
                     this.Hide();

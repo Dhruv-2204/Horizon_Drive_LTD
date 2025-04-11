@@ -400,6 +400,7 @@ namespace Horizon_Drive_LTD
         }
     }
 
+    /*
     public class RoundedButton : Button
     {
         private int borderRadius = 26;
@@ -436,6 +437,7 @@ namespace Horizon_Drive_LTD
 
 
     }
+    */
 }
 
 

@@ -8,5 +8,8 @@ namespace Horizon_Drive_LTD.Domain.Entities
 {
    public class Cars
     {
+
+
+
     }
 }
