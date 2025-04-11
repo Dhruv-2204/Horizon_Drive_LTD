@@ -223,7 +223,7 @@
             // pictureBox1
             // 
             pictureBox1.Anchor = AnchorStyles.Left;
-            pictureBox1.Image = Horizon_Drive_LTD.Properties.Resources.HORIZONDRIVE_LOGO;
+            //pictureBox1.Image = Horizon_Drive_LTD.Properties.Resources.HORIZONDRIVE_LOGO;
             pictureBox1.Location = new Point(51, 24);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(184, 159);
