@@ -17,10 +17,25 @@ namespace Horizon_Drive_LTD
         {
             InitializeComponent();
 
-
             // Set the form size to match BrowseListings
             this.ClientSize = new Size(1600, 900);
             this.MinimumSize = new Size(1000, 700);
+
+            // Center panel layout adjustments
+            this.panelMain.Dock = DockStyle.Fill;
+            this.panelContent.Dock = DockStyle.None;
+            this.panelContent.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            this.panelContent.AutoSize = false;
+            this.panelContent.Location = new Point(20, 127);
+            this.panelContent.Width = this.panelMain.Width - 40; // 20px margin on each side
+
+            // Adjust scrolling behavior
+            this.panelContent.AutoScroll = true;
+            this.panelContent.HorizontalScroll.Enabled = false;
+            this.panelContent.HorizontalScroll.Visible = false;
+
+            // Add resize handler
+            this.Resize += ListCarForm_Resize;
 
             // Set the plus icon for upload
             pictureBoxUpload.Image = CreatePlusIcon(30, 30);
@@ -34,6 +49,28 @@ namespace Horizon_Drive_LTD
 
             // Set up drag and drop functionality
             SetupDragAndDrop();
+
+            // Adjust control widths to fit
+            AdjustControlWidths();
+        }
+
+        private void ListCarForm_Resize(object sender, EventArgs e)
+        {
+            // Adjust panelContent width when form is resized
+            this.panelContent.Width = this.panelMain.Width - 40;
+
+            // Readjust control widths when form is resized
+            AdjustControlWidths();
+        }
+
+        private void AdjustControlWidths()
+        {
+            // Adjust the width of wider controls to fit within the panel
+            txtDescription.Width = panelContent.Width - txtDescription.Left - 30;
+            txtDailyRate.Width = panelContent.Width - txtDailyRate.Left - 30;
+            txtLicensePlate.Width = Math.Min(364, panelContent.Width - txtLicensePlate.Left - 30);
+            panelUploadPhotos.Width = panelContent.Width - panelUploadPhotos.Left - 30;
+            panelPhotoContainer.Width = panelContent.Width - panelPhotoContainer.Left - 30;
         }
 
         private void ListCarForm_Load(object sender, EventArgs e)

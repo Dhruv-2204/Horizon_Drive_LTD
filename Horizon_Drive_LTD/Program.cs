@@ -15,7 +15,8 @@ namespace Horizon_Drive_LTD
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new BrowseListings());
+            //Application.Run(new BrowseListings());
+            Application.Run(new ListCarForm()); // For testing
         }
     }
 }
