@@ -271,18 +271,9 @@ namespace Horizon_Drive_LTD
         private void btnListCar_Click(object sender, EventArgs e)
         {
             // Open form to list a new car
-            MessageBox.Show("List a Car functionality would open a form to add a new listing.",
-                           "List a Car",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
-
-            // In a real application, you would open a form here
-            // ListCarForm listCarForm = new ListCarForm();
-            // if (listCarForm.ShowDialog() == DialogResult.OK)
-            // {
-            //     LoadCarListings();
-            //     PopulateCarListings();
-            // }
+            ListCarForm listCarForm = new ListCarForm();
+            listCarForm.Show();
+            this.Hide();
         }
 
         private void btnManageYourListings_Click(object sender, EventArgs e)
