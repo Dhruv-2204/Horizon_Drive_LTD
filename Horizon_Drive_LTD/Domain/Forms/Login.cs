@@ -1,13 +1,4 @@
 ﻿using Horizon_Drive_LTD;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using Horizon_Drive_LTD.BusinessLogic.Services;
 using Horizon_Drive_LTD.Domain.Entities;
 namespace splashscreen
@@ -34,7 +25,7 @@ namespace splashscreen
         }
         private void MyForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (isClosing) return; // Prevent duplicate message box
+            if (isClosing) return; 
             isClosing = true;
 
             DialogResult result = MessageBox.Show("Do you want to close the Car Hire Application?", "Confirm Exit",
