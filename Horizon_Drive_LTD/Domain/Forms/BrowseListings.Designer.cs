@@ -260,6 +260,7 @@
             // 
             // textBoxSearch
             // 
+            /*
             textBoxSearch.BorderStyle = BorderStyle.None;
             textBoxSearch.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBoxSearch.Location = new Point(6, 6);
@@ -269,6 +270,7 @@
             textBoxSearch.TabIndex = 0;
             textBoxSearch.TextChanged += textBoxSearch_TextChanged;
             // 
+            */
             // labelBrowseListings
             // 
             labelBrowseListings.AutoSize = true;

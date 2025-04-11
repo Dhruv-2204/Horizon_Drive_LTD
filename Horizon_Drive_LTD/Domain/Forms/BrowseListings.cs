@@ -1,6 +1,14 @@
 ﻿
 using System.Data;
 using System.Drawing.Drawing2D;
+using Horizon_Drive_LTD.BusinessLogic.Repositories;
+using Horizon_Drive_LTD.BusinessLogic;
+using Horizon_Drive_LTD.Domain.Entities;
+using Horizon_Drive_LTD.DataStructure;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Xml;
+using System.Web;
 
 //BrowseListings.cs
 
@@ -10,6 +18,7 @@ namespace Horizon_Drive_LTD
     {
         // List to store car listings
         private List<CarListing> carListings = new List<CarListing>();
+        private HashTable<string, Cars> carHashTable;
 
         public BrowseListings()
         {
@@ -17,234 +26,140 @@ namespace Horizon_Drive_LTD
             this.ClientSize = new Size(1600, 900);
             this.MinimumSize = new Size(1000, 700);
 
-
             LoadCarListings();
             PopulateCarListings();
 
         }
+
+
         private void LoadCarListings()
         {
-            // Sample car data - in a real app, this would come from a database
-            carListings.Add(new CarListing
-            {
-                Id = 1,
-                Make = "Ford",
-                Model = "Raptor",
-                Year = 2023,
-                Description = "A powerful off-road pickup built for performance and adventure. Rent now for a rugged and thrilling ride!",
-                PricePerDay = 15000,
-                ImagePath = "Fordraptor.jpg",
-                AdditionalImages = new List<string>
-        {
-            "Fordraptor1.jpg",
-            "Fordraptor2.jpg",
-            "Fordraptor3.jpg"
-        }
-            });
+            DatabaseConnection dbConnection = new DatabaseConnection();
+            CarRepository carRepo = new CarRepository(dbConnection);
 
-            carListings.Add(new CarListing
-            {
-                Id = 2,
-                Make = "BMW",
-                Model = "X4",
-                Year = 2023,
-                Description = "A luxury high-performance SUV with bold design and powerful hybrid technology. Rent now for an elite driving experience!",
-                PricePerDay = 30000,
-                ImagePath = "bmw_x4.jpg",
-                AdditionalImages = new List<string>
-        {
-            "bmw_x4_1.jpg",
-            "bmw_x4_2.jpg",
-            "bmw_x4_3.jpg"
-        }
-            });
+            carHashTable = carRepo.LoadCarsFromDatabase();
 
-            carListings.Add(new CarListing
-            {
-                Id = 3,
-                Make = "Corvette",
-                Model = "C8",
-                Year = 2023,
-                Description = "A sleek, mid-engine sports car with thrilling performance and sharp handling. Rent now for an unforgettable drive!",
-                PricePerDay = 20000,
-                ImagePath = "corvette_c8.jpg",
-                AdditionalImages = new List<string>
-        {
-            "corvette_c8_1.jpg",
-            "corvette_c8_2.jpg",
-            "corvette_c8_3.jpg"
-        }
-            });
+            // Debugging the count of the carHashTable
+            Console.WriteLine($"Number of cars in hash table: {carHashTable.Count}");
 
-            carListings.Add(new CarListing
+            if (carHashTable.Count == 0)
             {
-                Id = 4,
-                Make = "Ford",
-                Model = "Mustang",
-                Year = 2023,
-                Description = "A modern muscle car with bold design and powerful performance. Rent now for an exhilarating ride!",
-                PricePerDay = 25000,
-                ImagePath = "ford_mustang.jpg",
-                AdditionalImages = new List<string>
-        {
-            "ford_mustang_1.jpg",
-            "ford_mustang_2.jpg",
-            "ford_mustang_3.jpg"
-        }
-            });
-
-            // Add more cars for the bottom row
-            carListings.Add(new CarListing
-            {
-                Id = 5,
-                Make = "Mercedes",
-                Model = "AMG",
-                Year = 2023,
-                Description = "Performance luxury at its finest with distinctive styling and remarkable power.",
-                PricePerDay = 28000,
-                ImagePath = "mercedes_amg.jpg",
-                AdditionalImages = new List<string>
-        {
-            "mercedes_amg_1.jpg",
-            "mercedes_amg_2.jpg",
-            "mercedes_amg_3.jpg"
-        }
-            });
-
-            carListings.Add(new CarListing
-            {
-                Id = 6,
-                Make = "Honda",
-                Model = "Civic",
-                Year = 2022,
-                Description = "Reliable, efficient and perfect for city driving with excellent fuel economy.",
-                PricePerDay = 8000,
-                ImagePath = "honda_civic.jpg",
-                AdditionalImages = new List<string>
-        {
-            "honda_civic_1.jpg",
-            "honda_civic_2.jpg",
-            "honda_civic_3.jpg"
-        }
-            });
-
-            carListings.Add(new CarListing
-            {
-                Id = 7,
-                Make = "Mercedes",
-                Model = "GLE Coupe",
-                Year = 2023,
-                Description = "Elegance meets performance in this luxury SUV coupe with cutting-edge technology.",
-                PricePerDay = 32000,
-                ImagePath = "mercedes_gle.jpg",
-                AdditionalImages = new List<string>
-        {
-            "mercedes_gle_1.jpg",
-            "mercedes_gle_2.jpg",
-            "mercedes_gle_3.jpg"
-        }
-            });
-
-            carListings.Add(new CarListing
-            {
-                Id = 8,
-                Make = "Mercedes",
-                Model = "AMG GT",
-                Year = 2023,
-                Description = "The pinnacle of Mercedes performance with breathtaking design and power.",
-                PricePerDay = 35000,
-                ImagePath = "mercedes_amg_gt.jpg",
-                AdditionalImages = new List<string>
-        {
-            "mercedes_amg_gt_1.jpg",
-            "mercedes_amg_gt_2.jpg",
-            "mercedes_amg_gt_3.jpg"
-        }
-            });
+                MessageBox.Show("No cars found in the database.");
+            }
         }
 
         private void PopulateCarListings()
         {
-            // Clear the flowLayoutPanel first
             flowLayoutPanelListings.Controls.Clear();
 
-            // Add car listing panels to the flow layout panel
-            foreach (var car in carListings)
+            foreach (var kvp in carHashTable.GetAllItems())
             {
-                // Create a car listing panel
-                Panel carPanel = CreateCarListingPanel(car);
+                Cars car = kvp.Value;
+
+                Panel carPanel = CreateCarListingPanel(car); // This should return a Panel containing car info
                 flowLayoutPanelListings.Controls.Add(carPanel);
             }
         }
 
-        private Panel CreateCarListingPanel(CarListing car)
+        private async void LoadImageFromAPI(string brand, string model, PictureBox pictureBox)
         {
-            // Main panel
-            Panel panel = new Panel();
-            panel.Size = new Size(250, 310);
-            panel.BorderStyle = BorderStyle.FixedSingle;
-            panel.Margin = new Padding(10);
-            panel.BackColor = Color.White;
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    string query = $"{brand} {model}";
+                    string requestUrl = $"http://www.carimagery.com/api.asmx/GetImageUrl?searchTerm={Uri.EscapeDataString(query)}";
 
-            // Car image
-            PictureBox pictureBox = new PictureBox();
-            pictureBox.Size = new Size(230, 150);
-            pictureBox.Location = new Point(10, 10);
-            pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    Console.WriteLine($"Requesting image URL for: {query}");
+
+                    HttpResponseMessage response = await client.GetAsync(requestUrl);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string xmlContent = await response.Content.ReadAsStringAsync();
+                        string imageUrl = ExtractImageUrlFromXml(xmlContent);
+
+                        Console.WriteLine($"Image URL: {imageUrl}");
+
+                        if (!string.IsNullOrEmpty(imageUrl))
+                        {
+                            pictureBox.LoadAsync(imageUrl);
+                        }
+                        else
+                        {
+                            Console.WriteLine("No image URL found");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Failed to fetch image for {brand} {model}. Status Code: {response.StatusCode}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error loading image: {ex.Message}");
+                }
+            }
+        }
+
+        private string ExtractImageUrlFromXml(string xml)
+        {
             try
             {
-                pictureBox.Image = Image.FromFile(Path.Combine("Images", car.ImagePath));
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(xml);
+                return doc.InnerText;
             }
             catch
             {
-                // Use placeholder if image not found
-                pictureBox.BackColor = Color.LightGray;
+                return null;
             }
+        }
+        private Panel CreateCarListingPanel(Cars car)
+        {
+            // Debug to verify car data
+            Console.WriteLine($"Creating panel for: {car.CarBrand} {car.Model}");
 
-            // Car title (Make and Model)
-            Label lblTitle = new Label();
-            lblTitle.AutoSize = false;
-            lblTitle.Size = new Size(230, 20);
-            lblTitle.Location = new Point(10, 170);
-            lblTitle.Font = new Font("Segoe UI", 9, FontStyle.Bold);
-            lblTitle.Text = $"{car.Make} {car.Model} - {car.Year}";
+            Panel panel = new Panel
+            {
+                Width = 300,
+                Height = 180,
+                BorderStyle = BorderStyle.FixedSingle,
+                Margin = new Padding(10)
+            };
 
-            // Car description
-            Label lblDescription = new Label();
-            lblDescription.AutoSize = false;
-            lblDescription.Size = new Size(230, 60);
-            lblDescription.Location = new Point(10, 190);
-            lblDescription.Font = new Font("Segoe UI", 8);
-            lblDescription.Text = car.Description;
+            PictureBox pictureBox = new PictureBox
+            {
+                Width = 120,
+                Height = 80,
+                Left = 10,
+                Top = 10,
+                SizeMode = PictureBoxSizeMode.StretchImage
+            };
 
-            // Price label
-            Label lblPrice = new Label();
-            lblPrice.AutoSize = false;
-            lblPrice.Size = new Size(100, 20);
-            lblPrice.Location = new Point(10, 255);
-            lblPrice.Font = new Font("Segoe UI", 9, FontStyle.Bold);
-            lblPrice.Text = $"Rs {car.PricePerDay}/day";
+            Label label = new Label
+            {
+                Text = $"{car.CarBrand} {car.Model}\n{car.CarPrice:C}\nSeats: {car.SeatNo}",
+                AutoSize = true,
+                Left = 140,
+                Top = 10
+            };
 
-            // View deal button
-            Button btnViewDeal = new Button();
-            btnViewDeal.Size = new Size(80, 30);
-            btnViewDeal.Location = new Point(160, 250);
-            btnViewDeal.Text = "View Deal";
-            btnViewDeal.BackColor = Color.FromArgb(30, 85, 110);
-            btnViewDeal.ForeColor = Color.White;
-            btnViewDeal.FlatStyle = FlatStyle.Flat;
-            btnViewDeal.Tag = car.Id;
-            btnViewDeal.Click += BtnViewDeal_Click;
-
-            // Add controls to panel
             panel.Controls.Add(pictureBox);
-            panel.Controls.Add(lblTitle);
-            panel.Controls.Add(lblDescription);
-            panel.Controls.Add(lblPrice);
-            panel.Controls.Add(btnViewDeal);
+            panel.Controls.Add(label);
+
+            // Debugging image URL fetch
+            Console.WriteLine($"Loading image for {car.CarBrand} {car.Model}");
+            LoadImageFromAPI(car.CarBrand, car.Model, pictureBox);
 
             return panel;
         }
+
+
+
+
+
+
 
         private void BtnViewDeal_Click(object sender, EventArgs e)
         {
@@ -331,7 +246,7 @@ namespace Horizon_Drive_LTD
             }
         }
 
-
+        /*
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
         {
             // Filter cars based on search text
@@ -356,6 +271,7 @@ namespace Horizon_Drive_LTD
                 flowLayoutPanelListings.Controls.Add(carPanel);
             }
         }
+        */
 
         private void pictureBoxLogo_Click(object sender, EventArgs e)
         {
