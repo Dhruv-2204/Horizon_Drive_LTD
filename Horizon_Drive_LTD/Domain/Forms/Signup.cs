@@ -163,8 +163,23 @@
             bool result = _authService.SignUp(newUser);
             if (result)
             {
-                MessageBox.Show("Account created successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
+                DialogResult dialogResult = MessageBox.Show(
+                    "Account created successfully!",
+                    "Success",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+
+                if (dialogResult == DialogResult.OK)
+                {
+                    Login login = new Login(); // Pass existing auth service to Login
+                    login.Show();
+                    // Optionally, you can close the signup form here
+
+
+                    // Close the current form, if necessary.
+                    this.Hide();
+                }
             }
             else
             {

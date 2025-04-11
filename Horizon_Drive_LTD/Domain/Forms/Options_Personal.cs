@@ -3,6 +3,10 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using Microsoft.Data.SqlClient;
+using Horizon_Drive_LTD.BusinessLogic;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace Horizon_Drive_LTD
 {
@@ -213,6 +217,20 @@ namespace Horizon_Drive_LTD
             pictureBoxProfile_Click(sender, e);
         }
 
+        public static string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                StringBuilder builder = new StringBuilder();
+                foreach (var b in bytes)
+                {
+                    builder.Append(b.ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
+
         private void btnSaveChanges_Click(object sender, EventArgs e)
         {
             // Validate inputs
@@ -226,10 +244,59 @@ namespace Horizon_Drive_LTD
                 MessageBox.Show("Please fill in all fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            else
+            {
 
-            // Here you would save the user's information to a database or file
-            // For now, we'll just show a success message
-            MessageBox.Show("Your information has been saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                try
+                {
+                    using (SqlConnection sqlConnection = _dbConnection.GetConnection())
+                    {
+                        sqlConnection.Open();
+
+                        string query = "UPDATE [User] " +
+                                       "SET FirstName = @FirstName," +
+                                       "LastName = @LastName," +
+                                       "Email = @Email," +
+                                       "TelephoneNo = @TelephoneNo," +
+                                       "Address = @Address," +
+                                       "Password = @Password " +
+                                       "WHERE UserName = @UserName";
+                        using (SqlCommand sqlCommand = new SqlCommand(query, sqlConnection))
+                        {
+                            textBoxPassword.Text = HashPassword(textBoxPassword.Text);
+                            sqlCommand.Parameters.AddWithValue("@FirstName", textBoxFirstName.Text);
+                            sqlCommand.Parameters.AddWithValue("@LastName", textBoxLastName.Text);
+                            sqlCommand.Parameters.AddWithValue("@Email", textBoxEmail.Text);
+                            sqlCommand.Parameters.AddWithValue("@TelephoneNo", textBoxPhone.Text);
+                            sqlCommand.Parameters.AddWithValue("@Address", textBoxAddress.Text);
+                            sqlCommand.Parameters.AddWithValue("@UserName", Username_Label.Text);
+                            sqlCommand.Parameters.AddWithValue("@Password", textBoxPassword.Text);
+                            int rowsAffected = sqlCommand.ExecuteNonQuery();
+                            if (rowsAffected > 0)
+                            {
+                                MessageBox.Show("Profile updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show("No changes made or user not found.", "Update Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
+                        }
+                    }
+                }
+                catch (SqlException sqlEx)
+                {
+                    MessageBox.Show($"Database error: {sqlEx.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                // Here you would save the user's information to a database or file
+                // For now, we'll just show a success message
+                MessageBox.Show("Your information has been saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void btnPersonal_Click(object sender, EventArgs e)
@@ -358,6 +425,104 @@ namespace Horizon_Drive_LTD
         private void textBoxLastName_TextChanged_1(object sender, EventArgs e)
         {
             // Duplicate last name text changed event
+        }
+
+
+        DatabaseConnection _dbConnection = new DatabaseConnection();
+
+        private void Username_Label_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+
+                    string query = "SELECT UserName FROM ActiveUser;";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Username_Label.Text = reader.GetString(0);
+                        }
+                        else
+                        {
+                            Username_Label.Text = "No active user found.";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Display an error message or log the exception
+                MessageBox.Show($"Error fetching active user: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Options_Personal_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+
+                    string query = "SELECT UserName FROM ActiveUser;";
+                    
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Username_Label.Text = reader.GetString(0); // Update label automatically
+                            
+                        }
+                        else
+                        {
+                            Username_Label.Text = "No active user found."; // Handle empty table
+                        }
+                    }
+
+                    string additionalDataQuery = "SELECT FirstName, LastName, Email,TelephoneNo, Address " +
+                                                 "FROM [User], ActiveUser " +
+                                                 "WHERE [User].UserName = ActiveUser.UserName;";
+
+                    using (SqlCommand additionalDataCmd = new SqlCommand(additionalDataQuery, conn))
+                    {
+                        // Use the username from the ActiveUser table to filter data
+                        //additionalDataCmd.Parameters.AddWithValue("@UserName", Username_Label.Text);
+
+                        using (SqlDataReader additionalDataReader = additionalDataCmd.ExecuteReader())
+                        {
+                            if (additionalDataReader.Read())
+                            {
+                                // Insert data into respective labels
+                                textBoxFirstName.Text = additionalDataReader.GetString(0); // FirstName
+                                textBoxLastName.Text = additionalDataReader.GetString(1);  // LastName
+                                textBoxEmail.Text = additionalDataReader.GetString(2);     // Email
+                                textBoxAddress.Text = additionalDataReader.GetString(4); 
+
+                            }
+                            else
+                            {
+                                labelFirstName.Text = ""; // FirstName
+                                labelLastName.Text = "";  // LastName
+                                labelEmail.Text = "";     // Email
+                                labelAddress.Text = "";   //Address
+                            }
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                // Display an error message or log the exception
+                MessageBox.Show($"Error fetching active user: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
     }
 
