@@ -361,38 +361,38 @@ namespace Horizon_Drive_LTD
         }
     }
 
-    // RoundedButton class remains unchanged
-    public class RoundedButton : Button
-    {
-        private int borderRadius = 26;
+    //public class RoundedButton : Button
+    //{
+    //    // Ensure there's only one declaration of borderRadius
+    //    private int borderRadius = 26;
 
-        public RoundedButton()
-        {
-            this.FlatStyle = FlatStyle.Flat;
-            this.FlatAppearance.BorderSize = 0;
-        }
+    //    public RoundedButton()
+    //    {
+    //        this.FlatStyle = FlatStyle.Flat;
+    //        this.FlatAppearance.BorderSize = 0;
+    //    }
 
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            // Enable anti-aliasing for smooth edges
-            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+    //    protected override void OnPaint(PaintEventArgs e)
+    //    {
+    //        // Enable anti-aliasing for smooth edges
+    //        e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-            GraphicsPath path = new GraphicsPath();
-            Rectangle rect = new Rectangle(0, 0, this.Width, this.Height);
+    //        GraphicsPath path = new GraphicsPath();
+    //        Rectangle rect = new Rectangle(0, 0, this.Width, this.Height);
 
-            // Create rounded rectangle with the specified corner radius
-            int diameter = borderRadius * 2;
-            path.AddArc(rect.X, rect.Y, diameter, diameter, 180, 90);
-            path.AddArc(rect.Width - diameter, rect.Y, diameter, diameter, 270, 90);
-            path.AddArc(rect.Width - diameter, rect.Height - diameter, diameter, diameter, 0, 90);
-            path.AddArc(rect.X, rect.Height - diameter, diameter, diameter, 90, 90);
-            path.CloseAllFigures();
+    //        // Create rounded rectangle with the specified corner radius
+    //        int diameter = borderRadius * 2;
+    //        path.AddArc(rect.X, rect.Y, diameter, diameter, 180, 90);
+    //        path.AddArc(rect.Width - diameter, rect.Y, diameter, diameter, 270, 90);
+    //        path.AddArc(rect.Width - diameter, rect.Height - diameter, diameter, diameter, 0, 90);
+    //        path.AddArc(rect.X, rect.Height - diameter, diameter, diameter, 90, 90);
+    //        path.CloseAllFigures();
 
-            // Set the button's region to our rounded rectangle
-            this.Region = new Region(path);
+    //        // Set the button's region to our rounded rectangle
+    //        this.Region = new Region(path);
 
-            // Draw the button
-            base.OnPaint(e);
-        }
-    }
+    //        // Draw the button
+    //        base.OnPaint(e);
+    //    }
+    //}
 }
