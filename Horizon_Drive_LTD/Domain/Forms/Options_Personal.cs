@@ -1,8 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.IO;
-using System.Windows.Forms;
-using System.Drawing.Drawing2D;
+﻿using System.Drawing.Drawing2D;
 using Microsoft.Data.SqlClient;
 using Horizon_Drive_LTD.BusinessLogic;
 using System.Text;
@@ -16,6 +12,8 @@ namespace Horizon_Drive_LTD
         private FormWindowState lastWindowState;
         private Size originalSize;
         private bool isInitializing = true;
+        DatabaseConnection _dbConnection = new DatabaseConnection();
+
 
         public Options_Personal()
         {
@@ -464,8 +462,18 @@ namespace Horizon_Drive_LTD
                                MessageBoxButtons.OK,
                                MessageBoxIcon.Information);
 
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+                    string dropTableQuery = "DROP TABLE IF EXISTS ActiveUser;";
+                    using (SqlCommand cmd = new SqlCommand(dropTableQuery, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
                 // Application.Restart(); // Uncomment to restart application
-                // this.Close(); // Uncomment to close current form
+                this.Close(); // Uncomment to close current form
             }
         }
 
@@ -521,7 +529,6 @@ namespace Horizon_Drive_LTD
         }
 
 
-        DatabaseConnection _dbConnection = new DatabaseConnection();
 
         private void Username_Label_Click(object sender, EventArgs e)
         {

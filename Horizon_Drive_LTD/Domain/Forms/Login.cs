@@ -97,8 +97,8 @@ namespace splashscreen
                     string createTableQuery = @"
                     IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='ActiveUser' AND xtype='U')
                     CREATE TABLE ActiveUser (
-                        UserName NVARCHAR(100) NOT NULL
-                    );";
+                        UserName Varchar(100) NOT NULL
+                        );";
                     using (SqlCommand cmd = new SqlCommand(createTableQuery, conn))
                     {
                         cmd.ExecuteNonQuery();
@@ -111,6 +111,7 @@ namespace splashscreen
                     using (SqlCommand cmd = new SqlCommand(insertUserQuery, conn))
                     {
                         cmd.Parameters.AddWithValue("@UserName", loggedInUser.UserName);
+                        //cmd.Parameters.AddWithValue("@UserId", loggedInUser.UserId);
                         cmd.ExecuteNonQuery();
                     }
                 }
