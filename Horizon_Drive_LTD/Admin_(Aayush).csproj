@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Manage_bookings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Manage_bookings.Designer.cs">
+      <DependentUpon>Manage_bookings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Manage_users.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -58,22 +64,25 @@
     <Compile Include="Manage_Users_search.Designer.cs">
       <DependentUpon>Manage_Users_search.cs</DependentUpon>
     </Compile>
-    <Compile Include="Managing_cars.cs">
+    <Compile Include="Managing_files.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Managing_cars.Designer.cs">
-      <DependentUpon>Managing_cars.cs</DependentUpon>
+    <Compile Include="Managing_files.Designer.cs">
+      <DependentUpon>Managing_files.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Manage_bookings.resx">
+      <DependentUpon>Manage_bookings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Manage_users.resx">
       <DependentUpon>Manage_users.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Manage_Users_search.resx">
       <DependentUpon>Manage_Users_search.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Managing_cars.resx">
-      <DependentUpon>Managing_cars.cs</DependentUpon>
+    <EmbeddedResource Include="Managing_files.resx">
+      <DependentUpon>Managing_files.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

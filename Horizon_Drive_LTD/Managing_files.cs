@@ -6,12 +6,13 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using WindowsFormsApp1;
 
 namespace Upload_cars
 {
-    public partial class Managing_cars : Form 
+    public partial class Managing_files : Form 
     {
-        public Managing_cars()
+        public Managing_files()
         {
             InitializeComponent();
             LoadImage();
@@ -118,6 +119,13 @@ namespace Upload_cars
         private void Save_button_clicked(object sender, EventArgs e)
         {
 
+        }
+
+        private void Manage_bookings_btn_Click(object sender, EventArgs e)
+        {
+            var manage_car_Page = new Manage_bookings(); // gets form Managing_cars
+            manage_car_Page.Show();                  // Shows the new form manage_cars
+            this.Hide();
         }
     }
 }

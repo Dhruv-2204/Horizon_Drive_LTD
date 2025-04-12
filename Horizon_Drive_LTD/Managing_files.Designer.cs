@@ -1,6 +1,6 @@
 ﻿namespace Upload_cars
 {
-    partial class Managing_cars
+    partial class Managing_files
     {
         /// <summary>
         /// Required designer variable.
@@ -38,8 +38,8 @@
             this.Search_Users = new System.Windows.Forms.Label();
             this.Save_button = new System.Windows.Forms.Button();
             this.user_background = new System.Windows.Forms.Panel();
-            this.UploadButton = new System.Windows.Forms.Button();
             this.DragDropListBox = new System.Windows.Forms.ListBox();
+            this.UploadButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel4.SuspendLayout();
@@ -92,6 +92,7 @@
             this.Manage_bookings_btn.TabIndex = 1;
             this.Manage_bookings_btn.Text = "Manage Bookings";
             this.Manage_bookings_btn.UseVisualStyleBackColor = false;
+            this.Manage_bookings_btn.Click += new System.EventHandler(this.Manage_bookings_btn_Click);
             // 
             // Manage_users
             // 
@@ -193,6 +194,19 @@
             this.user_background.Size = new System.Drawing.Size(741, 484);
             this.user_background.TabIndex = 1;
             // 
+            // DragDropListBox
+            // 
+            this.DragDropListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DragDropListBox.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DragDropListBox.FormattingEnabled = true;
+            this.DragDropListBox.ItemHeight = 15;
+            this.DragDropListBox.Location = new System.Drawing.Point(312, 158);
+            this.DragDropListBox.Name = "DragDropListBox";
+            this.DragDropListBox.Size = new System.Drawing.Size(388, 289);
+            this.DragDropListBox.TabIndex = 12;
+            // 
             // UploadButton
             // 
             this.UploadButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -209,19 +223,6 @@
             this.UploadButton.Text = "Upload File";
             this.UploadButton.UseVisualStyleBackColor = false;
             this.UploadButton.Click += new System.EventHandler(this.UploadButton_Click);
-            // 
-            // DragDropListBox
-            // 
-            this.DragDropListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.DragDropListBox.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DragDropListBox.FormattingEnabled = true;
-            this.DragDropListBox.ItemHeight = 15;
-            this.DragDropListBox.Location = new System.Drawing.Point(312, 158);
-            this.DragDropListBox.Name = "DragDropListBox";
-            this.DragDropListBox.Size = new System.Drawing.Size(388, 289);
-            this.DragDropListBox.TabIndex = 12;
             // 
             // Managing_cars
             // 

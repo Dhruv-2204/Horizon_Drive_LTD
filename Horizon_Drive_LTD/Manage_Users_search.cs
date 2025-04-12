@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows.Forms;
 using Upload_cars;
 using User_managing;
+using WindowsFormsApp1;
 
 namespace Manage_user_search_page
 {
@@ -65,14 +66,16 @@ namespace Manage_user_search_page
 
         private void Upload_Cars_click_btn(object sender, EventArgs e)
         {
-            var manage_car_Page = new Managing_cars(); // gets form Managing_cars
+            var manage_car_Page = new Managing_files(); // gets form Managing_cars
             manage_car_Page.Show();                  // Shows the new form manage_cars
             this.Hide();
         }
 
         private void Manage_bookings_click_btn(object sender, EventArgs e)
         {
-
+            var manage_user_Page = new Manage_bookings(); // Replace with your actual form name manage booking
+            manage_user_Page.Show();                  // Shows the new form manage user
+            this.Hide();
         }
 
         private void Logout_click_btn(object sender, EventArgs e)
