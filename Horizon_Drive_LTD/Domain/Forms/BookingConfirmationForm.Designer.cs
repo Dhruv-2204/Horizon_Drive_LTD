@@ -80,14 +80,14 @@
             this.labelCarName.Location = new System.Drawing.Point(180, 70);
             this.labelCarName.Size = new System.Drawing.Size(250, 25);
             this.labelCarName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.labelCarName.Text = "Ford Raptor 2025";
+           
             this.panelMain.Controls.Add(this.labelCarName);
 
             // Car features
             this.labelCarFeatures = new System.Windows.Forms.Label();
             this.labelCarFeatures.Location = new System.Drawing.Point(180, 95);
             this.labelCarFeatures.Size = new System.Drawing.Size(250, 20);
-            this.labelCarFeatures.Text = "4×4 • Automatic • 5 Seats";
+        
             this.panelMain.Controls.Add(this.labelCarFeatures);
 
             // Stars panel
@@ -221,7 +221,7 @@
             this.labelDailyRateValue.Location = new System.Drawing.Point(270, pricingTop);
             this.labelDailyRateValue.Size = new System.Drawing.Size(130, 20);
             this.labelDailyRateValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.labelDailyRateValue.Text = "MUR 15000.00 × 5 days";
+           
             this.panelPricing.Controls.Add(this.labelDailyRateValue);
 
             pricingTop += 25;
@@ -287,7 +287,7 @@
             this.labelTotalPriceValue.Size = new System.Drawing.Size(130, 20);
             this.labelTotalPriceValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.labelTotalPriceValue.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.labelTotalPriceValue.Text = "MUR 77500.00";
+            //this.labelTotalPriceValue.Text = "MUR 77500.00";
             this.panelPricing.Controls.Add(this.labelTotalPriceValue);
 
             // Terms and conditions

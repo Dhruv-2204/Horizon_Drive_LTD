@@ -17,8 +17,7 @@ namespace Horizon_Drive_LTD
 {
     public partial class BrowseListings : Form
     {
-        // List to store car listings
-        private List<CarListing> carListings = new List<CarListing>();
+     
         private HashTable<string, Cars> carHashTable;
 
         public BrowseListings()
@@ -184,8 +183,26 @@ namespace Horizon_Drive_LTD
 
         }
 
+        private void BtnViewDeal_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            string carId = btn.Tag.ToString(); // Make sure the Tag stores the CarID (e.g., "C00001")
 
+            // Retrieve the car from the hash table
+            Cars selectedCar = carHashTable.Search(carId);
 
+            if (selectedCar != null)
+            {
+                // Open the booking form with the selected car
+                CarBookingForm bookingForm = new CarBookingForm(selectedCar);
+                bookingForm.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Car details could not be found.");
+            }
+        }
+        /*
         private void BtnViewDeal_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
@@ -201,6 +218,7 @@ namespace Horizon_Drive_LTD
                 bookingForm.ShowDialog();
             }
         }
+        */
 
         private void btnBrowseListings_Click(object sender, EventArgs e)
         {

@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Horizon_Drive_LTD.Domain.Entities;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Horizon_Drive_LTD
 {
     public partial class BookingConfirmationForm : Form
     {
-        private CarListing car;
+        private Cars car;
         private DateTime startDate;
         private DateTime endDate;
         private string pickupLocation;
         private string dropoffLocation;
-        private string pickupTime = "10:00 AM";
+        private string pickupTime = "10:00 AM"; 
         private string dropoffTime = "11:00 AM";
         private bool driverIncluded;
         private bool babyCarSeatIncluded;
@@ -22,7 +24,7 @@ namespace Horizon_Drive_LTD
         private int days;
 
         public BookingConfirmationForm(
-            CarListing car,
+            Cars car,
             DateTime startDate,
             DateTime endDate,
             string pickupLocation,
@@ -56,23 +58,13 @@ namespace Horizon_Drive_LTD
 
         private void PopulateBookingDetails()
         {
-            // Set car image
-            try
-            {
-                string imagePath = System.IO.Path.Combine("Images", car.ImagePath);
-                if (System.IO.File.Exists(imagePath))
-                {
-                    pictureBoxCar.Image = Image.FromFile(imagePath);
-                }
-            }
-            catch { /* If image load fails, just show empty */ }
-
+           
             // Set car details
-            labelCarName.Text = $"{car.Make} {car.Model} {car.Year}";
-            labelCarFeatures.Text = $"4×4 • Automatic • 5 Seats";
+            labelCarName.Text = $"{car.CarBrand} {car.Model} {car.Year}";
+            labelCarFeatures.Text = $"{car.Features}";
 
             // Set star rating (example - you can adjust based on your actual data)
-            SetRating(4.8);
+            SetRating(car.Ratings);
 
             // Set rental period
             labelRentalPeriodValue.Text = $"{startDate.ToString("MMM d, yyyy")} - {endDate.ToString("MMM d, yyyy")} ({days} days)";
@@ -116,6 +108,8 @@ namespace Horizon_Drive_LTD
             CalculateAndDisplayPricing();
         }
 
+       
+
         private void AddOption(ref int yOffset, string optionText)
         {
             CheckBox checkBox = new CheckBox
@@ -132,7 +126,49 @@ namespace Horizon_Drive_LTD
             yOffset += 30;
         }
 
-        private void SetRating(double rating)
+        private void SetRating(decimal rating)
+        {
+            // Validate input (0-5 scale)
+            rating = Math.Max(0, Math.Min(5, rating));
+
+            // Set rating text (formatted to 1 decimal place)
+            labelRating.Text = $"{rating:0.0}/5";
+
+            // Clear existing stars
+            panelStars.Controls.Clear();
+
+            // Calculate full and partial stars
+            int fullStars = (int)Math.Floor(rating);
+            bool hasHalfStar = (rating - fullStars) >= 0.3m; // Threshold for showing half star
+
+            // Create 5 stars
+            for (int i = 0; i < 5; i++)
+            {
+                var star = new Label
+                {
+                    Text = i < fullStars ? "★" : "☆",
+                    Font = new Font("Segoe UI", 14, FontStyle.Bold),
+                    Size = new Size(24, 24),
+                    Location = new Point(i * 24, 0),
+                    ForeColor = i < fullStars ? Color.Gold : Color.LightGray,
+                    Tag = i + 1 // Store star number for click events
+                };
+
+                // Handle half-star case
+                if (hasHalfStar && i == fullStars)
+                {
+                    star.Text = "⯪"; // Half-star character
+                    star.ForeColor = Color.Gold;
+                }
+
+                panelStars.Controls.Add(star);
+            }
+
+          
+        }
+
+        /*
+        private void SetRating(decimal rating)
         {
             // Set rating text
             labelRating.Text = $"({rating}/5)";
@@ -157,11 +193,11 @@ namespace Horizon_Drive_LTD
                 panelStars.Controls.Add(star);
             }
         }
-
+        */
         private void CalculateAndDisplayPricing()
         {
             // Calculate base price
-            decimal dailyRate = car.PricePerDay;
+            decimal dailyRate = car.CarPrice;
             decimal basePrice = dailyRate * days;
 
             // Calculate add-ons
@@ -179,7 +215,7 @@ namespace Horizon_Drive_LTD
                          roofRackPrice + airportPickupPrice + serviceFee;
 
             // Display prices
-            labelDailyRateValue.Text = $"MUR {dailyRate:N2} × {days} days";
+            labelDailyRateValue.Text = $"MUR{dailyRate}×{days}";
 
             // Only show selected add-ons
             if (driverIncluded)
@@ -206,8 +242,8 @@ namespace Horizon_Drive_LTD
                 labelBabyCarSeatValue.Visible = false;
             }
 
-            labelServiceFeeValue.Text = $"MUR {serviceFee:N0}";
-            labelTotalPriceValue.Text = $"MUR {totalPrice:N2}";
+            labelServiceFeeValue.Text = $"MUR{serviceFee:N0}";
+            labelTotalPriceValue.Text = $"MUR{totalPrice:N2}";
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
@@ -221,6 +257,7 @@ namespace Horizon_Drive_LTD
             // Process the final booking
             MessageBox.Show("Your booking has been confirmed! A confirmation email will be sent shortly.",
                 "Booking Confirmed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
 
             this.DialogResult = DialogResult.OK;
             this.Close();
