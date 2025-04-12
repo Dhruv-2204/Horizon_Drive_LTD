@@ -200,21 +200,114 @@ namespace Horizon_Drive_LTD
                 {
                     try
                     {
-                        profileImagePath = openFileDialog.FileName;
-                        pictureBoxProfile.Image = Image.FromFile(profileImagePath);
+                        string username = string.Empty;
+
+                        // Get the active username from the database
+                        using (SqlConnection conn = _dbConnection.GetConnection())
+                        {
+                            conn.Open();
+                            string query = "SELECT UserName FROM ActiveUser";
+                            using (SqlCommand cmd = new SqlCommand(query, conn))
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    username = reader.GetString(0).Trim();
+                                    Username_Label.Text = username;
+                                }
+                                else
+                                {
+                                    throw new Exception("No active user found.");
+                                }
+                            }
+                        }
+
+                        // SBuild relative and full image paths
+                        string imageName = Path.GetFileName(openFileDialog.FileName);
+                        string relativePath = Path.Combine("Media", "Images", username, imageName);
+                        string absolutePath = Path.Combine(Application.StartupPath, relativePath);
+                        string userImageDir = Path.GetDirectoryName(absolutePath);
+
+                        // Create user folder if it doesn't exist
+                        Directory.CreateDirectory(userImageDir);
+
+                        // Copy the file to the target folder
+                        File.Copy(openFileDialog.FileName, absolutePath, overwrite: true);
+
+                        // Update database with image path
+                        using (SqlConnection conn2 = _dbConnection.GetConnection())
+                        {
+                            conn2.Open();
+                            string updateQuery = "UPDATE [User] SET ProfilePicture = @ProfilePicture WHERE UserName = @UserName";
+                            using (SqlCommand cmd = new SqlCommand(updateQuery, conn2))
+                            {
+                                cmd.Parameters.AddWithValue("@ProfilePicture", relativePath);
+                                cmd.Parameters.AddWithValue("@UserName", username);
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+
+                        //  Load the image safely without locking the file
+                        using (var img = new Bitmap(absolutePath))
+                        {
+                            pictureBoxProfile.Image = new Bitmap(img);
+                        }
+
+                        profileImagePath = relativePath;
+
+                        MessageBox.Show("Profile picture updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Error loading image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show($"Error uploading image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
         }
 
+
         private void buttonCamera_Click(object sender, EventArgs e)
         {
             // Same functionality as clicking the profile picture
             pictureBoxProfile_Click(sender, e);
+        }
+
+        private void LoadProfilePicture(string username)
+        {
+            try
+            {
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+
+                    string query = "SELECT ProfilePicture FROM [User] WHERE UserName = @UserName";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@UserName", username);
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read() && !reader.IsDBNull(0))
+                            {
+                                string imagePath = reader.GetString(0);
+
+                                if (File.Exists(imagePath)) // Ensure the file exists
+                                {
+                                    pictureBoxProfile.Image = Image.FromFile(imagePath);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Profile picture not found on disk.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading profile picture: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         public static string HashPassword(string password)
@@ -237,8 +330,8 @@ namespace Horizon_Drive_LTD
             if (string.IsNullOrWhiteSpace(textBoxFirstName.Text) ||
                 string.IsNullOrWhiteSpace(textBoxLastName.Text) ||
                 string.IsNullOrWhiteSpace(textBoxEmail.Text) ||
-                string.IsNullOrWhiteSpace(textBoxPhone.Text) ||
-                string.IsNullOrWhiteSpace(textBoxPassword.Text) ||
+                //string.IsNullOrWhiteSpace(textBoxPhone.Text) ||
+                //string.IsNullOrWhiteSpace(textBoxPassword.Text) ||
                 string.IsNullOrWhiteSpace(textBoxAddress.Text))
             {
                 MessageBox.Show("Please fill in all fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -246,8 +339,6 @@ namespace Horizon_Drive_LTD
             }
             else
             {
-
-
                 try
                 {
                     using (SqlConnection sqlConnection = _dbConnection.GetConnection())
@@ -261,6 +352,7 @@ namespace Horizon_Drive_LTD
                                        "TelephoneNo = @TelephoneNo," +
                                        "Address = @Address," +
                                        "Password = @Password " +
+                                       "ProfilePicture = @ProfilePicture " +
                                        "WHERE UserName = @UserName";
                         using (SqlCommand sqlCommand = new SqlCommand(query, sqlConnection))
                         {
@@ -272,6 +364,7 @@ namespace Horizon_Drive_LTD
                             sqlCommand.Parameters.AddWithValue("@Address", textBoxAddress.Text);
                             sqlCommand.Parameters.AddWithValue("@UserName", Username_Label.Text);
                             sqlCommand.Parameters.AddWithValue("@Password", textBoxPassword.Text);
+                            sqlCommand.Parameters.AddWithValue("@ProfilePicture", profileImagePath);
                             int rowsAffected = sqlCommand.ExecuteNonQuery();
                             if (rowsAffected > 0)
                             {
@@ -446,6 +539,7 @@ namespace Horizon_Drive_LTD
                         if (reader.Read())
                         {
                             Username_Label.Text = reader.GetString(0);
+                            LoadProfilePicture(Username_Label.Text); // Load the profile picture
                         }
                         else
                         {
@@ -485,7 +579,7 @@ namespace Horizon_Drive_LTD
                         }
                     }
 
-                    string additionalDataQuery = "SELECT FirstName, LastName, Email,TelephoneNo, Address " +
+                    string additionalDataQuery = "SELECT FirstName, LastName, Email,TelephoneNo, Address,ProfilePicture " +
                                                  "FROM [User], ActiveUser " +
                                                  "WHERE [User].UserName = ActiveUser.UserName;";
 
@@ -503,6 +597,7 @@ namespace Horizon_Drive_LTD
                                 textBoxLastName.Text = additionalDataReader.GetString(1);  // LastName
                                 textBoxEmail.Text = additionalDataReader.GetString(2);     // Email
                                 textBoxAddress.Text = additionalDataReader.GetString(4); 
+                                pictureBoxProfile.Image = Image.FromFile(additionalDataReader.GetString(5)); // ProfilePicture
 
                             }
                             else
