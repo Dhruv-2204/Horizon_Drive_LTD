@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Web;
+using System.Windows.Forms;
 
 //BrowseListings.cs
 
@@ -39,13 +40,7 @@ namespace Horizon_Drive_LTD
 
             carHashTable = carRepo.LoadCarsFromDatabase();
 
-            // Debugging the count of the carHashTable
-            Console.WriteLine($"Number of cars in hash table: {carHashTable.Count}");
-
-            if (carHashTable.Count == 0)
-            {
-                MessageBox.Show("No cars found in the database.");
-            }
+          
         }
 
         private void PopulateCarListings()
@@ -56,7 +51,7 @@ namespace Horizon_Drive_LTD
             {
                 Cars car = kvp.Value;
 
-                Panel carPanel = CreateCarListingPanel(car); // This should return a Panel containing car info
+                Panel carPanel = CreateCarListingPanel(car); 
                 flowLayoutPanelListings.Controls.Add(carPanel);
             }
         }
@@ -117,47 +112,77 @@ namespace Horizon_Drive_LTD
         }
         private Panel CreateCarListingPanel(Cars car)
         {
-            // Debug to verify car data
-            Console.WriteLine($"Creating panel for: {car.CarBrand} {car.Model}");
 
-            Panel panel = new Panel
+            // Main panel
+            Panel panel = new Panel();
+            panel.Size = new Size(250, 310);
+            panel.BorderStyle = BorderStyle.FixedSingle;
+            panel.Margin = new Padding(10);
+            panel.BackColor = Color.White;
+
+            // Car image
+            PictureBox pictureBox = new PictureBox();
+            pictureBox.Size = new Size(230, 150);
+            pictureBox.Location = new Point(10, 10);
+            pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+
+            try
             {
-                Width = 300,
-                Height = 180,
-                BorderStyle = BorderStyle.FixedSingle,
-                Margin = new Padding(10)
-            };
-
-            PictureBox pictureBox = new PictureBox
+                LoadImageFromAPI(car.CarBrand, car.Model, pictureBox); ;
+            }
+            catch
             {
-                Width = 120,
-                Height = 80,
-                Left = 10,
-                Top = 10,
-                SizeMode = PictureBoxSizeMode.StretchImage
-            };
+                // Use placeholder if image not found
+                pictureBox.BackColor = Color.LightGray;
+            }
 
-            Label label = new Label
-            {
-                Text = $"{car.CarBrand} {car.Model}\n{car.CarPrice:C}\nSeats: {car.SeatNo}",
-                AutoSize = true,
-                Left = 140,
-                Top = 10
-            };
 
+
+            // Car title (Make and Model)
+            Label lblTitle = new Label();
+            lblTitle.AutoSize = false;
+            lblTitle.Size = new Size(230, 20);
+            lblTitle.Location = new Point(10, 170);
+            lblTitle.Font = new Font("Segoe UI", 9, FontStyle.Bold);
+            lblTitle.Text = $"{car.CarBrand} {car.Model} - {car.Year}";
+
+            // Car description
+            Label lblDescription = new Label();
+            lblDescription.AutoSize = false;
+            lblDescription.Size = new Size(230, 60);
+            lblDescription.Location = new Point(10, 190);
+            lblDescription.Font = new Font("Segoe UI", 8);
+            lblDescription.Text = car.VehicleDescription;
+
+            // Price label
+            Label lblPrice = new Label();
+            lblPrice.AutoSize = false;
+            lblPrice.Size = new Size(100, 20);
+            lblPrice.Location = new Point(10, 255);
+            lblPrice.Font = new Font("Segoe UI", 9, FontStyle.Bold);
+            lblPrice.Text = $"Rs{car.CarPrice}";
+
+            // View deal button
+            Button btnViewDeal = new Button();
+            btnViewDeal.Size = new Size(80, 30);
+            btnViewDeal.Location = new Point(160, 250);
+            btnViewDeal.Text = "View Deal";
+            btnViewDeal.BackColor = Color.FromArgb(30, 85, 110);
+            btnViewDeal.ForeColor = Color.White;
+            btnViewDeal.FlatStyle = FlatStyle.Flat;
+            btnViewDeal.Tag = car.CarID;
+            btnViewDeal.Click += BtnViewDeal_Click;
+
+            // Add controls to panel
             panel.Controls.Add(pictureBox);
-            panel.Controls.Add(label);
-
-            // Debugging image URL fetch
-            Console.WriteLine($"Loading image for {car.CarBrand} {car.Model}");
-            LoadImageFromAPI(car.CarBrand, car.Model, pictureBox);
+            panel.Controls.Add(lblTitle);
+            panel.Controls.Add(lblDescription);
+            panel.Controls.Add(lblPrice);
+            panel.Controls.Add(btnViewDeal);
 
             return panel;
+
         }
-
-
-
-
 
 
 
