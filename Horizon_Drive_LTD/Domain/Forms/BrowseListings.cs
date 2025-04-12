@@ -21,6 +21,7 @@ namespace Horizon_Drive_LTD
         private List<CarListing> carListings = new List<CarListing>();
         private HashTable<string, Cars> carHashTable;
 
+
         public BrowseListings()
         {
             InitializeComponent();
@@ -133,6 +134,7 @@ namespace Horizon_Drive_LTD
             catch
             {
                 // Use placeholder if image not found
+
                 pictureBox.BackColor = Color.LightGray;
             }
 
