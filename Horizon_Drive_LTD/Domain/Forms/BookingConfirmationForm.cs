@@ -167,33 +167,7 @@ namespace Horizon_Drive_LTD
 
         }
 
-        /*
-        private void SetRating(decimal rating)
-        {
-            // Set rating text
-            labelRating.Text = $"({rating}/5)";
-
-            // Clear existing stars
-            panelStars.Controls.Clear();
-
-            // Create star shapes - in a real app you would use star images
-            int fullStars = (int)Math.Floor(rating);
-
-            for (int i = 0; i < 5; i++)
-            {
-                Label star = new Label
-                {
-                    Text = "★",
-                    Font = new Font("Arial", 12),
-                    Size = new Size(20, 20),
-                    Location = new Point(i * 20, 0),
-                    ForeColor = i < fullStars ? Color.Gold : Color.LightGray
-                };
-
-                panelStars.Controls.Add(star);
-            }
-        }
-        */
+       
         private void CalculateAndDisplayPricing()
         {
             // Calculate base price
@@ -263,9 +237,6 @@ namespace Horizon_Drive_LTD
             int numericPart = Math.Abs(guid.GetHashCode()) % 100000;
             string bookingId = "CU" + numericPart.ToString("D4");
 
-
-
-
             Booking booking = new Booking(bookingId, customerID, car.CarID, startDate, endDate, pickupLocation, dropoffLocation,
                 driverIncluded, babyCarSeatIncluded, insuranceIncluded,
                 roofRackIncluded, airportPickupIncluded);
@@ -273,6 +244,9 @@ namespace Horizon_Drive_LTD
             // create booking object - insert into hash table
             // insert into bookings table
             // image folder
+            // search
+
+            // 
 
 
             {
