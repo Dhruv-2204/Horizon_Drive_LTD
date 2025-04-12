@@ -39,7 +39,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                             "", // Image will come from API
                             reader["RegistrationNo"].ToString(),
                             reader["Model"].ToString(),
-                            Convert.ToInt32(reader["Year"]),
+                            Convert.ToInt32(reader["Years"]),
                             reader["Colour"].ToString(),
                             reader["Features"].ToString(),
                             reader["VehicleDescription"].ToString(),
