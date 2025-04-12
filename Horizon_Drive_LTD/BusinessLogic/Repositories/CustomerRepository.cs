@@ -26,7 +26,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             using (SqlConnection conn = _dbConnection.GetConnection())
             {
                 conn.Open();
-                string query = "SELECT CustomerID, UserID, LicenseNo, LicenseExpiryDate, LicensePhoto FROM [Customer]";
+                string query = "SELECT CustomerID, UserID, LicenseNo, LicenseExpiryDate, LicensePhoto FROM Customer";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -54,7 +54,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             using (SqlConnection conn = _dbConnection.GetConnection())
             {
                 conn.Open();
-                string query = @"INSERT INTO [Customer]
+                string query = @"INSERT INTO Customer
                              (CustomerID, UserID, LicenseNo, LicenseExpiryDate, LicensePhoto)
                              VALUES 
                              (@CustomerID, @UserID, @LicenseNo, @LicenseExpiryDate, @LicensePhoto)";

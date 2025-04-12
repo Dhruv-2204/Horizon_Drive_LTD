@@ -3,12 +3,14 @@ using Horizon_Drive_LTD.BusinessLogic.Repositories;
 using Horizon_Drive_LTD.BusinessLogic;
 using Horizon_Drive_LTD.BusinessLogic.Services;
 using Horizon_Drive_LTD.Domain.Entities;
+using Microsoft.Data.SqlClient;
 namespace splashscreen
 {
     public partial class Login : Form
     {
         private bool isClosing = false;
         private AuthenticationService _authService;
+        private DatabaseConnection _dbConnection;
 
         public Login(AuthenticationService authService)
         {
@@ -40,9 +42,20 @@ namespace splashscreen
             }
             else
             {
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+                    string dropTableQuery = "DROP TABLE IF EXISTS ActiveUser;";
+                    using (SqlCommand cmd = new SqlCommand(dropTableQuery, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
                 Application.Exit(); // Properly terminates the application without triggering FormClosing again
             }
         }
+
 
        
 
@@ -65,6 +78,41 @@ namespace splashscreen
 
             if (_authService.Login(enteredUsername, enteredPassword, out User loggedInUser))
             {
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+
+                    // Create the ActiveUser table if it does not exist
+                    string createTableQuery = @"
+                    IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='ActiveUser' AND xtype='U')
+                    CREATE TABLE ActiveUser (
+                        UserName Varchar(100) NOT NULL
+                        UserId Varchar(10) NOT NULL
+                    );";
+                    using (SqlCommand cmd = new SqlCommand(createTableQuery, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    // Insert the current user's username into the ActiveUser table
+                    string insertUserQuery = @"
+                    INSERT INTO ActiveUser (UserName)
+                    VALUES (@UserName);";
+                    using (SqlCommand cmd = new SqlCommand(insertUserQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@UserName", loggedInUser.UserName);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+
+
+
+
+
+
+
+
                 DialogResult result = MessageBox.Show(
                     $"Welcome, {loggedInUser.UserName}!",
                     "Login Successful",

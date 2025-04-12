@@ -9,11 +9,11 @@ namespace Horizon_Drive_LTD
     public partial class BookingConfirmationForm : Form
     {
         private Cars car;
-        private DateTime startDate;
-        private DateTime endDate;
+        private DateOnly startDate;
+        private DateOnly endDate;
         private string pickupLocation;
         private string dropoffLocation;
-        private string pickupTime = "10:00 AM"; 
+        private string pickupTime = "10:00 AM";
         private string dropoffTime = "11:00 AM";
         private bool driverIncluded;
         private bool babyCarSeatIncluded;
@@ -25,8 +25,8 @@ namespace Horizon_Drive_LTD
 
         public BookingConfirmationForm(
             Cars car,
-            DateTime startDate,
-            DateTime endDate,
+            DateOnly startDate,
+            DateOnly endDate,
             string pickupLocation,
             string dropoffLocation,
             bool driverIncluded,
@@ -49,7 +49,7 @@ namespace Horizon_Drive_LTD
             this.airportPickupIncluded = airportPickupIncluded;
 
             // Calculate rental days
-            TimeSpan rentalPeriod = endDate - startDate;
+            TimeSpan rentalPeriod = this.endDate.ToDateTime(TimeOnly.MinValue) - this.startDate.ToDateTime(TimeOnly.MinValue);
             days = (int)Math.Ceiling(rentalPeriod.TotalDays);
 
             // Populate the form with booking details
@@ -58,7 +58,7 @@ namespace Horizon_Drive_LTD
 
         private void PopulateBookingDetails()
         {
-           
+
             // Set car details
             labelCarName.Text = $"{car.CarBrand} {car.Model} {car.Year}";
             labelCarFeatures.Text = $"{car.Features}";
@@ -108,7 +108,7 @@ namespace Horizon_Drive_LTD
             CalculateAndDisplayPricing();
         }
 
-       
+
 
         private void AddOption(ref int yOffset, string optionText)
         {
@@ -164,7 +164,7 @@ namespace Horizon_Drive_LTD
                 panelStars.Controls.Add(star);
             }
 
-          
+
         }
 
         /*
@@ -256,11 +256,31 @@ namespace Horizon_Drive_LTD
         {
             // Process the final booking
             MessageBox.Show("Your booking has been confirmed! A confirmation email will be sent shortly.",
-                "Booking Confirmed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+             "Booking Confirmed", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            Guid guid = Guid.NewGuid();
+            int numericPart = Math.Abs(guid.GetHashCode()) % 100000;
+            string bookingId = "CU" + numericPart.ToString("D4");
+
+
+
+
+            Booking booking = new Booking(bookingId, customerID, car.CarID, startDate, endDate, pickupLocation, dropoffLocation,
+                driverIncluded, babyCarSeatIncluded, insuranceIncluded,
+                roofRackIncluded, airportPickupIncluded);
+
+            // create booking object - insert into hash table
+            // insert into bookings table
+            // image folder
+
+
+            {
+
+
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
         }
     }
 }
