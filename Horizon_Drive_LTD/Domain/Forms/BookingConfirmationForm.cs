@@ -165,45 +165,56 @@ namespace Horizon_Drive_LTD
             decimal basePrice = dailyRate * days;
 
             // Calculate add-ons
-            decimal driverPrice = driverIncluded ? 1000 * days : 0;
-            decimal babyCarSeatPrice = babyCarSeatIncluded ? 500 : 0;
-            decimal insurancePrice = insuranceIncluded ? 1500 : 0;
-            decimal roofRackPrice = roofRackIncluded ? 400 : 0;
-            decimal airportPickupPrice = airportPickupIncluded ? 1000 : 0;
+            decimal driverPrice = driverIncluded ? 1000 * days : 0; // MUR 1000 per day
+            decimal babyCarSeatPrice = babyCarSeatIncluded ? 500 * days : 0; // MUR 500 per day
+            decimal insurancePrice = insuranceIncluded ? 1500 : 0; // MUR 1500 per rental
+            decimal roofRackPrice = roofRackIncluded ? 400 : 0; // MUR 400 per rental
+            decimal airportPickupPrice = airportPickupIncluded ? 1000 : 0; // MUR 1000 per trip
 
             // Service fee (example)
             decimal serviceFee = 1000;
 
             // Calculate total
             totalPrice = basePrice + driverPrice + babyCarSeatPrice + insurancePrice +
-                         roofRackPrice + airportPickupPrice + serviceFee;
+                        roofRackPrice + airportPickupPrice + serviceFee;
 
             // Display prices
             labelDailyRateValue.Text = $"MUR {dailyRate:N2} × {days} days";
 
-            // Only show selected add-ons
+            // Display add-ons in price panel
+            labelDriverService.Visible = driverIncluded;
+            labelDriverServiceValue.Visible = driverIncluded;
             if (driverIncluded)
             {
                 labelDriverServiceValue.Text = $"MUR {driverPrice:N0}";
-                labelDriverService.Visible = true;
-                labelDriverServiceValue.Visible = true;
-            }
-            else
-            {
-                labelDriverService.Visible = false;
-                labelDriverServiceValue.Visible = false;
             }
 
+            labelBabyCarSeat.Visible = babyCarSeatIncluded;
+            labelBabyCarSeatValue.Visible = babyCarSeatIncluded;
             if (babyCarSeatIncluded)
             {
                 labelBabyCarSeatValue.Text = $"MUR {babyCarSeatPrice:N0}";
-                labelBabyCarSeat.Visible = true;
-                labelBabyCarSeatValue.Visible = true;
             }
-            else
+
+            labelInsurance.Visible = insuranceIncluded;
+            labelInsuranceValue.Visible = insuranceIncluded;
+            if (insuranceIncluded)
             {
-                labelBabyCarSeat.Visible = false;
-                labelBabyCarSeatValue.Visible = false;
+                labelInsuranceValue.Text = $"MUR {insurancePrice:N0}";
+            }
+
+            labelRoofRack.Visible = roofRackIncluded;
+            labelRoofRackValue.Visible = roofRackIncluded;
+            if (roofRackIncluded)
+            {
+                labelRoofRackValue.Text = $"MUR {roofRackPrice:N0}";
+            }
+
+            labelAirportPickup.Visible = airportPickupIncluded;
+            labelAirportPickupValue.Visible = airportPickupIncluded;
+            if (airportPickupIncluded)
+            {
+                labelAirportPickupValue.Text = $"MUR {airportPickupPrice:N0}";
             }
 
             labelServiceFeeValue.Text = $"MUR {serviceFee:N0}";
