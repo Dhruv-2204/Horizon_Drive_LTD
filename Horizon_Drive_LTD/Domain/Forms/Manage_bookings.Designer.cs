@@ -117,6 +117,7 @@
             // Logout_btn
             // 
             Logout_btn.BackColor = Color.FromArgb(33, 79, 95);
+            Logout_btn.Cursor = Cursors.Hand;
             Logout_btn.FlatAppearance.BorderSize = 0;
             Logout_btn.FlatAppearance.MouseOverBackColor = Color.CadetBlue;
             Logout_btn.FlatStyle = FlatStyle.Flat;
@@ -133,6 +134,7 @@
             // Manage_bookings_btn
             // 
             Manage_bookings_btn.BackColor = Color.FromArgb(194, 229, 255);
+            Manage_bookings_btn.Cursor = Cursors.Hand;
             Manage_bookings_btn.FlatAppearance.BorderSize = 0;
             Manage_bookings_btn.FlatAppearance.MouseDownBackColor = Color.Transparent;
             Manage_bookings_btn.FlatAppearance.MouseOverBackColor = Color.CadetBlue;
@@ -150,6 +152,7 @@
             // Manage_users
             // 
             Manage_users.BackColor = Color.FromArgb(33, 79, 95);
+            Manage_users.Cursor = Cursors.Hand;
             Manage_users.FlatAppearance.BorderSize = 0;
             Manage_users.FlatAppearance.MouseOverBackColor = Color.CadetBlue;
             Manage_users.FlatStyle = FlatStyle.Flat;
@@ -167,6 +170,7 @@
             // Upload_files
             // 
             Upload_files.BackColor = Color.FromArgb(33, 79, 95);
+            Upload_files.Cursor = Cursors.Hand;
             Upload_files.FlatAppearance.BorderSize = 0;
             Upload_files.FlatAppearance.MouseDownBackColor = Color.CadetBlue;
             Upload_files.FlatAppearance.MouseOverBackColor = Color.FromArgb(194, 220, 255);

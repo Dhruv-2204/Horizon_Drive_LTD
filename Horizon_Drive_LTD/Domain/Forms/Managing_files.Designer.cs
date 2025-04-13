@@ -64,6 +64,7 @@
             // Logout_btn
             // 
             Logout_btn.BackColor = Color.FromArgb(33, 79, 95);
+            Logout_btn.Cursor = Cursors.Hand;
             Logout_btn.FlatAppearance.BorderSize = 0;
             Logout_btn.FlatAppearance.MouseOverBackColor = Color.CadetBlue;
             Logout_btn.FlatStyle = FlatStyle.Flat;
@@ -81,6 +82,7 @@
             // Manage_bookings_btn
             // 
             Manage_bookings_btn.BackColor = Color.FromArgb(33, 79, 95);
+            Manage_bookings_btn.Cursor = Cursors.Hand;
             Manage_bookings_btn.FlatAppearance.BorderSize = 0;
             Manage_bookings_btn.FlatAppearance.MouseDownBackColor = Color.Transparent;
             Manage_bookings_btn.FlatAppearance.MouseOverBackColor = Color.CadetBlue;
@@ -99,6 +101,7 @@
             // Manage_users
             // 
             Manage_users.BackColor = Color.FromArgb(33, 79, 95);
+            Manage_users.Cursor = Cursors.Hand;
             Manage_users.FlatAppearance.BorderSize = 0;
             Manage_users.FlatAppearance.MouseOverBackColor = Color.CadetBlue;
             Manage_users.FlatStyle = FlatStyle.Flat;
@@ -116,6 +119,7 @@
             // Upload_Cars_btn
             // 
             Upload_Cars_btn.BackColor = Color.FromArgb(194, 229, 255);
+            Upload_Cars_btn.Cursor = Cursors.Hand;
             Upload_Cars_btn.FlatAppearance.BorderSize = 0;
             Upload_Cars_btn.FlatAppearance.MouseDownBackColor = Color.Transparent;
             Upload_Cars_btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(194, 220, 255);
@@ -172,6 +176,7 @@
             // 
             Save_button.Anchor = AnchorStyles.Top;
             Save_button.BackColor = Color.FromArgb(33, 79, 95);
+            Save_button.Cursor = Cursors.Hand;
             Save_button.FlatAppearance.MouseOverBackColor = Color.FromArgb(108, 129, 255);
             Save_button.FlatStyle = FlatStyle.Popup;
             Save_button.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -215,6 +220,7 @@
             // 
             UploadButton.Anchor = AnchorStyles.Top;
             UploadButton.BackColor = Color.FromArgb(33, 79, 95);
+            UploadButton.Cursor = Cursors.Hand;
             UploadButton.FlatAppearance.BorderSize = 0;
             UploadButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(108, 129, 255);
             UploadButton.FlatStyle = FlatStyle.Popup;

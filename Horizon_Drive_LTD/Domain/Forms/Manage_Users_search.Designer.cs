@@ -192,6 +192,7 @@
             // Logout_btn
             // 
             Logout_btn.BackColor = Color.FromArgb(33, 79, 95);
+            Logout_btn.Cursor = Cursors.Hand;
             Logout_btn.FlatAppearance.BorderSize = 0;
             Logout_btn.FlatAppearance.MouseOverBackColor = Color.CadetBlue;
             Logout_btn.FlatStyle = FlatStyle.Flat;
@@ -209,6 +210,7 @@
             // Manage_bookings_btn
             // 
             Manage_bookings_btn.BackColor = Color.FromArgb(33, 79, 95);
+            Manage_bookings_btn.Cursor = Cursors.Hand;
             Manage_bookings_btn.FlatAppearance.BorderSize = 0;
             Manage_bookings_btn.FlatAppearance.MouseOverBackColor = Color.CadetBlue;
             Manage_bookings_btn.FlatStyle = FlatStyle.Flat;
@@ -226,6 +228,7 @@
             // Manage_Users
             // 
             Manage_Users.BackColor = Color.FromArgb(194, 229, 255);
+            Manage_Users.Cursor = Cursors.Hand;
             Manage_Users.FlatAppearance.BorderSize = 0;
             Manage_Users.FlatStyle = FlatStyle.Popup;
             Manage_Users.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -241,6 +244,7 @@
             // Manage_Cars_btn
             // 
             Manage_Cars_btn.BackColor = Color.FromArgb(33, 79, 95);
+            Manage_Cars_btn.Cursor = Cursors.Hand;
             Manage_Cars_btn.FlatAppearance.BorderSize = 0;
             Manage_Cars_btn.FlatAppearance.MouseDownBackColor = Color.CadetBlue;
             Manage_Cars_btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(194, 220, 255);
