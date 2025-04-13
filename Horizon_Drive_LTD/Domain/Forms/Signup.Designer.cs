@@ -1,4 +1,6 @@
-﻿namespace Horizon_Drive_LTD
+﻿
+
+namespace Horizon_Drive_LTD
 {
     partial class Signup
     {
@@ -124,7 +126,7 @@
             panel4.Name = "panel4";
             panel4.Size = new Size(210, 53);
             panel4.TabIndex = 24;
-          
+
             // 
             // Last_Name
             // 
@@ -200,6 +202,7 @@
             signup_btn.TabIndex = 21;
             signup_btn.Text = " SIGN UP";
             signup_btn.UseVisualStyleBackColor = false;
+            signup_btn.Click += signup_btn_Click;
             // 
             // checkBox1
             // 
@@ -249,7 +252,7 @@
             Password.Size = new Size(378, 29);
             Password.TabIndex = 17;
             Password.UseSystemPasswordChar = true;
-           
+
             // 
             // Address
             // 
@@ -263,7 +266,7 @@
             Address.PlaceholderText = "Enter Address";
             Address.Size = new Size(378, 29);
             Address.TabIndex = 16;
-          
+
             // 
             // Phone_Number
             // 
@@ -277,7 +280,7 @@
             Phone_Number.PlaceholderText = "Enter Phone Number";
             Phone_Number.Size = new Size(378, 29);
             Phone_Number.TabIndex = 15;
-           
+
             // 
             // label9
             // 
@@ -324,7 +327,7 @@
             Email.PlaceholderText = "Enter Email";
             Email.Size = new Size(378, 29);
             Email.TabIndex = 11;
-          
+
             // 
             // label7
             // 
@@ -348,7 +351,7 @@
             Username.PlaceholderText = "Enter Username";
             Username.Size = new Size(378, 29);
             Username.TabIndex = 9;
-        
+
             // 
             // label6
             // 
@@ -448,6 +451,11 @@
             PerformLayout();
         }
 
+
+
+
+
+
         #endregion
 
         private Panel panel1;
@@ -478,5 +486,6 @@
         private Panel panel4;
         private Panel panel3;
         private Panel panel5;
+
     }
 }
