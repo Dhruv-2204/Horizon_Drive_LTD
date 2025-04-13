@@ -71,7 +71,7 @@ namespace Horizon_Drive_LTD
             pictureBox.Size = new Size(230, 150);
             pictureBox.Location = new Point(10, 10);
             pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            /*
+
             try
             {
                 string imagesFolder = Path.Combine(Application.StartupPath, "Images", "BrowseListings");
@@ -93,41 +93,7 @@ namespace Horizon_Drive_LTD
                 MessageBox.Show("Image load error: " + ex.Message);
                 pictureBox.BackColor = Color.LightGray;
             }
-            */
-            try
-            {
-                string baseFolder = Path.Combine(Application.StartupPath, "Images", "BrowseListings");
-                string carFolderName = $"{car.CarBrand}_{car.Model}_{car.Year}";
-                string carFolderPath = Path.Combine(baseFolder, carFolderName);
 
-                if (Directory.Exists(carFolderPath))
-                {
-                    // Get the first image file (jpg, png, jpeg, etc.)
-                    string[] imageFiles = Directory.GetFiles(carFolderPath, "*.*")
-                                                   .Where(file => file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase)
-                                                               || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase)
-                                                               || file.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
-                                                   .ToArray();
-
-                    if (imageFiles.Length > 0)
-                    {
-                        pictureBox.Image = Image.FromFile(imageFiles[0]);
-                    }
-                    else
-                    {
-                        pictureBox.BackColor = Color.LightGray; 
-                    }
-                }
-                else
-                {
-                    pictureBox.BackColor = Color.LightGray;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Image load error: " + ex.Message);
-                pictureBox.BackColor = Color.LightGray;
-            }
 
 
 

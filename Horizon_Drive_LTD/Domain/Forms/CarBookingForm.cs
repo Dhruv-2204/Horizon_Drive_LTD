@@ -27,7 +27,7 @@ namespace Horizon_Drive_LTD
             InitializeSlideshowControls();
 
             // Initialize slideshow images
-            InitializeSlideshow();
+            //  InitializeSlideshow();
 
             // Set default dates
             dateTimePickerStart.Value = DateTime.Now.AddDays(1);
@@ -77,45 +77,25 @@ namespace Horizon_Drive_LTD
             slideshowTimer.Tick += SlideshowTimer_Tick;
         }
 
-
+        
         private void InitializeSlideshow()
         {
             // Clear any existing images
             carImages.Clear();
 
-            try
+            // Add the main image
+            if (!string.IsNullOrEmpty(car.ImagePath))
             {
-                // Construct the folder path based on car brand, model, and year
-                string baseFolder = Path.Combine(Application.StartupPath, "Images", "BrowseListings");
-                string carFolderName = $"{car.CarBrand}_{car.Model}_{car.Year}";
-                string carFolderPath = Path.Combine(baseFolder, carFolderName);
-
-                if (Directory.Exists(carFolderPath))
-                {
-                    // Load all image files from that folder
-                    string[] imageFiles = Directory.GetFiles(carFolderPath, "*.*")
-                                                   .Where(file => file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase)
-                                                               || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase)
-                                                               || file.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
-                                                   .ToArray();
-
-                    if (imageFiles.Length > 0)
-                    {
-                        carImages.AddRange(imageFiles);
-                    }
-                }
-
-                if (carImages.Count == 0)
-                {
-                    MessageBox.Show("No images found for this car.");
-                }
+                carImages.Add(car.ImagePath);
             }
-            catch (Exception ex)
+
+            // Add any additional images from the car listing
+            if (car.AdditionalImages != null && car.AdditionalImages.Count > 0)
             {
-                MessageBox.Show("Slideshow initialization error: " + ex.Message);
+                carImages.AddRange(car.AdditionalImages);
             }
         }
-
+       
 
         private void LoadImage(int index)
         {
@@ -123,13 +103,13 @@ namespace Horizon_Drive_LTD
             {
                 try
                 {
-                    // Wrap around the index
+                    // Make sure index is valid
                     if (index < 0) index = carImages.Count - 1;
                     if (index >= carImages.Count) index = 0;
 
                     currentImageIndex = index;
 
-                    string imagePath = carImages[currentImageIndex];
+                    string imagePath = Path.Combine("Images", carImages[currentImageIndex]);
 
                     if (File.Exists(imagePath))
                     {
@@ -137,12 +117,14 @@ namespace Horizon_Drive_LTD
                     }
                     else
                     {
+                        // If file doesn't exist, show placeholder
                         pictureBoxCar.BackColor = Color.LightGray;
                         pictureBoxCar.Image = null;
                     }
                 }
                 catch (Exception ex)
                 {
+                    // If there's any error loading the image, use placeholder
                     pictureBoxCar.BackColor = Color.LightGray;
                     pictureBoxCar.Image = null;
                     Console.WriteLine($"Error loading image: {ex.Message}");
@@ -201,7 +183,6 @@ namespace Horizon_Drive_LTD
             passengersSpec.Text = $"Passengers: {car.SeatNo}";
             powerSpec.Text = $"Power: {car.Power}";
             drivetrainSpec.Text = $"Drivetrain: {car.DriveTrain}";
-            ratingCount.Text = $"Rating: {car.Ratings} reviews)"; 
 
 
         }
