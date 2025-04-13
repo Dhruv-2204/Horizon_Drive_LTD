@@ -16,6 +16,7 @@ namespace splashscreen
         {
             InitializeComponent();
            _authService = authService ?? throw new ArgumentNullException(nameof(authService));
+            _dbConnection = new DatabaseConnection(); 
         }
 
         public Login()
@@ -57,7 +58,6 @@ namespace splashscreen
         }
 
 
-       
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
@@ -78,39 +78,21 @@ namespace splashscreen
 
             if (_authService.Login(enteredUsername, enteredPassword, out User loggedInUser))
             {
-                using (SqlConnection conn = _dbConnection.GetConnection())
+
+
+                UserRepository userRepo = new UserRepository(new DatabaseConnection());
+
+                string userId = userRepo.GetUserIdByUsername(enteredUsername);
+
+                if (!string.IsNullOrEmpty(userId))
                 {
-                    conn.Open();
-
-                    // Create the ActiveUser table if it does not exist
-                    string createTableQuery = @"
-                    IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='ActiveUser' AND xtype='U')
-                    CREATE TABLE ActiveUser (
-                        UserName Varchar(100) NOT NULL
-                        UserId Varchar(10) NOT NULL
-                    );";
-                    using (SqlCommand cmd = new SqlCommand(createTableQuery, conn))
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-
-                    // Insert the current user's username into the ActiveUser table
-                    string insertUserQuery = @"
-                    INSERT INTO ActiveUser (UserName)
-                    VALUES (@UserName);";
-                    using (SqlCommand cmd = new SqlCommand(insertUserQuery, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@UserName", loggedInUser.UserName);
-                        cmd.ExecuteNonQuery();
-                    }
+                    userRepo.StoreActiveUser(enteredUsername, userId);
+                   
                 }
-
-
-
-
-
-
-
+                else
+                {
+                    MessageBox.Show("User ID not found.");
+                }
 
 
                 DialogResult result = MessageBox.Show(

@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Horizon_Drive_LTD.BusinessLogic.Repositories;
+using Horizon_Drive_LTD.BusinessLogic;
 using Horizon_Drive_LTD.Domain.Entities;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using Horizon_Drive_LTD.DataStructure;
+using System.Collections;
 
 namespace Horizon_Drive_LTD
 {
     public partial class BookingConfirmationForm : Form
     {
         private Cars car;
-        private DateOnly startDate;
-        private DateOnly endDate;
+        private DateTime startDate;
+        private DateTime endDate;
         private string pickupLocation;
         private string dropoffLocation;
         private string pickupTime = "10:00 AM";
@@ -25,8 +30,8 @@ namespace Horizon_Drive_LTD
 
         public BookingConfirmationForm(
             Cars car,
-            DateOnly startDate,
-            DateOnly endDate,
+            DateTime startDate,
+            DateTime endDate,
             string pickupLocation,
             string dropoffLocation,
             bool driverIncluded,
@@ -49,7 +54,7 @@ namespace Horizon_Drive_LTD
             this.airportPickupIncluded = airportPickupIncluded;
 
             // Calculate rental days
-            TimeSpan rentalPeriod = this.endDate.ToDateTime(TimeOnly.MinValue) - this.startDate.ToDateTime(TimeOnly.MinValue);
+            TimeSpan rentalPeriod = this.endDate - this.startDate;
             days = (int)Math.Ceiling(rentalPeriod.TotalDays);
 
             // Populate the form with booking details
@@ -228,28 +233,55 @@ namespace Horizon_Drive_LTD
 
         private void buttonBookNow_Click(object sender, EventArgs e)
         {
-            // Process the final booking
-            MessageBox.Show("Your booking has been confirmed! A confirmation email will be sent shortly.",
-             "Booking Confirmed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            UserRepository userRepo = new UserRepository(new DatabaseConnection());
+            userRepo.GetActiveUser(out string activeUsername, out string activeUserId);
 
-
+            BookingsRepository bookingRepo = new BookingsRepository(new DatabaseConnection());
+            HashTable<string, Booking> bookingHashTable = new HashTable<string, Booking>(1000);
+          
             Guid guid = Guid.NewGuid();
             int numericPart = Math.Abs(guid.GetHashCode()) % 100000;
             string bookingId = "CU" + numericPart.ToString("D4");
 
-            Booking booking = new Booking(bookingId, customerID, car.CarID, startDate, endDate, pickupLocation, dropoffLocation,
-                driverIncluded, babyCarSeatIncluded, insuranceIncluded,
-                roofRackIncluded, airportPickupIncluded);
-
-            // create booking object - insert into hash table
-            // insert into bookings table
-            // image folder
-            // search
-
-            // 
+            DateTime date = DateTime.Now;
+            string formattedDate = date.ToString("yyyy-MM-dd");
 
 
+            
+          
+
+            if (!string.IsNullOrEmpty(activeUsername) && !string.IsNullOrEmpty(activeUserId))
             {
+                Booking booking = new Booking(bookingId, activeUserId, car.CarID, formattedDate, startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"), pickupLocation, dropoffLocation,
+                 driverIncluded, babyCarSeatIncluded, insuranceIncluded,roofRackIncluded, airportPickupIncluded);
+
+                bookingHashTable.Insert(bookingId, booking);
+
+                bookingRepo.LoadBookingsIntoDatabase(new Booking(bookingId, activeUserId, car.CarID, formattedDate, startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"), pickupLocation, dropoffLocation,
+              driverIncluded, babyCarSeatIncluded, insuranceIncluded, roofRackIncluded, airportPickupIncluded));
+
+                // Process the final booking
+                MessageBox.Show("Your booking has been confirmed! A confirmation email will be sent shortly.",
+                 "Booking Confirmed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("No active user found.");
+            }
+
+
+           
+
+
+        // create booking object - insert into hash table
+        // insert into bookings table
+        // image folder
+        // search
+
+        // 
+
+
+        {
 
 
                 this.DialogResult = DialogResult.OK;

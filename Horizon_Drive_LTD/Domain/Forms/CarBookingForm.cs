@@ -206,6 +206,7 @@ namespace Horizon_Drive_LTD
             string pickupLocation = comboBoxPickup.SelectedItem?.ToString() ?? string.Empty;
             string dropoffLocation = comboBoxDropoff.SelectedItem?.ToString() ?? string.Empty;
 
+            
             // Show booking confirmation dialog
             BookingConfirmationForm confirmationForm = new BookingConfirmationForm(
                 car,
@@ -219,13 +220,14 @@ namespace Horizon_Drive_LTD
                 checkBoxRoofRack.Checked,
                 checkBoxAirportPickup.Checked
             );
-
+            
             if (confirmationForm.ShowDialog() == DialogResult.OK)
             {
                 // Booking was confirmed - you could save to database here
                 this.Close();
             }
             // If user cancelled, they stay on the booking form
+            
         }
 
         protected override void Dispose(bool disposing)

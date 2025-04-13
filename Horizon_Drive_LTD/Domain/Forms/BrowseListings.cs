@@ -128,16 +128,24 @@ namespace Horizon_Drive_LTD
 
             try
             {
-                LoadImageFromAPI(car.CarBrand, car.Model, pictureBox); ;
+                string imagesFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "BrowseListings");
+                string searchPattern = $"{car.CarBrand}_{car.Model}.*"; // Supports any extension
+                string[] matchingFiles = Directory.GetFiles(imagesFolder, searchPattern);
+
+              
+                pictureBox.Image = Image.FromFile(Path.Combine(imagesFolder, "Toyota_RAV4.png")); // Load the first matching file
+               
             }
-            catch
+            catch (Exception ex)
             {
-                // Use placeholder if image not found
-
-                pictureBox.BackColor = Color.LightGray;
+                pictureBox.BackColor = Color.LightGray; // In case of any error
+                MessageBox.Show($"Car image could not be loaded.\n\nError: {ex.Message}");
             }
 
 
+
+
+            panel.Controls.Add(pictureBox);
 
             // Car title (Make and Model)
             Label lblTitle = new Label();
@@ -175,7 +183,7 @@ namespace Horizon_Drive_LTD
             btnViewDeal.Click += BtnViewDeal_Click;
 
             // Add controls to panel
-            panel.Controls.Add(pictureBox);
+           
             panel.Controls.Add(lblTitle);
             panel.Controls.Add(lblDescription);
             panel.Controls.Add(lblPrice);

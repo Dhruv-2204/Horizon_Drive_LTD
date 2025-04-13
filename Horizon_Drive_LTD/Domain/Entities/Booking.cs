@@ -10,12 +10,13 @@ namespace Horizon_Drive_LTD.Domain.Entities
 {
     public class Booking
     {
+
         public string BookingID { get;set;}
         public string CustomerID { get;set;}
         public string CarID { get; set;}
-        public DateOnly BookingDate { get; set;}
-        public DateOnly PickupDate { get; set;}
-        public DateOnly DropoffDate { get; set;}
+        public string BookingDate { get; set;}
+        public string PickupDate { get; set;}
+        public string DropoffDate { get; set;}
         public string PickupLocation { get; set;}
         public string DropoffLocation { get; set;}
         public bool IncludeDriver { get; set;}
@@ -25,7 +26,7 @@ namespace Horizon_Drive_LTD.Domain.Entities
         public bool AirportPickupDropoff { get; set;}
 
 
-        public Booking(string bookingID, string customerID, string carID, DateOnly bookingDate, DateOnly pickupDate, DateOnly dropoffDate, string pickupLocation,
+        public Booking(string bookingID, string customerID, string carID, string bookingDate, string pickupDate, string dropoffDate, string pickupLocation,
             string dropoffLocation, bool includeDriver, bool babyCarSeat, bool fullInsuranceCoverage, bool roofRack, bool airportPickupDropoff) {
 
             BookingID = bookingID;
@@ -44,5 +45,6 @@ namespace Horizon_Drive_LTD.Domain.Entities
 
         }
 
+       
     }
 }

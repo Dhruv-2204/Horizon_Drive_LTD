@@ -3,6 +3,8 @@
     using System.Security.Cryptography;
     using System.Text;
     using System.Text.RegularExpressions;
+    using Horizon_Drive_LTD.BusinessLogic.Repositories;
+    using Horizon_Drive_LTD.BusinessLogic;
     using Horizon_Drive_LTD.BusinessLogic.Services;
     using Horizon_Drive_LTD.Domain.Entities;
     //Using the splashcreen namespace to summon the Login window
@@ -164,7 +166,22 @@
             if (result)
             {
                 MessageBox.Show("Account created successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
+
+                UserRepository userRepo = new UserRepository(new DatabaseConnection());
+
+                string userid = userRepo.GetUserIdByUsername(username);
+
+                if (!string.IsNullOrEmpty(userId))
+                {
+                    userRepo.StoreActiveUser(username, userId);
+
+                }
+                else
+                {
+                    MessageBox.Show("User ID not found.");
+                }
+
+
             }
             else
             {
