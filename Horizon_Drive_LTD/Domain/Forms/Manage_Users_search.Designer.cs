@@ -36,13 +36,13 @@
             Managing_users_click_btn = new Button();
             panel2 = new Panel();
             dataGridView1 = new DataGridView();
-            vScrollBar1 = new VScrollBar();
             panel1 = new Panel();
             Logout_btn = new Button();
             Manage_bookings_btn = new Button();
             Manage_Users = new Button();
             Manage_Cars_btn = new Button();
             pictureBox1 = new PictureBox();
+            label1 = new Label();
             search_box = new TextBox();
             user_background.SuspendLayout();
             panel4.SuspendLayout();
@@ -56,10 +56,10 @@
             // search_box
             // 
             search_box.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            search_box.Location = new Point(372, 102);
+            search_box.Location = new Point(461, 102);
             search_box.Margin = new Padding(4, 3, 4, 3);
             search_box.Name = "search_box";
-            search_box.Size = new Size(428, 23);
+            search_box.Size = new Size(339, 23);
             search_box.TabIndex = 5;
             search_box.Text = "Search";
             search_box.TextAlign = HorizontalAlignment.Center;
@@ -69,11 +69,11 @@
             // 
             user_background.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             user_background.BackColor = Color.FromArgb(224, 224, 224);
+            user_background.Controls.Add(label1);
             user_background.Controls.Add(panel4);
             user_background.Controls.Add(panel3);
             user_background.Controls.Add(search_box);
             user_background.Controls.Add(panel2);
-            user_background.Controls.Add(vScrollBar1);
             user_background.Controls.Add(panel1);
             user_background.Location = new Point(0, -1);
             user_background.Margin = new Padding(4, 3, 4, 3);
@@ -165,14 +165,6 @@
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.Size = new Size(428, 270);
             dataGridView1.TabIndex = 4;
-            // 
-            // vScrollBar1
-            // 
-            vScrollBar1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            vScrollBar1.Location = new Point(804, 175);
-            vScrollBar1.Name = "vScrollBar1";
-            vScrollBar1.Size = new Size(17, 228);
-            vScrollBar1.TabIndex = 2;
             // 
             // panel1
             // 
@@ -273,6 +265,15 @@
             pictureBox1.TabStop = false;
             pictureBox1.Click += pictureBox1_Click;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(396, 105);
+            label1.Name = "label1";
+            label1.Size = new Size(33, 15);
+            label1.TabIndex = 10;
+            label1.Text = "Filter";
+            // 
             // Manage_User_Page
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -306,13 +307,13 @@
         private System.Windows.Forms.Button Manage_Users;
         private System.Windows.Forms.Button Logout_btn;
         private System.Windows.Forms.Button Manage_bookings_btn;
-        private System.Windows.Forms.VScrollBar vScrollBar1;
         private System.Windows.Forms.Button Managing_users_click_btn;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label Search_Users;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel4;
+        private Label label1;
     }
 }
 
