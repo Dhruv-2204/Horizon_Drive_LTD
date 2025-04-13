@@ -1,39 +1,32 @@
-﻿using Horizon_Drive_LTD.Domain.Forms;
-using Manage_user_search_page;
+﻿using Manage_user_search_page;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Upload_cars;
 using User_managing;
+using WindowsFormsApp1;
 
-namespace WindowsFormsApp1
+namespace Horizon_Drive_LTD.Domain.Forms
 {
-    public partial class Manage_bookings : Form
+    public partial class Maintenance : Form
     {
-        public Manage_bookings()
+        public Maintenance()
         {
             InitializeComponent();
-            //loads the image from the folder Images
             LoadImage();
-            SetRoundedCorner(Manage_users, 25);
-            SetRoundedCorner(Upload_files, 25);
+            SetRoundedCorner(Manage_Users, 25);
+            SetRoundedCorner(Manage_files_btn, 25);
             SetRoundedCorner(Manage_bookings_btn, 25);
             SetRoundedCorner(Logout_btn, 25);
             SetRoundedCorner(Maintenance_btn, 25);
-            //SetRoundedCorner(Managing_users_click_btn, 25);
 
-        }
-
-        private void Upload_Cars_btn_Click(object sender, EventArgs e)
-        {
-            var manage_car_Page = new Managing_files(); // gets form Managing_cars
-            manage_car_Page.Show();                  // Shows the new form manage_cars
-            this.Dispose();
         }
 
         private void SetRoundedCorner(Button button, int radius)
@@ -70,29 +63,30 @@ namespace WindowsFormsApp1
                 MessageBox.Show("Image not found at: " + imagePath);
                 //error message window pops up if image is not found
             }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
         }
 
-        private void Manage_users_Click(object sender, EventArgs e)
+        private void Manage_Users_Click(object sender, EventArgs e)
         {
-            var manage_user_Page = new Manage_User_Page(); // Replace with your actual form name
-            manage_user_Page.Show();                  // Shows the new form
+            var manage_car_Page = new Manage_User_Page(); // gets form Managing_cars
+            manage_car_Page.Show();                  // Shows the new form manage_cars
             this.Dispose();
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void Manage_files_btn_Click(object sender, EventArgs e)
         {
-
+            var manage_car_Page = new Managing_files(); // gets form Managing_cars
+            manage_car_Page.Show();                  // Shows the new form manage_cars
+            this.Dispose();
         }
 
-        private void Logout_btn_Click(object sender, EventArgs e)
+        private void Manage_bookings_btn_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void Maintenance_btn_Click(object sender, EventArgs e)
-        {
-            var manage_car_Page = new Maintenance(); // gets form Managing_cars
+            var manage_car_Page = new Manage_bookings(); // gets form Managing_cars
             manage_car_Page.Show();                  // Shows the new form manage_cars
             this.Dispose();
         }

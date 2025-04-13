@@ -33,6 +33,7 @@
             panel4 = new Panel();
             Search_Users = new Label();
             panel1 = new Panel();
+            Maintenance_btn = new Button();
             Logout_btn = new Button();
             Manage_bookings_btn = new Button();
             Manage_users = new Button();
@@ -91,11 +92,11 @@
             // 
             Search_Users.Anchor = AnchorStyles.None;
             Search_Users.AutoSize = true;
-            Search_Users.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
-            Search_Users.Location = new Point(131, 22);
+            Search_Users.Font = new Font("Segoe UI", 27.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Search_Users.Location = new Point(95, 18);
             Search_Users.Margin = new Padding(4, 0, 4, 0);
             Search_Users.Name = "Search_Users";
-            Search_Users.Size = new Size(247, 37);
+            Search_Users.Size = new Size(335, 50);
             Search_Users.TabIndex = 7;
             Search_Users.Text = "Manage Bookings";
             // 
@@ -103,6 +104,7 @@
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             panel1.BackColor = Color.FromArgb(20, 48, 65);
+            panel1.Controls.Add(Maintenance_btn);
             panel1.Controls.Add(Logout_btn);
             panel1.Controls.Add(Manage_bookings_btn);
             panel1.Controls.Add(Manage_users);
@@ -114,6 +116,24 @@
             panel1.Size = new Size(300, 558);
             panel1.TabIndex = 0;
             // 
+            // Maintenance_btn
+            // 
+            Maintenance_btn.BackColor = Color.FromArgb(33, 79, 95);
+            Maintenance_btn.Cursor = Cursors.Hand;
+            Maintenance_btn.FlatAppearance.BorderSize = 0;
+            Maintenance_btn.FlatAppearance.MouseOverBackColor = Color.CadetBlue;
+            Maintenance_btn.FlatStyle = FlatStyle.Flat;
+            Maintenance_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
+            Maintenance_btn.ForeColor = SystemColors.ButtonHighlight;
+            Maintenance_btn.Location = new Point(68, 419);
+            Maintenance_btn.Margin = new Padding(4, 3, 4, 3);
+            Maintenance_btn.Name = "Maintenance_btn";
+            Maintenance_btn.Size = new Size(156, 53);
+            Maintenance_btn.TabIndex = 3;
+            Maintenance_btn.Text = "Maintenance";
+            Maintenance_btn.UseVisualStyleBackColor = false;
+            Maintenance_btn.Click += Maintenance_btn_Click;
+            // 
             // Logout_btn
             // 
             Logout_btn.BackColor = Color.FromArgb(33, 79, 95);
@@ -123,13 +143,14 @@
             Logout_btn.FlatStyle = FlatStyle.Flat;
             Logout_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
             Logout_btn.ForeColor = SystemColors.ButtonHighlight;
-            Logout_btn.Location = new Point(68, 464);
+            Logout_btn.Location = new Point(68, 493);
             Logout_btn.Margin = new Padding(4, 3, 4, 3);
             Logout_btn.Name = "Logout_btn";
             Logout_btn.Size = new Size(156, 53);
             Logout_btn.TabIndex = 2;
             Logout_btn.Text = "Log Out";
             Logout_btn.UseVisualStyleBackColor = false;
+            Logout_btn.Click += Logout_btn_Click;
             // 
             // Manage_bookings_btn
             // 
@@ -141,7 +162,7 @@
             Manage_bookings_btn.FlatStyle = FlatStyle.Flat;
             Manage_bookings_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
             Manage_bookings_btn.ForeColor = SystemColors.ControlText;
-            Manage_bookings_btn.Location = new Point(68, 374);
+            Manage_bookings_btn.Location = new Point(68, 345);
             Manage_bookings_btn.Margin = new Padding(4, 3, 4, 3);
             Manage_bookings_btn.Name = "Manage_bookings_btn";
             Manage_bookings_btn.Size = new Size(156, 53);
@@ -158,7 +179,7 @@
             Manage_users.FlatStyle = FlatStyle.Flat;
             Manage_users.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Manage_users.ForeColor = SystemColors.ControlLightLight;
-            Manage_users.Location = new Point(68, 213);
+            Manage_users.Location = new Point(68, 201);
             Manage_users.Margin = new Padding(4, 3, 4, 3);
             Manage_users.Name = "Manage_users";
             Manage_users.Size = new Size(156, 52);
@@ -177,7 +198,7 @@
             Upload_files.FlatStyle = FlatStyle.Flat;
             Upload_files.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Upload_files.ForeColor = SystemColors.ControlLightLight;
-            Upload_files.Location = new Point(68, 291);
+            Upload_files.Location = new Point(68, 272);
             Upload_files.Margin = new Padding(0);
             Upload_files.Name = "Upload_files";
             Upload_files.Size = new Size(156, 52);
@@ -232,5 +253,6 @@
         private System.Windows.Forms.Button Upload_files;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.DataGridView dataGridView2;
+        private Button Maintenance_btn;
     }
 }

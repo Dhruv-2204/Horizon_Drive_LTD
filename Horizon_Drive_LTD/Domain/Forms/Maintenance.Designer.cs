@@ -1,6 +1,6 @@
-﻿namespace Manage_user_search_page
+﻿namespace Horizon_Drive_LTD.Domain.Forms
 {
-    partial class Manage_User_Page
+    partial class Maintenance
     {
         /// <summary>
         /// Required designer variable.
@@ -28,23 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            TextBox search_box;
             user_background = new Panel();
-            label1 = new Label();
             panel4 = new Panel();
-            Search_Users = new Label();
+            label1 = new Label();
             panel3 = new Panel();
             Managing_users_click_btn = new Button();
             panel2 = new Panel();
             dataGridView1 = new DataGridView();
             panel1 = new Panel();
+            Maintenance_btn = new Button();
             Logout_btn = new Button();
             Manage_bookings_btn = new Button();
             Manage_Users = new Button();
-            Manage_Cars_btn = new Button();
+            Manage_files_btn = new Button();
             pictureBox1 = new PictureBox();
-            Maintenance_btn = new Button();
-            search_box = new TextBox();
             user_background.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
@@ -54,74 +51,47 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
-            // search_box
-            // 
-            search_box.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            search_box.Location = new Point(461, 102);
-            search_box.Margin = new Padding(4, 3, 4, 3);
-            search_box.Name = "search_box";
-            search_box.Size = new Size(339, 23);
-            search_box.TabIndex = 5;
-            search_box.Text = "Search";
-            search_box.TextAlign = HorizontalAlignment.Center;
-            search_box.TextChanged += Manage_users_search_user;
-            // 
             // user_background
             // 
             user_background.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             user_background.BackColor = Color.FromArgb(224, 224, 224);
-            user_background.Controls.Add(label1);
             user_background.Controls.Add(panel4);
             user_background.Controls.Add(panel3);
-            user_background.Controls.Add(search_box);
             user_background.Controls.Add(panel2);
             user_background.Controls.Add(panel1);
-            user_background.Location = new Point(0, -1);
+            user_background.Location = new Point(0, -2);
             user_background.Margin = new Padding(4, 3, 4, 3);
             user_background.Name = "user_background";
             user_background.Size = new Size(863, 560);
-            user_background.TabIndex = 0;
-            user_background.Paint += user_background_Paint;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(396, 105);
-            label1.Name = "label1";
-            label1.Size = new Size(33, 15);
-            label1.TabIndex = 10;
-            label1.Text = "Filter";
+            user_background.TabIndex = 1;
             // 
             // panel4
             // 
             panel4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel4.AutoSize = true;
-            panel4.Controls.Add(Search_Users);
-            panel4.Location = new Point(372, 3);
-            panel4.Margin = new Padding(4, 3, 4, 3);
+            panel4.Controls.Add(label1);
+            panel4.Location = new Point(307, 24);
             panel4.Name = "panel4";
-            panel4.Size = new Size(428, 76);
-            panel4.TabIndex = 9;
+            panel4.Size = new Size(543, 84);
+            panel4.TabIndex = 10;
             // 
-            // Search_Users
+            // label1
             // 
-            Search_Users.Anchor = AnchorStyles.None;
-            Search_Users.AutoSize = true;
-            Search_Users.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
-            Search_Users.Location = new Point(89, 8);
-            Search_Users.Margin = new Padding(4, 0, 4, 0);
-            Search_Users.Name = "Search_Users";
-            Search_Users.Size = new Size(210, 37);
-            Search_Users.TabIndex = 7;
-            Search_Users.Text = "SEARCH USERS";
-            Search_Users.Click += Search_Users_Click;
+            label1.Anchor = AnchorStyles.None;
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 27.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(54, 21);
+            label1.Name = "label1";
+            label1.Size = new Size(442, 50);
+            label1.TabIndex = 9;
+            label1.Text = "Cars under Maintenance";
             // 
             // panel3
             // 
             panel3.Anchor = AnchorStyles.None;
             panel3.AutoSize = true;
             panel3.Controls.Add(Managing_users_click_btn);
-            panel3.Location = new Point(372, 429);
+            panel3.Location = new Point(703, 659);
             panel3.Margin = new Padding(4, 3, 4, 3);
             panel3.Name = "panel3";
             panel3.Size = new Size(428, 115);
@@ -138,7 +108,7 @@
             Managing_users_click_btn.FlatStyle = FlatStyle.Flat;
             Managing_users_click_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
             Managing_users_click_btn.ForeColor = SystemColors.ButtonHighlight;
-            Managing_users_click_btn.Location = new Point(50, 22);
+            Managing_users_click_btn.Location = new Point(164, 29);
             Managing_users_click_btn.Margin = new Padding(4, 3, 4, 3);
             Managing_users_click_btn.Name = "Managing_users_click_btn";
             Managing_users_click_btn.Padding = new Padding(1);
@@ -146,16 +116,15 @@
             Managing_users_click_btn.TabIndex = 3;
             Managing_users_click_btn.Text = "Click to manage users";
             Managing_users_click_btn.UseVisualStyleBackColor = false;
-            Managing_users_click_btn.Click += Manage_users_click;
             // 
             // panel2
             // 
             panel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel2.Controls.Add(dataGridView1);
-            panel2.Location = new Point(372, 132);
+            panel2.Location = new Point(329, 149);
             panel2.Margin = new Padding(4, 3, 4, 3);
             panel2.Name = "panel2";
-            panel2.Size = new Size(428, 272);
+            panel2.Size = new Size(507, 350);
             panel2.TabIndex = 6;
             // 
             // dataGridView1
@@ -173,8 +142,9 @@
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowTemplate.Height = 30;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(428, 270);
+            dataGridView1.Size = new Size(507, 350);
             dataGridView1.TabIndex = 4;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // panel1
             // 
@@ -184,13 +154,31 @@
             panel1.Controls.Add(Logout_btn);
             panel1.Controls.Add(Manage_bookings_btn);
             panel1.Controls.Add(Manage_Users);
-            panel1.Controls.Add(Manage_Cars_btn);
+            panel1.Controls.Add(Manage_files_btn);
             panel1.Controls.Add(pictureBox1);
             panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(4, 3, 4, 3);
             panel1.Name = "panel1";
-            panel1.Size = new Size(300, 560);
+            panel1.Size = new Size(300, 1020);
             panel1.TabIndex = 0;
+            // 
+            // Maintenance_btn
+            // 
+            Maintenance_btn.BackColor = Color.FromArgb(194, 229, 255);
+            Maintenance_btn.Cursor = Cursors.Hand;
+            Maintenance_btn.FlatAppearance.BorderSize = 0;
+            Maintenance_btn.FlatAppearance.MouseDownBackColor = Color.CadetBlue;
+            Maintenance_btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(194, 220, 255);
+            Maintenance_btn.FlatStyle = FlatStyle.Flat;
+            Maintenance_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Maintenance_btn.ForeColor = SystemColors.ActiveCaptionText;
+            Maintenance_btn.Location = new Point(68, 407);
+            Maintenance_btn.Margin = new Padding(0);
+            Maintenance_btn.Name = "Maintenance_btn";
+            Maintenance_btn.Size = new Size(156, 52);
+            Maintenance_btn.TabIndex = 3;
+            Maintenance_btn.Text = "Maintenance";
+            Maintenance_btn.UseVisualStyleBackColor = false;
             // 
             // Logout_btn
             // 
@@ -208,7 +196,6 @@
             Logout_btn.TabIndex = 2;
             Logout_btn.Text = "Log Out";
             Logout_btn.UseVisualStyleBackColor = false;
-            Logout_btn.Click += Logout_click_btn;
             // 
             // Manage_bookings_btn
             // 
@@ -226,15 +213,16 @@
             Manage_bookings_btn.TabIndex = 1;
             Manage_bookings_btn.Text = "Manage Bookings";
             Manage_bookings_btn.UseVisualStyleBackColor = false;
-            Manage_bookings_btn.Click += Manage_bookings_click_btn;
+            Manage_bookings_btn.Click += Manage_bookings_btn_Click;
             // 
             // Manage_Users
             // 
-            Manage_Users.BackColor = Color.FromArgb(194, 229, 255);
+            Manage_Users.BackColor = Color.FromArgb(33, 79, 95);
             Manage_Users.Cursor = Cursors.Hand;
             Manage_Users.FlatAppearance.BorderSize = 0;
             Manage_Users.FlatStyle = FlatStyle.Popup;
             Manage_Users.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Manage_Users.ForeColor = SystemColors.ControlLightLight;
             Manage_Users.Location = new Point(68, 201);
             Manage_Users.Margin = new Padding(4, 3, 4, 3);
             Manage_Users.Name = "Manage_Users";
@@ -242,26 +230,26 @@
             Manage_Users.TabIndex = 1;
             Manage_Users.Text = "Manage Users";
             Manage_Users.UseVisualStyleBackColor = false;
-            Manage_Users.Click += Manage_Users_menu_Click_btn;
+            Manage_Users.Click += Manage_Users_Click;
             // 
-            // Manage_Cars_btn
+            // Manage_files_btn
             // 
-            Manage_Cars_btn.BackColor = Color.FromArgb(33, 79, 95);
-            Manage_Cars_btn.Cursor = Cursors.Hand;
-            Manage_Cars_btn.FlatAppearance.BorderSize = 0;
-            Manage_Cars_btn.FlatAppearance.MouseDownBackColor = Color.CadetBlue;
-            Manage_Cars_btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(194, 220, 255);
-            Manage_Cars_btn.FlatStyle = FlatStyle.Flat;
-            Manage_Cars_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Manage_Cars_btn.ForeColor = SystemColors.ButtonHighlight;
-            Manage_Cars_btn.Location = new Point(68, 269);
-            Manage_Cars_btn.Margin = new Padding(0);
-            Manage_Cars_btn.Name = "Manage_Cars_btn";
-            Manage_Cars_btn.Size = new Size(156, 52);
-            Manage_Cars_btn.TabIndex = 1;
-            Manage_Cars_btn.Text = "Upload Files";
-            Manage_Cars_btn.UseVisualStyleBackColor = false;
-            Manage_Cars_btn.Click += Upload_Cars_click_btn;
+            Manage_files_btn.BackColor = Color.FromArgb(33, 79, 95);
+            Manage_files_btn.Cursor = Cursors.Hand;
+            Manage_files_btn.FlatAppearance.BorderSize = 0;
+            Manage_files_btn.FlatAppearance.MouseDownBackColor = Color.CadetBlue;
+            Manage_files_btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(194, 220, 255);
+            Manage_files_btn.FlatStyle = FlatStyle.Flat;
+            Manage_files_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Manage_files_btn.ForeColor = SystemColors.ButtonHighlight;
+            Manage_files_btn.Location = new Point(68, 269);
+            Manage_files_btn.Margin = new Padding(0);
+            Manage_files_btn.Name = "Manage_files_btn";
+            Manage_files_btn.Size = new Size(156, 52);
+            Manage_files_btn.TabIndex = 1;
+            Manage_files_btn.Text = "Upload Files";
+            Manage_files_btn.UseVisualStyleBackColor = false;
+            Manage_files_btn.Click += Manage_files_btn_Click;
             // 
             // pictureBox1
             // 
@@ -274,38 +262,16 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click;
             // 
-            // Maintenance_btn
-            // 
-            Maintenance_btn.BackColor = Color.FromArgb(33, 79, 95);
-            Maintenance_btn.Cursor = Cursors.Hand;
-            Maintenance_btn.FlatAppearance.BorderSize = 0;
-            Maintenance_btn.FlatAppearance.MouseDownBackColor = Color.CadetBlue;
-            Maintenance_btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(194, 220, 255);
-            Maintenance_btn.FlatStyle = FlatStyle.Flat;
-            Maintenance_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Maintenance_btn.ForeColor = SystemColors.ButtonHighlight;
-            Maintenance_btn.Location = new Point(68, 407);
-            Maintenance_btn.Margin = new Padding(0);
-            Maintenance_btn.Name = "Maintenance_btn";
-            Maintenance_btn.Size = new Size(156, 52);
-            Maintenance_btn.TabIndex = 3;
-            Maintenance_btn.Text = "Maintenance";
-            Maintenance_btn.UseVisualStyleBackColor = false;
-            Maintenance_btn.Click += Maintenance_btn_click;
-            // 
-            // Manage_User_Page
+            // Maintenance
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            AutoSize = true;
             ClientSize = new Size(862, 557);
             Controls.Add(user_background);
-            Margin = new Padding(4, 3, 4, 3);
-            Name = "Manage_User_Page";
+            Name = "Maintenance";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Search Users";
+            Text = "Maintenance";
             user_background.ResumeLayout(false);
             user_background.PerformLayout();
             panel4.ResumeLayout(false);
@@ -316,26 +282,23 @@
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
-
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel user_background;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button Manage_Cars_btn;
-        private System.Windows.Forms.Button Manage_Users;
-        private System.Windows.Forms.Button Logout_btn;
-        private System.Windows.Forms.Button Manage_bookings_btn;
-        private System.Windows.Forms.Button Managing_users_click_btn;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label Search_Users;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Panel panel4;
-        private Label label1;
+        private Panel user_background;
+        private Panel panel3;
+        private Button Managing_users_click_btn;
+        private Panel panel2;
+        private DataGridView dataGridView1;
+        private Panel panel1;
         private Button Maintenance_btn;
+        private Button Logout_btn;
+        private Button Manage_bookings_btn;
+        private Button Manage_Users;
+        private Button Manage_files_btn;
+        private PictureBox pictureBox1;
+        private Panel panel4;
+        private Label label1;
     }
 }
-

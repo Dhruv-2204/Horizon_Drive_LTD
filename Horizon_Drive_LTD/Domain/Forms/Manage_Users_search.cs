@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Horizon_Drive_LTD.Domain.Forms;
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
@@ -22,6 +23,7 @@ namespace Manage_user_search_page
             SetRoundedCorner(Manage_bookings_btn, 25);
             SetRoundedCorner(Logout_btn, 25);
             SetRoundedCorner(Managing_users_click_btn, 25);
+            SetRoundedCorner(Maintenance_btn, 25);
         }
 
         private void user_background_Paint(object sender, PaintEventArgs e)
@@ -61,7 +63,7 @@ namespace Manage_user_search_page
 
         private void Manage_Users_menu_Click_btn(object sender, EventArgs e)
         {
-            
+
         }
 
         private void Upload_Cars_click_btn(object sender, EventArgs e)
@@ -97,7 +99,7 @@ namespace Manage_user_search_page
             //Combining folder name and image name to get the full path to display the image
             string imagePath = Path.Combine(System.Windows.Forms.Application.StartupPath, "Media", "Images", "HORIZONDRIVE_LOGO.png");
 
-           // condition to check if the image exists
+            // condition to check if the image exists
             if (File.Exists(imagePath))
             {
                 pictureBox1.Image = Image.FromFile(imagePath);
@@ -105,17 +107,22 @@ namespace Manage_user_search_page
             }
             else
             {
-                MessageBox.Show("Image not found at: " + imagePath); 
+                MessageBox.Show("Image not found at: " + imagePath);
                 //error message window pops up if image is not found
             }
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-           
+
 
         }
 
-        
+        private void Maintenance_btn_click(object sender, EventArgs e)
+        {
+            var manage_car_Page = new Maintenance(); // gets form Managing_cars
+            manage_car_Page.Show();                  // Shows the new form manage_cars
+            this.Hide();
+        }
     }
 }

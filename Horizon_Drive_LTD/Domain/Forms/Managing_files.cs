@@ -1,4 +1,5 @@
-﻿using Manage_user_search_page;
+﻿using Horizon_Drive_LTD.Domain.Forms;
+using Manage_user_search_page;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -20,6 +21,7 @@ namespace Upload_cars
             SetRoundedCorner(Upload_Cars_btn, 25);
             SetRoundedCorner(Manage_bookings_btn, 25);
             SetRoundedCorner(Logout_btn, 25);
+            SetRoundedCorner(Maintenance_btn, 25);
 
         }
 
@@ -78,34 +80,6 @@ namespace Upload_cars
         }
 
 
-
-
-        private void UploadButton_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.InitialDirectory = "c:\\"; // or set to Application.StartupPath
-                openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-                openFileDialog.FilterIndex = 1;
-                openFileDialog.RestoreDirectory = true;
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    // Getting the file path
-                    string filePath = openFileDialog.FileName;
-
-                    // Example: Read and show contents in a ListBox or TextBox
-                    string[] lines = File.ReadAllLines(filePath);
-                    foreach (string line in lines)
-                    {
-                        DragDropListBox.Items.Add(line); // if you're using a ListBox
-                    }
-
-
-                }
-            }
-        }
-
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -131,6 +105,65 @@ namespace Upload_cars
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Upload_Customer_File_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\"; // or set to Application.StartupPath
+                openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // Getting the file path
+                    string filePath = openFileDialog.FileName;
+
+                    // Example: Read and show contents in a ListBox or TextBox
+                    string[] lines = File.ReadAllLines(filePath);
+                    foreach (string line in lines)
+                    {
+                        DragDropListBox.Items.Add(line); // if you're using a ListBox
+                    }
+
+
+                }
+            }
+        }
+
+        private void Upload_Car_File_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\"; // or set to Application.StartupPath
+                openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // Getting the file path
+                    string filePath = openFileDialog.FileName;
+
+                    // Example: Read and show contents in a ListBox or TextBox
+                    string[] lines = File.ReadAllLines(filePath);
+                    foreach (string line in lines)
+                    {
+                        DragDropListBox.Items.Add(line); // if you're using a ListBox
+                    }
+
+
+                }
+            }
+        }
+
+        private void Mainteance_click(object sender, EventArgs e)
+        {
+            var manage_car_Page = new Maintenance(); // gets form Managing_cars
+            manage_car_Page.Show();                  // Shows the new form manage_cars
+            this.Dispose();
         }
     }
 }
