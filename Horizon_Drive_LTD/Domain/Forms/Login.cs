@@ -76,17 +76,29 @@ namespace splashscreen
             string enteredUsername = Username.Text.Trim();
             string enteredPassword = Password.Text;
 
+
+            Guid guid = Guid.NewGuid();
+            
+
             if (_authService.Login(enteredUsername, enteredPassword, out User loggedInUser))
             {
 
 
                 UserRepository userRepo = new UserRepository(new DatabaseConnection());
+                CustomerRepository customerRepo = new CustomerRepository(new DatabaseConnection());
+                LessorRepository lessorRepo = new LessorRepository(new DatabaseConnection());
+
+
 
                 string userId = userRepo.GetUserIdByUsername(enteredUsername);
 
+                string customerid = customerRepo.GetCustomerIdByUserId(userId);
+
+                string lessorid = lessorRepo.GetLessorIdByUserId(userId);
+
                 if (!string.IsNullOrEmpty(userId))
                 {
-                    userRepo.StoreActiveUser(enteredUsername, userId);
+                    userRepo.StoreActiveUser(enteredUsername, userId, customerid, lessorid);
                    
                 }
                 else

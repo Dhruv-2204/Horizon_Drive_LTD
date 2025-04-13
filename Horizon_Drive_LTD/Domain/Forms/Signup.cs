@@ -9,11 +9,15 @@
     using Horizon_Drive_LTD.Domain.Entities;
     //Using the splashcreen namespace to summon the Login window
     using splashscreen;
+    using Microsoft.Data.SqlClient;
+
     public partial class Signup : Form
     {
         private bool isClosing = false;
 
         private AuthenticationService _authService;
+        private readonly DatabaseConnection _dbConnection;
+
         public Signup(AuthenticationService authService)
         {
             InitializeComponent();
@@ -95,7 +99,15 @@
         {
             Guid guid = Guid.NewGuid();
             int numericPart = Math.Abs(guid.GetHashCode()) % 100000;
-            string userId = "U" + numericPart.ToString("D4");
+            string userId = "U" + numericPart.ToString("D5");
+
+            numericPart = Math.Abs(guid.GetHashCode()) % 100000;
+            string customerid = "CU" + numericPart.ToString("D5");
+
+            numericPart = Math.Abs(guid.GetHashCode()) % 100000;
+            string lessorid = "L" + numericPart.ToString("D5");
+
+
             string firstName = First_Name.Text.Trim();
             string lastName = Last_Name.Text.Trim();
             string username = Username.Text.Trim();
@@ -167,20 +179,43 @@
             {
                 MessageBox.Show("Account created successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+
                 UserRepository userRepo = new UserRepository(new DatabaseConnection());
 
-                string userid = userRepo.GetUserIdByUsername(username);
 
-                if (!string.IsNullOrEmpty(userId))
+                using (SqlConnection conn = _dbConnection.GetConnection())
                 {
-                    userRepo.StoreActiveUser(username, userId);
+                    conn.Open();
+
+                    string query = @"INSERT INTO Customer
+                  (CustomerId, UserId)
+                  VALUES 
+                  (@CustomerId, @UserId)";
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@CustomerId", customerid);
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    cmd.ExecuteNonQuery();
+
 
                 }
-                else
+
+                using (SqlConnection conn = _dbConnection.GetConnection())
                 {
-                    MessageBox.Show("User ID not found.");
+                    conn.Open();
+                    string query = @"INSERT INTO Lessor
+                  (LessorId, UserId)
+                  VALUES 
+                  (@LessorId, @UserId)";
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@LessorId", lessorid);
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    cmd.ExecuteNonQuery();
                 }
 
+
+                userRepo.StoreActiveUser(username, userId , customerid, lessorid);
 
             }
             else

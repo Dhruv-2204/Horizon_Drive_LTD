@@ -69,5 +69,24 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
         }
 
 
+        public string GetCustomerIdByUserId(string userId)
+        {
+            using (SqlConnection conn = _dbConnection.GetConnection())
+            {
+                conn.Open();
+                string query = "SELECT CustomerID FROM Customer WHERE UserID = @UserID";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@UserID", userId);
+                    object result = cmd.ExecuteScalar();
+
+                    return result?.ToString(); // Returns null if not found
+                }
+            }
+        }
+
+
+
     }
 }

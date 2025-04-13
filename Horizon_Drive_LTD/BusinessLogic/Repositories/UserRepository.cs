@@ -95,7 +95,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             }
         }
 
-        public void StoreActiveUser(string username, string userId)
+        public void StoreActiveUser(string username, string userId, string customerid, string lessorid)
         {
             using (SqlConnection conn = _dbConnection.GetConnection())
             {
@@ -106,7 +106,11 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='ActiveUser' AND xtype='U')
             CREATE TABLE ActiveUser (
                 UserName VARCHAR(100) NOT NULL,
-                UserId VARCHAR(10) NOT NULL
+                UserId VARCHAR(10) NOT NULL,
+                CustomerID VARCHAR(10) NOT NULL,
+                LessorID VARCHAR(10) NOT NULL
+                
+                
             );";
 
                 using (SqlCommand cmd = new SqlCommand(createTableQuery, conn))
@@ -122,25 +126,28 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                 }
 
                 // Insert the new active user
-                string insertQuery = "INSERT INTO ActiveUser (UserName, UserId) VALUES (@UserName, @UserId)";
+                string insertQuery = "INSERT INTO ActiveUser (UserName, UserId,CustomerID,LessorID) VALUES (@UserName, @UserId,@CustomerID,@LessorID)";
                 using (SqlCommand cmd = new SqlCommand(insertQuery, conn))
                 {
                     cmd.Parameters.AddWithValue("@UserName", username);
                     cmd.Parameters.AddWithValue("@UserId", userId);
+                    cmd.Parameters.AddWithValue("@CustomerID", customerid);
+                    cmd.Parameters.AddWithValue("@LessorID", lessorid);
+
                     cmd.ExecuteNonQuery();
                 }
             }
         }
 
-        public void GetActiveUser(out string userName, out string userId)
+        public void GetActiveUser(out string userName, out string customerid)
         {
             userName = null;
-            userId = null;
+            customerid = null;
 
             using (SqlConnection conn = _dbConnection.GetConnection())
             {
                 conn.Open();
-                string query = "SELECT TOP 1 UserName, UserId FROM ActiveUser";
+                string query = "SELECT TOP 1 UserName,CustomerID FROM ActiveUser";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -148,7 +155,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                     if (reader.Read())
                     {
                         userName = reader["UserName"].ToString();
-                        userId = reader["UserId"].ToString();
+                        customerid = reader["CustomerID"].ToString();
                     }
                 }
             }

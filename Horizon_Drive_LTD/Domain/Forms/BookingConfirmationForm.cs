@@ -234,31 +234,30 @@ namespace Horizon_Drive_LTD
         private void buttonBookNow_Click(object sender, EventArgs e)
         {
             UserRepository userRepo = new UserRepository(new DatabaseConnection());
-            userRepo.GetActiveUser(out string activeUsername, out string activeUserId);
+            userRepo.GetActiveUser(out string activeUsername, out string activeCustomerId);
 
             BookingsRepository bookingRepo = new BookingsRepository(new DatabaseConnection());
             HashTable<string, Booking> bookingHashTable = new HashTable<string, Booking>(1000);
           
             Guid guid = Guid.NewGuid();
             int numericPart = Math.Abs(guid.GetHashCode()) % 100000;
-            string bookingId = "CU" + numericPart.ToString("D4");
+            string bookingId = "B" + numericPart.ToString("D5");
 
             DateTime date = DateTime.Now;
             string formattedDate = date.ToString("yyyy-MM-dd");
 
 
-            
-          
 
-            if (!string.IsNullOrEmpty(activeUsername) && !string.IsNullOrEmpty(activeUserId))
+            MessageBox.Show("CustomerID being inserted: " + activeCustomerId);
+
+            if (!string.IsNullOrEmpty(activeUsername) && !string.IsNullOrEmpty(activeCustomerId))
             {
-                Booking booking = new Booking(bookingId, activeUserId, car.CarID, formattedDate, startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"), pickupLocation, dropoffLocation,
+                Booking booking = new Booking(bookingId, activeCustomerId, car.CarID, formattedDate, startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"), pickupLocation, dropoffLocation,
                  driverIncluded, babyCarSeatIncluded, insuranceIncluded,roofRackIncluded, airportPickupIncluded);
 
                 bookingHashTable.Insert(bookingId, booking);
 
-                bookingRepo.LoadBookingsIntoDatabase(new Booking(bookingId, activeUserId, car.CarID, formattedDate, startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"), pickupLocation, dropoffLocation,
-              driverIncluded, babyCarSeatIncluded, insuranceIncluded, roofRackIncluded, airportPickupIncluded));
+                bookingRepo.LoadBookingsIntoDatabase(booking);
 
                 // Process the final booking
                 MessageBox.Show("Your booking has been confirmed! A confirmation email will be sent shortly.",

@@ -18,6 +18,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Images\BrowseListings\Ford_F-150.jpg" />
+    <None Remove="Images\BrowseListings\Toyota_RAV4.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\BrowseListings\Ford_F-150.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\BrowseListings\Toyota_RAV4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>

@@ -18,8 +18,8 @@ namespace Horizon_Drive_LTD
     public partial class BrowseListings : Form
     {
      
-        private HashTable<string, Cars> carHashTable;
 
+        private HashTable<string, Cars> carHashTable;
 
         public BrowseListings()
         {
@@ -47,69 +47,15 @@ namespace Horizon_Drive_LTD
         {
             flowLayoutPanelListings.Controls.Clear();
 
-            foreach (var kvp in carHashTable.GetAllItems())
+            foreach (var carEntry in carHashTable.GetAllItems())
             {
-                Cars car = kvp.Value;
-
-                Panel carPanel = CreateCarListingPanel(car); 
+                Panel carPanel = CreateCarListingPanel(carEntry.Value);
                 flowLayoutPanelListings.Controls.Add(carPanel);
             }
         }
 
-        private async void LoadImageFromAPI(string brand, string model, PictureBox pictureBox)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                try
-                {
-                    string query = $"{brand} {model}";
-                    string requestUrl = $"http://www.carimagery.com/api.asmx/GetImageUrl?searchTerm={Uri.EscapeDataString(query)}";
 
-                    Console.WriteLine($"Requesting image URL for: {query}");
 
-                    HttpResponseMessage response = await client.GetAsync(requestUrl);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        string xmlContent = await response.Content.ReadAsStringAsync();
-                        string imageUrl = ExtractImageUrlFromXml(xmlContent);
-
-                        Console.WriteLine($"Image URL: {imageUrl}");
-
-                        if (!string.IsNullOrEmpty(imageUrl))
-                        {
-                            pictureBox.LoadAsync(imageUrl);
-                        }
-                        else
-                        {
-                            Console.WriteLine("No image URL found");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Failed to fetch image for {brand} {model}. Status Code: {response.StatusCode}");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error loading image: {ex.Message}");
-                }
-            }
-        }
-
-        private string ExtractImageUrlFromXml(string xml)
-        {
-            try
-            {
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(xml);
-                return doc.InnerText;
-            }
-            catch
-            {
-                return null;
-            }
-        }
         private Panel CreateCarListingPanel(Cars car)
         {
 
@@ -128,18 +74,24 @@ namespace Horizon_Drive_LTD
 
             try
             {
-                string imagesFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "BrowseListings");
-                string searchPattern = $"{car.CarBrand}_{car.Model}.*"; // Supports any extension
+                string imagesFolder = Path.Combine(Application.StartupPath, "Images", "BrowseListings");
+                string searchPattern = $"{car.CarBrand}_{car.Model}.*";
+
                 string[] matchingFiles = Directory.GetFiles(imagesFolder, searchPattern);
 
-              
-                pictureBox.Image = Image.FromFile(Path.Combine(imagesFolder, "Toyota_RAV4.png")); // Load the first matching file
-               
+                if (matchingFiles.Length > 0)
+                {
+                    pictureBox.Image = Image.FromFile(matchingFiles[0]);
+                }
+                else
+                {
+                    pictureBox.BackColor = Color.LightGray;
+                }
             }
             catch (Exception ex)
             {
-                pictureBox.BackColor = Color.LightGray; // In case of any error
-                MessageBox.Show($"Car image could not be loaded.\n\nError: {ex.Message}");
+                MessageBox.Show("Image load error: " + ex.Message);
+                pictureBox.BackColor = Color.LightGray;
             }
 
 
@@ -212,23 +164,7 @@ namespace Horizon_Drive_LTD
                 MessageBox.Show("Car details could not be found.");
             }
         }
-        /*
-        private void BtnViewDeal_Click(object sender, EventArgs e)
-        {
-            Button btn = (Button)sender;
-            int carId = (int)btn.Tag;
-
-            // Find the car
-            CarListing selectedCar = carListings.FirstOrDefault(c => c.Id == carId);
-
-            if (selectedCar != null)
-            {
-                // Open the booking form
-                CarBookingForm bookingForm = new CarBookingForm(selectedCar);
-                bookingForm.ShowDialog();
-            }
-        }
-        */
+        
 
         private void btnBrowseListings_Click(object sender, EventArgs e)
         {
@@ -287,72 +223,40 @@ namespace Horizon_Drive_LTD
 
             if (result == DialogResult.Yes)
             {
-                // In a real application, you would handle logout here
-                // Example: Reset authentication state, close the form, show login form
+              
                 MessageBox.Show("You have been logged out successfully.",
                                "Log Out",
                                MessageBoxButtons.OK,
                                MessageBoxIcon.Information);
 
-                // Application.Restart(); // Uncomment to restart application
-                // this.Close(); // Uncomment to close current form
+               
             }
         }
 
-        /*
+
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
         {
-            // Filter cars based on search text
             string searchText = textBoxSearch.Text.ToLower();
-
-            if (string.IsNullOrWhiteSpace(searchText))
-            {
-                PopulateCarListings(); // Show all if search is empty
-                return;
-            }
-
-            var filteredCars = carListings.Where(c =>
-                c.Make.ToLower().Contains(searchText) ||
-                c.Model.ToLower().Contains(searchText) ||
-                c.Description.ToLower().Contains(searchText)).ToList();
-
-            // Clear and repopulate with filtered results
             flowLayoutPanelListings.Controls.Clear();
-            foreach (var car in filteredCars)
+
+            IEnumerable<KeyValuePair<string, Cars>> allCars = carHashTable.GetAllItems();
+
+            foreach (var carEntry in allCars)
             {
-                Panel carPanel = CreateCarListingPanel(car);
-                flowLayoutPanelListings.Controls.Add(carPanel);
+                Cars car = carEntry.Value;
+
+                if (string.IsNullOrWhiteSpace(searchText) ||
+                    car.CarBrand.ToLower().Contains(searchText) ||
+                    car.Model.ToLower().Contains(searchText) ||
+                    car.Category.ToLower().Contains(searchText))
+                {
+                    Panel carPanel = CreateCarListingPanel(car);
+                    flowLayoutPanelListings.Controls.Add(carPanel);
+                }
             }
         }
-        */
 
-        private void pictureBoxLogo_Click(object sender, EventArgs e)
-        {
 
-        }
-
-        private void flowLayoutPanelListings_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void buttonFilter_Click(object sender, EventArgs e)
-        {
-            // Filter functionality
-            MessageBox.Show("Filter functionality would open filter options for car listings.",
-                           "Filter Cars",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
-        }
-
-        private void buttonCart_Click(object sender, EventArgs e)
-        {
-            // Shopping cart functionality
-            MessageBox.Show("Shopping cart functionality would display selected cars and reservation details.",
-                           "Shopping Cart",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
-        }
 
         private void buttonProfile_Click(object sender, EventArgs e)
         {
@@ -363,61 +267,11 @@ namespace Horizon_Drive_LTD
                            MessageBoxIcon.Information);
         }
 
-        private void labelBrowseListings_Click(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 
-    /*
-    public class RoundedButton : Button
-    {
-        private int borderRadius = 26;
-
-        public RoundedButton()
-        {
-            this.FlatStyle = FlatStyle.Flat;
-            this.FlatAppearance.BorderSize = 0;
-        }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            // Enable anti-aliasing for smooth edges
-            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-
-            GraphicsPath path = new GraphicsPath();
-            Rectangle rect = new Rectangle(0, 0, this.Width, this.Height);
-
-            // Create rounded rectangle with the specified corner radius
-            int diameter = borderRadius * 2;
-            path.AddArc(rect.X, rect.Y, diameter, diameter, 180, 90);
-            path.AddArc(rect.Width - diameter, rect.Y, diameter, diameter, 270, 90);
-            path.AddArc(rect.Width - diameter, rect.Height - diameter, diameter, diameter, 0, 90);
-            path.AddArc(rect.X, rect.Height - diameter, diameter, diameter, 90, 90);
-            path.CloseAllFigures();
-
-            // Set the button's region to our rounded rectangle
-            this.Region = new Region(path);
-
-            // Draw the button
-            base.OnPaint(e);
-        }
-
-
-
-    }
-    */
+   
 }
 
 
-public class CarListing
-{
-    public int Id { get; set; }
-    public string Make { get; set; }
-    public string Model { get; set; }
-    public int Year { get; set; }
-    public string Description { get; set; }
-    public decimal PricePerDay { get; set; }
-    public string ImagePath { get; set; }
-    public List<string> AdditionalImages { get; set; } = new List<string>();
-}
+

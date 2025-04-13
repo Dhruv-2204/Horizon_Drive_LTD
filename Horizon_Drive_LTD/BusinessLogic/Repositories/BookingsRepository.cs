@@ -27,7 +27,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                 conn.Open();
 
                 string insertQuery = @"
-                    INSERT INTO Bookings (
+                    INSERT INTO Booking (
                         BookingID, CustomerID, CarID, BookingDate, PickupDate, DropoffDate,
                         PickupLocation, DropoffLocation, IncludeDriver, BabyCarSeat,
                         FullInsuranceCoverage, RoofRack, AirportPickupDropoff

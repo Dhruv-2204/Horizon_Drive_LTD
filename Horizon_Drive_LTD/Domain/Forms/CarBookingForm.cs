@@ -77,7 +77,7 @@ namespace Horizon_Drive_LTD
             slideshowTimer.Tick += SlideshowTimer_Tick;
         }
 
-        /*
+        
         private void InitializeSlideshow()
         {
             // Clear any existing images
@@ -95,7 +95,7 @@ namespace Horizon_Drive_LTD
                 carImages.AddRange(car.AdditionalImages);
             }
         }
-       */
+       
 
         private void LoadImage(int index)
         {
