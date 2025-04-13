@@ -38,6 +38,10 @@ namespace Horizon_Drive_LTD
             PopulateYears();
             PopulateTypes();
             PopulateColors();
+            PopulateFuelTypes();
+            PopulateTransmissions();
+            PopulateDrivetrains();
+            PopulateSeatNumbers();
         }
 
         private void SetupDragAndDrop()
@@ -169,6 +173,34 @@ namespace Horizon_Drive_LTD
             string[] colors = { "Black", "White", "Silver", "Gray", "Red", "Blue", "Green", "Yellow", "Orange", "Brown", "Purple", "Gold", "Other" };
             cboColor.Items.Clear();
             cboColor.Items.AddRange(colors);
+        }
+
+        private void PopulateFuelTypes()
+        {
+            string[] fuelTypes = { "Gasoline", "Diesel", "Hybrid", "Electric", "Natural Gas", "Flex-Fuel", "Hydrogen" };
+            cboFuelType.Items.Clear();
+            cboFuelType.Items.AddRange(fuelTypes);
+        }
+
+        private void PopulateTransmissions()
+        {
+            string[] transmissions = { "Automatic", "Manual", "Semi-Automatic", "CVT", "Dual-Clutch" };
+            cboTransmission.Items.Clear();
+            cboTransmission.Items.AddRange(transmissions);
+        }
+
+        private void PopulateDrivetrains()
+        {
+            string[] drivetrains = { "FWD", "RWD", "AWD", "4WD" };
+            cboDrivetrain.Items.Clear();
+            cboDrivetrain.Items.AddRange(drivetrains);
+        }
+
+        private void PopulateSeatNumbers()
+        {
+            string[] seatNumbers = { "2", "4", "5", "6", "7", "8", "9+" };
+            cboSeatNumber.Items.Clear();
+            cboSeatNumber.Items.AddRange(seatNumbers);
         }
 
         private void PopulateModels(string make)
@@ -547,10 +579,60 @@ namespace Horizon_Drive_LTD
                 return false;
             }
 
+            // Validate new required fields
+            if (cboFuelType.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a fuel type for your car.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cboFuelType.Focus();
+                return false;
+            }
+
+            if (cboTransmission.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a transmission type for your car.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cboTransmission.Focus();
+                return false;
+            }
+
+            if (cboDrivetrain.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a drivetrain for your car.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cboDrivetrain.Focus();
+                return false;
+            }
+
+            if (cboSeatNumber.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select the number of seats in your car.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cboSeatNumber.Focus();
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtEngineCapacity.Text))
+            {
+                MessageBox.Show("Please enter the engine capacity.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtEngineCapacity.Focus();
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtPower.Text))
+            {
+                MessageBox.Show("Please enter the power output.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtPower.Focus();
+                return false;
+            }
+
             if (string.IsNullOrWhiteSpace(txtDescription.Text))
             {
                 MessageBox.Show("Please enter a description for your car.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtDescription.Focus();
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtCarFeatures.Text))
+            {
+                MessageBox.Show("Please enter features for your car.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtCarFeatures.Focus();
                 return false;
             }
 
@@ -605,35 +687,31 @@ namespace Horizon_Drive_LTD
                 Make = cboMake.SelectedItem.ToString(),
                 Model = cboModel.SelectedItem.ToString(),
                 Year = int.Parse(cboYear.SelectedItem.ToString()),
+                Type = cboType.SelectedItem.ToString(),
+                Color = cboColor.SelectedItem.ToString(),
+                LicensePlate = txtLicensePlate.Text,
+                FuelType = cboFuelType.SelectedItem.ToString(),
+                Transmission = cboTransmission.SelectedItem.ToString(),
+                Drivetrain = cboDrivetrain.SelectedItem.ToString(),
+                EngineCapacity = txtEngineCapacity.Text,
+                Power = txtPower.Text,
+                SeatNumber = cboSeatNumber.SelectedItem.ToString(),
                 Description = txtDescription.Text,
-                PricePerDay = decimal.Parse(txtDailyRate.Text)
+                Features = txtCarFeatures.Text,
+                PricePerDay = decimal.Parse(txtDailyRate.Text),
+                AvailabilityStart = dateTimePickerStart.Value,
+                AvailabilityEnd = dateTimePickerEnd.Value,
+                PhotoCount = uploadedPhotoPaths.Count
             };
-
-            // Properties that would be added to an extended CarListing class
-            string carType = cboType.SelectedItem.ToString();
-            string color = cboColor.SelectedItem.ToString();
-            string licensePlate = txtLicensePlate.Text;
-            DateTime availabilityStart = dateTimePickerStart.Value;
-            DateTime availabilityEnd = dateTimePickerEnd.Value;
-
-            // Additional features
-            bool hasGPS = checkBoxGPS.Checked;
-            bool hasBluetooth = checkBoxBluetooth.Checked;
-            bool hasLeatherSeat = checkBoxLeatherSeat.Checked;
-            bool hasSunroof = checkBoxSunroof.Checked;
-            bool hasChildSeat = checkBoxChildSeat.Checked;
-
-            // Photos would be processed here:
-            // 1. Copy to application's image directory
-            // 2. Save paths in database
 
             // For demo purposes, just log to console
             Console.WriteLine($"Car Listed: {carListing.Year} {carListing.Make} {carListing.Model}");
-            Console.WriteLine($"Type: {carType}, Color: {color}, License: {licensePlate}");
+            Console.WriteLine($"Type: {carListing.Type}, Color: {carListing.Color}, License: {carListing.LicensePlate}");
+            Console.WriteLine($"Fuel: {carListing.FuelType}, Transmission: {carListing.Transmission}, Drivetrain: {carListing.Drivetrain}");
+            Console.WriteLine($"Engine: {carListing.EngineCapacity}, Power: {carListing.Power}, Seats: {carListing.SeatNumber}");
             Console.WriteLine($"Daily Rate: {carListing.PricePerDay:C}");
-            Console.WriteLine($"Available: {availabilityStart.ToShortDateString()} to {availabilityEnd.ToShortDateString()}");
-            Console.WriteLine($"Features: GPS={hasGPS}, Bluetooth={hasBluetooth}, Leather={hasLeatherSeat}, Sunroof={hasSunroof}, ChildSeat={hasChildSeat}");
-            Console.WriteLine($"Photos: {uploadedPhotoPaths.Count} images uploaded");
+            Console.WriteLine($"Available: {carListing.AvailabilityStart.ToShortDateString()} to {carListing.AvailabilityEnd.ToShortDateString()}");
+            Console.WriteLine($"Photos: {carListing.PhotoCount} images uploaded");
         }
 
         #endregion
@@ -646,9 +724,22 @@ namespace Horizon_Drive_LTD
         public string Make { get; set; }
         public string Model { get; set; }
         public int Year { get; set; }
+        public string Type { get; set; }
+        public string Color { get; set; }
+        public string LicensePlate { get; set; }
+        public string FuelType { get; set; }
+        public string Transmission { get; set; }
+        public string Drivetrain { get; set; }
+        public string EngineCapacity { get; set; }
+        public string Power { get; set; }
+        public string SeatNumber { get; set; }
         public string Description { get; set; }
+        public string Features { get; set; }
         public decimal PricePerDay { get; set; }
+        public DateTime AvailabilityStart { get; set; }
+        public DateTime AvailabilityEnd { get; set; }
         public string ImagePath { get; set; }
         public List<string> AdditionalImages { get; set; } = new List<string>();
+        public int PhotoCount { get; set; }
     }
 }

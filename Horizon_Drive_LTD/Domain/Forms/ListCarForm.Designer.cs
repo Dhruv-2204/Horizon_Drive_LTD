@@ -47,6 +47,18 @@ namespace Horizon_Drive_LTD
             lblListYourCar = new Label();
             panelMain = new Panel();
             panelContent = new Panel();
+            cboSeatNumber = new ComboBox();
+            lblSeatNumber = new Label();
+            txtPower = new TextBox();
+            lblPower = new Label();
+            txtEngineCapacity = new TextBox();
+            lblEngineCapacity = new Label();
+            cboDrivetrain = new ComboBox();
+            lblDrivetrain = new Label();
+            cboTransmission = new ComboBox();
+            lblTransmission = new Label();
+            cboFuelType = new ComboBox();
+            lblFuelType = new Label();
             panelPhoto5 = new Panel();
             lblPlus5 = new Label();
             panelPhoto4 = new Panel();
@@ -57,14 +69,10 @@ namespace Horizon_Drive_LTD
             btnCancel = new Button();
             panelPhoto2 = new Panel();
             lblPlus2 = new Label();
-            checkBoxChildSeat = new CheckBox();
             panelPhoto1 = new Panel();
             lblPlus1 = new Label();
-            checkBoxSunroof = new CheckBox();
-            checkBoxLeatherSeat = new CheckBox();
-            checkBoxBluetooth = new CheckBox();
-            checkBoxGPS = new CheckBox();
-            lblAdditionalFeatures = new Label();
+            txtCarFeatures = new TextBox();
+            lblCarFeatures = new Label();
             dateTimePickerEnd = new DateTimePicker();
             lblAvailabilityEnd = new Label();
             dateTimePickerStart = new DateTimePicker();
@@ -246,7 +254,7 @@ namespace Horizon_Drive_LTD
             buttonProfile.FlatAppearance.BorderColor = Color.FromArgb(192, 192, 192);
             buttonProfile.FlatStyle = FlatStyle.Flat;
             buttonProfile.Font = new Font("Segoe UI Symbol", 12F);
-            buttonProfile.Location = new Point(1250, 60);
+            buttonProfile.Location = new Point(1190, 43);
             buttonProfile.Name = "buttonProfile";
             buttonProfile.Size = new Size(50, 53);
             buttonProfile.TabIndex = 4;
@@ -260,7 +268,7 @@ namespace Horizon_Drive_LTD
             buttonCart.FlatAppearance.BorderColor = Color.FromArgb(192, 192, 192);
             buttonCart.FlatStyle = FlatStyle.Flat;
             buttonCart.Font = new Font("Segoe UI Symbol", 12F);
-            buttonCart.Location = new Point(1190, 60);
+            buttonCart.Location = new Point(1130, 43);
             buttonCart.Name = "buttonCart";
             buttonCart.Size = new Size(50, 53);
             buttonCart.TabIndex = 3;
@@ -274,7 +282,7 @@ namespace Horizon_Drive_LTD
             buttonFilter.FlatAppearance.BorderColor = Color.FromArgb(192, 192, 192);
             buttonFilter.FlatStyle = FlatStyle.Flat;
             buttonFilter.Font = new Font("Segoe UI Symbol", 12F);
-            buttonFilter.Location = new Point(1130, 60);
+            buttonFilter.Location = new Point(1070, 43);
             buttonFilter.Name = "buttonFilter";
             buttonFilter.Size = new Size(50, 53);
             buttonFilter.TabIndex = 2;
@@ -308,19 +316,27 @@ namespace Horizon_Drive_LTD
             panelContent.AutoScroll = true;
             panelContent.BackColor = Color.FromArgb(240, 240, 240);
             panelContent.BorderStyle = BorderStyle.Fixed3D;
+            panelContent.Controls.Add(cboSeatNumber);
+            panelContent.Controls.Add(lblSeatNumber);
+            panelContent.Controls.Add(txtPower);
+            panelContent.Controls.Add(lblPower);
+            panelContent.Controls.Add(txtEngineCapacity);
+            panelContent.Controls.Add(lblEngineCapacity);
+            panelContent.Controls.Add(cboDrivetrain);
+            panelContent.Controls.Add(lblDrivetrain);
+            panelContent.Controls.Add(cboTransmission);
+            panelContent.Controls.Add(lblTransmission);
+            panelContent.Controls.Add(cboFuelType);
+            panelContent.Controls.Add(lblFuelType);
             panelContent.Controls.Add(panelPhoto5);
             panelContent.Controls.Add(panelPhoto4);
             panelContent.Controls.Add(btnListMyCar);
             panelContent.Controls.Add(panelPhoto3);
             panelContent.Controls.Add(btnCancel);
             panelContent.Controls.Add(panelPhoto2);
-            panelContent.Controls.Add(checkBoxChildSeat);
             panelContent.Controls.Add(panelPhoto1);
-            panelContent.Controls.Add(checkBoxSunroof);
-            panelContent.Controls.Add(checkBoxLeatherSeat);
-            panelContent.Controls.Add(checkBoxBluetooth);
-            panelContent.Controls.Add(checkBoxGPS);
-            panelContent.Controls.Add(lblAdditionalFeatures);
+            panelContent.Controls.Add(txtCarFeatures);
+            panelContent.Controls.Add(lblCarFeatures);
             panelContent.Controls.Add(dateTimePickerEnd);
             panelContent.Controls.Add(lblAvailabilityEnd);
             panelContent.Controls.Add(dateTimePickerStart);
@@ -346,17 +362,148 @@ namespace Horizon_Drive_LTD
             panelContent.Controls.Add(lblModel);
             panelContent.Controls.Add(cboMake);
             panelContent.Controls.Add(lblMake);
-            panelContent.Location = new Point(38, 129);
+            panelContent.Dock = DockStyle.Fill;
+            panelContent.Location = new Point(0, 123);
             panelContent.Name = "panelContent";
-            panelContent.Padding = new Padding(27, 31, 27, 31);
-            panelContent.Size = new Size(1191, 750);
+            panelContent.Padding = new Padding(40);
+            panelContent.Size = new Size(1267, 777);
             panelContent.TabIndex = 1;
+            // 
+            // cboSeatNumber
+            // 
+            cboSeatNumber.Font = new Font("Segoe UI", 11F);
+            cboSeatNumber.FormattingEnabled = true;
+            cboSeatNumber.Location = new Point(850, 270);
+            cboSeatNumber.Margin = new Padding(3, 15, 3, 25);
+            cboSeatNumber.Name = "cboSeatNumber";
+            cboSeatNumber.Size = new Size(300, 33);
+            cboSeatNumber.TabIndex = 80;
+            cboSeatNumber.Text = "Select Seat Number";
+            // 
+            // lblSeatNumber
+            // 
+            lblSeatNumber.AutoSize = true;
+            lblSeatNumber.Font = new Font("Segoe UI", 11F);
+            lblSeatNumber.Location = new Point(850, 243);
+            lblSeatNumber.Margin = new Padding(3, 25, 3, 5);
+            lblSeatNumber.Name = "lblSeatNumber";
+            lblSeatNumber.Size = new Size(135, 25);
+            lblSeatNumber.TabIndex = 79;
+            lblSeatNumber.Text = "Seat Number *";
+            // 
+            // txtPower
+            // 
+            txtPower.Font = new Font("Segoe UI", 11F);
+            txtPower.Location = new Point(443, 270);
+            txtPower.Margin = new Padding(3, 15, 3, 25);
+            txtPower.Name = "txtPower";
+            txtPower.PlaceholderText = "e.g. 150 HP";
+            txtPower.Size = new Size(364, 32);
+            txtPower.TabIndex = 78;
+            // 
+            // lblPower
+            // 
+            lblPower.AutoSize = true;
+            lblPower.Font = new Font("Segoe UI", 11F);
+            lblPower.Location = new Point(443, 243);
+            lblPower.Margin = new Padding(3, 25, 3, 5);
+            lblPower.Name = "lblPower";
+            lblPower.Size = new Size(77, 25);
+            lblPower.TabIndex = 77;
+            lblPower.Text = "Power *";
+            // 
+            // txtEngineCapacity
+            // 
+            txtEngineCapacity.Font = new Font("Segoe UI", 11F);
+            txtEngineCapacity.Location = new Point(36, 270);
+            txtEngineCapacity.Margin = new Padding(3, 15, 3, 25);
+            txtEngineCapacity.Name = "txtEngineCapacity";
+            txtEngineCapacity.PlaceholderText = "e.g. 2.0L";
+            txtEngineCapacity.Size = new Size(364, 32);
+            txtEngineCapacity.TabIndex = 76;
+            // 
+            // lblEngineCapacity
+            // 
+            lblEngineCapacity.AutoSize = true;
+            lblEngineCapacity.Font = new Font("Segoe UI", 11F);
+            lblEngineCapacity.Location = new Point(36, 243);
+            lblEngineCapacity.Margin = new Padding(3, 25, 3, 5);
+            lblEngineCapacity.Name = "lblEngineCapacity";
+            lblEngineCapacity.Size = new Size(160, 25);
+            lblEngineCapacity.TabIndex = 75;
+            lblEngineCapacity.Text = "Engine Capacity *";
+            // 
+            // cboDrivetrain
+            // 
+            cboDrivetrain.Font = new Font("Segoe UI", 11F);
+            cboDrivetrain.FormattingEnabled = true;
+            cboDrivetrain.Location = new Point(850, 197);
+            cboDrivetrain.Margin = new Padding(3, 15, 3, 25);
+            cboDrivetrain.Name = "cboDrivetrain";
+            cboDrivetrain.Size = new Size(300, 33);
+            cboDrivetrain.TabIndex = 74;
+            cboDrivetrain.Text = "Select Drivetrain";
+            // 
+            // lblDrivetrain
+            // 
+            lblDrivetrain.AutoSize = true;
+            lblDrivetrain.Font = new Font("Segoe UI", 11F);
+            lblDrivetrain.Location = new Point(850, 167);
+            lblDrivetrain.Margin = new Padding(3, 25, 3, 5);
+            lblDrivetrain.Name = "lblDrivetrain";
+            lblDrivetrain.Size = new Size(108, 25);
+            lblDrivetrain.TabIndex = 73;
+            lblDrivetrain.Text = "Drivetrain *";
+            // 
+            // cboTransmission
+            // 
+            cboTransmission.Font = new Font("Segoe UI", 11F);
+            cboTransmission.FormattingEnabled = true;
+            cboTransmission.Location = new Point(443, 197);
+            cboTransmission.Margin = new Padding(3, 15, 3, 25);
+            cboTransmission.Name = "cboTransmission";
+            cboTransmission.Size = new Size(364, 33);
+            cboTransmission.TabIndex = 72;
+            cboTransmission.Text = "Select Transmission";
+            // 
+            // lblTransmission
+            // 
+            lblTransmission.AutoSize = true;
+            lblTransmission.Font = new Font("Segoe UI", 11F);
+            lblTransmission.Location = new Point(443, 167);
+            lblTransmission.Margin = new Padding(3, 25, 3, 5);
+            lblTransmission.Name = "lblTransmission";
+            lblTransmission.Size = new Size(133, 25);
+            lblTransmission.TabIndex = 71;
+            lblTransmission.Text = "Transmission *";
+            // 
+            // cboFuelType
+            // 
+            cboFuelType.Font = new Font("Segoe UI", 11F);
+            cboFuelType.FormattingEnabled = true;
+            cboFuelType.Location = new Point(36, 197);
+            cboFuelType.Margin = new Padding(3, 15, 3, 25);
+            cboFuelType.Name = "cboFuelType";
+            cboFuelType.Size = new Size(364, 33);
+            cboFuelType.TabIndex = 70;
+            cboFuelType.Text = "Select Fuel Type";
+            // 
+            // lblFuelType
+            // 
+            lblFuelType.AutoSize = true;
+            lblFuelType.Font = new Font("Segoe UI", 11F);
+            lblFuelType.Location = new Point(36, 167);
+            lblFuelType.Margin = new Padding(3, 25, 3, 5);
+            lblFuelType.Name = "lblFuelType";
+            lblFuelType.Size = new Size(104, 25);
+            lblFuelType.TabIndex = 69;
+            lblFuelType.Text = "Fuel Type *";
             // 
             // panelPhoto5
             // 
             panelPhoto5.BackColor = Color.LightGray;
             panelPhoto5.Controls.Add(lblPlus5);
-            panelPhoto5.Location = new Point(773, 749);
+            panelPhoto5.Location = new Point(773, 835);
             panelPhoto5.Name = "panelPhoto5";
             panelPhoto5.Size = new Size(91, 124);
             panelPhoto5.TabIndex = 42;
@@ -378,7 +525,7 @@ namespace Horizon_Drive_LTD
             // 
             panelPhoto4.BackColor = Color.LightGray;
             panelPhoto4.Controls.Add(lblPlus4);
-            panelPhoto4.Location = new Point(668, 749);
+            panelPhoto4.Location = new Point(668, 835);
             panelPhoto4.Name = "panelPhoto4";
             panelPhoto4.Size = new Size(91, 124);
             panelPhoto4.TabIndex = 39;
@@ -401,7 +548,8 @@ namespace Horizon_Drive_LTD
             btnListMyCar.BackColor = Color.FromArgb(15, 30, 45);
             btnListMyCar.Font = new Font("Segoe UI", 11F);
             btnListMyCar.ForeColor = Color.White;
-            btnListMyCar.Location = new Point(1011, 1106);
+            btnListMyCar.Location = new Point(1011, 1052);
+            btnListMyCar.Margin = new Padding(25, 15, 3, 3);
             btnListMyCar.Name = "btnListMyCar";
             btnListMyCar.Size = new Size(136, 56);
             btnListMyCar.TabIndex = 71;
@@ -413,7 +561,7 @@ namespace Horizon_Drive_LTD
             // 
             panelPhoto3.BackColor = Color.LightGray;
             panelPhoto3.Controls.Add(lblPlus3);
-            panelPhoto3.Location = new Point(564, 749);
+            panelPhoto3.Location = new Point(564, 835);
             panelPhoto3.Name = "panelPhoto3";
             panelPhoto3.Size = new Size(91, 124);
             panelPhoto3.TabIndex = 37;
@@ -436,7 +584,8 @@ namespace Horizon_Drive_LTD
             btnCancel.BackColor = Color.LightGray;
             btnCancel.Font = new Font("Segoe UI", 11F);
             btnCancel.ForeColor = Color.Black;
-            btnCancel.Location = new Point(871, 1106);
+            btnCancel.Location = new Point(871, 1052);
+            btnCancel.Margin = new Padding(30, 15, 15, 3);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(128, 56);
             btnCancel.TabIndex = 70;
@@ -448,7 +597,7 @@ namespace Horizon_Drive_LTD
             // 
             panelPhoto2.BackColor = Color.LightGray;
             panelPhoto2.Controls.Add(lblPlus2);
-            panelPhoto2.Location = new Point(459, 749);
+            panelPhoto2.Location = new Point(459, 835);
             panelPhoto2.Name = "panelPhoto2";
             panelPhoto2.Size = new Size(91, 124);
             panelPhoto2.TabIndex = 36;
@@ -466,22 +615,11 @@ namespace Horizon_Drive_LTD
             lblPlus2.Text = "+";
             lblPlus2.Click += lblPlus2_Click;
             // 
-            // checkBoxChildSeat
-            // 
-            checkBoxChildSeat.AutoSize = true;
-            checkBoxChildSeat.Font = new Font("Segoe UI", 11F);
-            checkBoxChildSeat.Location = new Point(597, 1080);
-            checkBoxChildSeat.Name = "checkBoxChildSeat";
-            checkBoxChildSeat.Size = new Size(119, 29);
-            checkBoxChildSeat.TabIndex = 69;
-            checkBoxChildSeat.Text = "Child Seat";
-            checkBoxChildSeat.UseVisualStyleBackColor = true;
-            // 
             // panelPhoto1
             // 
             panelPhoto1.BackColor = Color.LightGray;
             panelPhoto1.Controls.Add(lblPlus1);
-            panelPhoto1.Location = new Point(355, 749);
+            panelPhoto1.Location = new Point(355, 835);
             panelPhoto1.Name = "panelPhoto1";
             panelPhoto1.Size = new Size(91, 124);
             panelPhoto1.TabIndex = 34;
@@ -499,66 +637,35 @@ namespace Horizon_Drive_LTD
             lblPlus1.Text = "+";
             lblPlus1.Click += lblPlus1_Click;
             // 
-            // checkBoxSunroof
+            // txtCarFeatures
             // 
-            checkBoxSunroof.AutoSize = true;
-            checkBoxSunroof.Font = new Font("Segoe UI", 11F);
-            checkBoxSunroof.Location = new Point(467, 1080);
-            checkBoxSunroof.Name = "checkBoxSunroof";
-            checkBoxSunroof.Size = new Size(101, 29);
-            checkBoxSunroof.TabIndex = 68;
-            checkBoxSunroof.Text = "Sunroof";
-            checkBoxSunroof.UseVisualStyleBackColor = true;
+            txtCarFeatures.Font = new Font("Segoe UI", 11F);
+            txtCarFeatures.Location = new Point(36, 463);
+            txtCarFeatures.Margin = new Padding(3, 15, 3, 30);
+            txtCarFeatures.Multiline = true;
+            txtCarFeatures.Name = "txtCarFeatures";
+            txtCarFeatures.PlaceholderText = "Describe what features your car have, Bluetooth, 360 Camera, etc...";
+            txtCarFeatures.Size = new Size(1190, 72);
+            txtCarFeatures.TabIndex = 68;
             // 
-            // checkBoxLeatherSeat
+            // lblCarFeatures
             // 
-            checkBoxLeatherSeat.AutoSize = true;
-            checkBoxLeatherSeat.Font = new Font("Segoe UI", 11F);
-            checkBoxLeatherSeat.Location = new Point(311, 1080);
-            checkBoxLeatherSeat.Name = "checkBoxLeatherSeat";
-            checkBoxLeatherSeat.Size = new Size(138, 29);
-            checkBoxLeatherSeat.TabIndex = 67;
-            checkBoxLeatherSeat.Text = "Leather Seat";
-            checkBoxLeatherSeat.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxBluetooth
-            // 
-            checkBoxBluetooth.AutoSize = true;
-            checkBoxBluetooth.Font = new Font("Segoe UI", 11F);
-            checkBoxBluetooth.Location = new Point(154, 1080);
-            checkBoxBluetooth.Name = "checkBoxBluetooth";
-            checkBoxBluetooth.Size = new Size(116, 29);
-            checkBoxBluetooth.TabIndex = 66;
-            checkBoxBluetooth.Text = "Bluetooth";
-            checkBoxBluetooth.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxGPS
-            // 
-            checkBoxGPS.AutoSize = true;
-            checkBoxGPS.Font = new Font("Segoe UI", 11F);
-            checkBoxGPS.Location = new Point(36, 1080);
-            checkBoxGPS.Name = "checkBoxGPS";
-            checkBoxGPS.Size = new Size(68, 29);
-            checkBoxGPS.TabIndex = 65;
-            checkBoxGPS.Text = "GPS";
-            checkBoxGPS.UseVisualStyleBackColor = true;
-            // 
-            // lblAdditionalFeatures
-            // 
-            lblAdditionalFeatures.AutoSize = true;
-            lblAdditionalFeatures.Font = new Font("Segoe UI", 11F);
-            lblAdditionalFeatures.Location = new Point(36, 1035);
-            lblAdditionalFeatures.Name = "lblAdditionalFeatures";
-            lblAdditionalFeatures.Size = new Size(188, 25);
-            lblAdditionalFeatures.TabIndex = 64;
-            lblAdditionalFeatures.Text = "Additional Features *";
+            lblCarFeatures.AutoSize = true;
+            lblCarFeatures.Font = new Font("Segoe UI", 11F);
+            lblCarFeatures.Location = new Point(36, 435);
+            lblCarFeatures.Margin = new Padding(3, 25, 3, 5);
+            lblCarFeatures.Name = "lblCarFeatures";
+            lblCarFeatures.Size = new Size(130, 25);
+            lblCarFeatures.TabIndex = 67;
+            lblCarFeatures.Text = "Car Features *";
             // 
             // dateTimePickerEnd
             // 
             dateTimePickerEnd.CalendarFont = new Font("Segoe UI", 11F);
             dateTimePickerEnd.Font = new Font("Segoe UI", 11F);
             dateTimePickerEnd.Format = DateTimePickerFormat.Short;
-            dateTimePickerEnd.Location = new Point(441, 969);
+            dateTimePickerEnd.Location = new Point(580, 1010);
+            dateTimePickerEnd.Margin = new Padding(25, 15, 3, 25);
             dateTimePickerEnd.Name = "dateTimePickerEnd";
             dateTimePickerEnd.Size = new Size(364, 32);
             dateTimePickerEnd.TabIndex = 63;
@@ -567,7 +674,8 @@ namespace Horizon_Drive_LTD
             // 
             lblAvailabilityEnd.AutoSize = true;
             lblAvailabilityEnd.Font = new Font("Segoe UI", 11F);
-            lblAvailabilityEnd.Location = new Point(441, 925);
+            lblAvailabilityEnd.Location = new Point(580, 975);
+            lblAvailabilityEnd.Margin = new Padding(3, 25, 3, 5);
             lblAvailabilityEnd.Name = "lblAvailabilityEnd";
             lblAvailabilityEnd.Size = new Size(154, 25);
             lblAvailabilityEnd.TabIndex = 62;
@@ -578,7 +686,8 @@ namespace Horizon_Drive_LTD
             dateTimePickerStart.CalendarFont = new Font("Segoe UI", 11F);
             dateTimePickerStart.Font = new Font("Segoe UI", 11F);
             dateTimePickerStart.Format = DateTimePickerFormat.Short;
-            dateTimePickerStart.Location = new Point(36, 969);
+            dateTimePickerStart.Location = new Point(140, 1010);
+            dateTimePickerStart.Margin = new Padding(3, 15, 3, 25);
             dateTimePickerStart.Name = "dateTimePickerStart";
             dateTimePickerStart.Size = new Size(364, 32);
             dateTimePickerStart.TabIndex = 61;
@@ -587,7 +696,8 @@ namespace Horizon_Drive_LTD
             // 
             lblAvailabilityStart.AutoSize = true;
             lblAvailabilityStart.Font = new Font("Segoe UI", 11F);
-            lblAvailabilityStart.Location = new Point(36, 925);
+            lblAvailabilityStart.Location = new Point(140, 975);
+            lblAvailabilityStart.Margin = new Padding(3, 25, 3, 5);
             lblAvailabilityStart.Name = "lblAvailabilityStart";
             lblAvailabilityStart.Size = new Size(160, 25);
             lblAvailabilityStart.TabIndex = 60;
@@ -595,9 +705,11 @@ namespace Horizon_Drive_LTD
             // 
             // panelPhotoContainer
             // 
-            panelPhotoContainer.Location = new Point(36, 749);
+            panelPhotoContainer.BorderStyle = BorderStyle.FixedSingle;
+            panelPhotoContainer.Location = new Point(36, 835);
+            panelPhotoContainer.Margin = new Padding(3, 15, 3, 25);
             panelPhotoContainer.Name = "panelPhotoContainer";
-            panelPhotoContainer.Size = new Size(1000, 124);
+            panelPhotoContainer.Size = new Size(1114, 124);
             panelPhotoContainer.TabIndex = 59;
             // 
             // panelUploadPhotos
@@ -605,9 +717,10 @@ namespace Horizon_Drive_LTD
             panelUploadPhotos.BorderStyle = BorderStyle.FixedSingle;
             panelUploadPhotos.Controls.Add(lblUploadInstructions);
             panelUploadPhotos.Controls.Add(pictureBoxUpload);
-            panelUploadPhotos.Location = new Point(36, 616);
+            panelUploadPhotos.Location = new Point(36, 685);
+            panelUploadPhotos.Margin = new Padding(3, 15, 3, 15);
             panelUploadPhotos.Name = "panelUploadPhotos";
-            panelUploadPhotos.Size = new Size(1000, 123);
+            panelUploadPhotos.Size = new Size(1114, 123);
             panelUploadPhotos.TabIndex = 58;
             panelUploadPhotos.Click += panelUploadPhotos_Click;
             panelUploadPhotos.Paint += PanelUploadPhotos_Paint;
@@ -635,7 +748,8 @@ namespace Horizon_Drive_LTD
             // 
             lblUploadPhotos.AutoSize = true;
             lblUploadPhotos.Font = new Font("Segoe UI", 11F);
-            lblUploadPhotos.Location = new Point(36, 577);
+            lblUploadPhotos.Location = new Point(36, 650);
+            lblUploadPhotos.Margin = new Padding(3, 25, 3, 5);
             lblUploadPhotos.Name = "lblUploadPhotos";
             lblUploadPhotos.Size = new Size(265, 25);
             lblUploadPhotos.TabIndex = 56;
@@ -646,7 +760,8 @@ namespace Horizon_Drive_LTD
             lblUploadHint.AutoSize = true;
             lblUploadHint.Font = new Font("Segoe UI", 9F, FontStyle.Italic);
             lblUploadHint.ForeColor = Color.Gray;
-            lblUploadHint.Location = new Point(36, 878);
+            lblUploadHint.Location = new Point(36, 815);
+            lblUploadHint.Margin = new Padding(3, 5, 3, 5);
             lblUploadHint.Name = "lblUploadHint";
             lblUploadHint.Size = new Size(432, 20);
             lblUploadHint.TabIndex = 57;
@@ -655,17 +770,19 @@ namespace Horizon_Drive_LTD
             // txtDailyRate
             // 
             txtDailyRate.Font = new Font("Segoe UI", 11F);
-            txtDailyRate.Location = new Point(36, 492);
+            txtDailyRate.Location = new Point(36, 573);
+            txtDailyRate.Margin = new Padding(3, 15, 3, 5);
             txtDailyRate.Name = "txtDailyRate";
             txtDailyRate.PlaceholderText = "e.g. 7500.00";
-            txtDailyRate.Size = new Size(1000, 32);
+            txtDailyRate.Size = new Size(1190, 32);
             txtDailyRate.TabIndex = 54;
             // 
             // lblDailyRate
             // 
             lblDailyRate.AutoSize = true;
             lblDailyRate.Font = new Font("Segoe UI", 11F);
-            lblDailyRate.Location = new Point(36, 448);
+            lblDailyRate.Location = new Point(36, 538);
+            lblDailyRate.Margin = new Padding(3, 25, 3, 5);
             lblDailyRate.Name = "lblDailyRate";
             lblDailyRate.Size = new Size(167, 25);
             lblDailyRate.TabIndex = 53;
@@ -676,7 +793,8 @@ namespace Horizon_Drive_LTD
             lblRateHint.AutoSize = true;
             lblRateHint.Font = new Font("Segoe UI", 9F, FontStyle.Italic);
             lblRateHint.ForeColor = Color.Gray;
-            lblRateHint.Location = new Point(36, 529);
+            lblRateHint.Location = new Point(36, 613);
+            lblRateHint.Margin = new Padding(3, 5, 3, 25);
             lblRateHint.Name = "lblRateHint";
             lblRateHint.Size = new Size(294, 20);
             lblRateHint.TabIndex = 55;
@@ -685,18 +803,20 @@ namespace Horizon_Drive_LTD
             // txtDescription
             // 
             txtDescription.Font = new Font("Segoe UI", 11F);
-            txtDescription.Location = new Point(36, 291);
+            txtDescription.Location = new Point(36, 358);
+            txtDescription.Margin = new Padding(3, 15, 3, 25);
             txtDescription.Multiline = true;
             txtDescription.Name = "txtDescription";
             txtDescription.PlaceholderText = "Describe your car, including condition, special features, etc.";
-            txtDescription.Size = new Size(1000, 139);
+            txtDescription.Size = new Size(1190, 65);
             txtDescription.TabIndex = 52;
             // 
             // lblDescription
             // 
             lblDescription.AutoSize = true;
             lblDescription.Font = new Font("Segoe UI", 11F);
-            lblDescription.Location = new Point(36, 253);
+            lblDescription.Location = new Point(36, 328);
+            lblDescription.Margin = new Padding(3, 25, 3, 5);
             lblDescription.Name = "lblDescription";
             lblDescription.Size = new Size(155, 25);
             lblDescription.TabIndex = 51;
@@ -705,7 +825,8 @@ namespace Horizon_Drive_LTD
             // txtLicensePlate
             // 
             txtLicensePlate.Font = new Font("Segoe UI", 11F);
-            txtLicensePlate.Location = new Point(850, 186);
+            txtLicensePlate.Location = new Point(850, 125);
+            txtLicensePlate.Margin = new Padding(3, 15, 3, 25);
             txtLicensePlate.Name = "txtLicensePlate";
             txtLicensePlate.PlaceholderText = "Enter license plate";
             txtLicensePlate.Size = new Size(300, 32);
@@ -715,7 +836,8 @@ namespace Horizon_Drive_LTD
             // 
             lblLicensePlate.AutoSize = true;
             lblLicensePlate.Font = new Font("Segoe UI", 11F);
-            lblLicensePlate.Location = new Point(850, 142);
+            lblLicensePlate.Location = new Point(850, 95);
+            lblLicensePlate.Margin = new Padding(3, 25, 3, 5);
             lblLicensePlate.Name = "lblLicensePlate";
             lblLicensePlate.Size = new Size(134, 25);
             lblLicensePlate.TabIndex = 49;
@@ -725,7 +847,8 @@ namespace Horizon_Drive_LTD
             // 
             cboColor.Font = new Font("Segoe UI", 11F);
             cboColor.FormattingEnabled = true;
-            cboColor.Location = new Point(443, 186);
+            cboColor.Location = new Point(443, 125);
+            cboColor.Margin = new Padding(3, 15, 3, 25);
             cboColor.Name = "cboColor";
             cboColor.Size = new Size(364, 33);
             cboColor.TabIndex = 48;
@@ -735,7 +858,8 @@ namespace Horizon_Drive_LTD
             // 
             lblColor.AutoSize = true;
             lblColor.Font = new Font("Segoe UI", 11F);
-            lblColor.Location = new Point(443, 142);
+            lblColor.Location = new Point(443, 95);
+            lblColor.Margin = new Padding(3, 25, 3, 5);
             lblColor.Name = "lblColor";
             lblColor.Size = new Size(71, 25);
             lblColor.TabIndex = 47;
@@ -745,7 +869,8 @@ namespace Horizon_Drive_LTD
             // 
             cboType.Font = new Font("Segoe UI", 11F);
             cboType.FormattingEnabled = true;
-            cboType.Location = new Point(36, 186);
+            cboType.Location = new Point(36, 125);
+            cboType.Margin = new Padding(3, 15, 3, 25);
             cboType.Name = "cboType";
             cboType.Size = new Size(364, 33);
             cboType.TabIndex = 46;
@@ -755,7 +880,8 @@ namespace Horizon_Drive_LTD
             // 
             lblType.AutoSize = true;
             lblType.Font = new Font("Segoe UI", 11F);
-            lblType.Location = new Point(36, 142);
+            lblType.Location = new Point(36, 95);
+            lblType.Margin = new Padding(3, 25, 3, 5);
             lblType.Name = "lblType";
             lblType.Size = new Size(64, 25);
             lblType.TabIndex = 45;
@@ -765,7 +891,8 @@ namespace Horizon_Drive_LTD
             // 
             cboYear.Font = new Font("Segoe UI", 11F);
             cboYear.FormattingEnabled = true;
-            cboYear.Location = new Point(850, 62);
+            cboYear.Location = new Point(850, 50);
+            cboYear.Margin = new Padding(3, 15, 3, 25);
             cboYear.Name = "cboYear";
             cboYear.Size = new Size(300, 33);
             cboYear.TabIndex = 44;
@@ -775,7 +902,8 @@ namespace Horizon_Drive_LTD
             // 
             lblYear.AutoSize = true;
             lblYear.Font = new Font("Segoe UI", 11F);
-            lblYear.Location = new Point(850, 17);
+            lblYear.Location = new Point(850, 20);
+            lblYear.Margin = new Padding(3, 20, 3, 5);
             lblYear.Name = "lblYear";
             lblYear.Size = new Size(61, 25);
             lblYear.TabIndex = 43;
@@ -785,7 +913,8 @@ namespace Horizon_Drive_LTD
             // 
             cboModel.Font = new Font("Segoe UI", 11F);
             cboModel.FormattingEnabled = true;
-            cboModel.Location = new Point(443, 62);
+            cboModel.Location = new Point(443, 50);
+            cboModel.Margin = new Padding(3, 15, 3, 25);
             cboModel.Name = "cboModel";
             cboModel.Size = new Size(364, 33);
             cboModel.TabIndex = 41;
@@ -795,7 +924,8 @@ namespace Horizon_Drive_LTD
             // 
             lblModel.AutoSize = true;
             lblModel.Font = new Font("Segoe UI", 11F);
-            lblModel.Location = new Point(443, 17);
+            lblModel.Location = new Point(443, 20);
+            lblModel.Margin = new Padding(3, 20, 3, 5);
             lblModel.Name = "lblModel";
             lblModel.Size = new Size(79, 25);
             lblModel.TabIndex = 40;
@@ -805,7 +935,8 @@ namespace Horizon_Drive_LTD
             // 
             cboMake.Font = new Font("Segoe UI", 11F);
             cboMake.FormattingEnabled = true;
-            cboMake.Location = new Point(36, 62);
+            cboMake.Location = new Point(36, 50);
+            cboMake.Margin = new Padding(3, 15, 3, 25);
             cboMake.Name = "cboMake";
             cboMake.Size = new Size(364, 33);
             cboMake.TabIndex = 38;
@@ -815,7 +946,8 @@ namespace Horizon_Drive_LTD
             // 
             lblMake.AutoSize = true;
             lblMake.Font = new Font("Segoe UI", 11F);
-            lblMake.Location = new Point(36, 17);
+            lblMake.Location = new Point(36, 20);
+            lblMake.Margin = new Padding(3, 20, 3, 5);
             lblMake.Name = "lblMake";
             lblMake.Size = new Size(71, 25);
             lblMake.TabIndex = 35;
@@ -884,14 +1016,10 @@ namespace Horizon_Drive_LTD
         private Button btnCancel;
         private Panel panelPhoto2;
         private Label lblPlus2;
-        private CheckBox checkBoxChildSeat;
         private Panel panelPhoto1;
         private Label lblPlus1;
-        private CheckBox checkBoxSunroof;
-        private CheckBox checkBoxLeatherSeat;
-        private CheckBox checkBoxBluetooth;
-        private CheckBox checkBoxGPS;
-        private Label lblAdditionalFeatures;
+        private TextBox txtCarFeatures;
+        private Label lblCarFeatures;
         private DateTimePicker dateTimePickerEnd;
         private Label lblAvailabilityEnd;
         private DateTimePicker dateTimePickerStart;
@@ -919,5 +1047,17 @@ namespace Horizon_Drive_LTD
         private Label lblModel;
         private ComboBox cboMake;
         private Label lblMake;
+        private ComboBox cboFuelType;
+        private Label lblFuelType;
+        private ComboBox cboTransmission;
+        private Label lblTransmission;
+        private ComboBox cboDrivetrain;
+        private Label lblDrivetrain;
+        private TextBox txtEngineCapacity;
+        private Label lblEngineCapacity;
+        private TextBox txtPower;
+        private Label lblPower;
+        private ComboBox cboSeatNumber;
+        private Label lblSeatNumber;
     }
 }
