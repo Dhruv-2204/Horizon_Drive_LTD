@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Horizon_Drive_LTD.BusinessLogic.Repositories;
+﻿using Horizon_Drive_LTD.BusinessLogic.Repositories;
 using Horizon_Drive_LTD.DataStructure;
 using Horizon_Drive_LTD.Domain.Entities;
 
@@ -20,6 +14,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Services
         public AuthenticationService(HashTable<string, User> hashTable, UserRepository userRepo)
         {
             userHashTable = hashTable;
+            //customerHashTable = hashTable;
             _userRepo = userRepo;
         }
 
@@ -50,7 +45,9 @@ namespace Horizon_Drive_LTD.BusinessLogic.Services
             }
 
             userHashTable.Insert(newUser.UserId, newUser);
+            
             _userRepo.InsertUser(newUser);
+
 
             return true;
         }

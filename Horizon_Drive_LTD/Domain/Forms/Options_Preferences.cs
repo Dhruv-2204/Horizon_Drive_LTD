@@ -1,9 +1,9 @@
-﻿using System;
-using System.Drawing;
-using System.IO;
-using System.Windows.Forms;
+﻿
 
 //Options_Preferences.cs
+using Horizon_Drive_LTD.BusinessLogic;
+using Microsoft.Data.SqlClient;
+
 namespace Horizon_Drive_LTD
 {
     public partial class Options_Preferences : Form
@@ -12,6 +12,9 @@ namespace Horizon_Drive_LTD
         private FormWindowState lastWindowState;
         private Size originalSize;
         private bool isInitializing = true;
+
+        DatabaseConnection _dbConnection = new DatabaseConnection();
+
 
         public Options_Preferences()
         {
@@ -159,7 +162,6 @@ namespace Horizon_Drive_LTD
 
         private void btnSaveChanges_Click(object sender, EventArgs e)
         {
-            // Validate inputs
             if (string.IsNullOrWhiteSpace(licenseImagePath) ||
                 string.IsNullOrWhiteSpace(textBoxLicenseNumber.Text) ||
                 string.IsNullOrWhiteSpace(textBoxLicenseExpiry.Text))
@@ -168,15 +170,110 @@ namespace Horizon_Drive_LTD
                 return;
             }
 
-            // Here you would save the user's information to a database or file
-            // For now, we'll just show a success message
-            MessageBox.Show("Your license information has been saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            try
+            {
+                string username = string.Empty;
+                string userId = "";
+
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+
+                    // Get active username
+                    string getUserQuery = "SELECT UserName FROM ActiveUser";
+                    using (SqlCommand cmd = new SqlCommand(getUserQuery, conn))
+                    {
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        if (reader.Read())
+                        {
+                            username = reader.GetString(0);
+                        }
+                        reader.Close();
+                    }
+
+                    // Get corresponding UserID from User table
+                    string getUserIdQuery = "SELECT UserId FROM [User] WHERE UserName = @UserName";
+                    using (SqlCommand cmd = new SqlCommand(getUserIdQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@UserName", username);
+                        object result = cmd.ExecuteScalar();
+                        if (result != null)
+                        {
+                            //userId = Convert.ToInt32(result);
+                            userId = result.ToString();
+                        }
+                        else
+                        {
+                            MessageBox.Show("User not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
+
+                    // Store license image file to Media/LicenseImages/{UserID}
+                    string relativeFolder = Path.Combine("Media", "LicenseImages", userId.ToString());
+                    string fullFolder = Path.Combine(Application.StartupPath, relativeFolder);
+                    Directory.CreateDirectory(fullFolder);
+
+                    string fileName = Path.GetFileName(licenseImagePath);
+                    string destinationPath = Path.Combine(fullFolder, fileName);
+                    File.Copy(licenseImagePath, destinationPath, overwrite: true);
+
+                    string relativeImagePath = Path.Combine(relativeFolder, fileName);
+
+                    // Update the Customer table
+                    string updateCustomerQuery = @" UPDATE Customer 
+                                                    SET LicenseNo = @LicenseNo, 
+                                                        LicenseExpiryDate = @LicenseExpiryDate, 
+                                                        LicensePhoto = @LicensePhoto
+                                                    WHERE UserId = @UserId";
+
+                    using (SqlCommand cmd = new SqlCommand(updateCustomerQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@LicenseNo", textBoxLicenseNumber.Text.Trim());
+                        cmd.Parameters.AddWithValue("@LicenseExpiryDate", textBoxLicenseExpiry.Text.Trim());
+                        cmd.Parameters.AddWithValue("@LicensePhoto", relativeImagePath);
+                        cmd.Parameters.AddWithValue("@UserId", userId);
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Your license information has been saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("No records were updated. Please check if the user is registered as a customer.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Database error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
 
         private void btnPersonal_Click(object sender, EventArgs e)
         {
             // Switch to the Personal tab form
             Options_Personal personalForm = new Options_Personal();
+            personalForm.FormClosed += (s, args) =>
+            {
+                // Delete the ActiveUser table when the dashboard is closed
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+                    string dropTableQuery = "DROP TABLE IF EXISTS ActiveUser;";
+                    using (SqlCommand cmd = new SqlCommand(dropTableQuery, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                // Handle any cleanup or state reset if needed
+                this.Close();
+            };
+
             personalForm.Show();
             this.Hide();
         }
@@ -238,6 +335,17 @@ namespace Horizon_Drive_LTD
                                "Log Out",
                                MessageBoxButtons.OK,
                                MessageBoxIcon.Information);
+
+                // Clear the ActiveUser table
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+                    string dropTableQuery = "DROP TABLE IF EXISTS ActiveUser;";
+                    using (SqlCommand cmd = new SqlCommand(dropTableQuery, conn))
+                    {
+                        cmd.ExecuteNonQuery(); // Drop the ActiveUser table
+                    }
+                }
 
                 // Application.Restart(); // Uncomment to restart application
                 this.Close(); // Close current form

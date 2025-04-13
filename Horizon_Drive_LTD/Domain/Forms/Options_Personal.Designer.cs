@@ -38,6 +38,8 @@
             pictureBoxLogo = new PictureBox();
             mainScrollPanel = new Panel();
             panelMain = new Panel();
+            label1 = new Label();
+            Username_Label = new Label();
             buttonCamera = new Button();
             btnSaveChanges = new RoundedButton();
             textBoxAddress = new TextBox();
@@ -50,26 +52,26 @@
             labelPhone = new Label();
             textBoxEmail = new TextBox();
             labelEmail = new Label();
+            panelNameFields = new Panel();
+            textBoxLastName = new TextBox();
+            labelLastName = new Label();
+            textBoxFirstName = new TextBox();
+            labelFirstName = new Label();
             panelTabs = new Panel();
             btnPreferences = new RoundedButton();
             btnPersonal = new RoundedButton();
             labelAccountSettings = new Label();
             panelProfileImage = new Panel();
             pictureBoxProfile = new PictureBox();
-            labelFirstName = new Label();
-            textBoxFirstName = new TextBox();
-            labelLastName = new Label();
-            textBoxLastName = new TextBox();
-            panelNameFields = new Panel();
             panelSidebar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).BeginInit();
             mainScrollPanel.SuspendLayout();
             panelMain.SuspendLayout();
             panelPhone.SuspendLayout();
+            panelNameFields.SuspendLayout();
             panelTabs.SuspendLayout();
             panelProfileImage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxProfile).BeginInit();
-            panelNameFields.SuspendLayout();
             SuspendLayout();
             // 
             // panelSidebar
@@ -213,6 +215,8 @@
             panelMain.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelMain.AutoSize = true;
             panelMain.BackColor = Color.White;
+            panelMain.Controls.Add(label1);
+            panelMain.Controls.Add(Username_Label);
             panelMain.Controls.Add(buttonCamera);
             panelMain.Controls.Add(btnSaveChanges);
             panelMain.Controls.Add(textBoxAddress);
@@ -231,9 +235,30 @@
             panelMain.Margin = new Padding(3, 4, 3, 4);
             panelMain.Name = "panelMain";
             panelMain.Padding = new Padding(40, 51, 40, 51);
-            panelMain.Size = new Size(890, 953);
+            panelMain.Size = new Size(921, 953);
             panelMain.TabIndex = 1;
             panelMain.Paint += panelMain_Paint;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI Semibold", 12.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(655, 69);
+            label1.Name = "label1";
+            label1.Size = new Size(123, 30);
+            label1.TabIndex = 19;
+            label1.Text = "Username :";
+            // 
+            // Username_Label
+            // 
+            Username_Label.AutoSize = true;
+            Username_Label.Font = new Font("Yu Gothic UI", 13.8F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
+            Username_Label.Location = new Point(784, 69);
+            Username_Label.Name = "Username_Label";
+            Username_Label.Size = new Size(94, 31);
+            Username_Label.TabIndex = 18;
+            Username_Label.Text = "________";
+            Username_Label.Click += Username_Label_Click;
             // 
             // buttonCamera
             // 
@@ -258,7 +283,7 @@
             btnSaveChanges.FlatStyle = FlatStyle.Flat;
             btnSaveChanges.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSaveChanges.ForeColor = Color.White;
-            btnSaveChanges.Location = new Point(360, 861);
+            btnSaveChanges.Location = new Point(375, 861);
             btnSaveChanges.Margin = new Padding(3, 4, 3, 4);
             btnSaveChanges.Name = "btnSaveChanges";
             btnSaveChanges.Size = new Size(171, 61);
@@ -277,7 +302,7 @@
             textBoxAddress.MinimumSize = new Size(754, 43);
             textBoxAddress.Multiline = true;
             textBoxAddress.Name = "textBoxAddress";
-            textBoxAddress.Size = new Size(779, 43);
+            textBoxAddress.Size = new Size(810, 43);
             textBoxAddress.TabIndex = 17;
             // 
             // labelAddress
@@ -300,7 +325,7 @@
             textBoxPassword.MinimumSize = new Size(754, 33);
             textBoxPassword.Name = "textBoxPassword";
             textBoxPassword.PasswordChar = '•';
-            textBoxPassword.Size = new Size(779, 33);
+            textBoxPassword.Size = new Size(810, 33);
             textBoxPassword.TabIndex = 17;
             // 
             // labelPassword
@@ -322,7 +347,7 @@
             panelPhone.Location = new Point(70, 620);
             panelPhone.Margin = new Padding(3, 4, 3, 4);
             panelPhone.Name = "panelPhone";
-            panelPhone.Size = new Size(775, 44);
+            panelPhone.Size = new Size(806, 44);
             panelPhone.TabIndex = 13;
             // 
             // buttonCountryCode
@@ -335,7 +360,7 @@
             buttonCountryCode.Location = new Point(0, 0);
             buttonCountryCode.Margin = new Padding(3, 4, 3, 4);
             buttonCountryCode.Name = "buttonCountryCode";
-            buttonCountryCode.Size = new Size(71, 44);
+            buttonCountryCode.Size = new Size(79, 44);
             buttonCountryCode.TabIndex = 1;
             buttonCountryCode.Text = "Country";
             buttonCountryCode.UseVisualStyleBackColor = false;
@@ -344,13 +369,12 @@
             // textBoxPhone
             // 
             textBoxPhone.BorderStyle = BorderStyle.FixedSingle;
-            textBoxPhone.Dock = DockStyle.Fill;
             textBoxPhone.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBoxPhone.Location = new Point(0, 0);
+            textBoxPhone.Location = new Point(85, 0);
             textBoxPhone.Margin = new Padding(3, 4, 3, 4);
             textBoxPhone.Multiline = true;
             textBoxPhone.Name = "textBoxPhone";
-            textBoxPhone.Size = new Size(775, 44);
+            textBoxPhone.Size = new Size(721, 44);
             textBoxPhone.TabIndex = 0;
             textBoxPhone.TextChanged += textBoxPhone_TextChanged;
             // 
@@ -373,7 +397,7 @@
             textBoxEmail.Margin = new Padding(3, 4, 3, 4);
             textBoxEmail.MinimumSize = new Size(751, 33);
             textBoxEmail.Name = "textBoxEmail";
-            textBoxEmail.Size = new Size(776, 33);
+            textBoxEmail.Size = new Size(807, 33);
             textBoxEmail.TabIndex = 11;
             textBoxEmail.TextChanged += textBoxEmail_TextChanged;
             // 
@@ -386,6 +410,64 @@
             labelEmail.Size = new Size(62, 25);
             labelEmail.TabIndex = 10;
             labelEmail.Text = "Email:";
+            // 
+            // panelNameFields
+            // 
+            panelNameFields.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panelNameFields.Controls.Add(textBoxLastName);
+            panelNameFields.Controls.Add(labelLastName);
+            panelNameFields.Controls.Add(textBoxFirstName);
+            panelNameFields.Controls.Add(labelFirstName);
+            panelNameFields.Location = new Point(70, 395);
+            panelNameFields.Margin = new Padding(3, 4, 3, 4);
+            panelNameFields.Name = "panelNameFields";
+            panelNameFields.Size = new Size(806, 88);
+            panelNameFields.TabIndex = 4;
+            // 
+            // textBoxLastName
+            // 
+            textBoxLastName.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            textBoxLastName.BorderStyle = BorderStyle.FixedSingle;
+            textBoxLastName.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBoxLastName.Location = new Point(456, 37);
+            textBoxLastName.Margin = new Padding(3, 4, 3, 4);
+            textBoxLastName.MinimumSize = new Size(2, 33);
+            textBoxLastName.Name = "textBoxLastName";
+            textBoxLastName.Size = new Size(346, 33);
+            textBoxLastName.TabIndex = 3;
+            textBoxLastName.TextChanged += textBoxLastName_TextChanged_1;
+            // 
+            // labelLastName
+            // 
+            labelLastName.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            labelLastName.AutoSize = true;
+            labelLastName.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelLastName.Location = new Point(456, 9);
+            labelLastName.Name = "labelLastName";
+            labelLastName.Size = new Size(104, 25);
+            labelLastName.TabIndex = 2;
+            labelLastName.Text = "Last Name:";
+            // 
+            // textBoxFirstName
+            // 
+            textBoxFirstName.BorderStyle = BorderStyle.FixedSingle;
+            textBoxFirstName.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBoxFirstName.Location = new Point(0, 37);
+            textBoxFirstName.Margin = new Padding(3, 4, 3, 4);
+            textBoxFirstName.MinimumSize = new Size(2, 33);
+            textBoxFirstName.Name = "textBoxFirstName";
+            textBoxFirstName.Size = new Size(351, 33);
+            textBoxFirstName.TabIndex = 1;
+            // 
+            // labelFirstName
+            // 
+            labelFirstName.AutoSize = true;
+            labelFirstName.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelFirstName.Location = new Point(-3, 9);
+            labelFirstName.Name = "labelFirstName";
+            labelFirstName.Size = new Size(106, 25);
+            labelFirstName.TabIndex = 0;
+            labelFirstName.Text = "First Name:";
             // 
             // panelTabs
             // 
@@ -445,7 +527,7 @@
             // 
             panelProfileImage.Anchor = AnchorStyles.Top;
             panelProfileImage.Controls.Add(pictureBoxProfile);
-            panelProfileImage.Location = new Point(367, 191);
+            panelProfileImage.Location = new Point(382, 191);
             panelProfileImage.Margin = new Padding(3, 4, 3, 4);
             panelProfileImage.Name = "panelProfileImage";
             panelProfileImage.Size = new Size(178, 196);
@@ -463,64 +545,6 @@
             pictureBoxProfile.TabStop = false;
             pictureBoxProfile.Click += pictureBoxProfile_Click;
             // 
-            // labelFirstName
-            // 
-            labelFirstName.AutoSize = true;
-            labelFirstName.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelFirstName.Location = new Point(-3, 9);
-            labelFirstName.Name = "labelFirstName";
-            labelFirstName.Size = new Size(106, 25);
-            labelFirstName.TabIndex = 0;
-            labelFirstName.Text = "First Name:";
-            // 
-            // textBoxFirstName
-            // 
-            textBoxFirstName.BorderStyle = BorderStyle.FixedSingle;
-            textBoxFirstName.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBoxFirstName.Location = new Point(0, 37);
-            textBoxFirstName.Margin = new Padding(3, 4, 3, 4);
-            textBoxFirstName.MinimumSize = new Size(2, 33);
-            textBoxFirstName.Name = "textBoxFirstName";
-            textBoxFirstName.Size = new Size(351, 33);
-            textBoxFirstName.TabIndex = 1;
-            // 
-            // labelLastName
-            // 
-            labelLastName.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            labelLastName.AutoSize = true;
-            labelLastName.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelLastName.Location = new Point(425, 9);
-            labelLastName.Name = "labelLastName";
-            labelLastName.Size = new Size(104, 25);
-            labelLastName.TabIndex = 2;
-            labelLastName.Text = "Last Name:";
-            // 
-            // textBoxLastName
-            // 
-            textBoxLastName.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            textBoxLastName.BorderStyle = BorderStyle.FixedSingle;
-            textBoxLastName.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBoxLastName.Location = new Point(425, 37);
-            textBoxLastName.Margin = new Padding(3, 4, 3, 4);
-            textBoxLastName.MinimumSize = new Size(2, 33);
-            textBoxLastName.Name = "textBoxLastName";
-            textBoxLastName.Size = new Size(346, 33);
-            textBoxLastName.TabIndex = 3;
-            textBoxLastName.TextChanged += textBoxLastName_TextChanged_1;
-            // 
-            // panelNameFields
-            // 
-            panelNameFields.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panelNameFields.Controls.Add(textBoxLastName);
-            panelNameFields.Controls.Add(labelLastName);
-            panelNameFields.Controls.Add(textBoxFirstName);
-            panelNameFields.Controls.Add(labelFirstName);
-            panelNameFields.Location = new Point(70, 395);
-            panelNameFields.Margin = new Padding(3, 4, 3, 4);
-            panelNameFields.Name = "panelNameFields";
-            panelNameFields.Size = new Size(775, 88);
-            panelNameFields.TabIndex = 4;
-            // 
             // Options_Personal
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -533,6 +557,7 @@
             Name = "Options_Personal";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Horizon Drive - Account Settings";
+            Load += Options_Personal_Load;
             panelSidebar.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).EndInit();
             mainScrollPanel.ResumeLayout(false);
@@ -541,11 +566,11 @@
             panelMain.PerformLayout();
             panelPhone.ResumeLayout(false);
             panelPhone.PerformLayout();
+            panelNameFields.ResumeLayout(false);
+            panelNameFields.PerformLayout();
             panelTabs.ResumeLayout(false);
             panelProfileImage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBoxProfile).EndInit();
-            panelNameFields.ResumeLayout(false);
-            panelNameFields.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -584,5 +609,7 @@
         private Label labelLastName;
         private TextBox textBoxFirstName;
         private Label labelFirstName;
+        private Label Username_Label;
+        private Label label1;
     }
 }

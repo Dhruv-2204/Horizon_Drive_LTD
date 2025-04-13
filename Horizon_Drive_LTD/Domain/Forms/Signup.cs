@@ -3,8 +3,11 @@
     using System.Security.Cryptography;
     using System.Text;
     using System.Text.RegularExpressions;
+    using Horizon_Drive_LTD.BusinessLogic;
+    using Horizon_Drive_LTD.BusinessLogic.Repositories;
     using Horizon_Drive_LTD.BusinessLogic.Services;
     using Horizon_Drive_LTD.Domain.Entities;
+    using Microsoft.Data.SqlClient;
     //Using the splashcreen namespace to summon the Login window
     using splashscreen;
     public partial class Signup : Form
@@ -93,7 +96,9 @@
         {
             Guid guid = Guid.NewGuid();
             int numericPart = Math.Abs(guid.GetHashCode()) % 100000;
-            string userId = "U" + numericPart.ToString("D4");
+            string UserId = "U" + numericPart.ToString("D5");
+            string CustomerId = "CU" + numericPart.ToString("D5");
+            string LessorId = "L" + numericPart.ToString("D5");
             string firstName = First_Name.Text.Trim();
             string lastName = Last_Name.Text.Trim();
             string username = Username.Text.Trim();
@@ -147,7 +152,7 @@
 
             // If all validation passes, create the user object
             User newUser = new(
-                userId,
+                UserId,
                 username,
                 firstName,
                 lastName,
@@ -159,12 +164,61 @@
                 string.Empty 
             );
 
-           
+
+            DatabaseConnection _dbConnection = new DatabaseConnection();
+
             bool result = _authService.SignUp(newUser);
             if (result)
             {
-                MessageBox.Show("Account created successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
+                //InsertCustomerId(customerId, userId);
+
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+
+                    string query = @"INSERT INTO Customer
+                              (CustomerId, UserId)
+                              VALUES 
+                              (@CustomerId, @UserId)";
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@CustomerId", CustomerId);
+                    cmd.Parameters.AddWithValue("@UserId", UserId);
+                    cmd.ExecuteNonQuery();
+
+
+                }
+
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+                    string query = @"INSERT INTO Lessor
+                              (LessorId, UserId)
+                              VALUES 
+                              (@LessorId, @UserId)";
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@LessorId", LessorId);
+                    cmd.Parameters.AddWithValue("@UserId", UserId);
+                    cmd.ExecuteNonQuery();
+                }
+                DialogResult dialogResult = MessageBox.Show(
+                    "Account created successfully!",
+                    "Success",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+
+                if (dialogResult == DialogResult.OK)
+                {
+                    Login login = new Login(); // Pass existing auth service to Login
+                    login.Show();
+                    // Optionally, you can close the signup form here
+
+
+                    // Close the current form, if necessary.
+                    this.Hide();
+                }
             }
             else
             {

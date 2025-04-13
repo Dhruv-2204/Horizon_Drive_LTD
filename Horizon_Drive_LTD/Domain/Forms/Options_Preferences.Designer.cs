@@ -243,6 +243,7 @@
             textBoxLicenseExpiry.Margin = new Padding(3, 4, 3, 4);
             textBoxLicenseExpiry.MinimumSize = new Size(754, 43);
             textBoxLicenseExpiry.Name = "textBoxLicenseExpiry";
+            textBoxLicenseExpiry.PlaceholderText = "YYYY-MM-DD";
             textBoxLicenseExpiry.Size = new Size(758, 43);
             textBoxLicenseExpiry.TabIndex = 17;
             // 
@@ -252,9 +253,9 @@
             labelLicenseExpiry.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelLicenseExpiry.Location = new Point(66, 422);
             labelLicenseExpiry.Name = "labelLicenseExpiry";
-            labelLicenseExpiry.Size = new Size(178, 25);
+            labelLicenseExpiry.Size = new Size(241, 25);
             labelLicenseExpiry.TabIndex = 16;
-            labelLicenseExpiry.Text = "License Expiry Date:";
+            labelLicenseExpiry.Text = "Date of License First Issue  :";
             // 
             // textBoxLicenseNumber
             // 
@@ -299,7 +300,7 @@
             buttonUploadLicense.Location = new Point(0, 0);
             buttonUploadLicense.Margin = new Padding(3, 4, 3, 4);
             buttonUploadLicense.Name = "buttonUploadLicense";
-            buttonUploadLicense.Size = new Size(37, 48);
+            buttonUploadLicense.Size = new Size(58, 48);
             buttonUploadLicense.TabIndex = 1;
             buttonUploadLicense.Text = "📄";
             buttonUploadLicense.UseVisualStyleBackColor = false;
