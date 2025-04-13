@@ -15,7 +15,7 @@ namespace splashscreen
         public Login(AuthenticationService authService)
         {
             InitializeComponent();
-           _authService = authService ?? throw new ArgumentNullException(nameof(authService));
+            _authService = authService ?? throw new ArgumentNullException(nameof(authService));
         }
 
         public Login()
@@ -29,7 +29,7 @@ namespace splashscreen
         }
         private void MyForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (isClosing) return; 
+            if (isClosing) return;
             isClosing = true;
 
             DialogResult result = MessageBox.Show("Do you want to close the Car Hire Application?", "Confirm Exit",
@@ -46,7 +46,7 @@ namespace splashscreen
             }
         }
 
-       
+
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
@@ -120,6 +120,9 @@ namespace splashscreen
             this.Dispose(); //closes the login window
         }
 
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

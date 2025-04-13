@@ -8,6 +8,7 @@ using Horizon_Drive_LTD.BusinessLogic.Repositories;
 using Horizon_Drive_LTD.BusinessLogic.Services;
 using Horizon_Drive_LTD.DataStructure;
 using Horizon_Drive_LTD.Domain.Entities;
+using Manage_user_search_page;
 
 
 namespace splashscreen
@@ -25,7 +26,7 @@ namespace splashscreen
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SPLASH_SCREEN());
+            Application.Run(new Manage_User_Page());
 
         }
     }
