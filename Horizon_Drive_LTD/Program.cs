@@ -28,7 +28,8 @@ namespace splashscreen
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new SPLASH_SCREEN());
             //Application.Run(new Options_Personal());
-            Application.Run(new ListCarForm());
+            //Application.Run(new ListCarForm());
+            Application.Run(new BrowseListings());
 
         }
     }
