@@ -1,21 +1,24 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using Horizon_Drive_LTD.Domain.Entities;
 
 namespace Horizon_Drive_LTD
 {
     public partial class CarBookingForm : Form
     {
-        private CarListing car;
+        private Cars car;
         private List<string> carImages = new List<string>();
         private int currentImageIndex = 0;
         private System.Windows.Forms.Timer slideshowTimer;
         private Button btnNextImage;
         private Button btnPrevImage;
+      
 
-        public CarBookingForm(CarListing selectedCar)
+        public CarBookingForm(Cars selectedCar)
         {
             InitializeComponent();
             car = selectedCar;
@@ -74,23 +77,45 @@ namespace Horizon_Drive_LTD
             slideshowTimer.Tick += SlideshowTimer_Tick;
         }
 
+
         private void InitializeSlideshow()
         {
             // Clear any existing images
             carImages.Clear();
 
-            // Add the main image
-            if (!string.IsNullOrEmpty(car.ImagePath))
+            try
             {
-                carImages.Add(car.ImagePath);
-            }
+                // Construct the folder path based on car brand, model, and year
+                string baseFolder = Path.Combine(Application.StartupPath, "Images", "BrowseListings");
+                string carFolderName = $"{car.CarBrand}_{car.Model}_{car.Year}";
+                string carFolderPath = Path.Combine(baseFolder, carFolderName);
 
-            // Add any additional images from the car listing
-            if (car.AdditionalImages != null && car.AdditionalImages.Count > 0)
+                if (Directory.Exists(carFolderPath))
+                {
+                    // Load all image files from that folder
+                    string[] imageFiles = Directory.GetFiles(carFolderPath, "*.*")
+                                                   .Where(file => file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase)
+                                                               || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase)
+                                                               || file.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
+                                                   .ToArray();
+
+                    if (imageFiles.Length > 0)
+                    {
+                        carImages.AddRange(imageFiles);
+                    }
+                }
+
+                if (carImages.Count == 0)
+                {
+                    MessageBox.Show("No images found for this car.");
+                }
+            }
+            catch (Exception ex)
             {
-                carImages.AddRange(car.AdditionalImages);
+                MessageBox.Show("Slideshow initialization error: " + ex.Message);
             }
         }
+
 
         private void LoadImage(int index)
         {
@@ -98,13 +123,13 @@ namespace Horizon_Drive_LTD
             {
                 try
                 {
-                    // Make sure index is valid
+                    // Wrap around the index
                     if (index < 0) index = carImages.Count - 1;
                     if (index >= carImages.Count) index = 0;
 
                     currentImageIndex = index;
 
-                    string imagePath = Path.Combine("Images", carImages[currentImageIndex]);
+                    string imagePath = carImages[currentImageIndex];
 
                     if (File.Exists(imagePath))
                     {
@@ -112,14 +137,12 @@ namespace Horizon_Drive_LTD
                     }
                     else
                     {
-                        // If file doesn't exist, show placeholder
                         pictureBoxCar.BackColor = Color.LightGray;
                         pictureBoxCar.Image = null;
                     }
                 }
                 catch (Exception ex)
                 {
-                    // If there's any error loading the image, use placeholder
                     pictureBoxCar.BackColor = Color.LightGray;
                     pictureBoxCar.Image = null;
                     Console.WriteLine($"Error loading image: {ex.Message}");
@@ -164,101 +187,26 @@ namespace Horizon_Drive_LTD
             LoadImage(0);
 
             // Set car title
-            labelCarTitle.Text = $"{car.Make} {car.Model} ({car.Year}) for Rent";
-
-            // Set location
-            labelLocation.Text = "From Horizon Drive Ltd, Mauritius";
+            labelCarTitle.Text = $"{car.CarBrand} {car.Model} ({car.Year}) for Rent";
 
             // Set price
-            labelPrice.Text = $"MUR {car.PricePerDay}/day";
+            labelPrice.Text = $"MUR {car.CarPrice}/day";
 
-            // Set description
-            string description = $"Premium Vehicle Rental in Mauritius – Experience Luxury and Performance!\n" +
-                $"Looking for a high-quality {car.Make} {car.Model} rental in Mauritius? This vehicle at Horizon Drive Ltd offers " +
-                $"exceptional comfort, performance, and cutting-edge features. Whether " +
-                $"you're exploring the island, heading to business meetings, or enjoying a relaxing vacation, " +
-                $"this {car.Make} {car.Model} ensures a memorable driving experience.\n\n" +
-                $"Book now and experience the power and elegance of the {car.Make} {car.Model}!";
+            string description = car.VehicleDescription;
+            string features = car.Features;
 
             textBoxDescription.Text = description;
+            featuresDetails.Text = features;
+            transmissionSpec.Text = $"Transmission Type: {car.TransmissionType}";
+            passengersSpec.Text = $"Passengers: {car.SeatNo}";
+            powerSpec.Text = $"Power: {car.Power}";
+            drivetrainSpec.Text = $"Drivetrain: {car.DriveTrain}";
+            ratingCount.Text = $"Rating: {car.Ratings} reviews)"; 
 
-            // Customize specifications based on car type
-            CustomizeSpecifications();
+
         }
 
-        private void CustomizeSpecifications()
-        {
-            // Customize specifications based on car make/model
-            // This is just an example - you would typically load this from a database
-            switch (car.Model.ToLower())
-            {
-                case "raptor":
-                    transmissionSpec.Text = "Transmission: Automatic";
-                    passengersSpec.Text = "Passengers: 5 Seats";
-                    storageSpec.Text = "Storage Capacity: 1000kg";
-                    powerSpec.Text = "Power: 450hp";
-                    drivetrainSpec.Text = "Drivetrain: 4WD (Four-Wheel Drive)";
-                    break;
 
-                case "x4":
-                    transmissionSpec.Text = "Transmission: Automatic";
-                    passengersSpec.Text = "Passengers: 5 Seats";
-                    storageSpec.Text = "Storage Capacity: 650kg";
-                    powerSpec.Text = "Power: 382hp";
-                    drivetrainSpec.Text = "Drivetrain: AWD (All-Wheel Drive)";
-                    break;
-
-                case "c8":
-                    transmissionSpec.Text = "Transmission: Automatic";
-                    passengersSpec.Text = "Passengers: 2 Seats";
-                    storageSpec.Text = "Storage Capacity: 357L";
-                    powerSpec.Text = "Power: 490hp";
-                    drivetrainSpec.Text = "Drivetrain: RWD (Rear-Wheel Drive)";
-                    break;
-
-                case "mustang":
-                    transmissionSpec.Text = "Transmission: Automatic";
-                    passengersSpec.Text = "Passengers: 4 Seats";
-                    storageSpec.Text = "Storage Capacity: 382L";
-                    powerSpec.Text = "Power: 460hp";
-                    drivetrainSpec.Text = "Drivetrain: RWD (Rear-Wheel Drive)";
-                    break;
-
-                case "amg":
-                case "amg gt":
-                    transmissionSpec.Text = "Transmission: Automatic";
-                    passengersSpec.Text = "Passengers: 2 Seats";
-                    storageSpec.Text = "Storage Capacity: 350L";
-                    powerSpec.Text = "Power: 503hp";
-                    drivetrainSpec.Text = "Drivetrain: RWD (Rear-Wheel Drive)";
-                    break;
-
-                case "civic":
-                    transmissionSpec.Text = "Transmission: Automatic";
-                    passengersSpec.Text = "Passengers: 5 Seats";
-                    storageSpec.Text = "Storage Capacity: 428L";
-                    powerSpec.Text = "Power: 180hp";
-                    drivetrainSpec.Text = "Drivetrain: FWD (Front-Wheel Drive)";
-                    break;
-
-                case "gle coupe":
-                    transmissionSpec.Text = "Transmission: Automatic";
-                    passengersSpec.Text = "Passengers: 5 Seats";
-                    storageSpec.Text = "Storage Capacity: 600L";
-                    powerSpec.Text = "Power: 429hp";
-                    drivetrainSpec.Text = "Drivetrain: AWD (All-Wheel Drive)";
-                    break;
-
-                default:
-                    // Default specifications
-                    transmissionSpec.Text = "Transmission: Automatic";
-                    passengersSpec.Text = "Passengers: 5 Seats";
-                    storageSpec.Text = "Storage Capacity: 500L";
-                    powerSpec.Text = "Power: 300hp";
-                    drivetrainSpec.Text = "Drivetrain: FWD (Front-Wheel Drive)";
-                    break;
-            }
-        }
 
         private void btnBookCar_Click(object sender, EventArgs e)
         {
@@ -277,6 +225,7 @@ namespace Horizon_Drive_LTD
             string pickupLocation = comboBoxPickup.SelectedItem?.ToString() ?? string.Empty;
             string dropoffLocation = comboBoxDropoff.SelectedItem?.ToString() ?? string.Empty;
 
+            
             // Show booking confirmation dialog
             BookingConfirmationForm confirmationForm = new BookingConfirmationForm(
                 car,
@@ -290,13 +239,14 @@ namespace Horizon_Drive_LTD
                 checkBoxRoofRack.Checked,
                 checkBoxAirportPickup.Checked
             );
-
+            
             if (confirmationForm.ShowDialog() == DialogResult.OK)
             {
                 // Booking was confirmed - you could save to database here
                 this.Close();
             }
             // If user cancelled, they stay on the booking form
+            
         }
 
         protected override void Dispose(bool disposing)
@@ -317,5 +267,7 @@ namespace Horizon_Drive_LTD
             }
             base.Dispose(disposing);
         }
+
+       
     }
 }

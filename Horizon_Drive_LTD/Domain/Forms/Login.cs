@@ -3,17 +3,20 @@ using Horizon_Drive_LTD.BusinessLogic.Repositories;
 using Horizon_Drive_LTD.BusinessLogic;
 using Horizon_Drive_LTD.BusinessLogic.Services;
 using Horizon_Drive_LTD.Domain.Entities;
+using Microsoft.Data.SqlClient;
 namespace splashscreen
 {
     public partial class Login : Form
     {
         private bool isClosing = false;
         private AuthenticationService _authService;
+        private DatabaseConnection _dbConnection;
 
         public Login(AuthenticationService authService)
         {
             InitializeComponent();
            _authService = authService ?? throw new ArgumentNullException(nameof(authService));
+            _dbConnection = new DatabaseConnection(); 
         }
 
         public Login()
@@ -40,11 +43,21 @@ namespace splashscreen
             }
             else
             {
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+                    string dropTableQuery = "DROP TABLE IF EXISTS ActiveUser;";
+                    using (SqlCommand cmd = new SqlCommand(dropTableQuery, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
                 Application.Exit(); // Properly terminates the application without triggering FormClosing again
             }
         }
 
-       
+
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
@@ -63,8 +76,37 @@ namespace splashscreen
             string enteredUsername = Username.Text.Trim();
             string enteredPassword = Password.Text;
 
+
+            Guid guid = Guid.NewGuid();
+            
+
             if (_authService.Login(enteredUsername, enteredPassword, out User loggedInUser))
             {
+
+
+                UserRepository userRepo = new UserRepository(new DatabaseConnection());
+                CustomerRepository customerRepo = new CustomerRepository(new DatabaseConnection());
+                LessorRepository lessorRepo = new LessorRepository(new DatabaseConnection());
+
+
+
+                string userId = userRepo.GetUserIdByUsername(enteredUsername);
+
+                string customerid = customerRepo.GetCustomerIdByUserId(userId);
+
+                string lessorid = lessorRepo.GetLessorIdByUserId(userId);
+
+                if (!string.IsNullOrEmpty(userId))
+                {
+                    userRepo.StoreActiveUser(enteredUsername, userId, customerid, lessorid);
+                   
+                }
+                else
+                {
+                    MessageBox.Show("User ID not found.");
+                }
+
+
                 DialogResult result = MessageBox.Show(
                     $"Welcome, {loggedInUser.UserName}!",
                     "Login Successful",

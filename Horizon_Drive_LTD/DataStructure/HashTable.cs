@@ -186,5 +186,13 @@ namespace Horizon_Drive_LTD.DataStructure
             }
             return true;
         }
+
+        public int Count
+        {
+            get
+            {
+                return _size;
+            }
+        }
     }
 }

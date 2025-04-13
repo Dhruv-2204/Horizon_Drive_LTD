@@ -77,5 +77,89 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             }
         }
 
+
+
+        public string GetUserIdByUsername(string username)
+        {
+            using (SqlConnection conn = _dbConnection.GetConnection())
+            {
+                conn.Open();
+                string query = "SELECT UserId FROM [User] WHERE UserName = @UserName";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@UserName", username);
+                    var result = cmd.ExecuteScalar();
+                    return result?.ToString(); // returns null if not found
+                }
+            }
+        }
+
+        public void StoreActiveUser(string username, string userId, string customerid, string lessorid)
+        {
+            using (SqlConnection conn = _dbConnection.GetConnection())
+            {
+                conn.Open();
+
+                // Ensure the table exists
+                string createTableQuery = @"
+            IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='ActiveUser' AND xtype='U')
+            CREATE TABLE ActiveUser (
+                UserName VARCHAR(100) NOT NULL,
+                UserId VARCHAR(10) NOT NULL,
+                CustomerID VARCHAR(10) NOT NULL,
+                LessorID VARCHAR(10) NOT NULL
+                
+                
+            );";
+
+                using (SqlCommand cmd = new SqlCommand(createTableQuery, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                // Optional: Clear existing active users (if you want only one active user at a time)
+                string deleteQuery = "DELETE FROM ActiveUser";
+                using (SqlCommand deleteCmd = new SqlCommand(deleteQuery, conn))
+                {
+                    deleteCmd.ExecuteNonQuery();
+                }
+
+                // Insert the new active user
+                string insertQuery = "INSERT INTO ActiveUser (UserName, UserId,CustomerID,LessorID) VALUES (@UserName, @UserId,@CustomerID,@LessorID)";
+                using (SqlCommand cmd = new SqlCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.AddWithValue("@UserName", username);
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    cmd.Parameters.AddWithValue("@CustomerID", customerid);
+                    cmd.Parameters.AddWithValue("@LessorID", lessorid);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void GetActiveUser(out string userName, out string customerid)
+        {
+            userName = null;
+            customerid = null;
+
+            using (SqlConnection conn = _dbConnection.GetConnection())
+            {
+                conn.Open();
+                string query = "SELECT TOP 1 UserName,CustomerID FROM ActiveUser";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        userName = reader["UserName"].ToString();
+                        customerid = reader["CustomerID"].ToString();
+                    }
+                }
+            }
+        }
+
     }
 }
