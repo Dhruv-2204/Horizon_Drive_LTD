@@ -95,10 +95,10 @@ namespace splashscreen
 
                     // Create the ActiveUser table if it does not exist
                     string createTableQuery = @"
-                    IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='ActiveUser' AND xtype='U')
-                    CREATE TABLE ActiveUser (
-                        UserName Varchar(100) NOT NULL
-                        );";
+                                IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='ActiveUser' AND xtype='U')
+                                CREATE TABLE ActiveUser (
+                                UserName Varchar(100) NOT NULL
+                                );";
                     using (SqlCommand cmd = new SqlCommand(createTableQuery, conn))
                     {
                         cmd.ExecuteNonQuery();
@@ -155,6 +155,102 @@ namespace splashscreen
                 MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
+        // dummy code to find lost password
+
+        //private void LOGIN_btn_Click(object sender, EventArgs e)
+        //{
+        //    string enteredUsername = Username.Text.Trim();
+        //    string enteredPassword = Password.Text;
+
+        //    string actualPasswordFromDB = null;
+        //    //enteredPassword = HashPassword(enteredPassword);
+
+        //    using (SqlConnection conn = _dbConnection.GetConnection())
+        //    {
+        //        conn.Open();
+
+        //        // Step 1: Retrieve actual password for the entered username
+        //        string query = "SELECT Password FROM [User] WHERE UserName = @UserName";
+        //        using (SqlCommand cmd = new SqlCommand(query, conn))
+        //        {
+        //            cmd.Parameters.AddWithValue("@UserName", enteredUsername);
+        //            var result = cmd.ExecuteScalar();
+
+        //            if (result == null)
+        //            {
+        //                MessageBox.Show("Username not found.", "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //                return;
+        //            }
+
+        //            actualPasswordFromDB = result.ToString();
+        //        }
+        //    }
+
+        //    // Step 2: Display the actual password to the user (for testing only)
+        //    MessageBox.Show($"Password for {enteredUsername} is: {actualPasswordFromDB}", "Debug Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        //    // Step 3: Check if user typed the correct password (plaintext comparison)
+        //    if (enteredPassword == actualPasswordFromDB)
+        //    {
+        //        // OPTIONAL: proceed to track ActiveUser (same as before)
+        //        using (SqlConnection conn = _dbConnection.GetConnection())
+        //        {
+        //            conn.Open();
+
+        //            string createTableQuery = @"
+        //        IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='ActiveUser' AND xtype='U')
+        //        CREATE TABLE ActiveUser (
+        //            UserName Varchar(100) NOT NULL
+        //        );";
+        //            using (SqlCommand cmd = new SqlCommand(createTableQuery, conn))
+        //            {
+        //                cmd.ExecuteNonQuery();
+        //            }
+
+        //            string insertUserQuery = "INSERT INTO ActiveUser (UserName) VALUES (@UserName);";
+        //            using (SqlCommand cmd = new SqlCommand(insertUserQuery, conn))
+        //            {
+        //                cmd.Parameters.AddWithValue("@UserName", enteredUsername);
+        //                cmd.ExecuteNonQuery();
+        //            }
+        //        }
+
+        //        DialogResult result = MessageBox.Show(
+        //            $"Welcome, {enteredUsername}!",
+        //            "Login Successful",
+        //            MessageBoxButtons.OK,
+        //            MessageBoxIcon.Information
+        //        );
+
+        //        if (result == DialogResult.OK)
+        //        {
+        //            Options_Personal dashboard = new Options_Personal();
+        //            dashboard.FormClosed += (s, args) =>
+        //            {
+        //                using (SqlConnection conn = _dbConnection.GetConnection())
+        //                {
+        //                    conn.Open();
+        //                    string dropTableQuery = "DROP TABLE IF EXISTS ActiveUser;";
+        //                    using (SqlCommand cmd = new SqlCommand(dropTableQuery, conn))
+        //                    {
+        //                        cmd.ExecuteNonQuery();
+        //                    }
+        //                }
+        //                this.Close();
+        //            };
+
+        //            dashboard.Show();
+        //            this.Hide();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Incorrect password entered.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
+
 
 
         private void Signup_btn_Click(object sender, EventArgs e)

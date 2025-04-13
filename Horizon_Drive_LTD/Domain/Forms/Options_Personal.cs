@@ -323,75 +323,160 @@ namespace Horizon_Drive_LTD
             }
         }
 
+        //private void btnSaveChanges_Click(object sender, EventArgs e)
+        //{
+        //    // Validate inputs
+        //    if (string.IsNullOrWhiteSpace(textBoxFirstName.Text) ||
+        //        string.IsNullOrWhiteSpace(textBoxLastName.Text) ||
+        //        string.IsNullOrWhiteSpace(textBoxEmail.Text) ||
+        //        //string.IsNullOrWhiteSpace(textBoxPhone.Text) ||
+        //        //string.IsNullOrWhiteSpace(textBoxPassword.Text) ||
+        //        string.IsNullOrWhiteSpace(textBoxAddress.Text))
+        //    {
+        //        MessageBox.Show("Please fill in all fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        try
+        //        {
+        //            using (SqlConnection sqlConnection = _dbConnection.GetConnection())
+        //            {
+        //                sqlConnection.Open();
+
+        //                string query = "UPDATE [User] " +
+        //                               "SET FirstName = @FirstName," +
+        //                               "LastName = @LastName," +
+        //                               "Email = @Email," +
+        //                               "TelephoneNo = @TelephoneNo," +
+        //                               "Address = @Address," +
+        //                               "Password = @Password, " +
+        //                               "ProfilePicture = @ProfilePicture " +
+        //                               "WHERE UserName = @UserName";
+        //                using (SqlCommand sqlCommand = new SqlCommand(query, sqlConnection))
+        //                {
+        //                    textBoxPassword.Text = HashPassword(textBoxPassword.Text);
+        //                    sqlCommand.Parameters.AddWithValue("@FirstName", textBoxFirstName.Text);
+        //                    sqlCommand.Parameters.AddWithValue("@LastName", textBoxLastName.Text);
+        //                    sqlCommand.Parameters.AddWithValue("@Email", textBoxEmail.Text);
+        //                    sqlCommand.Parameters.AddWithValue("@TelephoneNo", textBoxPhone.Text);
+        //                    sqlCommand.Parameters.AddWithValue("@Address", textBoxAddress.Text);
+        //                    sqlCommand.Parameters.AddWithValue("@UserName", Username_Label.Text);
+        //                    //if (sqlCommand.Parameters.AddWithValue("@Password"))
+        //                    sqlCommand.Parameters.AddWithValue("@Password", HashPassword(textBoxPassword.Text));
+        //                    sqlCommand.Parameters.AddWithValue("@ProfilePicture", profileImagePath);
+        //                    int rowsAffected = sqlCommand.ExecuteNonQuery();
+        //                    if (rowsAffected > 0)
+        //                    {
+        //                        MessageBox.Show($"Profile updated successfully. {textBoxPassword.Text}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //                        MessageBox.Show($"{HashPassword(textBoxPassword.Text)}");
+        //                    }
+        //                    else
+        //                    {
+        //                        MessageBox.Show("No changes made or user not found.", "Update Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        catch (SqlException sqlEx)
+        //        {
+        //            MessageBox.Show($"Database error: {sqlEx.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        }
+
+        //        // Here you would save the user's information to a database or file
+        //        // For now, we'll just show a success message
+        //        MessageBox.Show("Your information has been saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //    }
+        //}
+
         private void btnSaveChanges_Click(object sender, EventArgs e)
         {
-            // Validate inputs
             if (string.IsNullOrWhiteSpace(textBoxFirstName.Text) ||
                 string.IsNullOrWhiteSpace(textBoxLastName.Text) ||
                 string.IsNullOrWhiteSpace(textBoxEmail.Text) ||
-                //string.IsNullOrWhiteSpace(textBoxPhone.Text) ||
-                //string.IsNullOrWhiteSpace(textBoxPassword.Text) ||
                 string.IsNullOrWhiteSpace(textBoxAddress.Text))
             {
                 MessageBox.Show("Please fill in all fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            else
-            {
-                try
-                {
-                    using (SqlConnection sqlConnection = _dbConnection.GetConnection())
-                    {
-                        sqlConnection.Open();
 
-                        string query = "UPDATE [User] " +
-                                       "SET FirstName = @FirstName," +
-                                       "LastName = @LastName," +
-                                       "Email = @Email," +
-                                       "TelephoneNo = @TelephoneNo," +
-                                       "Address = @Address," +
-                                       "Password = @Password, " +
-                                       "ProfilePicture = @ProfilePicture " +
-                                       "WHERE UserName = @UserName";
-                        using (SqlCommand sqlCommand = new SqlCommand(query, sqlConnection))
+            try
+            {
+                using (SqlConnection sqlConnection = _dbConnection.GetConnection())
+                {
+                    sqlConnection.Open();
+
+                    string currentPasswordHash = string.Empty;
+
+                    // Step 1: Fetch current password hash from the database
+                    string fetchQuery = "SELECT Password FROM [User] WHERE UserName = @UserName";
+                    using (SqlCommand fetchCommand = new SqlCommand(fetchQuery, sqlConnection))
+                    {
+                        fetchCommand.Parameters.AddWithValue("@UserName", Username_Label.Text);
+                        var result = fetchCommand.ExecuteScalar();
+                        if (result != null)
+                            currentPasswordHash = result.ToString();
+                    }
+
+                    // Step 2: Determine whether the password needs re-hashing
+                    string enteredPassword = textBoxPassword.Text.Trim();
+                    string finalPassword = currentPasswordHash;
+
+                    if (!string.IsNullOrEmpty(enteredPassword) && HashPassword(enteredPassword) != currentPasswordHash)
+                    {
+                        // User entered a new password, so hash it
+                        finalPassword = HashPassword(enteredPassword);
+                    }
+
+                    // Step 3: Perform update
+                    string updateQuery = @"UPDATE [User]
+                                   SET FirstName = @FirstName,
+                                       LastName = @LastName,
+                                       Email = @Email,
+                                       TelephoneNo = @TelephoneNo,
+                                       Address = @Address,
+                                       Password = @Password,
+                                       ProfilePicture = @ProfilePicture
+                                   WHERE UserName = @UserName";
+
+                    using (SqlCommand sqlCommand = new SqlCommand(updateQuery, sqlConnection))
+                    {
+                        sqlCommand.Parameters.AddWithValue("@FirstName", textBoxFirstName.Text);
+                        sqlCommand.Parameters.AddWithValue("@LastName", textBoxLastName.Text);
+                        sqlCommand.Parameters.AddWithValue("@Email", textBoxEmail.Text);
+                        sqlCommand.Parameters.AddWithValue("@TelephoneNo", textBoxPhone.Text);
+                        sqlCommand.Parameters.AddWithValue("@Address", textBoxAddress.Text);
+                        sqlCommand.Parameters.AddWithValue("@UserName", Username_Label.Text);
+                        sqlCommand.Parameters.AddWithValue("@Password", finalPassword);
+                        sqlCommand.Parameters.AddWithValue("@ProfilePicture", profileImagePath);
+
+                        int rowsAffected = sqlCommand.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
                         {
-                            textBoxPassword.Text = HashPassword(textBoxPassword.Text);
-                            sqlCommand.Parameters.AddWithValue("@FirstName", textBoxFirstName.Text);
-                            sqlCommand.Parameters.AddWithValue("@LastName", textBoxLastName.Text);
-                            sqlCommand.Parameters.AddWithValue("@Email", textBoxEmail.Text);
-                            sqlCommand.Parameters.AddWithValue("@TelephoneNo", textBoxPhone.Text);
-                            sqlCommand.Parameters.AddWithValue("@Address", textBoxAddress.Text);
-                            sqlCommand.Parameters.AddWithValue("@UserName", Username_Label.Text);
-                            //if (sqlCommand.Parameters.AddWithValue("@Password"))
-                            sqlCommand.Parameters.AddWithValue("@Password", HashPassword(textBoxPassword.Text));
-                            sqlCommand.Parameters.AddWithValue("@ProfilePicture", profileImagePath);
-                            int rowsAffected = sqlCommand.ExecuteNonQuery();
-                            if (rowsAffected > 0)
-                            {
-                                MessageBox.Show($"Profile updated successfully. {textBoxPassword.Text}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                MessageBox.Show($"{HashPassword(textBoxPassword.Text)}");
-                            }
-                            else
-                            {
-                                MessageBox.Show("No changes made or user not found.", "Update Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            }
+                            MessageBox.Show("Profile updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("No changes made or user not found.", "Update Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
                 }
-                catch (SqlException sqlEx)
-                {
-                    MessageBox.Show($"Database error: {sqlEx.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                // Here you would save the user's information to a database or file
-                // For now, we'll just show a success message
-                MessageBox.Show("Your information has been saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (SqlException sqlEx)
+            {
+                MessageBox.Show($"Database error: {sqlEx.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private void btnPersonal_Click(object sender, EventArgs e)
         {
