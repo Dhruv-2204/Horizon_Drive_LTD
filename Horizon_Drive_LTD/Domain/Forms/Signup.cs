@@ -7,7 +7,6 @@
     using Horizon_Drive_LTD.BusinessLogic;
     using Horizon_Drive_LTD.BusinessLogic.Services;
     using Horizon_Drive_LTD.Domain.Entities;
-    //Using the splashcreen namespace to summon the Login window
     using splashscreen;
     using Microsoft.Data.SqlClient;
 
@@ -16,7 +15,8 @@
         private bool isClosing = false;
 
         private AuthenticationService _authService;
-        private readonly DatabaseConnection _dbConnection;
+       // private readonly DatabaseConnection _dbConnection;
+       DatabaseConnection _dbConnection = new DatabaseConnection();
 
         public Signup(AuthenticationService authService)
         {
@@ -50,7 +50,8 @@
 
         private void Login_button(object sender, EventArgs e)
         {
-            Login login = new Login(); // Pass existing auth service to Login
+
+            Login login = new Login(_authService); 
             login.Show();
             this.Dispose();
         }

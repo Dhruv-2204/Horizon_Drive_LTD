@@ -135,6 +135,20 @@ namespace Horizon_Drive_LTD.DataStructure
             }
         }
 
+        public IEnumerable<TValue> Values()
+        {
+            for (int i = 0; i < _capacity; i++)
+            {
+                if (_buckets[i] != null)
+                {
+                    foreach (var kvp in _buckets[i])
+                    {
+                        yield return kvp.Value;
+                    }
+                }
+            }
+        }
+
         private void Resize()
         {
             int newCapacity = GetNextPrime(_capacity * 2);

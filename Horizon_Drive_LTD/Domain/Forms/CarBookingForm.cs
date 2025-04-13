@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using Horizon_Drive_LTD.BusinessLogic.Repositories;
+using Horizon_Drive_LTD.BusinessLogic;
+using Horizon_Drive_LTD.DataStructure;
 using Horizon_Drive_LTD.Domain.Entities;
 
 namespace Horizon_Drive_LTD
@@ -85,6 +88,7 @@ namespace Horizon_Drive_LTD
 
             try
             {
+                // Set the image folder path: Images/BrowseListings/Brand_Model
                 string baseFolder = Path.Combine(Application.StartupPath, "Images", "BrowseListings");
                 string carFolderName = $"{car.CarBrand}_{car.Model}";
                 string carFolderPath = Path.Combine(baseFolder, carFolderName);
@@ -109,7 +113,7 @@ namespace Horizon_Drive_LTD
                 }
                 else
                 {
-                    LoadImage(0); // ✅ Show the first image
+                    LoadImage(0); // Load the first image
                 }
             }
             catch (Exception ex)
@@ -124,6 +128,7 @@ namespace Horizon_Drive_LTD
             {
                 try
                 {
+                    // Loop the index around
                     if (index < 0) index = carImages.Count - 1;
                     if (index >= carImages.Count) index = 0;
 
@@ -132,6 +137,7 @@ namespace Horizon_Drive_LTD
 
                     if (File.Exists(imagePath))
                     {
+                        // Avoid file lock by creating a Bitmap copy
                         using (var tempImg = Image.FromFile(imagePath))
                         {
                             pictureBoxCar.Image = new Bitmap(tempImg);
@@ -201,7 +207,7 @@ namespace Horizon_Drive_LTD
             passengersSpec.Text = $"Passengers: {car.SeatNo}";
             powerSpec.Text = $"Power: {car.Power}";
             drivetrainSpec.Text = $"Drivetrain: {car.DriveTrain}";
-            ratingCount.Text = $"Rating: {car.Ratings} reviews)";
+            ratingCount.Text = $"Rating: {car.Ratings}";
 
 
         }
@@ -210,6 +216,9 @@ namespace Horizon_Drive_LTD
 
         private void btnBookCar_Click(object sender, EventArgs e)
         {
+            BookingsRepository bookingRepo = new BookingsRepository(new DatabaseConnection());
+            HashTable<string, Booking> bookingHashTable = bookingRepo.LoadBookingsFromDatabase();
+
             // Calculate rental days
             TimeSpan rentalPeriod = dateTimePickerEnd.Value - dateTimePickerStart.Value;
             int days = (int)Math.Ceiling(rentalPeriod.TotalDays);
@@ -225,27 +234,37 @@ namespace Horizon_Drive_LTD
             string pickupLocation = comboBoxPickup.SelectedItem?.ToString() ?? string.Empty;
             string dropoffLocation = comboBoxDropoff.SelectedItem?.ToString() ?? string.Empty;
 
+            bool isAvailable = bookingRepo.IsCarAvailable(car.CarID, dateTimePickerStart.Value, dateTimePickerEnd.Value, bookingHashTable);
 
-            // Show booking confirmation dialog
-            BookingConfirmationForm confirmationForm = new BookingConfirmationForm(
-                car,
-                dateTimePickerStart.Value,
-                dateTimePickerEnd.Value,
-                pickupLocation,
-                dropoffLocation,
-                checkBoxDriver.Checked,
-                checkBoxBabyCarSeat.Checked,
-                checkBoxInsurance.Checked,
-                checkBoxRoofRack.Checked,
-                checkBoxAirportPickup.Checked
-            );
-
-            if (confirmationForm.ShowDialog() == DialogResult.OK)
+            if (!isAvailable)
             {
-                // Booking was confirmed - you could save to database here
-                this.Close();
+                MessageBox.Show("This car is already booked for the selected dates.");
             }
-            // If user cancelled, they stay on the booking form
+            else
+            {
+                // Show booking confirmation dialog
+                BookingConfirmationForm confirmationForm = new BookingConfirmationForm(
+                    car,
+                    dateTimePickerStart.Value,
+                    dateTimePickerEnd.Value,
+                    pickupLocation,
+                    dropoffLocation,
+                    checkBoxDriver.Checked,
+                    checkBoxBabyCarSeat.Checked,
+                    checkBoxInsurance.Checked,
+                    checkBoxRoofRack.Checked,
+                    checkBoxAirportPickup.Checked
+                );
+
+                if (confirmationForm.ShowDialog() == DialogResult.OK)
+                {
+                    // Booking was confirmed - you could save to database here
+                    this.Close();
+                }
+              
+            }
+
+
 
         }
 

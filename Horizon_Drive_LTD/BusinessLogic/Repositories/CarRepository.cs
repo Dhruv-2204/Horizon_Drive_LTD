@@ -9,7 +9,7 @@ using Microsoft.Data.SqlClient;
 
 namespace Horizon_Drive_LTD.BusinessLogic.Repositories
 {
-    public  class CarRepository
+    public class CarRepository
     {
         private readonly DatabaseConnection _dbConnection;
 
@@ -36,7 +36,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                             reader["CarID"].ToString(),
                             reader["CarBrand"].ToString(),
                             reader["Category"].ToString(),
-                            "", // Image will come from API
+                            "", 
                             reader["RegistrationNo"].ToString(),
                             reader["Model"].ToString(),
                             Convert.ToInt32(reader["Years"]),
@@ -54,7 +54,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                             reader["Status"].ToString()
                         );
                         carHashTable.Insert(car.CarID, car);
-                        
+
                     }
                 }
             }
@@ -63,5 +63,88 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
         }
 
 
+        public HashTable<string, Cars> LoadUnBookedCarsFromDatabase()
+        {
+            var carHashTable = new HashTable<string, Cars>(1000);
+
+            using (SqlConnection conn = _dbConnection.GetConnection())
+            {
+                conn.Open();
+                string query = "SELECT * FROM Car WHERE Status = 'unbooked'"; 
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Cars car = new Cars(
+                            reader["CarID"].ToString(),
+                            reader["CarBrand"].ToString(),
+                            reader["Category"].ToString(),
+                            "", 
+                            reader["RegistrationNo"].ToString(),
+                            reader["Model"].ToString(),
+                            Convert.ToInt32(reader["Years"]),
+                            reader["Colour"].ToString(),
+                            reader["Features"].ToString(),
+                            reader["VehicleDescription"].ToString(),
+                            Convert.ToDecimal(reader["CarPrice"]),
+                            Convert.ToInt32(reader["SeatNo"]),
+                            reader["EngineCapacity"].ToString(),
+                            Convert.ToDecimal(reader["Ratings"]),
+                            reader["Power"].ToString(),
+                            reader["DriveTrain"].ToString(),
+                            reader["FuelType"].ToString(),
+                            reader["TransmissionType"].ToString(),
+                            reader["Status"].ToString()
+                        );
+
+                        carHashTable.Insert(car.CarID, car);
+                    }
+                }
+            }
+
+            return carHashTable;
+        }
+
+
+        public void CheckCarStatus(string carId)
+        {
+            using (SqlConnection conn = _dbConnection.GetConnection())
+            {
+                conn.Open();
+
+                string updateQuery = @"
+          ";
+
+                using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
+                {
+                    
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void ChangeCarStatus(string carId)
+        {
+            using (SqlConnection conn = _dbConnection.GetConnection())
+            {
+                conn.Open();
+
+                string updateQuery = @"
+            UPDATE Car 
+            SET Status = @Status 
+            WHERE CarID = @CarID";
+
+                using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Status", "booked");
+                    cmd.Parameters.AddWithValue("@CarID", carId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }

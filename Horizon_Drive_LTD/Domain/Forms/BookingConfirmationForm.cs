@@ -8,6 +8,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using Horizon_Drive_LTD.DataStructure;
 using System.Collections;
+using Horizon_Drive_LTD.BusinessLogic.Services;
 
 namespace Horizon_Drive_LTD
 {
@@ -231,6 +232,10 @@ namespace Horizon_Drive_LTD
             this.Close();
         }
 
+       
+
+
+
         private void buttonBookNow_Click(object sender, EventArgs e)
         {
             UserRepository userRepo = new UserRepository(new DatabaseConnection());
@@ -238,7 +243,9 @@ namespace Horizon_Drive_LTD
 
             BookingsRepository bookingRepo = new BookingsRepository(new DatabaseConnection());
             HashTable<string, Booking> bookingHashTable = new HashTable<string, Booking>(1000);
-          
+
+            CarRepository carRepo = new CarRepository(new DatabaseConnection());
+
             Guid guid = Guid.NewGuid();
             int numericPart = Math.Abs(guid.GetHashCode()) % 100000;
             string bookingId = "B" + numericPart.ToString("D5");
@@ -246,38 +253,39 @@ namespace Horizon_Drive_LTD
             DateTime date = DateTime.Now;
             string formattedDate = date.ToString("yyyy-MM-dd");
 
+            bool isAvailable = bookingRepo.IsCarAvailable(car.CarID, startDate, endDate, bookingHashTable);
 
-
-            MessageBox.Show("CustomerID being inserted: " + activeCustomerId);
-
-            if (!string.IsNullOrEmpty(activeUsername) && !string.IsNullOrEmpty(activeCustomerId))
+            if (!isAvailable)
             {
-                Booking booking = new Booking(bookingId, activeCustomerId, car.CarID, formattedDate, startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"), pickupLocation, dropoffLocation,
-                 driverIncluded, babyCarSeatIncluded, insuranceIncluded,roofRackIncluded, airportPickupIncluded);
-
-                bookingHashTable.Insert(bookingId, booking);
-
-                bookingRepo.LoadBookingsIntoDatabase(booking);
-
-                // Process the final booking
-                MessageBox.Show("Your booking has been confirmed! A confirmation email will be sent shortly.",
-                 "Booking Confirmed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("This car is already booked for the selected dates.");
             }
             else
             {
-                MessageBox.Show("No active user found.");
+                if (!string.IsNullOrEmpty(activeUsername) && !string.IsNullOrEmpty(activeCustomerId))
+                {
+                    Booking booking = new Booking(bookingId, activeCustomerId, car.CarID, formattedDate, startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"), pickupLocation, dropoffLocation,
+                     driverIncluded, babyCarSeatIncluded, insuranceIncluded, roofRackIncluded, airportPickupIncluded);
+
+                    bookingHashTable.Insert(bookingId, booking);
+
+                    bookingRepo.LoadBookingsIntoDatabase(booking);
+                    carRepo.ChangeCarStatus(car.CarID);
+
+                    // Process the final booking
+                    MessageBox.Show("Your booking has been confirmed! A confirmation email will be sent shortly.",
+                     "Booking Confirmed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    string customerEmail = userRepo.GetEmailByCustomerId(activeCustomerId); 
+                    EmailService.SendBookingConfirmationEmail(customerEmail, booking);
+                }
+                else
+                {
+                    MessageBox.Show("No active user found.");
+                }
             }
 
 
            
-
-
-        // create booking object - insert into hash table
-        // insert into bookings table
-        // image folder
-        // search
-
-        // 
 
 
         {

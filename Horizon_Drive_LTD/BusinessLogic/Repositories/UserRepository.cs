@@ -161,5 +161,34 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             }
         }
 
+        public string GetEmailByCustomerId(string customerId)
+        {
+            using (SqlConnection connection = _dbConnection.GetConnection())
+            {
+                connection.Open();
+
+                string query = @"
+            SELECT u.Email 
+            FROM [User] u
+            INNER JOIN Customer c ON u.UserId = c.UserId
+            WHERE c.CustomerId = @CustomerId";
+
+                SqlCommand cmd = new SqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@CustomerId", customerId);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return reader["Email"].ToString();
+                    }
+                    else
+                    {
+                        return null; // No email found
+                    }
+                }
+            }
+        }
+
     }
 }
