@@ -14,9 +14,10 @@ namespace Horizon_Drive_LTD
         private List<string> carImages = new List<string>();
         private int currentImageIndex = 0;
         private System.Windows.Forms.Timer slideshowTimer;
+
         private Button btnNextImage;
         private Button btnPrevImage;
-      
+
 
         public CarBookingForm(Cars selectedCar)
         {
@@ -27,7 +28,7 @@ namespace Horizon_Drive_LTD
             InitializeSlideshowControls();
 
             // Initialize slideshow images
-            //  InitializeSlideshow();
+            InitializeSlideshow();
 
             // Set default dates
             dateTimePickerStart.Value = DateTime.Now.AddDays(1);
@@ -71,31 +72,51 @@ namespace Horizon_Drive_LTD
             carDetailsPanel.Controls.Add(btnPrevImage);
             btnPrevImage.BringToFront();
 
-            // Create slideshow timer - explicitly use System.Windows.Forms.Timer
+          
             slideshowTimer = new System.Windows.Forms.Timer();
             slideshowTimer.Interval = 3000; // 3 seconds
             slideshowTimer.Tick += SlideshowTimer_Tick;
         }
 
-        
+
         private void InitializeSlideshow()
         {
-            // Clear any existing images
             carImages.Clear();
 
-            // Add the main image
-            if (!string.IsNullOrEmpty(car.ImagePath))
+            try
             {
-                carImages.Add(car.ImagePath);
-            }
+                string baseFolder = Path.Combine(Application.StartupPath, "Images", "BrowseListings");
+                string carFolderName = $"{car.CarBrand}_{car.Model}";
+                string carFolderPath = Path.Combine(baseFolder, carFolderName);
 
-            // Add any additional images from the car listing
-            if (car.AdditionalImages != null && car.AdditionalImages.Count > 0)
+                if (Directory.Exists(carFolderPath))
+                {
+                    string[] imageFiles = Directory.GetFiles(carFolderPath, "*.*")
+                                                   .Where(file => file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase)
+                                                               || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase)
+                                                               || file.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
+                                                   .ToArray();
+
+                    if (imageFiles.Length > 0)
+                    {
+                        carImages.AddRange(imageFiles);
+                    }
+                }
+
+                if (carImages.Count == 0)
+                {
+                    MessageBox.Show("No images found for this car.");
+                }
+                else
+                {
+                    LoadImage(0); // ✅ Show the first image
+                }
+            }
+            catch (Exception ex)
             {
-                carImages.AddRange(car.AdditionalImages);
+                MessageBox.Show("Slideshow initialization error: " + ex.Message);
             }
         }
-       
 
         private void LoadImage(int index)
         {
@@ -103,28 +124,27 @@ namespace Horizon_Drive_LTD
             {
                 try
                 {
-                    // Make sure index is valid
                     if (index < 0) index = carImages.Count - 1;
                     if (index >= carImages.Count) index = 0;
 
                     currentImageIndex = index;
-
-                    string imagePath = Path.Combine("Images", carImages[currentImageIndex]);
+                    string imagePath = carImages[currentImageIndex];
 
                     if (File.Exists(imagePath))
                     {
-                        pictureBoxCar.Image = Image.FromFile(imagePath);
+                        using (var tempImg = Image.FromFile(imagePath))
+                        {
+                            pictureBoxCar.Image = new Bitmap(tempImg);
+                        }
                     }
                     else
                     {
-                        // If file doesn't exist, show placeholder
                         pictureBoxCar.BackColor = Color.LightGray;
                         pictureBoxCar.Image = null;
                     }
                 }
                 catch (Exception ex)
                 {
-                    // If there's any error loading the image, use placeholder
                     pictureBoxCar.BackColor = Color.LightGray;
                     pictureBoxCar.Image = null;
                     Console.WriteLine($"Error loading image: {ex.Message}");
@@ -134,21 +154,19 @@ namespace Horizon_Drive_LTD
 
         private void SlideshowTimer_Tick(object sender, EventArgs e)
         {
-            // Show next image
             LoadImage(currentImageIndex + 1);
         }
 
         private void btnNextImage_Click(object sender, EventArgs e)
         {
-            // Show next image
             LoadImage(currentImageIndex + 1);
         }
 
         private void btnPrevImage_Click(object sender, EventArgs e)
         {
-            // Show previous image
             LoadImage(currentImageIndex - 1);
         }
+
 
         private void pictureBoxCar_Click(object sender, EventArgs e)
         {
@@ -183,6 +201,7 @@ namespace Horizon_Drive_LTD
             passengersSpec.Text = $"Passengers: {car.SeatNo}";
             powerSpec.Text = $"Power: {car.Power}";
             drivetrainSpec.Text = $"Drivetrain: {car.DriveTrain}";
+            ratingCount.Text = $"Rating: {car.Ratings} reviews)";
 
 
         }
@@ -206,7 +225,7 @@ namespace Horizon_Drive_LTD
             string pickupLocation = comboBoxPickup.SelectedItem?.ToString() ?? string.Empty;
             string dropoffLocation = comboBoxDropoff.SelectedItem?.ToString() ?? string.Empty;
 
-            
+
             // Show booking confirmation dialog
             BookingConfirmationForm confirmationForm = new BookingConfirmationForm(
                 car,
@@ -220,14 +239,14 @@ namespace Horizon_Drive_LTD
                 checkBoxRoofRack.Checked,
                 checkBoxAirportPickup.Checked
             );
-            
+
             if (confirmationForm.ShowDialog() == DialogResult.OK)
             {
                 // Booking was confirmed - you could save to database here
                 this.Close();
             }
             // If user cancelled, they stay on the booking form
-            
+
         }
 
         protected override void Dispose(bool disposing)
@@ -249,6 +268,7 @@ namespace Horizon_Drive_LTD
             base.Dispose(disposing);
         }
 
-       
+
     }
+
 }

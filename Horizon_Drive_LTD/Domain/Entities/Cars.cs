@@ -31,13 +31,7 @@ namespace Horizon_Drive_LTD.Domain.Entities
         public string TransmissionType { get; set; }
         public string Status { get; set; }
 
-        private string GenerateCarId()
-        {
-            Guid guid = Guid.NewGuid();
-            int numericPart = Math.Abs(guid.GetHashCode()) % 100000; 
-            return "C" + numericPart.ToString("D5"); 
-        }
-
+       
         public Cars(string carid , string carBrand, string category, string carImage, string registrationNo, string model, int year,
          string colour, string features, string desc, decimal price, int seat, string engine, decimal rating,
          string power, string drive, string fuel, string transmission, string status)
