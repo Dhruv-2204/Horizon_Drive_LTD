@@ -56,16 +56,7 @@ namespace Horizon_Drive_LTD
 
         private void PopulateBookingDetails()
         {
-            // Set car image
-            try
-            {
-                string imagePath = System.IO.Path.Combine("Images", car.ImagePath);
-                if (System.IO.File.Exists(imagePath))
-                {
-                    pictureBoxCar.Image = Image.FromFile(imagePath);
-                }
-            }
-            catch { /* If image load fails, just show empty */ }
+            
 
             // Set car details
             labelCarName.Text = $"{car.Make} {car.Model} {car.Year}";
