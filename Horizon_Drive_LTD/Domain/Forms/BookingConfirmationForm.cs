@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Horizon_Drive_LTD.BusinessLogic.Repositories;
-using Horizon_Drive_LTD.BusinessLogic;
-using Horizon_Drive_LTD.Domain.Entities;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
-using Horizon_Drive_LTD.DataStructure;
-using System.Collections;
 
 namespace Horizon_Drive_LTD
 {
     public partial class BookingConfirmationForm : Form
     {
-        private Cars car;
+        private CarListing car;
         private DateTime startDate;
         private DateTime endDate;
         private string pickupLocation;
@@ -29,7 +22,7 @@ namespace Horizon_Drive_LTD
         private int days;
 
         public BookingConfirmationForm(
-            Cars car,
+            CarListing car,
             DateTime startDate,
             DateTime endDate,
             string pickupLocation,
@@ -54,7 +47,7 @@ namespace Horizon_Drive_LTD
             this.airportPickupIncluded = airportPickupIncluded;
 
             // Calculate rental days
-            TimeSpan rentalPeriod = this.endDate - this.startDate;
+            TimeSpan rentalPeriod = endDate - startDate;
             days = (int)Math.Ceiling(rentalPeriod.TotalDays);
 
             // Populate the form with booking details
@@ -63,13 +56,23 @@ namespace Horizon_Drive_LTD
 
         private void PopulateBookingDetails()
         {
+            // Set car image
+            try
+            {
+                string imagePath = System.IO.Path.Combine("Images", car.ImagePath);
+                if (System.IO.File.Exists(imagePath))
+                {
+                    pictureBoxCar.Image = Image.FromFile(imagePath);
+                }
+            }
+            catch { /* If image load fails, just show empty */ }
 
             // Set car details
-            labelCarName.Text = $"{car.CarBrand} {car.Model} {car.Year}";
-            labelCarFeatures.Text = $"{car.Features}";
+            labelCarName.Text = $"{car.Make} {car.Model} {car.Year}";
+            labelCarFeatures.Text = $"4×4 • Automatic • 5 Seats";
 
             // Set star rating (example - you can adjust based on your actual data)
-            SetRating(car.Ratings);
+            SetRating(4.8);
 
             // Set rental period
             labelRentalPeriodValue.Text = $"{startDate.ToString("MMM d, yyyy")} - {endDate.ToString("MMM d, yyyy")} ({days} days)";
@@ -113,8 +116,6 @@ namespace Horizon_Drive_LTD
             CalculateAndDisplayPricing();
         }
 
-
-
         private void AddOption(ref int yOffset, string optionText)
         {
             CheckBox checkBox = new CheckBox
@@ -131,98 +132,93 @@ namespace Horizon_Drive_LTD
             yOffset += 30;
         }
 
-        private void SetRating(decimal rating)
+        private void SetRating(double rating)
         {
-            // Validate input (0-5 scale)
-            rating = Math.Max(0, Math.Min(5, rating));
-
-            // Set rating text (formatted to 1 decimal place)
-            labelRating.Text = $"{rating:0.0}/5";
+            // Set rating text
+            labelRating.Text = $"({rating}/5)";
 
             // Clear existing stars
             panelStars.Controls.Clear();
 
-            // Calculate full and partial stars
+            // Create star shapes - in a real app you would use star images
             int fullStars = (int)Math.Floor(rating);
-            bool hasHalfStar = (rating - fullStars) >= 0.3m; // Threshold for showing half star
 
-            // Create 5 stars
             for (int i = 0; i < 5; i++)
             {
-                var star = new Label
+                Label star = new Label
                 {
-                    Text = i < fullStars ? "★" : "☆",
-                    Font = new Font("Segoe UI", 14, FontStyle.Bold),
-                    Size = new Size(24, 24),
-                    Location = new Point(i * 24, 0),
-                    ForeColor = i < fullStars ? Color.Gold : Color.LightGray,
-                    Tag = i + 1 // Store star number for click events
+                    Text = "★",
+                    Font = new Font("Arial", 12),
+                    Size = new Size(20, 20),
+                    Location = new Point(i * 20, 0),
+                    ForeColor = i < fullStars ? Color.Gold : Color.LightGray
                 };
-
-                // Handle half-star case
-                if (hasHalfStar && i == fullStars)
-                {
-                    star.Text = "⯪"; // Half-star character
-                    star.ForeColor = Color.Gold;
-                }
 
                 panelStars.Controls.Add(star);
             }
-
-
         }
 
-       
         private void CalculateAndDisplayPricing()
         {
             // Calculate base price
-            decimal dailyRate = car.CarPrice;
+            decimal dailyRate = car.PricePerDay;
             decimal basePrice = dailyRate * days;
 
             // Calculate add-ons
-            decimal driverPrice = driverIncluded ? 1000 * days : 0;
-            decimal babyCarSeatPrice = babyCarSeatIncluded ? 500 : 0;
-            decimal insurancePrice = insuranceIncluded ? 1500 : 0;
-            decimal roofRackPrice = roofRackIncluded ? 400 : 0;
-            decimal airportPickupPrice = airportPickupIncluded ? 1000 : 0;
+            decimal driverPrice = driverIncluded ? 1000 * days : 0; // MUR 1000 per day
+            decimal babyCarSeatPrice = babyCarSeatIncluded ? 500 * days : 0; // MUR 500 per day
+            decimal insurancePrice = insuranceIncluded ? 1500 : 0; // MUR 1500 per rental
+            decimal roofRackPrice = roofRackIncluded ? 400 : 0; // MUR 400 per rental
+            decimal airportPickupPrice = airportPickupIncluded ? 1000 : 0; // MUR 1000 per trip
 
             // Service fee (example)
             decimal serviceFee = 1000;
 
             // Calculate total
             totalPrice = basePrice + driverPrice + babyCarSeatPrice + insurancePrice +
-                         roofRackPrice + airportPickupPrice + serviceFee;
+                        roofRackPrice + airportPickupPrice + serviceFee;
 
             // Display prices
-            labelDailyRateValue.Text = $"MUR{dailyRate}×{days}";
+            labelDailyRateValue.Text = $"MUR {dailyRate:N2} × {days} days";
 
-            // Only show selected add-ons
+            // Display add-ons in price panel
+            labelDriverService.Visible = driverIncluded;
+            labelDriverServiceValue.Visible = driverIncluded;
             if (driverIncluded)
             {
                 labelDriverServiceValue.Text = $"MUR {driverPrice:N0}";
-                labelDriverService.Visible = true;
-                labelDriverServiceValue.Visible = true;
-            }
-            else
-            {
-                labelDriverService.Visible = false;
-                labelDriverServiceValue.Visible = false;
             }
 
+            labelBabyCarSeat.Visible = babyCarSeatIncluded;
+            labelBabyCarSeatValue.Visible = babyCarSeatIncluded;
             if (babyCarSeatIncluded)
             {
                 labelBabyCarSeatValue.Text = $"MUR {babyCarSeatPrice:N0}";
-                labelBabyCarSeat.Visible = true;
-                labelBabyCarSeatValue.Visible = true;
-            }
-            else
-            {
-                labelBabyCarSeat.Visible = false;
-                labelBabyCarSeatValue.Visible = false;
             }
 
-            labelServiceFeeValue.Text = $"MUR{serviceFee:N0}";
-            labelTotalPriceValue.Text = $"MUR{totalPrice:N2}";
+            labelInsurance.Visible = insuranceIncluded;
+            labelInsuranceValue.Visible = insuranceIncluded;
+            if (insuranceIncluded)
+            {
+                labelInsuranceValue.Text = $"MUR {insurancePrice:N0}";
+            }
+
+            labelRoofRack.Visible = roofRackIncluded;
+            labelRoofRackValue.Visible = roofRackIncluded;
+            if (roofRackIncluded)
+            {
+                labelRoofRackValue.Text = $"MUR {roofRackPrice:N0}";
+            }
+
+            labelAirportPickup.Visible = airportPickupIncluded;
+            labelAirportPickupValue.Visible = airportPickupIncluded;
+            if (airportPickupIncluded)
+            {
+                labelAirportPickupValue.Text = $"MUR {airportPickupPrice:N0}";
+            }
+
+            labelServiceFeeValue.Text = $"MUR {serviceFee:N0}";
+            labelTotalPriceValue.Text = $"MUR {totalPrice:N2}";
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
@@ -233,59 +229,12 @@ namespace Horizon_Drive_LTD
 
         private void buttonBookNow_Click(object sender, EventArgs e)
         {
-            UserRepository userRepo = new UserRepository(new DatabaseConnection());
-            userRepo.GetActiveUser(out string activeUsername, out string activeCustomerId);
+            // Process the final booking
+            MessageBox.Show("Your booking has been confirmed! A confirmation email will be sent shortly.",
+                "Booking Confirmed", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            BookingsRepository bookingRepo = new BookingsRepository(new DatabaseConnection());
-            HashTable<string, Booking> bookingHashTable = new HashTable<string, Booking>(1000);
-          
-            Guid guid = Guid.NewGuid();
-            int numericPart = Math.Abs(guid.GetHashCode()) % 100000;
-            string bookingId = "B" + numericPart.ToString("D5");
-
-            DateTime date = DateTime.Now;
-            string formattedDate = date.ToString("yyyy-MM-dd");
-
-
-
-            MessageBox.Show("CustomerID being inserted: " + activeCustomerId);
-
-            if (!string.IsNullOrEmpty(activeUsername) && !string.IsNullOrEmpty(activeCustomerId))
-            {
-                Booking booking = new Booking(bookingId, activeCustomerId, car.CarID, formattedDate, startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"), pickupLocation, dropoffLocation,
-                 driverIncluded, babyCarSeatIncluded, insuranceIncluded,roofRackIncluded, airportPickupIncluded);
-
-                bookingHashTable.Insert(bookingId, booking);
-
-                bookingRepo.LoadBookingsIntoDatabase(booking);
-
-                // Process the final booking
-                MessageBox.Show("Your booking has been confirmed! A confirmation email will be sent shortly.",
-                 "Booking Confirmed", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                MessageBox.Show("No active user found.");
-            }
-
-
-           
-
-
-        // create booking object - insert into hash table
-        // insert into bookings table
-        // image folder
-        // search
-
-        // 
-
-
-        {
-
-
-                this.DialogResult = DialogResult.OK;
-                this.Close();
-            }
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
     }
 }
