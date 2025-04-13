@@ -97,7 +97,7 @@
             panelMain.Margin = new Padding(3, 4, 3, 4);
             panelMain.Name = "panelMain";
             panelMain.Padding = new Padding(23, 27, 23, 27);
-            panelMain.Size = new Size(514, 839);
+            panelMain.Size = new Size(514, 920);
             panelMain.TabIndex = 1;
             // 
             // buttonBookNow
@@ -461,7 +461,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(514, 839);
+            ClientSize = new Size(514, 920);
             Controls.Add(panelMain);
             Font = new Font("Segoe UI", 9F);
             FormBorderStyle = FormBorderStyle.FixedDialog;
