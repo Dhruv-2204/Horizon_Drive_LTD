@@ -95,10 +95,10 @@ namespace splashscreen
 
                     // Create the ActiveUser table if it does not exist
                     string createTableQuery = @"
-                                IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='ActiveUser' AND xtype='U')
-                                CREATE TABLE ActiveUser (
-                                UserName Varchar(100) NOT NULL
-                                );";
+                                                IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='ActiveUser' AND xtype='U')
+                                                CREATE TABLE ActiveUser (
+                                                UserName Varchar(100) NOT NULL
+                                                );";
                     using (SqlCommand cmd = new SqlCommand(createTableQuery, conn))
                     {
                         cmd.ExecuteNonQuery();
@@ -106,8 +106,8 @@ namespace splashscreen
 
                     // Insert the current user's username into the ActiveUser table
                     string insertUserQuery = @"
-                    INSERT INTO ActiveUser (UserName)
-                    VALUES (@UserName);";
+                                                INSERT INTO ActiveUser (UserName)
+                                                VALUES (@UserName);";
                     using (SqlCommand cmd = new SqlCommand(insertUserQuery, conn))
                     {
                         cmd.Parameters.AddWithValue("@UserName", loggedInUser.UserName);
@@ -127,7 +127,8 @@ namespace splashscreen
 
                 if (result == DialogResult.OK)
                 {
-                    Options_Personal dashboard = new Options_Personal();
+                    //Options_Personal dashboard = new Options_Personal();
+                    ListCarForm dashboard = new ListCarForm();
                     dashboard.FormClosed += (s, args) =>
                     {
                         // Delete the ActiveUser table when the dashboard is closed

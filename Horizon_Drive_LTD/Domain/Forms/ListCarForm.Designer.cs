@@ -41,9 +41,8 @@ namespace Horizon_Drive_LTD
             btnLogout = new RoundedButton();
             openFileDialogPhotos = new OpenFileDialog();
             panelHeader = new Panel();
+            UsernameLabel = new Label();
             buttonProfile = new Button();
-            buttonCart = new Button();
-            buttonFilter = new Button();
             lblListYourCar = new Label();
             panelMain = new Panel();
             panelContent = new Panel();
@@ -237,15 +236,25 @@ namespace Horizon_Drive_LTD
             // 
             // panelHeader
             // 
+            panelHeader.Controls.Add(UsernameLabel);
             panelHeader.Controls.Add(buttonProfile);
-            panelHeader.Controls.Add(buttonCart);
-            panelHeader.Controls.Add(buttonFilter);
             panelHeader.Controls.Add(lblListYourCar);
             panelHeader.Dock = DockStyle.Top;
+            panelHeader.ForeColor = Color.MidnightBlue;
             panelHeader.Location = new Point(0, 0);
             panelHeader.Name = "panelHeader";
             panelHeader.Size = new Size(1267, 123);
             panelHeader.TabIndex = 1;
+            // 
+            // UsernameLabel
+            // 
+            UsernameLabel.AutoSize = true;
+            UsernameLabel.Font = new Font("Segoe UI", 13.2000008F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
+            UsernameLabel.Location = new Point(1080, 54);
+            UsernameLabel.Name = "UsernameLabel";
+            UsernameLabel.Size = new Size(94, 31);
+            UsernameLabel.TabIndex = 5;
+            UsernameLabel.Text = "You -->";
             // 
             // buttonProfile
             // 
@@ -260,34 +269,6 @@ namespace Horizon_Drive_LTD
             buttonProfile.TabIndex = 4;
             buttonProfile.Text = "👤";
             buttonProfile.UseVisualStyleBackColor = false;
-            // 
-            // buttonCart
-            // 
-            buttonCart.AutoSize = true;
-            buttonCart.BackColor = Color.White;
-            buttonCart.FlatAppearance.BorderColor = Color.FromArgb(192, 192, 192);
-            buttonCart.FlatStyle = FlatStyle.Flat;
-            buttonCart.Font = new Font("Segoe UI Symbol", 12F);
-            buttonCart.Location = new Point(1130, 43);
-            buttonCart.Name = "buttonCart";
-            buttonCart.Size = new Size(50, 53);
-            buttonCart.TabIndex = 3;
-            buttonCart.Text = "\U0001f6d2";
-            buttonCart.UseVisualStyleBackColor = false;
-            // 
-            // buttonFilter
-            // 
-            buttonFilter.AutoSize = true;
-            buttonFilter.BackColor = Color.White;
-            buttonFilter.FlatAppearance.BorderColor = Color.FromArgb(192, 192, 192);
-            buttonFilter.FlatStyle = FlatStyle.Flat;
-            buttonFilter.Font = new Font("Segoe UI Symbol", 12F);
-            buttonFilter.Location = new Point(1070, 43);
-            buttonFilter.Name = "buttonFilter";
-            buttonFilter.Size = new Size(50, 53);
-            buttonFilter.TabIndex = 2;
-            buttonFilter.Text = "🔍";
-            buttonFilter.UseVisualStyleBackColor = false;
             // 
             // lblListYourCar
             // 
@@ -1001,8 +982,6 @@ namespace Horizon_Drive_LTD
         private OpenFileDialog openFileDialogPhotos;
         private Panel panelHeader;
         private Button buttonProfile;
-        private Button buttonCart;
-        private Button buttonFilter;
         private Label lblListYourCar;
         private Panel panelMain;
         private Panel panelContent;
@@ -1059,5 +1038,6 @@ namespace Horizon_Drive_LTD
         private Label lblPower;
         private ComboBox cboSeatNumber;
         private Label lblSeatNumber;
+        private Label UsernameLabel;
     }
 }

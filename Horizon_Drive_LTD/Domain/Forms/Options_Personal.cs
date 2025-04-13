@@ -412,7 +412,7 @@ namespace Horizon_Drive_LTD
 
                     string currentPasswordHash = string.Empty;
 
-                    // Step 1: Fetch current password hash from the database
+                    //  Fetch current password hash from the database
                     string fetchQuery = "SELECT Password FROM [User] WHERE UserName = @UserName";
                     using (SqlCommand fetchCommand = new SqlCommand(fetchQuery, sqlConnection))
                     {
@@ -422,7 +422,7 @@ namespace Horizon_Drive_LTD
                             currentPasswordHash = result.ToString();
                     }
 
-                    // Step 2: Determine whether the password needs re-hashing
+                    //  Determine whether the password needs re-hashing
                     string enteredPassword = textBoxPassword.Text.Trim();
                     string finalPassword = currentPasswordHash;
 
@@ -432,16 +432,16 @@ namespace Horizon_Drive_LTD
                         finalPassword = HashPassword(enteredPassword);
                     }
 
-                    // Step 3: Perform update
+                    //  Perform update
                     string updateQuery = @"UPDATE [User]
-                                   SET FirstName = @FirstName,
-                                       LastName = @LastName,
-                                       Email = @Email,
-                                       TelephoneNo = @TelephoneNo,
-                                       Address = @Address,
-                                       Password = @Password,
-                                       ProfilePicture = @ProfilePicture
-                                   WHERE UserName = @UserName";
+                                           SET FirstName = @FirstName,
+                                               LastName = @LastName,
+                                               Email = @Email,
+                                               TelephoneNo = @TelephoneNo,
+                                               Address = @Address,
+                                               Password = @Password,
+                                               ProfilePicture = @ProfilePicture
+                                           WHERE UserName = @UserName";
 
                     using (SqlCommand sqlCommand = new SqlCommand(updateQuery, sqlConnection))
                     {
