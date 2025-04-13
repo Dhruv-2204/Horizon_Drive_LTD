@@ -241,6 +241,7 @@ namespace Horizon_Drive_LTD
                             {
                                 cmd.Parameters.AddWithValue("@ProfilePicture", relativePath);
                                 cmd.Parameters.AddWithValue("@UserName", username);
+                                //cmd.Parameters.AddWithValue("@Password", HashPassword("M@he2025"));
                                 cmd.ExecuteNonQuery();
                             }
                         }
@@ -349,7 +350,7 @@ namespace Horizon_Drive_LTD
                                        "Email = @Email," +
                                        "TelephoneNo = @TelephoneNo," +
                                        "Address = @Address," +
-                                       "Password = @Password " +
+                                       "Password = @Password, " +
                                        "ProfilePicture = @ProfilePicture " +
                                        "WHERE UserName = @UserName";
                         using (SqlCommand sqlCommand = new SqlCommand(query, sqlConnection))
@@ -361,12 +362,14 @@ namespace Horizon_Drive_LTD
                             sqlCommand.Parameters.AddWithValue("@TelephoneNo", textBoxPhone.Text);
                             sqlCommand.Parameters.AddWithValue("@Address", textBoxAddress.Text);
                             sqlCommand.Parameters.AddWithValue("@UserName", Username_Label.Text);
-                            sqlCommand.Parameters.AddWithValue("@Password", textBoxPassword.Text);
+                            //if (sqlCommand.Parameters.AddWithValue("@Password"))
+                            sqlCommand.Parameters.AddWithValue("@Password", HashPassword(textBoxPassword.Text));
                             sqlCommand.Parameters.AddWithValue("@ProfilePicture", profileImagePath);
                             int rowsAffected = sqlCommand.ExecuteNonQuery();
                             if (rowsAffected > 0)
                             {
-                                MessageBox.Show("Profile updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show($"Profile updated successfully. {textBoxPassword.Text}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show($"{HashPassword(textBoxPassword.Text)}");
                             }
                             else
                             {
@@ -558,7 +561,7 @@ namespace Horizon_Drive_LTD
             catch (Exception ex)
             {
                 // Display an error message or log the exception
-                MessageBox.Show($"Error fetching active user: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show($"Error fetching active user: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -586,7 +589,7 @@ namespace Horizon_Drive_LTD
                         }
                     }
 
-                    string additionalDataQuery = "SELECT FirstName, LastName, Email,TelephoneNo, Address,ProfilePicture " +
+                    string additionalDataQuery = "SELECT FirstName, LastName, Email,TelephoneNo, Address,ProfilePicture,Password " +
                                                  "FROM [User], ActiveUser " +
                                                  "WHERE [User].UserName = ActiveUser.UserName;";
 
@@ -605,6 +608,10 @@ namespace Horizon_Drive_LTD
                                 textBoxEmail.Text = additionalDataReader.GetString(2);     // Email
                                 textBoxAddress.Text = additionalDataReader.GetString(4); 
                                 pictureBoxProfile.Image = Image.FromFile(additionalDataReader.GetString(5)); // ProfilePicture
+                                //textBoxPassword.Text = additionalDataReader.GetString(3); // Password
+                                textBoxPhone.Text = additionalDataReader.GetString(3); // TelephoneNo
+                                //text
+                                textBoxPassword.Text = additionalDataReader.GetString(6);
 
                             }
                             else
@@ -622,7 +629,7 @@ namespace Horizon_Drive_LTD
             catch (Exception ex)
             {
                 // Display an error message or log the exception
-                MessageBox.Show($"Error fetching active user: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show($"Error fetching active user: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }

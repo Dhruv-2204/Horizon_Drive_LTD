@@ -82,7 +82,7 @@ namespace splashscreen
             string enteredUsername = Username.Text.Trim();
             string enteredPassword = Password.Text;
 
-            enteredPassword = HashPassword(enteredPassword); // Hash the entered password
+            enteredPassword = HashPassword(enteredPassword); // Hash the entered password  // M@he2025
 
 
 
