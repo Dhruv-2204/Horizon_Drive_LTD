@@ -1,13 +1,10 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
+﻿
 using Horizon_Drive_LTD.BusinessLogic.Repositories;
 using Horizon_Drive_LTD.BusinessLogic;
 using Horizon_Drive_LTD.Domain.Entities;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+
 using Horizon_Drive_LTD.DataStructure;
-using System.Collections;
+
 using Horizon_Drive_LTD.BusinessLogic.Services;
 
 namespace Horizon_Drive_LTD
