@@ -107,7 +107,7 @@ namespace Upload_cars
 
         }
 
-        private void Upload_Customer_File_Click(object sender, EventArgs e)
+        private void Upload_File_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
@@ -135,28 +135,7 @@ namespace Upload_cars
 
         private void Upload_Car_File_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.InitialDirectory = "c:\\"; // or set to Application.StartupPath
-                openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-                openFileDialog.FilterIndex = 1;
-                openFileDialog.RestoreDirectory = true;
 
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    // Getting the file path
-                    string filePath = openFileDialog.FileName;
-
-                    // Example: Read and show contents in a ListBox or TextBox
-                    string[] lines = File.ReadAllLines(filePath);
-                    foreach (string line in lines)
-                    {
-                        DragDropListBox.Items.Add(line); // if you're using a ListBox
-                    }
-
-
-                }
-            }
         }
 
         private void Mainteance_click(object sender, EventArgs e)
@@ -165,5 +144,17 @@ namespace Upload_cars
             manage_car_Page.Show();                  // Shows the new form manage_cars
             this.Dispose();
         }
+
+        private void Save_Customer_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Save_Car_Click(object sender, EventArgs e)
+        {
+
+        }
+
+       
     }
 }

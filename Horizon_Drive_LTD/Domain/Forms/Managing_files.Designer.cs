@@ -36,10 +36,10 @@
             Upload_Cars_btn = new Button();
             pictureBox1 = new PictureBox();
             panel4 = new Panel();
-            button1 = new Button();
+            Upload_File_btn = new Button();
             Search_Users = new Label();
-            Save_button = new Button();
-            UploadButton = new Button();
+            Save_Car_btn = new Button();
+            Save_Customer_btn = new Button();
             user_background = new Panel();
             DragDropListBox = new ListBox();
             panel1.SuspendLayout();
@@ -174,41 +174,41 @@
             // 
             panel4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel4.AutoSize = true;
-            panel4.Controls.Add(button1);
+            panel4.Controls.Add(Upload_File_btn);
             panel4.Controls.Add(Search_Users);
-            panel4.Controls.Add(Save_button);
-            panel4.Controls.Add(UploadButton);
+            panel4.Controls.Add(Save_Car_btn);
+            panel4.Controls.Add(Save_Customer_btn);
             panel4.Location = new Point(308, 3);
             panel4.Margin = new Padding(4, 3, 4, 3);
             panel4.Name = "panel4";
-            panel4.Size = new Size(543, 152);
+            panel4.Size = new Size(543, 163);
             panel4.TabIndex = 9;
             // 
-            // button1
+            // Upload_File_btn
             // 
-            button1.Anchor = AnchorStyles.Top;
-            button1.BackColor = Color.FromArgb(33, 79, 95);
-            button1.Cursor = Cursors.Hand;
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatAppearance.MouseOverBackColor = Color.FromArgb(108, 129, 255);
-            button1.FlatStyle = FlatStyle.Popup;
-            button1.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = SystemColors.ControlLightLight;
-            button1.Location = new Point(14, 88);
-            button1.Margin = new Padding(4, 3, 4, 3);
-            button1.Name = "button1";
-            button1.Size = new Size(151, 44);
-            button1.TabIndex = 12;
-            button1.Text = "Upload Customer File";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += Upload_Customer_File_Click;
+            Upload_File_btn.Anchor = AnchorStyles.Top;
+            Upload_File_btn.BackColor = Color.FromArgb(33, 79, 95);
+            Upload_File_btn.Cursor = Cursors.Hand;
+            Upload_File_btn.FlatAppearance.BorderSize = 0;
+            Upload_File_btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(108, 129, 255);
+            Upload_File_btn.FlatStyle = FlatStyle.Popup;
+            Upload_File_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Upload_File_btn.ForeColor = SystemColors.ControlLightLight;
+            Upload_File_btn.Location = new Point(190, 55);
+            Upload_File_btn.Margin = new Padding(4, 3, 4, 3);
+            Upload_File_btn.Name = "Upload_File_btn";
+            Upload_File_btn.Size = new Size(166, 44);
+            Upload_File_btn.TabIndex = 12;
+            Upload_File_btn.Text = "Upload  File";
+            Upload_File_btn.UseVisualStyleBackColor = false;
+            Upload_File_btn.Click += Upload_File_Click;
             // 
             // Search_Users
             // 
             Search_Users.Anchor = AnchorStyles.None;
             Search_Users.AutoSize = true;
             Search_Users.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Search_Users.Location = new Point(165, 16);
+            Search_Users.Location = new Point(167, 7);
             Search_Users.Margin = new Padding(4, 0, 4, 0);
             Search_Users.Name = "Search_Users";
             Search_Users.Size = new Size(211, 40);
@@ -216,42 +216,42 @@
             Search_Users.Text = "UPLOAD FILES";
             Search_Users.Click += Search_Users_Click;
             // 
-            // Save_button
+            // Save_Car_btn
             // 
-            Save_button.Anchor = AnchorStyles.Top;
-            Save_button.BackColor = Color.FromArgb(33, 79, 95);
-            Save_button.Cursor = Cursors.Hand;
-            Save_button.FlatAppearance.MouseOverBackColor = Color.FromArgb(108, 129, 255);
-            Save_button.FlatStyle = FlatStyle.Popup;
-            Save_button.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Save_button.ForeColor = SystemColors.ControlLightLight;
-            Save_button.Location = new Point(370, 88);
-            Save_button.Margin = new Padding(4, 3, 4, 3);
-            Save_button.Name = "Save_button";
-            Save_button.Size = new Size(152, 44);
-            Save_button.TabIndex = 10;
-            Save_button.Text = "Save File To Database";
-            Save_button.UseVisualStyleBackColor = false;
-            Save_button.Click += Save_button_clicked;
+            Save_Car_btn.Anchor = AnchorStyles.Top;
+            Save_Car_btn.BackColor = Color.FromArgb(33, 79, 95);
+            Save_Car_btn.Cursor = Cursors.Hand;
+            Save_Car_btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(108, 129, 255);
+            Save_Car_btn.FlatStyle = FlatStyle.Popup;
+            Save_Car_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Save_Car_btn.ForeColor = SystemColors.ControlLightLight;
+            Save_Car_btn.Location = new Point(330, 105);
+            Save_Car_btn.Margin = new Padding(4, 3, 4, 3);
+            Save_Car_btn.Name = "Save_Car_btn";
+            Save_Car_btn.Size = new Size(209, 44);
+            Save_Car_btn.TabIndex = 10;
+            Save_Car_btn.Text = "Save Car File To Database";
+            Save_Car_btn.UseVisualStyleBackColor = false;
+            Save_Car_btn.Click += Save_Car_Click;
             // 
-            // UploadButton
+            // Save_Customer_btn
             // 
-            UploadButton.Anchor = AnchorStyles.Top;
-            UploadButton.BackColor = Color.FromArgb(33, 79, 95);
-            UploadButton.Cursor = Cursors.Hand;
-            UploadButton.FlatAppearance.BorderSize = 0;
-            UploadButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(108, 129, 255);
-            UploadButton.FlatStyle = FlatStyle.Popup;
-            UploadButton.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            UploadButton.ForeColor = SystemColors.ControlLightLight;
-            UploadButton.Location = new Point(190, 88);
-            UploadButton.Margin = new Padding(4, 3, 4, 3);
-            UploadButton.Name = "UploadButton";
-            UploadButton.Size = new Size(150, 44);
-            UploadButton.TabIndex = 11;
-            UploadButton.Text = "Upload Car File";
-            UploadButton.UseVisualStyleBackColor = false;
-            UploadButton.Click += Upload_Car_File_Click;
+            Save_Customer_btn.Anchor = AnchorStyles.Top;
+            Save_Customer_btn.BackColor = Color.FromArgb(33, 79, 95);
+            Save_Customer_btn.Cursor = Cursors.Hand;
+            Save_Customer_btn.FlatAppearance.BorderSize = 0;
+            Save_Customer_btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(108, 129, 255);
+            Save_Customer_btn.FlatStyle = FlatStyle.Popup;
+            Save_Customer_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Save_Customer_btn.ForeColor = SystemColors.ControlLightLight;
+            Save_Customer_btn.Location = new Point(4, 105);
+            Save_Customer_btn.Margin = new Padding(4, 3, 4, 3);
+            Save_Customer_btn.Name = "Save_Customer_btn";
+            Save_Customer_btn.Size = new Size(213, 44);
+            Save_Customer_btn.TabIndex = 11;
+            Save_Customer_btn.Text = "Save Customer File To Database";
+            Save_Customer_btn.UseVisualStyleBackColor = false;
+            Save_Customer_btn.Click += Save_Customer_Click;
             // 
             // user_background
             // 
@@ -308,10 +308,10 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label Search_Users;
-        private System.Windows.Forms.Button Save_button;
+        private System.Windows.Forms.Button Save_Car_btn;
         private System.Windows.Forms.Panel user_background;
-        private System.Windows.Forms.Button UploadButton;
-        private Button button1;
+        private System.Windows.Forms.Button Save_Customer_btn;
+        private Button Upload_File_btn;
         private Button Maintenance_btn;
         private ListBox DragDropListBox;
     }
