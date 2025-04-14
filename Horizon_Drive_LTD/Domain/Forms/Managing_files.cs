@@ -105,7 +105,7 @@ namespace Upload_cars
                         ["CarImagePath"] = car.CarImagePath,
                         ["RegistrationNo"] = car.RegistrationNo,
                         ["Model"] = car.Model,
-                        ["Year"] = car.Year,
+                        ["Years"] = car.Year,
                         ["Colour"] = car.Colour,
                         ["Features"] = car.Features,
                         ["VehicleDescription"] = car.VehicleDescription,
@@ -135,7 +135,7 @@ namespace Upload_cars
 
         private void SaveCarToDatabase(Hashtable data)
         {
-            string connStr = "Data Source=LAPTOP-6P9HT3IB\\SQLEXPRESS;Initial Catalog=CarDBMS;Integrated Security=True;Trust Server Certificate=True";
+            string connStr = "Data Source=LAPTOP-VKDU1VH3\\SQLEXPRESS;Initial Catalog=Car_DBMS;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
 
             try
             {
@@ -144,9 +144,9 @@ namespace Upload_cars
                     conn.Open();
 
                     string query = @"INSERT INTO Car 
-                (CarID, UserID, CarBrand, Category, CarImagePath, RegistrationNo, Model, Year, Colour, Features, VehicleDescription, CarPrice, SeatNo, EngineCapacity, Ratings, Power, DriveTrain, FuelType, TransmissionType, Status, AvailabilityStart, AvailabilityEnd) 
+                (CarID, UserID, CarBrand, Category, CarImagePath, RegistrationNo, Model, Years, Colour, Features, VehicleDescription, CarPrice, SeatNo, EngineCapacity, Ratings, Power, DriveTrain, FuelType, TransmissionType, Status, AvailabilityStart, AvailabilityEnd) 
                 VALUES 
-                (@carid, @userid, @carBrand, @category, @carImage, @registrationNo, @model, @year, @colour, @features, @desc, @price, @seat, @engine, @rating, @power, @drive, @fuel, @transmission, @status, @availabilityStart, @availabilityEnd)";
+                (@carid, @userid, @carBrand, @category, @carImage, @registrationNo, @model, @years, @colour, @features, @desc, @price, @seat, @engine, @rating, @power, @drive, @fuel, @transmission, @status, @availabilityStart, @availabilityEnd)";
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
@@ -157,7 +157,7 @@ namespace Upload_cars
                         cmd.Parameters.AddWithValue("@carImage", data["CarImagePath"]);
                         cmd.Parameters.AddWithValue("@registrationNo", data["RegistrationNo"]);
                         cmd.Parameters.AddWithValue("@model", data["Model"]);
-                        cmd.Parameters.AddWithValue("@year", data["Year"]);
+                        cmd.Parameters.AddWithValue("@years", data["Years"]);
                         cmd.Parameters.AddWithValue("@colour", data["Colour"]);
                         cmd.Parameters.AddWithValue("@features", data["Features"]);
                         cmd.Parameters.AddWithValue("@desc", data["VehicleDescription"]);
