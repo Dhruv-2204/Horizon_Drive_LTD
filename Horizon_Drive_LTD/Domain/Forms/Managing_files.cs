@@ -133,10 +133,7 @@ namespace Upload_cars
             }
         }
 
-        private void Upload_Car_File_Click(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private void Mainteance_click(object sender, EventArgs e)
         {
@@ -150,11 +147,9 @@ namespace Upload_cars
 
         }
 
-        private void Save_Car_Click(object sender, EventArgs e)
+        private void Save_File_Click(object sender, EventArgs e)
         {
 
         }
-
-       
     }
 }
