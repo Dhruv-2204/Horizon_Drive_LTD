@@ -189,7 +189,8 @@
             // 
             // pictureBoxLogo
             // 
-            pictureBoxLogo.Image = Properties.Resources.Logo;
+            // Load the logo image from the Images folder
+            pictureBoxLogo.Image = Image.FromFile(Path.Combine("Images", "Logo.png"));
             pictureBoxLogo.Location = new Point(54, 59);
             pictureBoxLogo.Margin = new Padding(3, 4, 3, 4);
             pictureBoxLogo.Name = "pictureBoxLogo";

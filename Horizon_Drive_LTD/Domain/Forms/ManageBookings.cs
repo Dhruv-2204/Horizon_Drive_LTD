@@ -19,11 +19,41 @@ namespace Horizon_Drive_LTD
             this.ClientSize = new Size(1600, 900);
             this.MinimumSize = new Size(1000, 700);
 
+            // Display the username
+            DisplayUsername();
+
             // Load sample booking data
             LoadBookingData();
 
             // Set the default filter to Upcoming
             ApplyFilter("Upcoming");
+        }
+
+        // Method to fetch and display username
+        private void DisplayUsername()
+        {
+            string username = GetLoggedInUsername();
+
+            if (string.IsNullOrEmpty(username))
+            {
+                labelUsername.Text = "User not logged in";
+                // style the label differently (RED) for non-logged in users
+                labelUsername.ForeColor = Color.Red;
+            }
+            else
+            {
+                labelUsername.Text = username;
+                labelUsername.ForeColor = Color.FromArgb(15, 30, 45); // Colour of logged in users
+            }
+        }
+
+
+        // Method to get the username from your database
+        private string GetLoggedInUsername()
+        {
+            // Replace this with database fetch logic
+            // For testing purposes, return null to show "not logged in"
+            return null;
         }
 
         private void LoadBookingData()
@@ -175,13 +205,13 @@ namespace Horizon_Drive_LTD
                 Location = new Point(70, 80)
             };
 
-            // Drop-off details
+            // Drop-off details - ADJUSTED POSITIONS
             Label lblDropOffTitle = new Label
             {
                 Text = "Drop-off:",
                 Font = new Font("Segoe UI", 9, FontStyle.Bold),
                 AutoSize = true,
-                Location = new Point(280, 60)
+                Location = new Point(280, 60) 
             };
 
             Label lblDropOffLocation = new Label
@@ -189,7 +219,7 @@ namespace Horizon_Drive_LTD
                 Text = booking.DropoffLocation,
                 Font = new Font("Segoe UI", 9),
                 AutoSize = true,
-                Location = new Point(350, 60)
+                Location = new Point(352, 60) 
             };
 
             Label lblDropOffDate = new Label
@@ -197,7 +227,7 @@ namespace Horizon_Drive_LTD
                 Text = booking.DropoffDate.ToString("MMM d, yyyy"),
                 Font = new Font("Segoe UI", 9),
                 AutoSize = true,
-                Location = new Point(350, 80)
+                Location = new Point(352, 80) // Adjusted to match the location label
             };
 
             // Status label
@@ -342,7 +372,18 @@ namespace Horizon_Drive_LTD
                                "Log Out",
                                MessageBoxButtons.OK,
                                MessageBoxIcon.Information);
+
+                // After logout, update the username display
+                DisplayUsername();
             }
+        }
+
+        private void buttonProfile_Click(object sender, EventArgs e)
+        {
+            // Open the Options_Personal form
+            Options_Personal optionsPersonalForm = new Options_Personal();
+            optionsPersonalForm.Show();
+            this.Hide();
         }
 
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
