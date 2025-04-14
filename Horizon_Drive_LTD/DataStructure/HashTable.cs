@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace Horizon_Drive_LTD.DataStructure
 {
-   public class HashTable<TKey, TValue>
+    // This is an implementation of a hash table using separate chaining with linked lists.
+    public class HashTable<TKey, TValue>
     {
         private int _capacity;
         private int _size;
         private float _loadFactor;
         private LinkedList<KeyValuePair<TKey, TValue>>[] _buckets;
 
+        // Constructor to initialize the hash table with a specified capacity and load factor
         public HashTable(int capacity, float loadFactor = 0.75f)
         {
             if (capacity <= 0)
@@ -33,7 +35,7 @@ namespace Horizon_Drive_LTD.DataStructure
             double fractionalPart = product - Math.Floor(product);
             return (int)(_capacity * fractionalPart);
         }
-
+        // This method is used to insert a key-value pair into the hash table.
         public void Insert(TKey key, TValue value)
         {
             if (ShouldResize())
@@ -54,7 +56,7 @@ namespace Horizon_Drive_LTD.DataStructure
                 bucket.Remove(existingNode);
 
                 // Add a new key-value pair with the updated value
-                bucket.AddLast(new KeyValuePair<TKey, TValue>(key, value));   // It was immutable before that (struct)
+                bucket.AddLast(new KeyValuePair<TKey, TValue>(key, value));  
             }
             else
             {
@@ -64,7 +66,7 @@ namespace Horizon_Drive_LTD.DataStructure
             }
 
         }
-
+        // This method is used to search for a value by its key in the hash table.
         public TValue Search(TKey key)
         {
             int index = GetHash(key);
@@ -100,6 +102,24 @@ namespace Horizon_Drive_LTD.DataStructure
 
             return false; // Key not found
         }
+        // This method checks if the hash table contains a specific key.
+        public bool ContainsKey(TKey key)
+        {
+            int index = GetHash(key);
+
+            if (_buckets[index] != null)
+            {
+                foreach (var kvp in _buckets[index])
+                {
+                    if (kvp.Key.Equals(key))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
 
         //public void GetAllItems()
         //{
@@ -121,6 +141,7 @@ namespace Horizon_Drive_LTD.DataStructure
         //    }
         //}
 
+        // This method retrieves all key-value pairs in the hash table.
         public IEnumerable<KeyValuePair<TKey, TValue>> GetAllItems()
         {
             for (int i = 0; i < _capacity; i++)
@@ -134,7 +155,7 @@ namespace Horizon_Drive_LTD.DataStructure
                 }
             }
         }
-
+        // This method retrieves all values in the hash table.
         public IEnumerable<TValue> Values()
         {
             for (int i = 0; i < _capacity; i++)
@@ -148,7 +169,23 @@ namespace Horizon_Drive_LTD.DataStructure
                 }
             }
         }
+        // This method retrieves all keys in the hash table.
+        public IEnumerable<TKey> Keys()
+        {
+            for (int i = 0; i < _capacity; i++)
+            {
+                if (_buckets[i] != null)
+                {
+                    foreach (var kvp in _buckets[i])
+                    {
+                        yield return kvp.Key;
+                    }
+                }
+            }
 
+
+        }
+        // This method resizes the hash table when the load factor exceeds the threshold.
         private void Resize()
         {
             int newCapacity = GetNextPrime(_capacity * 2);

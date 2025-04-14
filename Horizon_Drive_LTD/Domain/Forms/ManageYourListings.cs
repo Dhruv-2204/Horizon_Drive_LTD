@@ -2,37 +2,28 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Common;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using Horizon_Drive_LTD.BusinessLogic;
+using Horizon_Drive_LTD.BusinessLogic.Repositories;
+using Horizon_Drive_LTD.BusinessLogic.Services;
+using Horizon_Drive_LTD.DataStructure;
+using Horizon_Drive_LTD.Domain.Entities;
+using Microsoft.Data.SqlClient;
 
 namespace Horizon_Drive_LTD
 {
     public partial class ManageYourListings : Form
     {
-        // TransactionHistory class to store transaction data
-        public class TransactionHistory
-        {
-            public int Id { get; set; }
-            public int CarId { get; set; }
-            public DateTime StartDate { get; set; }
-            public DateTime EndDate { get; set; }
-            public decimal RentalPrice { get; set; }
-            public string Status { get; set; }
-        }
-
-        // Model class for car listings
-        public class CarListing
-        {
-            public int Id { get; set; }
-            public string Title { get; set; }
-            public decimal Price { get; set; }
-            public string Status { get; set; }
-            public string[] Features { get; set; }
-            public string ImagePath { get; set; }
-        }
+        private bool isClosing = false;
+        DatabaseConnection _dbConnection = new DatabaseConnection();
+        private HashTable<string, Cars> carHashTable;
+        private HashTable<string, Booking> bookingHashTable;
 
         public ManageYourListings()
         {
@@ -42,63 +33,53 @@ namespace Horizon_Drive_LTD
             this.ClientSize = new Size(1600, 900);
             this.MinimumSize = new Size(1000, 700);
 
+            string userId = CurrentUser.CurrentUserId;
+
             // Load data dynamically
             LoadCarListingsFromDatabase();
-            LoadTransactionsFromDatabase();
+
+
+           // LoadTransactionsFromDatabase();
 
             // Initially hide the "no more cars" label since we'll show it conditionally
             labelNoMoreListings.Visible = false;
+
+           
         }
 
-        // Method to load car listings from database
         private void LoadCarListingsFromDatabase()
         {
-            // Clear existing static car listings
-            if (panelContent.Controls.Contains(panelCarListing1))
-                panelContent.Controls.Remove(panelCarListing1);
+            // Clear existing dynamic car listing panels
+            panelContent.Controls.Clear();
 
-            if (panelContent.Controls.Contains(panelCarListing2))
-                panelContent.Controls.Remove(panelCarListing2);
+            CarRepository carRepo = new CarRepository(new DatabaseConnection());
+            carHashTable = carRepo.LoadCarsFromDatabase(); 
 
-            // In a real implementation, you would fetch data from the database
-            // For example:
-            // var carListings = _carListingService.GetCarListingsByUserId(currentUserId);
+          
+            string userid = CurrentUser.CurrentUserId;
 
-            // For demo purposes, we'll create a sample list
-            var sampleCarListings = new List<CarListing>
+            int verticalPosition = 31;
+            int listingsCount = 0;
+            int reservedCount = 0;
+
+            foreach (var kvp in carHashTable.GetAllItems())
             {
-                new CarListing {
-                    Id = 1,
-                    Title = "Ford Raptor (2023)",
-                    Price = 15000,
-                    Status = "Active",
-                    Features = new[] { "GPS", "Bluetooth", "Leather Seat", "Sunroof" },
-                    ImagePath = "Fordraptor.jpg"
-                },
-                new CarListing {
-                    Id = 2,
-                    Title = "BMW XM (2025)",
-                    Price = 30000,
-                    Status = "Reserved",
-                    Features = new[] { "GPS", "Bluetooth", "Leather Seat", "Sunroof" },
-                    ImagePath = "bmw_xm.jpg"
+                Cars car = kvp.Value;
+
+                if (car.UserID == userid)
+                {
+                    Panel carPanel = CreateCarListingPanelFromCar(car, verticalPosition);
+                    panelContent.Controls.Add(carPanel);
+                    verticalPosition += carPanel.Height + 10;
+
+                    listingsCount++;
+                    if (car.Status == "booked")
+                        reservedCount++;
                 }
-                // Add more sample cars as needed
-            };
-
-            // Keep track of vertical position for dynamic placement
-            int verticalPosition = 31; // Initial padding
-
-            // Create and add car listing panels dynamically
-            foreach (var car in sampleCarListings)
-            {
-                Panel carPanel = CreateCarListingPanel(car, verticalPosition);
-                panelContent.Controls.Add(carPanel);
-                verticalPosition += carPanel.Height + 10; // Add some spacing between panels
             }
 
-            // Show "no more listings" message if no cars are available
-            if (sampleCarListings.Count == 0)
+            // Show "no more listings" message
+            if (listingsCount == 0)
             {
                 labelNoMoreListings.Location = new Point(27, verticalPosition);
                 labelNoMoreListings.Visible = true;
@@ -108,24 +89,22 @@ namespace Horizon_Drive_LTD
                 labelNoMoreListings.Visible = false;
             }
 
-            // Update the transaction history section starting position
             labelTransactionHistory.Location = new Point(27, verticalPosition + 20);
-
-            // Update counts in the header
-            lblListingsCount.Text = sampleCarListings.Count.ToString();
-            lblReservationsCount.Text = sampleCarListings.Count(c => c.Status == "Reserved").ToString();
+            lblListingsCount.Text = listingsCount.ToString();
+            lblReservationsCount.Text = reservedCount.ToString();
         }
-
+       
         // Method to create a car listing panel
-        private Panel CreateCarListingPanel(CarListing car, int yPosition)
+      
+        private Panel CreateCarListingPanelFromCar(Cars car, int yPosition)
         {
             // Create main panel
             Panel panel = new Panel
             {
                 BorderStyle = BorderStyle.FixedSingle,
                 Location = new Point(27, yPosition),
-                Size = new Size(1055, 133),
-                Name = $"panelCarListing{car.Id}"
+                Size = new Size(1100, 133),
+                Name = $"panelCarListing{car.CarID}"
             };
 
             // Create and add car image
@@ -133,23 +112,52 @@ namespace Horizon_Drive_LTD
             {
                 BackColor = Color.LightGray,
                 Location = new Point(11, 13),
-                Size = new Size(126, 107),
+                Size = new Size(126, 110),
                 SizeMode = PictureBoxSizeMode.Zoom,
-                Name = $"pictureBoxCar{car.Id}"
+                Name = $"pictureBoxCar{car.CarID}"
             };
 
-            // Try to load the image if it exists
             try
             {
-                if (File.Exists(Path.Combine("Images", car.ImagePath)))
+
+                string brand = car.CarBrand.Replace(" ", "");
+                string model = car.Model.Replace(" ", "");
+                // Navigate to the specific folder for the car
+                string carFolder = Path.Combine(Application.StartupPath, "Images", "BrowseListings", $"{brand}_{model}");
+
+                // Make sure the folder exists
+                if (Directory.Exists(carFolder))
                 {
-                    pictureBox.Image = Image.FromFile(Path.Combine("Images", car.ImagePath));
+                    // Get all valid image files inside the folder
+                    string[] matchingFiles = Directory.GetFiles(carFolder, "*.*")
+                        .Where(file => file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase)
+                                    || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase)
+                                    || file.EndsWith(".png", StringComparison.OrdinalIgnoreCase)
+                                    || file.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase))
+                        .ToArray();
+
+                    if (matchingFiles.Length > 0)
+                    {
+                        pictureBox.Image = Image.FromFile(matchingFiles[0]);
+                    }
+                    else
+                    {
+                        pictureBox.BackColor = Color.LightGray;
+                        MessageBox.Show("No images found in folder: " + carFolder);
+                    }
+                }
+                else
+                {
+                    pictureBox.BackColor = Color.LightGray;
+                    MessageBox.Show("Folder not found: " + carFolder);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error loading image: {ex.Message}");
+                MessageBox.Show("Image load error: " + ex.Message);
+                pictureBox.BackColor = Color.LightGray;
             }
+
 
             // Create title label
             Label titleLabel = new Label
@@ -157,8 +165,8 @@ namespace Horizon_Drive_LTD
                 Font = new Font("Segoe UI", 10F, FontStyle.Bold),
                 Location = new Point(149, 13),
                 Size = new Size(343, 27),
-                Text = car.Title,
-                Name = $"lblCar{car.Id}Title"
+                Text = $"{car.CarBrand} {car.Model} {car.Year}",
+                Name = $"lblCar{car.CarID}Title"
             };
 
             // Create price label
@@ -167,20 +175,20 @@ namespace Horizon_Drive_LTD
                 Font = new Font("Segoe UI", 9F),
                 Location = new Point(149, 47),
                 Size = new Size(343, 27),
-                Text = $"MUR {car.Price} / day",
-                Name = $"lblCar{car.Id}Price"
+                Text = $"MUR {car.CarPrice} per day",
+                Name = $"lblCar{car.CarID}Price"
             };
 
             // Create status label
             Label statusLabel = new Label
             {
-                BackColor = car.Status == "Active" ? Color.LimeGreen : Color.LightBlue,
+                BackColor = car.Status == "unbooked" ? Color.LimeGreen : Color.LightBlue,
                 Font = new Font("Segoe UI", 9F),
                 Location = new Point(941, 13),
-                Size = new Size(91, 27),
+                Size = new Size(130, 27),
                 Text = car.Status,
                 TextAlign = ContentAlignment.MiddleCenter,
-                Name = $"lblCar{car.Id}Status"
+                Name = $"lblCar{car.CarID}Status"
             };
 
             // Create features panel
@@ -188,52 +196,55 @@ namespace Horizon_Drive_LTD
             {
                 Location = new Point(149, 80),
                 Size = new Size(343, 40),
-                Name = $"panelCar{car.Id}Features"
+                Name = $"panelCar{car.CarID}Features"
             };
 
             // Add feature labels to the panel
             int featureX = 0;
-            for (int i = 0; i < car.Features.Length && i < 4; i++)
-            {
-                Label featureLabel = new Label
-                {
-                    AutoSize = true,
-                    BackColor = Color.LightGray,
-                    BorderStyle = BorderStyle.FixedSingle,
-                    Font = new Font("Segoe UI", 8F),
-                    Location = new Point(featureX, 7),
-                    Padding = new Padding(6, 3, 6, 3),
-                    Text = car.Features[i],
-                    Name = $"lblCar{car.Id}Feature{i + 1}"
-                };
 
-                featuresPanel.Controls.Add(featureLabel);
-                featureX += featureLabel.Width + 6;
-            }
-
-            // Create delete button
-            Button deleteButton = new Button
+            Label featureLabel = new Label
             {
-                BackColor = Color.OrangeRed,
-                FlatStyle = FlatStyle.Flat,
-                ForeColor = Color.White,
-                Location = new Point(941, 80),
-                Size = new Size(91, 40),
-                Text = "Delete",
-                Name = $"btnDeleteCar{car.Id}"
+                AutoSize = true,
+                BackColor = Color.LightGray,
+                BorderStyle = BorderStyle.FixedSingle,
+                Font = new Font("Segoe UI", 8F),
+                Location = new Point(featureX, 7),
+                Padding = new Padding(6, 3, 6, 3),
+                Text = car.Features,
+                Name = $"lblCar{car.CarID}Feature"
             };
 
-            // Add event handler to the delete button
-            deleteButton.Click += BtnDelete_Click;
-            deleteButton.FlatAppearance.BorderSize = 0;
+            featuresPanel.Controls.Add(featureLabel);
 
+            if (car.Status == "unbooked")
+            {
+
+                // Create delete button
+                Button deleteButton = new Button
+                {
+                    BackColor = Color.OrangeRed,
+                    FlatStyle = FlatStyle.Flat,
+                    ForeColor = Color.White,
+                    Location = new Point(941, 80),
+                    Size = new Size(130, 40),
+                    Text = "Delete",
+                    Name = $"btnDeleteCar{car.CarID}"
+                };
+
+                // Add event handler to the delete button
+                deleteButton.Click += BtnDelete_Click;
+                deleteButton.FlatAppearance.BorderSize = 0;
+                panel.Controls.Add(deleteButton);
+            }
+ 
+          
             // Add all controls to the panel
             panel.Controls.Add(pictureBox);
             panel.Controls.Add(titleLabel);
             panel.Controls.Add(priceLabel);
             panel.Controls.Add(statusLabel);
             panel.Controls.Add(featuresPanel);
-            panel.Controls.Add(deleteButton);
+           
 
             return panel;
         }
@@ -248,34 +259,47 @@ namespace Horizon_Drive_LTD
             if (panelContent.Controls.Contains(panelTransaction2))
                 panelContent.Controls.Remove(panelTransaction2);
 
-            // In a real implementation, you would fetch data from the database
-            // For example:
-            // var transactions = _transactionService.GetTransactionsByUserId(currentUserId);
+            string currentuserid = CurrentUser.CurrentUserId;
 
-            // For demo purposes, we'll create a sample list
-            var sampleTransactions = new List<TransactionHistory>
+            BookingsRepository bookingRepo = new BookingsRepository(new DatabaseConnection());
+            bookingHashTable = bookingRepo.LoadBookingsFromDatabase();
+
+            CarRepository carRepo = new CarRepository(new DatabaseConnection());
+            List<int> userCarIds = carRepo.GetCarIdsByUserId(currentuserid);
+
+            int verticalPosition = 31; 
+            int listingsCount = 0;
+            int reservedCount = 0;
+
+            /*
+
+            foreach (var kvp in bookingHashTable.GetAllItems())
             {
-                new TransactionHistory {
-                    Id = 1,
-                    CarId = 1,
-                    StartDate = new DateTime(2025, 3, 15),
-                    EndDate = new DateTime(2025, 6, 15),
-                    RentalPrice = 15000,
-                    Status = "Finished"
-                },
-                new TransactionHistory {
-                    Id = 2,
-                    CarId = 2,
-                    StartDate = new DateTime(2025, 2, 15),
-                    EndDate = new DateTime(2025, 2, 22),
-                    RentalPrice = 30000,
-                    Status = "Finished"
+                Booking booking = kvp.Value;
+
+                if (userCarIds.Contains(booking.CarID))
+                {
+                    if (userCarIds.Contains(int.Parse(booking.CarID)))
+                    Panel carPanel = CreateTransactionPanel(booking, verticalPosition);
+                    panelContent.Controls.Add(carPanel);
+                    verticalPosition += carPanel.Height + 10;
+
+                    listingsCount++;
+
+                    // Check status from carHashTable using booking.CarID
+                    if (carHashTable.ContainsKey(booking.CarID))
+                    {
+                        Car car = carHashTable.Search(booking.CarID);
+                        if (car.Status == "booked")
+                            reservedCount++;
+                    }
                 }
-                // Add more sample transactions as needed
-            };
+            }
+            */
+            /*
 
             // Find the position after the transaction history label
-            int verticalPosition = labelTransactionHistory.Location.Y + labelTransactionHistory.Height + 20;
+            verticalPosition = labelTransactionHistory.Location.Y + labelTransactionHistory.Height + 20;
 
             // Create and add transaction panels dynamically
             foreach (var transaction in sampleTransactions)
@@ -302,7 +326,7 @@ namespace Horizon_Drive_LTD
         }
 
         // Method to create a transaction panel
-        private Panel CreateTransactionPanel(TransactionHistory transaction, int yPosition)
+        private Panel CreateTransactionPanel(Booking booking, int yPosition)
         {
             // Create main panel
             Panel panel = new Panel
@@ -310,7 +334,7 @@ namespace Horizon_Drive_LTD
                 BorderStyle = BorderStyle.FixedSingle,
                 Location = new Point(27, yPosition),
                 Size = new Size(1057, 159),
-                Name = $"panelTransaction{transaction.Id}"
+                Name = $"panelTransaction{booking.CarID}"
             };
 
             // Create and add car image
@@ -410,89 +434,93 @@ namespace Horizon_Drive_LTD
 
             return panel;
         }
-
-        #region Event Handlers
+            */
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            // Extract ID from button name (format: btnDeleteCar{ID})
             string buttonName = btn.Name;
-            int carId = int.Parse(buttonName.Substring("btnDeleteCar".Length));
+            string carId = buttonName.Substring("btnDeleteCar".Length);
 
             DialogResult result = MessageBox.Show(
-                "Are you sure you want to delete this listing?",
+                "Are you sure you want to delete this car listing?",
                 "Confirm Deletion",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
-                // In a real application, you would remove the car from a database
-                // For this demo, just hide the panel
-                Panel panelToHide = (Panel)panelContent.Controls.Find($"panelCarListing{carId}", true)[0];
-                panelToHide.Visible = false;
-
-                // Count visible car panels
-                int visibleCars = 0;
-                foreach (Control control in panelContent.Controls)
+                try
                 {
-                    if (control is Panel panel && panel.Name.StartsWith("panelCarListing") && panel.Visible)
+                    //Remove from hash table
+                    if (carHashTable.ContainsKey(carId))
                     {
-                        visibleCars++;
+                        carHashTable.Remove(carId);
+                    }
+
+                    // Remove from Car table
+                    CarRepository carRepo = new CarRepository(new DatabaseConnection());
+                    carRepo.DeleteCarById(carId);
+
+                    //Remove the panel from UI
+                    Panel panelToHide = (Panel)panelContent.Controls.Find($"panelCarListing{carId}", true)[0];
+                    panelContent.Controls.Remove(panelToHide);
+                    panelToHide.Dispose();
+
+                    // Recalculate visible cars
+                    int visibleCars = panelContent.Controls
+                        .OfType<Panel>()
+                        .Count(p => p.Name.StartsWith("panelCarListing") && p.Visible);
+
+                    lblListingsCount.Text = visibleCars.ToString();
+
+                    // Update reservation count if needed
+                    Label statusLabel = panelToHide.Controls.Find($"lblCar{carId}Status", true).FirstOrDefault() as Label;
+                    if (statusLabel != null && statusLabel.Text == "Reserved")
+                    {
+                        int currentReservations = int.Parse(lblReservationsCount.Text);
+                        lblReservationsCount.Text = (currentReservations - 1).ToString();
+                    }
+
+                    // Show "no listings" message
+                    labelNoMoreListings.Visible = (visibleCars == 0);
+                    if (labelNoMoreListings.Visible)
+                        labelNoMoreListings.Location = new Point(27, 31);
+
+                    // Reposition transaction history
+                    int newTransactionY = 31;
+                    foreach (Control control in panelContent.Controls)
+                    {
+                        if (control is Panel panel && panel.Name.StartsWith("panelCarListing") && panel.Visible)
+                        {
+                            newTransactionY = Math.Max(newTransactionY, panel.Location.Y + panel.Height + 10);
+                        }
+                    }
+
+                    if (visibleCars == 0)
+                        newTransactionY += labelNoMoreListings.Height + 10;
+
+                    labelTransactionHistory.Location = new Point(27, newTransactionY);
+
+                    // Reposition transaction panels
+                    int transactionY = labelTransactionHistory.Location.Y + labelTransactionHistory.Height + 20;
+                    foreach (Control control in panelContent.Controls)
+                    {
+                        if (control is Panel panel && panel.Name.StartsWith("panelTransaction") && panel.Visible)
+                        {
+                            panel.Location = new Point(27, transactionY);
+                            transactionY += panel.Height + 10;
+                        }
+                    }
+
+                    //  Reposition "no history" label
+                    if (labelNoMoreHistory.Visible)
+                    {
+                        labelNoMoreHistory.Location = new Point(27, transactionY);
                     }
                 }
-
-                // Update the listing count
-                lblListingsCount.Text = visibleCars.ToString();
-
-                // If the car was reserved, update reservation count
-                Label statusLabel = (Label)panelToHide.Controls.Find($"lblCar{carId}Status", true)[0];
-                if (statusLabel.Text == "Reserved")
+                catch (Exception ex)
                 {
-                    int currentReservations = int.Parse(lblReservationsCount.Text);
-                    lblReservationsCount.Text = (currentReservations - 1).ToString();
-                }
-
-                // Show "no more cars" message if all are hidden
-                if (visibleCars == 0)
-                {
-                    labelNoMoreListings.Visible = true;
-                    // Position it correctly
-                    labelNoMoreListings.Location = new Point(27, 31);
-                }
-
-                // Reposition the transaction history section
-                int newTransactionY = 31;
-                foreach (Control control in panelContent.Controls)
-                {
-                    if (control is Panel panel && panel.Name.StartsWith("panelCarListing") && panel.Visible)
-                    {
-                        newTransactionY = Math.Max(newTransactionY, panel.Location.Y + panel.Height + 10);
-                    }
-                }
-
-                if (visibleCars == 0)
-                {
-                    newTransactionY += labelNoMoreListings.Height + 10;
-                }
-
-                labelTransactionHistory.Location = new Point(27, newTransactionY);
-
-                // Reposition all transaction panels
-                int transactionY = labelTransactionHistory.Location.Y + labelTransactionHistory.Height + 20;
-                foreach (Control control in panelContent.Controls)
-                {
-                    if (control is Panel panel && panel.Name.StartsWith("panelTransaction") && panel.Visible)
-                    {
-                        panel.Location = new Point(27, transactionY);
-                        transactionY += panel.Height + 10;
-                    }
-                }
-
-                // Reposition the "no more history" label
-                if (labelNoMoreHistory.Visible)
-                {
-                    labelNoMoreHistory.Location = new Point(27, transactionY);
+                    MessageBox.Show("Error while deleting the car: " + ex.Message);
                 }
             }
         }
@@ -512,8 +540,7 @@ namespace Horizon_Drive_LTD
 
             if (result == DialogResult.Yes)
             {
-                // In a real application, you would remove the transaction from a database
-                // For this demo, just hide the panel
+                
                 Panel panelToHide = (Panel)panelContent.Controls.Find($"panelTransaction{transactionId}", true)[0];
                 panelToHide.Visible = false;
 
@@ -597,6 +624,39 @@ namespace Horizon_Drive_LTD
                 // this.Close(); // Uncomment to close current form
             }
         }
-        #endregion
+        
+
+        private void Form2_Load(object sender, EventArgs e)
+        {
+            this.FormClosing += new FormClosingEventHandler(ManageListing_FormClosing);
+        }
+        private void ManageListing_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (isClosing) return;
+            isClosing = true;
+
+            DialogResult result = MessageBox.Show("Do you want to close the Car Hire Application?", "Confirm Exit",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.No)
+            {
+                e.Cancel = true; // Prevent closing
+                isClosing = false;
+            }
+            else
+            {
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+                    string dropTableQuery = "DROP TABLE IF EXISTS ActiveUser;";
+                    using (SqlCommand cmd = new SqlCommand(dropTableQuery, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                Application.Exit(); // Properly terminates the application without triggering FormClosing again
+            }
+        }
     }
 }

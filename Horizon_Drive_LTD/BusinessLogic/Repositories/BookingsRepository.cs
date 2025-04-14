@@ -91,8 +91,6 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
 
                     cmd.ExecuteNonQuery();
 
-
-
                 }
             }
         }
@@ -133,8 +131,6 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                     cmd.Parameters.AddWithValue("@AirportPickupIncluded", booking.AirportPickupDropoff);
 
                     cmd.ExecuteNonQuery();
-
-
 
                 }
             }

@@ -88,8 +88,6 @@ namespace splashscreen
                 CustomerRepository customerRepo = new CustomerRepository(new DatabaseConnection());
                 LessorRepository lessorRepo = new LessorRepository(new DatabaseConnection());
 
-
-
                 string userId = userRepo.GetUserIdByUsername(enteredUsername);
 
                 string customerid = customerRepo.GetCustomerIdByUserId(userId);
@@ -99,7 +97,10 @@ namespace splashscreen
                 if (!string.IsNullOrEmpty(userId))
                 {
                     userRepo.StoreActiveUser(enteredUsername, userId, customerid, lessorid);
-                   
+
+                    CurrentUser.CurrentUserId = userId;
+                    CurrentUser.Currentuser = loggedInUser;
+
                 }
                 else
                 {

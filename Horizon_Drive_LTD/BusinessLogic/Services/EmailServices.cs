@@ -10,8 +10,10 @@ using System.Configuration;
 
 namespace Horizon_Drive_LTD.BusinessLogic.Services
 {
+    //  This class handles the sending of booking confirmation emails to customers.
     public class EmailService
     {
+        // This method sends a booking confirmation email to the customer.
         public static void SendBookingConfirmationEmail(string customerEmail, Booking booking)
         {
             try
@@ -48,7 +50,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Services
                     Safe travels,
                     Car Hire Service Team
                     ";
-
+                // Create the email message
                 MailMessage mail = new MailMessage(senderEmail, customerEmail, subject, body);
                 SmtpClient smtpClient = new SmtpClient(ConfigurationManager.AppSettings["SmtpHost"], int.Parse(ConfigurationManager.AppSettings["SmtpPort"]))
                 {
@@ -58,7 +60,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Services
          ConfigurationManager.AppSettings["SenderPassword"]
      )
                 };
-
+                // Send the email to the user 
                 smtpClient.Send(mail);
             }
             catch (Exception ex)

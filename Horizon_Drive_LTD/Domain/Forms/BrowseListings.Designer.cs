@@ -103,6 +103,7 @@
             btnManageYourListings.TabIndex = 7;
             btnManageYourListings.Text = "Manage your Listings";
             btnManageYourListings.UseVisualStyleBackColor = false;
+            btnManageYourListings.Click += btnManageYourListings_Click;
             // 
             // btnOptions
             // 

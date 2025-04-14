@@ -233,9 +233,6 @@ namespace Horizon_Drive_LTD
         }
 
        
-
-
-
         private void buttonBookNow_Click(object sender, EventArgs e)
         {
             UserRepository userRepo = new UserRepository(new DatabaseConnection());
@@ -244,11 +241,19 @@ namespace Horizon_Drive_LTD
             BookingsRepository bookingRepo = new BookingsRepository(new DatabaseConnection());
             HashTable<string, Booking> bookingHashTable = new HashTable<string, Booking>(1000);
 
+            PaymentRepository paymentRepository = new PaymentRepository(new DatabaseConnection());
+           
+
             CarRepository carRepo = new CarRepository(new DatabaseConnection());
 
+            // creating the Booking ID
             Guid guid = Guid.NewGuid();
             int numericPart = Math.Abs(guid.GetHashCode()) % 100000;
             string bookingId = "B" + numericPart.ToString("D5");
+
+            // creating the Payment ID
+            numericPart = Math.Abs(guid.GetHashCode()) % 100000;
+            string paymentId = "P" + numericPart.ToString("D5");
 
             DateTime date = DateTime.Now;
             string formattedDate = date.ToString("yyyy-MM-dd");
@@ -270,6 +275,9 @@ namespace Horizon_Drive_LTD
 
                     bookingRepo.LoadBookingsIntoDatabase(booking);
                     carRepo.ChangeCarStatus(car.CarID);
+
+                    Payment payment = new Payment(paymentId,bookingId, activeCustomerId, formattedDate,"Online", totalPrice);
+                    paymentRepository.LoadPaymentIntoDatabase(payment);
 
                     // Process the final booking
                     MessageBox.Show("Your booking has been confirmed! A confirmation email will be sent shortly.",

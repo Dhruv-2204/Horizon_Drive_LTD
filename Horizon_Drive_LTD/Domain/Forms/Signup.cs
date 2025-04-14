@@ -174,7 +174,9 @@
                 string.Empty 
             );
 
-           
+          
+
+
             bool result = _authService.SignUp(newUser);
             if (result)
             {

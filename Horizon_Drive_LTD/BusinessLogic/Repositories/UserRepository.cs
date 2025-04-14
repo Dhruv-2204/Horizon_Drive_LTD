@@ -118,7 +118,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                     cmd.ExecuteNonQuery();
                 }
 
-                // Optional: Clear existing active users (if you want only one active user at a time)
+                
                 string deleteQuery = "DELETE FROM ActiveUser";
                 using (SqlCommand deleteCmd = new SqlCommand(deleteQuery, conn))
                 {

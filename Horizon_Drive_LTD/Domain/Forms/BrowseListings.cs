@@ -10,14 +10,22 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Web;
 using System.Windows.Forms;
+using Timer = System.Windows.Forms.Timer;
+using Microsoft.Data.SqlClient;
+using System.Data.Common;
+using Horizon_Drive_LTD.BusinessLogic.Services;
 
 //BrowseListings.cs
 
 namespace Horizon_Drive_LTD
 {
+
+
     public partial class BrowseListings : Form
     {
-     
+
+        private bool isClosing = false;
+        DatabaseConnection _dbConnection = new DatabaseConnection();
 
         private HashTable<string, Cars> carHashTable;
 
@@ -74,18 +82,37 @@ namespace Horizon_Drive_LTD
 
             try
             {
-                string imagesFolder = Path.Combine(Application.StartupPath, "Images", "BrowseListings");
-                string searchPattern = $"{car.CarBrand}_{car.Model}.*";
 
-                string[] matchingFiles = Directory.GetFiles(imagesFolder, searchPattern);
+                string brand = car.CarBrand.Replace(" ", "");
+                string model = car.Model.Replace(" ", "");
+                // Navigate to the specific folder for the car
+                string carFolder = Path.Combine(Application.StartupPath, "Images", "BrowseListings", $"{brand}_{model}");
 
-                if (matchingFiles.Length > 0)
+                // Make sure the folder exists
+                if (Directory.Exists(carFolder))
                 {
-                    pictureBox.Image = Image.FromFile(matchingFiles[0]);
+                    // Get all valid image files inside the folder
+                    string[] matchingFiles = Directory.GetFiles(carFolder, "*.*")
+                        .Where(file => file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase)
+                                    || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase)
+                                    || file.EndsWith(".png", StringComparison.OrdinalIgnoreCase)
+                                    || file.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase))
+                        .ToArray();
+
+                    if (matchingFiles.Length > 0)
+                    {
+                        pictureBox.Image = Image.FromFile(matchingFiles[0]);
+                    }
+                    else
+                    {
+                        pictureBox.BackColor = Color.LightGray;
+                        MessageBox.Show("No images found in folder: " + carFolder);
+                    }
                 }
                 else
                 {
                     pictureBox.BackColor = Color.LightGray;
+                    MessageBox.Show("Folder not found: " + carFolder);
                 }
             }
             catch (Exception ex)
@@ -93,7 +120,6 @@ namespace Horizon_Drive_LTD
                 MessageBox.Show("Image load error: " + ex.Message);
                 pictureBox.BackColor = Color.LightGray;
             }
-
 
 
 
@@ -111,7 +137,7 @@ namespace Horizon_Drive_LTD
             Label lblDescription = new Label();
             lblDescription.AutoSize = false;
             lblDescription.Size = new Size(230, 60);
-            lblDescription.Location = new Point(10, 190);
+            lblDescription.Location = new Point(10, 200);
             lblDescription.Font = new Font("Segoe UI", 8);
             lblDescription.Text = car.VehicleDescription;
 
@@ -123,6 +149,7 @@ namespace Horizon_Drive_LTD
             lblPrice.Font = new Font("Segoe UI", 9, FontStyle.Bold);
             lblPrice.Text = $"Rs{car.CarPrice}";
 
+          
             // View deal button
             Button btnViewDeal = new Button();
             btnViewDeal.Size = new Size(80, 30);
@@ -188,9 +215,13 @@ namespace Horizon_Drive_LTD
                            MessageBoxButtons.OK,
                            MessageBoxIcon.Information);
 
-            // In a real application, you would open a form here
-            // ManageYourListingsForm manageYourListingsForm = new ManageYourListingsForm();
-            // manageYourListingsForm.ShowDialog();
+
+            ManageYourListings manageYourListingsForm = new ManageYourListings();
+         
+            manageYourListingsForm.Show();
+
+            this.Hide();
+
         }
 
         private void btnManageBooking_Click(object sender, EventArgs e)
@@ -267,10 +298,43 @@ namespace Horizon_Drive_LTD
                            MessageBoxIcon.Information);
         }
 
-        
+        private void Form2_Load(object sender, EventArgs e)
+        {
+            this.FormClosing += new FormClosingEventHandler(MyForm_FormClosing);
+        }
+        private void MyForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (isClosing) return;
+            isClosing = true;
+
+            DialogResult result = MessageBox.Show("Do you want to close the Car Hire Application?", "Confirm Exit",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.No)
+            {
+                e.Cancel = true; // Prevent closing
+                isClosing = false;
+            }
+            else
+            {
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+                    string dropTableQuery = "DROP TABLE IF EXISTS ActiveUser;";
+                    using (SqlCommand cmd = new SqlCommand(dropTableQuery, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                Application.Exit(); // Properly terminates the application without triggering FormClosing again
+            }
+        }
+
+
     }
 
-   
+
 }
 
 
