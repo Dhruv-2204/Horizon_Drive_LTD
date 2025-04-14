@@ -1,12 +1,17 @@
-﻿using Horizon_Drive_LTD.DataStructure;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Horizon_Drive_LTD.DataStructure;
 using Horizon_Drive_LTD.Domain.Entities;
 using Microsoft.Data.SqlClient;
-
 
 namespace Horizon_Drive_LTD.BusinessLogic.Repositories
 {
     public class CustomerRepository
     {
+
         private readonly DatabaseConnection _dbConnection;
 
         public CustomerRepository(DatabaseConnection dbConnection)
@@ -21,7 +26,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             using (SqlConnection conn = _dbConnection.GetConnection())
             {
                 conn.Open();
-                string query = "SELECT CustomerID, UserID, LicenseNo, LicenseExpiryDate, LicensePhoto FROM [Customer]";
+                string query = "SELECT CustomerID, UserID, LicenseNo, LicenseExpiryDate, LicensePhoto FROM Customer";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -49,7 +54,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             using (SqlConnection conn = _dbConnection.GetConnection())
             {
                 conn.Open();
-                string query = @"INSERT INTO [Customer]
+                string query = @"INSERT INTO Customer
                              (CustomerID, UserID, LicenseNo, LicenseExpiryDate, LicensePhoto)
                              VALUES 
                              (@CustomerID, @UserID, @LicenseNo, @LicenseExpiryDate, @LicensePhoto)";
@@ -63,20 +68,25 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             }
         }
 
-        public void InsertCustomerId(string CustomerId, string userId)
+
+        public string GetCustomerIdByUserId(string userId)
         {
             using (SqlConnection conn = _dbConnection.GetConnection())
             {
                 conn.Open();
-                string query = @"INSERT INTO [Customer]
-                             (CustomerID, UserID)
-                             VALUES 
-                             (@CustomerID, @UserID)";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@CustomerID", CustomerId);
-                cmd.Parameters.AddWithValue("@UserID", userId);
-                cmd.ExecuteNonQuery();
+                string query = "SELECT CustomerID FROM Customer WHERE UserID = @UserID";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@UserID", userId);
+                    object result = cmd.ExecuteScalar();
+
+                    return result?.ToString(); // Returns null if not found
+                }
             }
         }
+
+
+
     }
 }

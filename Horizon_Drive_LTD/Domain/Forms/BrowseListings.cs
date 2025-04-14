@@ -1,14 +1,33 @@
-﻿using System.Data;
+﻿
+using System.Data;
 using System.Drawing.Drawing2D;
+using Horizon_Drive_LTD.BusinessLogic.Repositories;
+using Horizon_Drive_LTD.BusinessLogic;
+using Horizon_Drive_LTD.Domain.Entities;
+using Horizon_Drive_LTD.DataStructure;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Xml;
+using System.Web;
+using System.Windows.Forms;
+using Timer = System.Windows.Forms.Timer;
+using Microsoft.Data.SqlClient;
+using System.Data.Common;
+using Horizon_Drive_LTD.BusinessLogic.Services;
 
 //BrowseListings.cs
 
 namespace Horizon_Drive_LTD
 {
+
+
     public partial class BrowseListings : Form
     {
-        // List to store car listings
-        private List<CarListing> carListings = new List<CarListing>();
+
+        private bool isClosing = false;
+        DatabaseConnection _dbConnection = new DatabaseConnection();
+
+        private HashTable<string, Cars> carHashTable;
 
         public BrowseListings()
         {
@@ -16,197 +35,38 @@ namespace Horizon_Drive_LTD
             this.ClientSize = new Size(1600, 900);
             this.MinimumSize = new Size(1000, 700);
 
-
-            // Display the username
-            DisplayUsername();
-
             LoadCarListings();
             PopulateCarListings();
+
         }
 
-        // Method to fetch and display username
-        private void DisplayUsername()
-        {
-            string username = GetLoggedInUsername();
-
-            if (string.IsNullOrEmpty(username))
-            {
-                labelUsername.Text = "User not logged in";
-                // style the label differently (RED) for non-logged in users
-                labelUsername.ForeColor = Color.Red;
-            }
-            else
-            {
-                labelUsername.Text = username;
-                labelUsername.ForeColor = Color.FromArgb(15, 30, 45); // Colour of logged in users
-            }
-        }
-
-        // Method to get the username from your database
-        private string GetLoggedInUsername()
-        {
-            // Replace this with database fetch logic
-            
-            return null;
-        }
 
         private void LoadCarListings()
         {
-            // Sample car data - in a real app, this would come from a database
-            carListings.Add(new CarListing
-            {
-                Id = 1,
-                Make = "Ford",
-                Model = "Raptor",
-                Year = 2023,
-                Description = "A powerful off-road pickup built for performance and adventure. Rent now for a rugged and thrilling ride!",
-                PricePerDay = 15000,
-                ImagePath = "Fordraptor.jpg",
-                AdditionalImages = new List<string>
-        {
-            "Fordraptor1.jpg",
-            "Fordraptor2.jpg",
-            "Fordraptor3.jpg"
-        }
-            });
+            DatabaseConnection dbConnection = new DatabaseConnection();
+            CarRepository carRepo = new CarRepository(dbConnection);
 
-            carListings.Add(new CarListing
-            {
-                Id = 2,
-                Make = "BMW",
-                Model = "X4",
-                Year = 2023,
-                Description = "A luxury high-performance SUV with bold design and powerful hybrid technology. Rent now for an elite driving experience!",
-                PricePerDay = 30000,
-                ImagePath = "bmw_x4.jpg",
-                AdditionalImages = new List<string>
-        {
-            "bmw_x4_1.jpg",
-            "bmw_x4_2.jpg",
-            "bmw_x4_3.jpg"
-        }
-            });
+            carHashTable = carRepo.LoadCarsFromDatabase();
 
-            carListings.Add(new CarListing
-            {
-                Id = 3,
-                Make = "Corvette",
-                Model = "C8",
-                Year = 2023,
-                Description = "A sleek, mid-engine sports car with thrilling performance and sharp handling. Rent now for an unforgettable drive!",
-                PricePerDay = 20000,
-                ImagePath = "corvette_c8.jpg",
-                AdditionalImages = new List<string>
-        {
-            "corvette_c8_1.jpg",
-            "corvette_c8_2.jpg",
-            "corvette_c8_3.jpg"
-        }
-            });
-
-            carListings.Add(new CarListing
-            {
-                Id = 4,
-                Make = "Ford",
-                Model = "Mustang",
-                Year = 2023,
-                Description = "A modern muscle car with bold design and powerful performance. Rent now for an exhilarating ride!",
-                PricePerDay = 25000,
-                ImagePath = "ford_mustang.jpg",
-                AdditionalImages = new List<string>
-        {
-            "ford_mustang_1.jpg",
-            "ford_mustang_2.jpg",
-            "ford_mustang_3.jpg"
-        }
-            });
-
-            // Add more cars for the bottom row
-            carListings.Add(new CarListing
-            {
-                Id = 5,
-                Make = "Mercedes",
-                Model = "AMG",
-                Year = 2023,
-                Description = "Performance luxury at its finest with distinctive styling and remarkable power.",
-                PricePerDay = 28000,
-                ImagePath = "mercedes_amg.jpg",
-                AdditionalImages = new List<string>
-        {
-            "mercedes_amg_1.jpg",
-            "mercedes_amg_2.jpg",
-            "mercedes_amg_3.jpg"
-        }
-            });
-
-            carListings.Add(new CarListing
-            {
-                Id = 6,
-                Make = "Honda",
-                Model = "Civic",
-                Year = 2022,
-                Description = "Reliable, efficient and perfect for city driving with excellent fuel economy.",
-                PricePerDay = 8000,
-                ImagePath = "honda_civic.jpg",
-                AdditionalImages = new List<string>
-        {
-            "honda_civic_1.jpg",
-            "honda_civic_2.jpg",
-            "honda_civic_3.jpg"
-        }
-            });
-
-            carListings.Add(new CarListing
-            {
-                Id = 7,
-                Make = "Mercedes",
-                Model = "GLE Coupe",
-                Year = 2023,
-                Description = "Elegance meets performance in this luxury SUV coupe with cutting-edge technology.",
-                PricePerDay = 32000,
-                ImagePath = "mercedes_gle.jpg",
-                AdditionalImages = new List<string>
-        {
-            "mercedes_gle_1.jpg",
-            "mercedes_gle_2.jpg",
-            "mercedes_gle_3.jpg"
-        }
-            });
-
-            carListings.Add(new CarListing
-            {
-                Id = 8,
-                Make = "Mercedes",
-                Model = "AMG GT",
-                Year = 2023,
-                Description = "The pinnacle of Mercedes performance with breathtaking design and power.",
-                PricePerDay = 35000,
-                ImagePath = "mercedes_amg_gt.jpg",
-                AdditionalImages = new List<string>
-        {
-            "mercedes_amg_gt_1.jpg",
-            "mercedes_amg_gt_2.jpg",
-            "mercedes_amg_gt_3.jpg"
-        }
-            });
+          
         }
 
         private void PopulateCarListings()
         {
-            // Clear the flowLayoutPanel first
             flowLayoutPanelListings.Controls.Clear();
 
-            // Add car listing panels to the flow layout panel
-            foreach (var car in carListings)
+            foreach (var carEntry in carHashTable.GetAllItems())
             {
-                // Create a car listing panel
-                Panel carPanel = CreateCarListingPanel(car);
+                Panel carPanel = CreateCarListingPanel(carEntry.Value);
                 flowLayoutPanelListings.Controls.Add(carPanel);
             }
         }
 
-        private Panel CreateCarListingPanel(CarListing car)
+
+
+        private Panel CreateCarListingPanel(Cars car)
         {
+
             // Main panel
             Panel panel = new Panel();
             panel.Size = new Size(250, 310);
@@ -219,15 +79,51 @@ namespace Horizon_Drive_LTD
             pictureBox.Size = new Size(230, 150);
             pictureBox.Location = new Point(10, 10);
             pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+
             try
             {
-                pictureBox.Image = Image.FromFile(Path.Combine("Images", car.ImagePath));
+
+                string brand = car.CarBrand.Replace(" ", "");
+                string model = car.Model.Replace(" ", "");
+                // Navigate to the specific folder for the car
+                string carFolder = Path.Combine(Application.StartupPath, "Images", "BrowseListings", $"{brand}_{model}");
+
+                // Make sure the folder exists
+                if (Directory.Exists(carFolder))
+                {
+                    // Get all valid image files inside the folder
+                    string[] matchingFiles = Directory.GetFiles(carFolder, "*.*")
+                        .Where(file => file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase)
+                                    || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase)
+                                    || file.EndsWith(".png", StringComparison.OrdinalIgnoreCase)
+                                    || file.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase))
+                        .ToArray();
+
+                    if (matchingFiles.Length > 0)
+                    {
+                        pictureBox.Image = Image.FromFile(matchingFiles[0]);
+                    }
+                    else
+                    {
+                        pictureBox.BackColor = Color.LightGray;
+                        MessageBox.Show("No images found in folder: " + carFolder);
+                    }
+                }
+                else
+                {
+                    pictureBox.BackColor = Color.LightGray;
+                    MessageBox.Show("Folder not found: " + carFolder);
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                // Use placeholder if image not found
+                MessageBox.Show("Image load error: " + ex.Message);
                 pictureBox.BackColor = Color.LightGray;
             }
+
+
+
+            panel.Controls.Add(pictureBox);
 
             // Car title (Make and Model)
             Label lblTitle = new Label();
@@ -235,15 +131,15 @@ namespace Horizon_Drive_LTD
             lblTitle.Size = new Size(230, 20);
             lblTitle.Location = new Point(10, 170);
             lblTitle.Font = new Font("Segoe UI", 9, FontStyle.Bold);
-            lblTitle.Text = $"{car.Make} {car.Model} - {car.Year}";
+            lblTitle.Text = $"{car.CarBrand} {car.Model} - {car.Year}";
 
             // Car description
             Label lblDescription = new Label();
             lblDescription.AutoSize = false;
             lblDescription.Size = new Size(230, 60);
-            lblDescription.Location = new Point(10, 190);
+            lblDescription.Location = new Point(10, 200);
             lblDescription.Font = new Font("Segoe UI", 8);
-            lblDescription.Text = car.Description;
+            lblDescription.Text = car.VehicleDescription;
 
             // Price label
             Label lblPrice = new Label();
@@ -251,8 +147,9 @@ namespace Horizon_Drive_LTD
             lblPrice.Size = new Size(100, 20);
             lblPrice.Location = new Point(10, 255);
             lblPrice.Font = new Font("Segoe UI", 9, FontStyle.Bold);
-            lblPrice.Text = $"Rs {car.PricePerDay}/day";
+            lblPrice.Text = $"Rs{car.CarPrice}";
 
+          
             // View deal button
             Button btnViewDeal = new Button();
             btnViewDeal.Size = new Size(80, 30);
@@ -261,34 +158,40 @@ namespace Horizon_Drive_LTD
             btnViewDeal.BackColor = Color.FromArgb(30, 85, 110);
             btnViewDeal.ForeColor = Color.White;
             btnViewDeal.FlatStyle = FlatStyle.Flat;
-            btnViewDeal.Tag = car.Id;
+            btnViewDeal.Tag = car.CarID;
             btnViewDeal.Click += BtnViewDeal_Click;
 
             // Add controls to panel
-            panel.Controls.Add(pictureBox);
+           
             panel.Controls.Add(lblTitle);
             panel.Controls.Add(lblDescription);
             panel.Controls.Add(lblPrice);
             panel.Controls.Add(btnViewDeal);
 
             return panel;
+
         }
 
         private void BtnViewDeal_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            int carId = (int)btn.Tag;
+            string carId = btn.Tag.ToString(); // Make sure the Tag stores the CarID (e.g., "C00001")
 
-            // Find the car
-            CarListing selectedCar = carListings.FirstOrDefault(c => c.Id == carId);
+            // Retrieve the car from the hash table
+            Cars selectedCar = carHashTable.Search(carId);
 
             if (selectedCar != null)
             {
-                // Open the booking form
+                // Open the booking form with the selected car
                 CarBookingForm bookingForm = new CarBookingForm(selectedCar);
                 bookingForm.ShowDialog();
             }
+            else
+            {
+                MessageBox.Show("Car details could not be found.");
+            }
         }
+        
 
         private void btnBrowseListings_Click(object sender, EventArgs e)
         {
@@ -312,9 +215,13 @@ namespace Horizon_Drive_LTD
                            MessageBoxButtons.OK,
                            MessageBoxIcon.Information);
 
-            // In a real application, you would open a form here
-            // ManageYourListingsForm manageYourListingsForm = new ManageYourListingsForm();
-            // manageYourListingsForm.ShowDialog();
+
+            ManageYourListings manageYourListingsForm = new ManageYourListings();
+         
+            manageYourListingsForm.Show();
+
+            this.Hide();
+
         }
 
         private void btnManageBooking_Click(object sender, EventArgs e)
@@ -347,100 +254,88 @@ namespace Horizon_Drive_LTD
 
             if (result == DialogResult.Yes)
             {
-                // In a real application, you would handle logout here
-                // Example: Reset authentication state, close the form, show login form
+              
                 MessageBox.Show("You have been logged out successfully.",
                                "Log Out",
                                MessageBoxButtons.OK,
                                MessageBoxIcon.Information);
 
-                // After logout, update the username display
-                DisplayUsername();
-
-                // Application.Restart(); // Uncomment to restart application
-                // this.Close(); // Uncomment to close current form
+               
             }
         }
 
 
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
         {
-            // Filter cars based on search text
             string searchText = textBoxSearch.Text.ToLower();
-
-            if (string.IsNullOrWhiteSpace(searchText))
-            {
-                PopulateCarListings(); // Show all if search is empty
-                return;
-            }
-
-            var filteredCars = carListings.Where(c =>
-                c.Make.ToLower().Contains(searchText) ||
-                c.Model.ToLower().Contains(searchText) ||
-                c.Description.ToLower().Contains(searchText)).ToList();
-
-            // Clear and repopulate with filtered results
             flowLayoutPanelListings.Controls.Clear();
-            foreach (var car in filteredCars)
+
+            IEnumerable<KeyValuePair<string, Cars>> allCars = carHashTable.GetAllItems();
+
+            foreach (var carEntry in allCars)
             {
-                Panel carPanel = CreateCarListingPanel(car);
-                flowLayoutPanelListings.Controls.Add(carPanel);
+                Cars car = carEntry.Value;
+
+                if (string.IsNullOrWhiteSpace(searchText) ||
+                    car.CarBrand.ToLower().Contains(searchText) ||
+                    car.Model.ToLower().Contains(searchText) ||
+                    car.Category.ToLower().Contains(searchText))
+                {
+                    Panel carPanel = CreateCarListingPanel(car);
+                    flowLayoutPanelListings.Controls.Add(carPanel);
+                }
             }
         }
 
-        private void pictureBoxLogo_Click(object sender, EventArgs e)
-        {
 
-        }
-
-        private void flowLayoutPanelListings_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void buttonFilter_Click(object sender, EventArgs e)
-        {
-            // Filter functionality
-            MessageBox.Show("Filter functionality would open filter options for car listings.",
-                           "Filter Cars",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
-        }
-
-        private void buttonCart_Click(object sender, EventArgs e)
-        {
-            // Shopping cart functionality
-            MessageBox.Show("Shopping cart functionality would display selected cars and reservation details.",
-                           "Shopping Cart",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
-        }
 
         private void buttonProfile_Click(object sender, EventArgs e)
         {
-            // Open the Options_Personal form
-            Options_Personal optionsPersonalForm = new Options_Personal();
-            optionsPersonalForm.Show();
-            this.Hide();
+            // Profile functionality
+            MessageBox.Show("Profile functionality would display user information and settings.",
+                           "User Profile",
+                           MessageBoxButtons.OK,
+                           MessageBoxIcon.Information);
         }
 
-        private void labelBrowseListings_Click(object sender, EventArgs e)
+        private void Form2_Load(object sender, EventArgs e)
         {
-
+            this.FormClosing += new FormClosingEventHandler(MyForm_FormClosing);
         }
+        private void MyForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (isClosing) return;
+            isClosing = true;
+
+            DialogResult result = MessageBox.Show("Do you want to close the Car Hire Application?", "Confirm Exit",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.No)
+            {
+                e.Cancel = true; // Prevent closing
+                isClosing = false;
+            }
+            else
+            {
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+                    string dropTableQuery = "DROP TABLE IF EXISTS ActiveUser;";
+                    using (SqlCommand cmd = new SqlCommand(dropTableQuery, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                Application.Exit(); // Properly terminates the application without triggering FormClosing again
+            }
+        }
+
+
     }
 
+
 }
 
 
-public class CarListing
-{
-    public int Id { get; set; }
-    public string Make { get; set; }
-    public string Model { get; set; }
-    public int Year { get; set; }
-    public string Description { get; set; }
-    public decimal PricePerDay { get; set; }
-    public string ImagePath { get; set; }
-    public List<string> AdditionalImages { get; set; } = new List<string>();
-}
+
