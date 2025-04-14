@@ -11,10 +11,13 @@
   <ItemGroup>
     <Compile Remove="Repositoriess\**" />
     <Compile Remove="Sound\**" />
+    <Compile Remove="Tests\**" />
     <EmbeddedResource Remove="Repositoriess\**" />
     <EmbeddedResource Remove="Sound\**" />
+    <EmbeddedResource Remove="Tests\**" />
     <None Remove="Repositoriess\**" />
     <None Remove="Sound\**" />
+    <None Remove="Tests\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,7 +42,6 @@
   <ItemGroup>
     <Folder Include="Domain\Interfaces\" />
     <Folder Include="Media\Images\" />
-    <Folder Include="Tests\" />
   </ItemGroup>
 
 </Project>
