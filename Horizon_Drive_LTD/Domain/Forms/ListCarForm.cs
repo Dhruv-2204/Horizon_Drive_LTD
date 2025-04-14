@@ -1,12 +1,13 @@
-﻿using Horizon_Drive_LTD.BusinessLogic;
+﻿using System.Data;
+using System.Drawing.Drawing2D;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using System.Linq;
+using Horizon_Drive_LTD.BusinessLogic;
 
 namespace Horizon_Drive_LTD
 {
@@ -16,11 +17,8 @@ namespace Horizon_Drive_LTD
         private List<string> uploadedPhotoPaths = new List<string>();
         private List<PictureBox> photoPictureBoxes = new List<PictureBox>();
 
-        // Placeholder for the username
-        //private DatabaseConnection _dbConnection;
+        // Database connection
         DatabaseConnection _dbConnection = new DatabaseConnection();
-
-
 
         public ListCarForm()
         {
@@ -42,10 +40,42 @@ namespace Horizon_Drive_LTD
 
         private void ListCarForm_Load(object sender, EventArgs e)
         {
+            // Display the username
+            DisplayUsername();
+
             // Populate dropdown lists
+            PopulateMakes();
+            PopulateYears();
+            PopulateTypes();
+            PopulateColors();
+            PopulateFuelTypes();
+            PopulateTransmissions();
+            PopulateDrivetrains();
+            PopulateSeatNumbers();
+        }
+
+        // Method to fetch and display username
+        private void DisplayUsername()
+        {
+            string username = GetLoggedInUsername();
+            if (string.IsNullOrEmpty(username))
+            {
+                UsernameLabel.Text = "User not logged in";
+                // Style the label differently (RED) for non-logged in users
+                UsernameLabel.ForeColor = Color.Red;
+            }
+            else
+            {
+                UsernameLabel.Text = username;
+                UsernameLabel.ForeColor = Color.FromArgb(15, 30, 45); // Color of logged in users
+            }
+        }
+
+        // Method to get the username from the database
+        private string GetLoggedInUsername()
+        {
             try
             {
-                string username = string.Empty;
                 // Get the active username from the database
                 using (SqlConnection conn = _dbConnection.GetConnection())
                 {
@@ -56,12 +86,7 @@ namespace Horizon_Drive_LTD
                     {
                         if (reader.Read())
                         {
-                            username = reader.GetString(0).Trim();
-                            UsernameLabel.Text = username;
-                        }
-                        else
-                        {
-                            throw new Exception("No active user found.");
+                            return reader.GetString(0).Trim();
                         }
                     }
                 }
@@ -69,16 +94,9 @@ namespace Horizon_Drive_LTD
             catch (Exception ex)
             {
                 MessageBox.Show($"Error retrieving username: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
             }
-            PopulateMakes();
-            PopulateYears();
-            PopulateTypes();
-            PopulateColors();
-            PopulateFuelTypes();
-            PopulateTransmissions();
-            PopulateDrivetrains();
-            PopulateSeatNumbers();
+
+            return null;
         }
 
         private void SetupDragAndDrop()
@@ -414,7 +432,7 @@ namespace Horizon_Drive_LTD
                 SaveCarListing();
 
 
-                 using (SqlConnection conn = _dbConnection.GetConnection())
+                using (SqlConnection conn = _dbConnection.GetConnection())
                 {
                     conn.Open();
 
@@ -445,11 +463,11 @@ namespace Horizon_Drive_LTD
                         int rowsAffected = cmd.ExecuteNonQuery();
                     }
                 }
-                    // Show success message
-                    MessageBox.Show("Your car has been listed successfully!",
-                               "Success",
-                               MessageBoxButtons.OK,
-                               MessageBoxIcon.Information);
+                // Show success message
+                MessageBox.Show("Your car has been listed successfully!",
+                           "Success",
+                           MessageBoxButtons.OK,
+                           MessageBoxIcon.Information);
 
                 // Return to browse listings
                 BrowseListings browseListings = new BrowseListings();

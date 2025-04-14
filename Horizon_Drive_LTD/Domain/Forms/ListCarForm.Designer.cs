@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Data;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Horizon_Drive_LTD
@@ -249,12 +250,13 @@ namespace Horizon_Drive_LTD
             // UsernameLabel
             // 
             UsernameLabel.AutoSize = true;
-            UsernameLabel.Font = new Font("Segoe UI", 13.2000008F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
-            UsernameLabel.Location = new Point(1080, 54);
+            UsernameLabel.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            UsernameLabel.ForeColor = Color.FromArgb(30, 85, 110);
+            UsernameLabel.Location = new Point(1032, 60);
             UsernameLabel.Name = "UsernameLabel";
-            UsernameLabel.Size = new Size(94, 31);
+            UsernameLabel.Size = new Size(152, 23);
             UsernameLabel.TabIndex = 5;
-            UsernameLabel.Text = "You -->";
+            UsernameLabel.Text = "User not logged in";
             // 
             // buttonProfile
             // 
@@ -982,10 +984,23 @@ namespace Horizon_Drive_LTD
         private RoundedButton btnLogout;
         private OpenFileDialog openFileDialogPhotos;
         private Panel panelHeader;
+        private Label UsernameLabel;
         private Button buttonProfile;
         private Label lblListYourCar;
         private Panel panelMain;
         private Panel panelContent;
+        private ComboBox cboSeatNumber;
+        private Label lblSeatNumber;
+        private TextBox txtPower;
+        private Label lblPower;
+        private TextBox txtEngineCapacity;
+        private Label lblEngineCapacity;
+        private ComboBox cboDrivetrain;
+        private Label lblDrivetrain;
+        private ComboBox cboTransmission;
+        private Label lblTransmission;
+        private ComboBox cboFuelType;
+        private Label lblFuelType;
         private Panel panelPhoto5;
         private Label lblPlus5;
         private Panel panelPhoto4;
@@ -1027,18 +1042,5 @@ namespace Horizon_Drive_LTD
         private Label lblModel;
         private ComboBox cboMake;
         private Label lblMake;
-        private ComboBox cboFuelType;
-        private Label lblFuelType;
-        private ComboBox cboTransmission;
-        private Label lblTransmission;
-        private ComboBox cboDrivetrain;
-        private Label lblDrivetrain;
-        private TextBox txtEngineCapacity;
-        private Label lblEngineCapacity;
-        private TextBox txtPower;
-        private Label lblPower;
-        private ComboBox cboSeatNumber;
-        private Label lblSeatNumber;
-        private Label UsernameLabel;
     }
 }
