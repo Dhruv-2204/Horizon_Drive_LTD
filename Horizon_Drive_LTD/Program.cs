@@ -27,6 +27,7 @@ namespace splashscreen
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Manage_User_Page());
+            //Application.Run(new SPLASH_SCREEN());
 
         }
     }
