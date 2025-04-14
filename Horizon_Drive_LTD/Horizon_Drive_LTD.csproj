@@ -42,4 +42,10 @@
     <Folder Include="Tests\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Images\Logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

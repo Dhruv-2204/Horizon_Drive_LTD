@@ -496,13 +496,48 @@ namespace Horizon_Drive_LTD
         {
             // Add panels to list for easy management
             var photoPanels = new List<Panel>
+    {
+        panelPhoto1,
+        panelPhoto2,
+        panelPhoto3,
+        panelPhoto4,
+        panelPhoto5
+    };
+
+            // Calculate total width needed for all panels with spacing
+            int panelWidth = panelPhoto1.Width;
+            int spacing = 10;
+            int totalPanelsWidth = (panelWidth * photoPanels.Count) + (spacing * (photoPanels.Count - 1));
+
+            // Calculate starting X position to center the panels
+            int startX = (panelPhotoContainer.Width - totalPanelsWidth) / 2;
+
+            // Add the photo panels to the container
+            for (int i = 0; i < photoPanels.Count; i++)
             {
-                panelPhoto1,
-                panelPhoto2,
-                panelPhoto3,
-                panelPhoto4,
-                panelPhoto5
-            };
+                var panel = photoPanels[i];
+
+                // Add panels to the container
+                panelPhotoContainer.Controls.Add(panel);
+
+                // Position panels centered in the container with proper spacing
+                panel.Location = new Point(
+                    startX + (i * (panelWidth + spacing)),
+                    (panelPhotoContainer.Height - panel.Height) / 2); // Center vertically as well
+
+                // Reposition the existing remove label (×) to the top-right corner
+                if (panel.Controls.Count > 0 && panel.Controls[0] is Label removeLabel)
+                {
+                    removeLabel.AutoSize = true;
+                    removeLabel.Text = "×";
+                    removeLabel.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+                    removeLabel.ForeColor = Color.Red;
+                    removeLabel.Cursor = Cursors.Hand;
+                    removeLabel.Location = new Point(panel.Width - 20, 0); // Top-right position
+                    removeLabel.BackColor = Color.Transparent;
+                    removeLabel.BringToFront(); // Ensure it's on top
+                }
+            }
 
             // Initialize picture boxes for uploaded photos
             foreach (var panel in photoPanels)
@@ -512,11 +547,88 @@ namespace Horizon_Drive_LTD
                     Size = new Size(70, 70),
                     SizeMode = PictureBoxSizeMode.Zoom,
                     Dock = DockStyle.Fill,
-                    Visible = false
+                    Visible = false,
+                    Cursor = Cursors.Hand // Change cursor to indicate it's clickable
                 };
 
+                // Add click event to open the image
+                pictureBox.Click += PictureBox_Click;
+
                 panel.Controls.Add(pictureBox);
+                // Move the pictureBox to the back so the remove label stays on top
+                pictureBox.SendToBack();
                 photoPictureBoxes.Add(pictureBox);
+            }
+        }
+
+        // Event handler for PictureBox click
+        private void PictureBox_Click(object sender, EventArgs e)
+        {
+            PictureBox clickedPictureBox = (PictureBox)sender;
+            int index = photoPictureBoxes.IndexOf(clickedPictureBox);
+
+            if (index >= 0 && index < uploadedPhotoPaths.Count)
+            {
+                // Get the path of the clicked photo
+                string imagePath = uploadedPhotoPaths[index];
+
+                // Create and show a form to display the image in full size
+                ShowFullSizeImage(imagePath);
+            }
+        }
+
+        // Method to show full-size image in a new form
+        private void ShowFullSizeImage(string imagePath)
+        {
+            try
+            {
+                // Create a new form to display the image
+                Form imageForm = new Form
+                {
+                    Text = "Uploaded Image",
+                    StartPosition = FormStartPosition.CenterScreen,
+                    MinimizeBox = false,
+                    MaximizeBox = true,
+                    FormBorderStyle = FormBorderStyle.Sizable,
+                    Size = new Size(800, 600)
+                };
+
+                // Create a PictureBox to hold the image
+                PictureBox pb = new PictureBox
+                {
+                    Image = Image.FromFile(imagePath),
+                    SizeMode = PictureBoxSizeMode.Zoom,
+                    Dock = DockStyle.Fill,
+                    Cursor = Cursors.Hand
+                };
+
+                // Add click handler to close the form when the image is clicked
+                pb.Click += (s, e) => { imageForm.Close(); };
+
+                // Add a label with instructions
+                Label instructionLabel = new Label
+                {
+                    Text = "Click anywhere to close",
+                    AutoSize = true,
+                    BackColor = Color.FromArgb(200, 255, 255, 255),
+                    Padding = new Padding(5),
+                    Font = new Font("Segoe UI", 9F),
+                    Dock = DockStyle.Bottom
+                };
+
+                // Add controls to the form
+                imageForm.Controls.Add(pb);
+                imageForm.Controls.Add(instructionLabel);
+
+                // Show the form
+                imageForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error displaying image: {ex.Message}",
+                               "Error",
+                               MessageBoxButtons.OK,
+                               MessageBoxIcon.Error);
             }
         }
 
@@ -584,7 +696,7 @@ namespace Horizon_Drive_LTD
 
                 pictureBox.Visible = false;
                 panel.Visible = false;
-                plusLabel.Text = "+";
+                plusLabel.Text = "×";
             }
 
             // Add photos to UI
@@ -599,7 +711,7 @@ namespace Horizon_Drive_LTD
                     pictureBox.Image = Image.FromFile(uploadedPhotoPaths[i]);
                     pictureBox.Visible = true;
                     panel.Visible = true;
-                    plusLabel.Text = "×"; // Use × as remove icon
+                    plusLabel.Text = "×";
                 }
                 catch (Exception ex)
                 {
@@ -608,6 +720,26 @@ namespace Horizon_Drive_LTD
                                    MessageBoxButtons.OK,
                                    MessageBoxIcon.Error);
                 }
+            }
+
+            // Add a simple instruction label when photos are present
+            if (uploadedPhotoPaths.Count > 0)
+            {
+                // Check if the label already exists
+                Label instructionLabel = panelPhotoContainer.Controls.OfType<Label>().FirstOrDefault();
+
+                if (instructionLabel == null)
+                {
+                    // Create new label if it doesn't exist
+                    instructionLabel = new Label();
+                    instructionLabel.Text = "Click image to view full size";
+                    instructionLabel.AutoSize = true;
+                    instructionLabel.ForeColor = Color.Black;
+                    instructionLabel.Location = new Point(5, 5);
+                    panelPhotoContainer.Controls.Add(instructionLabel);
+                }
+
+                instructionLabel.Visible = true;
             }
         }
 

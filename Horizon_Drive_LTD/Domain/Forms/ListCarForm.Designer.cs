@@ -205,7 +205,6 @@ namespace Horizon_Drive_LTD
             // 
             // pictureBoxLogo
             // 
-            pictureBoxLogo.Image = Properties.Resources.Logo;
             pictureBoxLogo.Location = new Point(72, 63);
             pictureBoxLogo.Name = "pictureBoxLogo";
             pictureBoxLogo.Size = new Size(195, 245);
@@ -236,6 +235,7 @@ namespace Horizon_Drive_LTD
             // 
             // panelHeader
             // 
+            panelHeader.BorderStyle = BorderStyle.FixedSingle;
             panelHeader.Controls.Add(UsernameLabel);
             panelHeader.Controls.Add(buttonProfile);
             panelHeader.Controls.Add(lblListYourCar);
@@ -263,6 +263,7 @@ namespace Horizon_Drive_LTD
             buttonProfile.FlatAppearance.BorderColor = Color.FromArgb(192, 192, 192);
             buttonProfile.FlatStyle = FlatStyle.Flat;
             buttonProfile.Font = new Font("Segoe UI Symbol", 12F);
+            buttonProfile.ForeColor = Color.FromArgb(30, 85, 110);
             buttonProfile.Location = new Point(1190, 43);
             buttonProfile.Name = "buttonProfile";
             buttonProfile.Size = new Size(50, 53);
@@ -633,7 +634,7 @@ namespace Horizon_Drive_LTD
             // 
             lblCarFeatures.AutoSize = true;
             lblCarFeatures.Font = new Font("Segoe UI", 11F);
-            lblCarFeatures.Location = new Point(36, 435);
+            lblCarFeatures.Location = new Point(36, 437);
             lblCarFeatures.Margin = new Padding(3, 25, 3, 5);
             lblCarFeatures.Name = "lblCarFeatures";
             lblCarFeatures.Size = new Size(130, 25);
@@ -710,15 +711,15 @@ namespace Horizon_Drive_LTD
             // 
             lblUploadInstructions.AutoSize = true;
             lblUploadInstructions.Font = new Font("Segoe UI", 10F);
-            lblUploadInstructions.Location = new Point(445, 71);
+            lblUploadInstructions.Location = new Point(355, 71);
             lblUploadInstructions.Name = "lblUploadInstructions";
-            lblUploadInstructions.Size = new Size(357, 23);
+            lblUploadInstructions.Size = new Size(415, 23);
             lblUploadInstructions.TabIndex = 1;
-            lblUploadInstructions.Text = "Drag and drop photos here or click to browse";
+            lblUploadInstructions.Text = "Drag and drop photos here or double click to browse";
             // 
             // pictureBoxUpload
             // 
-            pictureBoxUpload.Location = new Point(555, 17);
+            pictureBoxUpload.Location = new Point(530, 18);
             pictureBoxUpload.Name = "pictureBoxUpload";
             pictureBoxUpload.Size = new Size(39, 53);
             pictureBoxUpload.SizeMode = PictureBoxSizeMode.Zoom;
@@ -741,7 +742,7 @@ namespace Horizon_Drive_LTD
             lblUploadHint.AutoSize = true;
             lblUploadHint.Font = new Font("Segoe UI", 9F, FontStyle.Italic);
             lblUploadHint.ForeColor = Color.Gray;
-            lblUploadHint.Location = new Point(36, 815);
+            lblUploadHint.Location = new Point(34, 813);
             lblUploadHint.Margin = new Padding(3, 5, 3, 5);
             lblUploadHint.Name = "lblUploadHint";
             lblUploadHint.Size = new Size(432, 20);
@@ -751,7 +752,7 @@ namespace Horizon_Drive_LTD
             // txtDailyRate
             // 
             txtDailyRate.Font = new Font("Segoe UI", 11F);
-            txtDailyRate.Location = new Point(36, 573);
+            txtDailyRate.Location = new Point(36, 578);
             txtDailyRate.Margin = new Padding(3, 15, 3, 5);
             txtDailyRate.Name = "txtDailyRate";
             txtDailyRate.PlaceholderText = "e.g. 7500.00";
@@ -762,7 +763,7 @@ namespace Horizon_Drive_LTD
             // 
             lblDailyRate.AutoSize = true;
             lblDailyRate.Font = new Font("Segoe UI", 11F);
-            lblDailyRate.Location = new Point(36, 538);
+            lblDailyRate.Location = new Point(36, 548);
             lblDailyRate.Margin = new Padding(3, 25, 3, 5);
             lblDailyRate.Name = "lblDailyRate";
             lblDailyRate.Size = new Size(167, 25);
@@ -774,7 +775,7 @@ namespace Horizon_Drive_LTD
             lblRateHint.AutoSize = true;
             lblRateHint.Font = new Font("Segoe UI", 9F, FontStyle.Italic);
             lblRateHint.ForeColor = Color.Gray;
-            lblRateHint.Location = new Point(36, 613);
+            lblRateHint.Location = new Point(34, 611);
             lblRateHint.Margin = new Padding(3, 5, 3, 25);
             lblRateHint.Name = "lblRateHint";
             lblRateHint.Size = new Size(294, 20);
