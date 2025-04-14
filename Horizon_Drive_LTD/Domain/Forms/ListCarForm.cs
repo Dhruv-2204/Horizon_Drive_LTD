@@ -421,61 +421,7 @@ namespace Horizon_Drive_LTD
             }
         }
 
-        /*private void btnListMyCar_Click(object sender, EventArgs e)
-        {
-            Guid guid = Guid.NewGuid();
-            int numericPart = Math.Abs(guid.GetHashCode()) % 100000;
-            string CarId = "C" + numericPart.ToString("D5");
-
-            if (ValidateForm())
-            {
-                // In a real application, save data to database
-                SaveCarListing();
-
-
-                using (SqlConnection conn = _dbConnection.GetConnection())
-                {
-                    conn.Open();
-
-                    string query = "INSERT INTO Car (CarId,UserId, CarBrand, Model, Years, Category, Colour, RegistrationNo, FuelType, TransmissionType, Drivetrain, EngineCapacity, Power, SeatNo, VehicleDescription, Features, CarPrice, AvailabilityStart, AvailabilityEnd) " +
-                                   "VALUES (@CarId,@UserId, @CarBrand, @Model, @Years, @Category, @Colour, @RegistrationNo, @FuelType, @TransmissionType, @Drivetrain, @EngineCapacity, @Power, @SeatNo, @VehicleDescription, @Features, @CarPrice, @AvailabilityStart, @AvailabilityEnd)";
-                    using (SqlCommand cmd = new SqlCommand(query, conn)) //Monac0_0
-                    {
-                        cmd.Parameters.AddWithValue("@CarID", CarId);
-                        cmd.Parameters.AddWithValue("@UserID", GetUserIdByUsername(UsernameLabel.Text));
-                        cmd.Parameters.AddWithValue("@CarBrand", cboMake.SelectedItem.ToString());
-                        cmd.Parameters.AddWithValue("@Model", cboModel.SelectedItem.ToString());
-                        cmd.Parameters.AddWithValue("@Years", int.Parse(cboYear.SelectedItem.ToString()));
-                        cmd.Parameters.AddWithValue("@Category", cboType.SelectedItem.ToString());
-                        cmd.Parameters.AddWithValue("@Colour", cboColor.SelectedItem.ToString());
-                        cmd.Parameters.AddWithValue("@RegistrationNo", txtLicensePlate.Text);
-                        cmd.Parameters.AddWithValue("@FuelType", cboFuelType.SelectedItem.ToString());
-                        cmd.Parameters.AddWithValue("@TransmissionType", cboTransmission.SelectedItem.ToString());
-                        cmd.Parameters.AddWithValue("@Drivetrain", cboDrivetrain.SelectedItem.ToString());
-                        cmd.Parameters.AddWithValue("@EngineCapacity", txtEngineCapacity.Text);
-                        cmd.Parameters.AddWithValue("@Power", txtPower.Text);
-                        cmd.Parameters.AddWithValue("@SeatNo", cboSeatNumber.SelectedItem.ToString());
-                        cmd.Parameters.AddWithValue("@VehicleDescription", txtDescription.Text);
-                        cmd.Parameters.AddWithValue("@Features", txtCarFeatures.Text);
-                        cmd.Parameters.AddWithValue("@CarPrice", decimal.Parse(txtDailyRate.Text));
-                        cmd.Parameters.AddWithValue("@AvailabilityStart", dateTimePickerStart.Value);
-                        cmd.Parameters.AddWithValue("@AvailabilityEnd", dateTimePickerEnd.Value);
-                        // Execute the command
-                        int rowsAffected = cmd.ExecuteNonQuery();
-                    }
-                }
-                // Show success message
-                MessageBox.Show("Your car has been listed successfully!",
-                           "Success",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
-
-                // Return to browse listings
-                BrowseListings browseListings = new BrowseListings();
-                browseListings.Show();
-                this.Close();
-            }
-        }*/
+        
 
 
         private void btnListMyCar_Click(object sender, EventArgs e)

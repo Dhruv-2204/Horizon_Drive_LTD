@@ -31,14 +31,16 @@ namespace Horizon_Drive_LTD.Domain.Entities
         public string FuelType { get; set; } 
         public string TransmissionType { get; set; }
         public string Status { get; set; }
+        public DateTime AvailabilityStart { get; set; }
+        public DateTime AvailabilityEnd { get; set; }
 
-      
+
 
 
 
         public Cars(string carid , string userid, string carBrand, string category, string carImage, string registrationNo, string model, int year,
          string colour, string features, string desc, decimal price, int seat, string engine, decimal rating,
-         string power, string drive, string fuel, string transmission, string status)
+         string power, string drive, string fuel, string transmission, string status, DateTime availabilityStart, DateTime availabiltyEnd)
         {
             CarID = carid;
             UserID = userid;
@@ -64,7 +66,13 @@ namespace Horizon_Drive_LTD.Domain.Entities
             Power = power;
             DriveTrain = drive;
             Status = status;
+
+            AvailabilityStart = availabilityStart;
+            AvailabilityEnd = availabiltyEnd;
+
         }
+
+
 
         
     }

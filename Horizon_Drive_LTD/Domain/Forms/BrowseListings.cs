@@ -14,6 +14,8 @@ using Timer = System.Windows.Forms.Timer;
 using Microsoft.Data.SqlClient;
 using System.Data.Common;
 using Horizon_Drive_LTD.BusinessLogic.Services;
+using System.Reflection;
+using System.Diagnostics;
 
 //BrowseListings.cs
 
@@ -80,47 +82,89 @@ namespace Horizon_Drive_LTD
             pictureBox.Location = new Point(10, 10);
             pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
+            //try
+            //{
+            //    // Replace spaces in brand to ensure folder name consistency
+            //    string brand = car.CarBrand.Replace(" ", "");
+            //    string imagePath = car.CarImagePath;
+
+            //    // Define the project root and car folder paths
+            //    string projectRoot = Path.GetFullPath(Path.Combine(Application.StartupPath, @"..\..\.."));
+            //    string carFolder = Path.Combine(projectRoot, "Media", "Images", "CarTable", brand, imagePath);
+
+            //    // Check if the folder exists
+            //    if (Directory.Exists(carFolder))
+            //    {
+            //        // Retrieve all valid image files within the folder
+            //        string[] matchingFiles = Directory.GetFiles(carFolder, "*.*")
+            //            .Where(file => file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase)
+            //                        || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase)
+            //                        || file.EndsWith(".png", StringComparison.OrdinalIgnoreCase)
+            //                        || file.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase))
+            //            .ToArray();
+
+            //        // Check if images exist and load the first one
+            //        if (matchingFiles.Length > 0)
+            //        {
+            //            pictureBox.Image = Image.FromFile(matchingFiles[0]); // Display the first valid image
+            //        }
+            //        else
+            //        {
+            //            pictureBox.Image = Properties.Resources.Logo; // Use default logo as fallback
+            //                                                          // Optional user feedback (uncomment if needed)
+            //                                                          // pictureBox.BackColor = Color.LightGray;
+            //                                                          // MessageBox.Show($"No images found in folder: {carFolder}");
+            //        }
+            //    }
+            //    else
+            //    {
+            //        pictureBox.Image = Properties.Resources.Logo; // Use default logo if folder not found
+            //                                                      // Optional user feedback (uncomment if needed)
+            //                                                      // pictureBox.BackColor = Color.LightGray;
+            //                                                      // MessageBox.Show($"Folder not found: {carFolder}");
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    // Handle unexpected exceptions gracefully
+            //    MessageBox.Show($"Image load error: {ex.Message}");
+            //    pictureBox.Image = Properties.Resources.Logo; // Default fallback image
+            //                                                  // Optional visual feedback (uncomment if needed)
+            //                                                  // pictureBox.BackColor = Color.LightGray;
+            //}
+
+
             try
             {
+                // Get the directory where images are stored for this car
+                string projectRoot = Path.GetFullPath(Path.Combine(Application.StartupPath, @"..\..\.."));
+                //string carImageDir = Path.Combine(projectRoot, "Media", "Images", "CarTable", car.CarBrand, car.CarID);
 
-                string brand = car.CarBrand.Replace(" ", "");
-                string model = car.Model.Replace(" ", "");
-                // Navigate to the specific folder for the car
-                string carFolder = Path.Combine(Application.StartupPath, "Images", "BrowseListings", $"{brand}_{model}");
+                string carImageDir = Path.Combine(projectRoot, "Media", "Images", car.CarBrand, car.CarID);
 
-                // Make sure the folder exists
-                if (Directory.Exists(carFolder))
+
+                // Get all image files in the directory
+                var imageFiles = Directory.GetFiles(carImageDir)
+                    .Where(f => f.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
+                                f.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) ||
+                                f.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
+                                f.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+
+                if (imageFiles.Any())
                 {
-                    // Get all valid image files inside the folder
-                    string[] matchingFiles = Directory.GetFiles(carFolder, "*.*")
-                        .Where(file => file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase)
-                                    || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase)
-                                    || file.EndsWith(".png", StringComparison.OrdinalIgnoreCase)
-                                    || file.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase))
-                        .ToArray();
-
-                    if (matchingFiles.Length > 0)
-                    {
-                        pictureBox.Image = Image.FromFile(matchingFiles[0]);
-                    }
-                    else
-                    {
-                        pictureBox.BackColor = Color.LightGray;
-                        MessageBox.Show("No images found in folder: " + carFolder);
-                    }
+                    pictureBox.Image = Image.FromFile(imageFiles.First());
                 }
                 else
                 {
-                    pictureBox.BackColor = Color.LightGray;
-                    MessageBox.Show("Folder not found: " + carFolder);
+                    pictureBox.Image = Properties.Resources.Logo;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Image load error: " + ex.Message);
-                pictureBox.BackColor = Color.LightGray;
+                pictureBox.Image = Properties.Resources.Logo;
+                Debug.WriteLine($"Image load error: {ex.Message}");
             }
-
 
 
             panel.Controls.Add(pictureBox);

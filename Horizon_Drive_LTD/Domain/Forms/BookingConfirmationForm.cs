@@ -269,21 +269,24 @@ namespace Horizon_Drive_LTD
                 if (!string.IsNullOrEmpty(activeUsername) && !string.IsNullOrEmpty(activeCustomerId))
                 {
                     Booking booking = new Booking(bookingId, activeCustomerId, car.CarID, formattedDate, startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"), pickupLocation, dropoffLocation,
-                     driverIncluded, babyCarSeatIncluded, insuranceIncluded, roofRackIncluded, airportPickupIncluded);
+                                                    driverIncluded, babyCarSeatIncluded, insuranceIncluded, roofRackIncluded, airportPickupIncluded);
 
                     bookingHashTable.Insert(bookingId, booking);
 
                     bookingRepo.LoadBookingsIntoDatabase(booking);
                     carRepo.ChangeCarStatus(car.CarID);
 
-                    Payment payment = new Payment(paymentId,bookingId, activeCustomerId, formattedDate,"Online", totalPrice);
+                    string userId = CurrentUser.CurrentUserId;
+                    MessageBox.Show($"{userId}");
+
+                    Payment payment = new Payment(paymentId, bookingId, userId, formattedDate, "Online", totalPrice);
                     paymentRepository.LoadPaymentIntoDatabase(payment);
 
                     // Process the final booking
                     MessageBox.Show("Your booking has been confirmed! A confirmation email will be sent shortly.",
                      "Booking Confirmed", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    string customerEmail = userRepo.GetEmailByCustomerId(activeCustomerId); 
+                    string customerEmail = userRepo.GetEmailByCustomerId(activeCustomerId);
                     EmailService.SendBookingConfirmationEmail(customerEmail, booking);
                 }
                 else

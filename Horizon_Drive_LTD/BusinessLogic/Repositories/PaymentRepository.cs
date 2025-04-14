@@ -24,12 +24,14 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             using (SqlConnection conn = _dbConnection.GetConnection())
             {
                 conn.Open();
-                string query = "INSERT INTO Payment (PaymentID, BookingID, PaymentAmount, PaymentDate, PaymentMethod) " +
-                               "VALUES (@PaymentID, @BookingID, @Amount, @PaymentDate, @PaymentMethod)";
+                string query = "INSERT INTO Payment (PaymentID, BookingID, UserID, PaymentAmount, PaymentDate, PaymentMethod) " +
+                               "VALUES (@PaymentID, @BookingID, @UserID, @PaymentAmount, @PaymentDate, @PaymentMethod)";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@PaymentID", payment.PaymentID);
                     cmd.Parameters.AddWithValue("@BookingID", payment.BookingID);
+                    cmd.Parameters.AddWithValue("@UserID", payment.UserID);
+
                     cmd.Parameters.AddWithValue("@PaymentAmount", payment.PaymentAmount);
                     cmd.Parameters.AddWithValue("@PaymentDate", payment.PaymentDate);
                     cmd.Parameters.AddWithValue("@PaymentMethod", payment.PaymentMethod);

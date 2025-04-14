@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Horizon_Drive_LTD.DataStructure;
+﻿using Horizon_Drive_LTD.DataStructure;
 using Horizon_Drive_LTD.Domain.Entities;
 using Microsoft.Data.SqlClient;
 
@@ -35,28 +30,29 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                     while (reader.Read())
                     {
                         Cars car = new Cars(
-                            reader["CarID"].ToString(),
-                            reader["UserID"].ToString(),
-
-                            reader["CarBrand"].ToString(),
-                            reader["Category"].ToString(),
-                            "",
-                            reader["RegistrationNo"].ToString(),
-                            reader["Model"].ToString(),
-                            Convert.ToInt32(reader["Years"]),
-                            reader["Colour"].ToString(),
-                            reader["Features"].ToString(),
-                            reader["VehicleDescription"].ToString(),
-                            Convert.ToDecimal(reader["CarPrice"]),
-                            Convert.ToInt32(reader["SeatNo"]),
-                            reader["EngineCapacity"].ToString(),
-                            Convert.ToDecimal(reader["Ratings"]),
-                            reader["Power"].ToString(),
-                            reader["DriveTrain"].ToString(),
-                            reader["FuelType"].ToString(),
-                            reader["TransmissionType"].ToString(),
-                            reader["Status"].ToString()
-                        );
+                                reader["CarID"] != DBNull.Value ? reader["CarID"].ToString() : "UnknownCarID",
+                                reader["UserID"] != DBNull.Value ? reader["UserID"].ToString() : "UnknownUserID",
+                                reader["CarBrand"] != DBNull.Value ? reader["CarBrand"].ToString() : "UnknownBrand",
+                                reader["Category"] != DBNull.Value ? reader["Category"].ToString() : "UnknownCategory",
+                                "", 
+                                reader["RegistrationNo"] != DBNull.Value ? reader["RegistrationNo"].ToString() : "UnknownRegNo",
+                                reader["Model"] != DBNull.Value ? reader["Model"].ToString() : "UnknownModel",
+                                reader["Years"] != DBNull.Value ? Convert.ToInt32(reader["Years"]) : 0, // Default integer value.
+                                reader["Colour"] != DBNull.Value ? reader["Colour"].ToString() : "UnknownColour",
+                                reader["Features"] != DBNull.Value ? reader["Features"].ToString() : "NoFeatures",
+                                reader["VehicleDescription"] != DBNull.Value ? reader["VehicleDescription"].ToString() : "NoDescription",
+                                reader["CarPrice"] != DBNull.Value ? Convert.ToDecimal(reader["CarPrice"]) : 0.0M, // Default decimal value.
+                                reader["SeatNo"] != DBNull.Value ? Convert.ToInt32(reader["SeatNo"]) : 0, // Default seat number.
+                                reader["EngineCapacity"] != DBNull.Value ? reader["EngineCapacity"].ToString() : "UnknownCapacity",
+                                reader["Ratings"] != DBNull.Value ? Convert.ToDecimal(reader["Ratings"]) : 0.0M, // Default rating value.
+                                reader["Power"] != DBNull.Value ? reader["Power"].ToString() : "UnknownPower",
+                                reader["DriveTrain"] != DBNull.Value ? reader["DriveTrain"].ToString() : "UnknownDriveTrain",
+                                reader["FuelType"] != DBNull.Value ? reader["FuelType"].ToString() : "UnknownFuel",
+                                reader["TransmissionType"] != DBNull.Value ? reader["TransmissionType"].ToString() : "UnknownTransmission",
+                                reader["Status"] != DBNull.Value ? reader["Status"].ToString() : "UnknownStatus",
+                                reader["AvailabilityStart"] != DBNull.Value ? Convert.ToDateTime(reader["AvailabilityStart"]) : DateTime.MinValue, // Default DateTime value.
+                                reader["AvailabilityEnd"] != DBNull.Value ? Convert.ToDateTime(reader["AvailabilityEnd"]) : DateTime.MinValue // Default DateTime value.
+);
                         // Insert the car into the hash table using its CarID as the key.
                         carHashTable.Insert(car.CarID, car);
 
@@ -102,7 +98,11 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                             reader["DriveTrain"].ToString(),
                             reader["FuelType"].ToString(),
                             reader["TransmissionType"].ToString(),
-                            reader["Status"].ToString()
+                            reader["Status"].ToString(),
+                            Convert.ToDateTime(reader["AvailabilityStart"]),
+                            Convert.ToDateTime(reader["AvailabilityEnd"])
+
+
                         );
 
                         carHashTable.Insert(car.CarID, car);
@@ -147,7 +147,9 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                             reader["DriveTrain"].ToString(),
                             reader["FuelType"].ToString(),
                             reader["TransmissionType"].ToString(),
-                            reader["Status"].ToString()
+                            reader["Status"].ToString(),
+                            Convert.ToDateTime(reader["AvailabilityStart"]),
+                            Convert.ToDateTime(reader["AvailabilityEnd"])
                         );
 
                         carHashTable.Insert(car.CarID, car);
