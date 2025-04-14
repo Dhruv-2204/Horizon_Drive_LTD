@@ -38,12 +38,14 @@
 
   <ItemGroup>
     <Folder Include="Domain\Interfaces\" />
-    <Folder Include="Media\Images\" />
     <Folder Include="Tests\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="Images\Logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Media\Images\_empty.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

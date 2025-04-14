@@ -101,25 +101,6 @@ namespace Horizon_Drive_LTD.DataStructure
             return false; // Key not found
         }
 
-        //public void GetAllItems()
-        //{
-        //    for (int i = 0; i < _capacity; i++)
-        //    {
-        //        Console.Write($"Index {i}: ");
-        //        if (_buckets[i] != null)
-        //        {
-        //            foreach (var kvp in _buckets[i])
-        //            {
-        //                Console.Write($"[{kvp.Key}: {kvp.Value}] -> ");
-        //            }
-        //            Console.WriteLine("null");
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("null");
-        //        }
-        //    }
-        //}
 
         public IEnumerable<KeyValuePair<TKey, TValue>> GetAllItems()
         {

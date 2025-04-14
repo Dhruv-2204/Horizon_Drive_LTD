@@ -19,6 +19,8 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             _dbConnection = dbConnection;
         }
 
+        // this method is used to load users from the database into a hash table
+        // fast lookup for user data   
         internal HashTable<string, User> LoadUsersIntoHashTable()
         {
             var userTable = new HashTable<string, User>(1000);

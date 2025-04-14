@@ -420,7 +420,7 @@ namespace Horizon_Drive_LTD
             }
         }
 
-        private void btnListMyCar_Click(object sender, EventArgs e)
+        /*private void btnListMyCar_Click(object sender, EventArgs e)
         {
             Guid guid = Guid.NewGuid();
             int numericPart = Math.Abs(guid.GetHashCode()) % 100000;
@@ -474,8 +474,98 @@ namespace Horizon_Drive_LTD
                 browseListings.Show();
                 this.Close();
             }
+        }*/
+
+
+        private void btnListMyCar_Click(object sender, EventArgs e)
+        {
+            if (!ValidateForm()) return;
+
+            // Generate IDs
+            string carId = "C" + (Math.Abs(Guid.NewGuid().GetHashCode()) % 100000).ToString("D5");
+            string carBrand = cboMake.SelectedItem.ToString();
+
+            try
+            {
+                // 1. Save images to project directory
+                List<string> imagePaths = SaveCarImages(uploadedPhotoPaths, carBrand, carId);
+
+                // 2. Save to database
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+
+                    // Insert car data
+                    string carQuery = @"
+                INSERT INTO Car (
+                    CarId, UserId, CarBrand, Model, Years, Category, Colour, 
+                    RegistrationNo, FuelType, TransmissionType, Drivetrain, 
+                    EngineCapacity, Power, SeatNo, VehicleDescription, 
+                    Features, CarPrice, AvailabilityStart, AvailabilityEnd
+                ) VALUES (
+                    @CarId, @UserId, @CarBrand, @Model, @Year, @Category, @Colour,
+                    @RegNo, @FuelType, @Transmission, @Drivetrain,
+                    @EngineCap, @Power, @Seats, @Description,
+                    @Features, @Price, @StartDate, @EndDate
+                )";
+
+                    using (SqlCommand cmd = new SqlCommand(carQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@CarId", carId);
+                        cmd.Parameters.AddWithValue("@UserId", GetUserIdByUsername(UsernameLabel.Text));
+                        cmd.Parameters.AddWithValue("@CarBrand", carBrand);
+                        cmd.Parameters.AddWithValue("@Model", cboModel.SelectedItem.ToString());
+                        cmd.Parameters.AddWithValue("@Year", int.Parse(cboYear.SelectedItem.ToString()));
+                        cmd.Parameters.AddWithValue("@Category", cboType.SelectedItem.ToString());
+                        cmd.Parameters.AddWithValue("@Colour", cboColor.SelectedItem.ToString());
+                        cmd.Parameters.AddWithValue("@RegNo", txtLicensePlate.Text);
+                        cmd.Parameters.AddWithValue("@FuelType", cboFuelType.SelectedItem.ToString());
+                        cmd.Parameters.AddWithValue("@Transmission", cboTransmission.SelectedItem.ToString());
+                        cmd.Parameters.AddWithValue("@Drivetrain", cboDrivetrain.SelectedItem.ToString());
+                        cmd.Parameters.AddWithValue("@EngineCap", txtEngineCapacity.Text);
+                        cmd.Parameters.AddWithValue("@Power", txtPower.Text);
+                        cmd.Parameters.AddWithValue("@Seats", cboSeatNumber.SelectedItem.ToString());
+                        cmd.Parameters.AddWithValue("@Description", txtDescription.Text);
+                        cmd.Parameters.AddWithValue("@Features", txtCarFeatures.Text);
+                        cmd.Parameters.AddWithValue("@Price", decimal.Parse(txtDailyRate.Text));
+                        cmd.Parameters.AddWithValue("@StartDate", dateTimePickerStart.Value);
+                        cmd.Parameters.AddWithValue("@EndDate", dateTimePickerEnd.Value);
+                        // Add any other parameters as needed
+
+
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    // Insert image references
+                    foreach (string path in imagePaths)
+                    {
+                        //string imageId = "IMG" + (imagePaths.IndexOf(path) + 1).ToString("D6"); // Formats as 6-digit number
+
+                        // using GUID
+                        string imageId = "IMG" + (Math.Abs(Guid.NewGuid().GetHashCode()) % 100000).ToString("D5");
+
+                        string imageQuery = "INSERT INTO CarImages (ImageId, CarId, ImagePath) VALUES (@ImageId, @CarId, @Path)";
+
+                        using (SqlCommand imgCmd = new SqlCommand(imageQuery, conn))
+                        {
+                            imgCmd.Parameters.AddWithValue("@ImageId", imageId);
+                            imgCmd.Parameters.AddWithValue("@CarId", carId);
+                            imgCmd.Parameters.AddWithValue("@Path", path);
+                            imgCmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                MessageBox.Show("Car listed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
+        // Save car listing to database
         private object GetUserIdByUsername(string text)
         {
             using (SqlConnection conn = _dbConnection.GetConnection())
@@ -490,6 +580,40 @@ namespace Horizon_Drive_LTD
                     return cmd.ExecuteScalar();
                 }
             }
+        }
+
+        // Get the project's Media/Images directory
+        private string GetProjectImageDirectory()
+        {
+            string projectRoot = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\.."));
+            return Path.Combine(projectRoot, "Media", "Images","CarTable");
+        }
+
+        // Create a subdirectory for the car's images
+        private string CreateCarImageDirectory(string carBrand, string carId)
+        {
+            string targetDir = Path.Combine(GetProjectImageDirectory(), carBrand, carId);
+            Directory.CreateDirectory(targetDir);
+            return targetDir;
+        }
+
+        // Save images to project directory and return relative paths
+        private List<string> SaveCarImages(List<string> sourcePaths, string carBrand, string carId)
+        {
+            List<string> savedPaths = new List<string>();
+            string targetDir = CreateCarImageDirectory(carBrand, carId);
+
+            foreach (string sourcePath in sourcePaths)
+            {
+                string extension = Path.GetExtension(sourcePath);
+                string fileName = $"{Guid.NewGuid()}{extension}"; // Unique filename
+                string destPath = Path.Combine(targetDir, fileName);
+
+                File.Copy(sourcePath, destPath);
+                savedPaths.Add($"Media/Images/{carBrand}/{carId}/{fileName}");
+            }
+
+            return savedPaths;
         }
 
         private void PanelUploadPhotos_Paint(object sender, PaintEventArgs e)
@@ -916,47 +1040,14 @@ namespace Horizon_Drive_LTD
             return true;
         }
 
-        private void SaveCarListing()
-        {
-            // In a real application, this would save to a database
-            // For now, we'll just create a CarListing object that could be saved
-
-            CarListing carListing = new CarListing
-            {
-                Make = cboMake.SelectedItem.ToString(),
-                Model = cboModel.SelectedItem.ToString(),
-                Year = int.Parse(cboYear.SelectedItem.ToString()),
-                Type = cboType.SelectedItem.ToString(),
-                Color = cboColor.SelectedItem.ToString(),
-                LicensePlate = txtLicensePlate.Text,
-                FuelType = cboFuelType.SelectedItem.ToString(),
-                Transmission = cboTransmission.SelectedItem.ToString(),
-                Drivetrain = cboDrivetrain.SelectedItem.ToString(),
-                EngineCapacity = txtEngineCapacity.Text,
-                Power = txtPower.Text,
-                SeatNumber = cboSeatNumber.SelectedItem.ToString(),
-                Description = txtDescription.Text,
-                Features = txtCarFeatures.Text,
-                PricePerDay = decimal.Parse(txtDailyRate.Text),
-                AvailabilityStart = dateTimePickerStart.Value,
-                AvailabilityEnd = dateTimePickerEnd.Value,
-                PhotoCount = uploadedPhotoPaths.Count
-            };
-
-            // For demo purposes, just log to console
-            Console.WriteLine($"Car Listed: {carListing.Year} {carListing.Make} {carListing.Model}");
-            Console.WriteLine($"Type: {carListing.Type}, Color: {carListing.Color}, License: {carListing.LicensePlate}");
-            Console.WriteLine($"Fuel: {carListing.FuelType}, Transmission: {carListing.Transmission}, Drivetrain: {carListing.Drivetrain}");
-            Console.WriteLine($"Engine: {carListing.EngineCapacity}, Power: {carListing.Power}, Seats: {carListing.SeatNumber}");
-            Console.WriteLine($"Daily Rate: {carListing.PricePerDay:C}");
-            Console.WriteLine($"Available: {carListing.AvailabilityStart.ToShortDateString()} to {carListing.AvailabilityEnd.ToShortDateString()}");
-            Console.WriteLine($"Photos: {carListing.PhotoCount} images uploaded");
-        }
+        
+        
 
         #endregion
     }
 
     // CarListing class embedded in this file as requested
+
     public class CarListing
     {
         public int Id { get; set; }
