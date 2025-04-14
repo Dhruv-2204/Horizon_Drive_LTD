@@ -41,6 +41,7 @@
             Save_File_btn = new Button();
             user_background = new Panel();
             DragDropListBox = new ListBox();
+            labelfilepath = new Label();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel4.SuspendLayout();
@@ -173,6 +174,7 @@
             // 
             panel4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel4.AutoSize = true;
+            panel4.Controls.Add(labelfilepath);
             panel4.Controls.Add(Upload_File_btn);
             panel4.Controls.Add(Search_Users);
             panel4.Controls.Add(Save_File_btn);
@@ -199,7 +201,7 @@
             Upload_File_btn.TabIndex = 12;
             Upload_File_btn.Text = "Upload  File";
             Upload_File_btn.UseVisualStyleBackColor = false;
-            Upload_File_btn.Click += Upload_File_Click;
+            Upload_File_btn.Click += Upload_File_btn_Click;
             // 
             // Search_Users
             // 
@@ -256,6 +258,16 @@
             DragDropListBox.Size = new Size(455, 364);
             DragDropListBox.TabIndex = 12;
             // 
+            // labelfilepath
+            // 
+            labelfilepath.AutoSize = true;
+            labelfilepath.Location = new Point(76, 55);
+            labelfilepath.Name = "labelfilepath";
+            labelfilepath.Size = new Size(72, 15);
+            labelfilepath.TabIndex = 13;
+            labelfilepath.Text = "labelfilepath";
+            labelfilepath.Visible = false;
+            // 
             // Managing_files
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -292,5 +304,6 @@
         private Button Upload_File_btn;
         private Button Maintenance_btn;
         private ListBox DragDropListBox;
+        private Label labelfilepath;
     }
 }
