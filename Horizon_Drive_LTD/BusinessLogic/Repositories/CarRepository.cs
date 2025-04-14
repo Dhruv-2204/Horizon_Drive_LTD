@@ -55,7 +55,10 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                             reader["DriveTrain"].ToString(),
                             reader["FuelType"].ToString(),
                             reader["TransmissionType"].ToString(),
-                            reader["Status"].ToString()
+                            reader["Status"].ToString(),
+                            reader["AvailabilityStart"] != DBNull.Value ? Convert.ToDateTime(reader["AvailabilityStart"]) : DateTime.MinValue, // Default DateTime value.
+                            reader["AvailabilityEnd"] != DBNull.Value ? Convert.ToDateTime(reader["AvailabilityEnd"]) : DateTime.MinValue // Default DateTime value.
+
                         );
                         // Insert the car into the hash table using its CarID as the key.
                         carHashTable.Insert(car.CarID, car);
@@ -82,6 +85,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                 {
                     while (reader.Read())
                     {
+
                         Cars car = new Cars(
                             reader["CarID"].ToString(),
                              reader["UserID"].ToString(),
@@ -102,7 +106,12 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                             reader["DriveTrain"].ToString(),
                             reader["FuelType"].ToString(),
                             reader["TransmissionType"].ToString(),
-                            reader["Status"].ToString()
+                            reader["Status"].ToString(),
+                            reader["AvailabilityStart"] != DBNull.Value ? Convert.ToDateTime(reader["AvailabilityStart"]) : DateTime.MinValue, // Default DateTime value.
+                            reader["AvailabilityEnd"] != DBNull.Value ? Convert.ToDateTime(reader["AvailabilityEnd"]) : DateTime.MinValue // Default DateTime value.
+
+
+
                         );
 
                         carHashTable.Insert(car.CarID, car);
@@ -125,6 +134,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
+
                     while (reader.Read())
                     {
                         Cars car = new Cars(
@@ -147,9 +157,11 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                             reader["DriveTrain"].ToString(),
                             reader["FuelType"].ToString(),
                             reader["TransmissionType"].ToString(),
-                            reader["Status"].ToString()
-                        );
+                            reader["Status"].ToString(),
+                            reader["AvailabilityStart"] != DBNull.Value ? Convert.ToDateTime(reader["AvailabilityStart"]) : DateTime.MinValue, // Default DateTime value.
+                            reader["AvailabilityEnd"] != DBNull.Value ? Convert.ToDateTime(reader["AvailabilityEnd"]) : DateTime.MinValue // Default DateTime value.
 
+                        );
                         carHashTable.Insert(car.CarID, car);
                     }
                 }
@@ -227,14 +239,21 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                     {
                         while (reader.Read())
                         {
-                            carIds.Add(reader.GetInt32(0));
+                            if (int.TryParse(reader["CarId"].ToString(), out int carId))
+                            {
+                                carIds.Add(carId);
+                            }
+                            else
+                            {
+                                // Handle the case where CarId is not a valid integer
+                                // Log an error or take appropriate action
+                            }
                         }
                     }
                 }
             }
 
             return carIds;
-
         }
     }
 

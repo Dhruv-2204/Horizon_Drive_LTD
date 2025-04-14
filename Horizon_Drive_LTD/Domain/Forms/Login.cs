@@ -4,6 +4,8 @@ using Horizon_Drive_LTD.BusinessLogic;
 using Horizon_Drive_LTD.BusinessLogic.Services;
 using Horizon_Drive_LTD.Domain.Entities;
 using Microsoft.Data.SqlClient;
+using System.Text;
+using System.Security.Cryptography;
 namespace splashscreen
 {
     public partial class Login : Form
@@ -70,12 +72,25 @@ namespace splashscreen
                 Password.UseSystemPasswordChar = true;
             }
         }
-
+        public static string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                StringBuilder builder = new StringBuilder();
+                foreach (var b in bytes)
+                {
+                    builder.Append(b.ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
         private void LOGIN_btn_Click(object sender, EventArgs e)
         {
             string enteredUsername = Username.Text.Trim();
             string enteredPassword = Password.Text;
 
+           // enteredPassword = HashPassword(enteredPassword); 
 
             Guid guid = Guid.NewGuid();
             

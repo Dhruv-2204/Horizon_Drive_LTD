@@ -9,6 +9,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using Horizon_Drive_LTD.DataStructure;
 using System.Collections;
 using Horizon_Drive_LTD.BusinessLogic.Services;
+using Microsoft.VisualBasic.ApplicationServices;
 
 namespace Horizon_Drive_LTD
 {
@@ -276,7 +277,10 @@ namespace Horizon_Drive_LTD
                     bookingRepo.LoadBookingsIntoDatabase(booking);
                     carRepo.ChangeCarStatus(car.CarID);
 
-                    Payment payment = new Payment(paymentId,bookingId, activeCustomerId, formattedDate,"Online", totalPrice);
+                    string userId = CurrentUser.CurrentUserId;
+                    MessageBox.Show($"{userId}");
+
+                    Payment payment = new Payment(paymentId,bookingId, userId, formattedDate,"Online", totalPrice);
                     paymentRepository.LoadPaymentIntoDatabase(payment);
 
                     // Process the final booking

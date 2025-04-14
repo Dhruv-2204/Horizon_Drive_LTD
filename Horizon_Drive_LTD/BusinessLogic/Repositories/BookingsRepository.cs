@@ -158,6 +158,65 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             return true;
         }
 
+        public List<(Booking, string carBrand, string model, int year, decimal price, string status)> GetBookingsForUserWithCarDetails(string userId)
+        {
+            var result = new List<(Booking, string, string, int, decimal, string)>();
+
+            using (SqlConnection conn = _dbConnection.GetConnection())
+            {
+                conn.Open();
+
+                string query = @"
+               SELECT 
+                    b.*, 
+                    c.CarBrand, 
+                    c.Model, 
+                    YEAR(c.Years) AS Years,   
+                    c.CarPrice, 
+                    c.Status
+                FROM Booking b
+                INNER JOIN Car c ON b.CarID = c.CarID
+                WHERE c.UserID = @userId";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@userId", userId);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Booking booking = new Booking(
+                                reader["BookingID"].ToString(),
+                                reader["CustomerID"].ToString(),
+                                reader["CarID"].ToString(),
+                                reader["BookingDate"].ToString(),
+                                reader["PickupDate"].ToString(),
+                                reader["DropoffDate"].ToString(),
+                                reader["PickupLocation"].ToString(),
+                                reader["DropoffLocation"].ToString(),
+                                Convert.ToBoolean(reader["IncludeDriver"]),
+                                Convert.ToBoolean(reader["BabyCarSeat"]),
+                                Convert.ToBoolean(reader["FullInsuranceCoverage"]),
+                                Convert.ToBoolean(reader["RoofRack"]),
+                                Convert.ToBoolean(reader["AirportPickupDropoff"])
+                            );
+
+                            string carBrand = reader["CarBrand"].ToString();
+                            string model = reader["Model"].ToString();
+                            int year = Convert.ToInt32(reader["Years"]);
+                            decimal price = Convert.ToDecimal(reader["CarPrice"]);
+                            string status = reader["Status"].ToString();
+
+                            result.Add((booking, carBrand, model, year, price, status));
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
 
 
     }

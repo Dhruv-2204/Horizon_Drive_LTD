@@ -10,7 +10,6 @@ namespace Horizon_Drive_LTD.Domain.Entities
     {
         public static string CurrentUserId { get; set; }
         public static User Currentuser { get; set; }
-      
 
     }
 }

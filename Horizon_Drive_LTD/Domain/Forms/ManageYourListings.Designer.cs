@@ -101,8 +101,6 @@
             panelReservations.SuspendLayout();
             panelTotalListings.SuspendLayout();
             SuspendLayout();
-
-            this.FormClosing += ManageListing_FormClosing;
             // 
             // panelSidebar
             // 
@@ -798,6 +796,7 @@
             Name = "ManageYourListings";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Horizon Drive - Manage Your Listings";
+            FormClosing += ManageListing_FormClosing;
             panelSidebar.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).EndInit();
             panelMain.ResumeLayout(false);

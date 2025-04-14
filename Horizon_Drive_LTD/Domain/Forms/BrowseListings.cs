@@ -5,21 +5,14 @@ using Horizon_Drive_LTD.BusinessLogic.Repositories;
 using Horizon_Drive_LTD.BusinessLogic;
 using Horizon_Drive_LTD.Domain.Entities;
 using Horizon_Drive_LTD.DataStructure;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Web;
-using System.Windows.Forms;
-using Timer = System.Windows.Forms.Timer;
+
 using Microsoft.Data.SqlClient;
-using System.Data.Common;
-using Horizon_Drive_LTD.BusinessLogic.Services;
+
 
 //BrowseListings.cs
 
 namespace Horizon_Drive_LTD
 {
-
 
     public partial class BrowseListings : Form
     {
@@ -120,7 +113,6 @@ namespace Horizon_Drive_LTD
                 MessageBox.Show("Image load error: " + ex.Message);
                 pictureBox.BackColor = Color.LightGray;
             }
-
 
 
             panel.Controls.Add(pictureBox);
@@ -224,6 +216,7 @@ namespace Horizon_Drive_LTD
 
         }
 
+
         private void btnManageBooking_Click(object sender, EventArgs e)
         {
             // Open the Manage Bookings form
@@ -254,13 +247,11 @@ namespace Horizon_Drive_LTD
 
             if (result == DialogResult.Yes)
             {
-              
                 MessageBox.Show("You have been logged out successfully.",
                                "Log Out",
                                MessageBoxButtons.OK,
                                MessageBoxIcon.Information);
 
-               
             }
         }
 
@@ -286,7 +277,6 @@ namespace Horizon_Drive_LTD
                 }
             }
         }
-
 
 
         private void buttonProfile_Click(object sender, EventArgs e)
