@@ -1,28 +1,29 @@
-﻿using System.Data;
-using System.Drawing.Drawing2D;
-using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Windows.Forms;
-using System.Linq;
+﻿using Microsoft.Data.SqlClient;
 using Horizon_Drive_LTD.BusinessLogic;
+using Horizon_Drive_LTD.DataStructure;
 
 namespace Horizon_Drive_LTD
 {
     public partial class ListCarForm : Form
     {
-        // List to keep track of uploaded photos
-        private List<string> uploadedPhotoPaths = new List<string>();
-        private List<PictureBox> photoPictureBoxes = new List<PictureBox>();
+
+        private HashTable<string, CarListing> carHashTable;
+
+
 
         // Database connection
         DatabaseConnection _dbConnection = new DatabaseConnection();
 
+        // List to keep track of uploaded photos
+        private List<string> uploadedPhotoPaths = new List<string>();
+        private List<PictureBox> photoPictureBoxes = new List<PictureBox>();
+
         public ListCarForm()
         {
             InitializeComponent();
+
+            //
+            carHashTable = new HashTable<string, CarListing>(1000);
 
             // Initialize photo placeholders
             InitializePhotoPlaceholders();
