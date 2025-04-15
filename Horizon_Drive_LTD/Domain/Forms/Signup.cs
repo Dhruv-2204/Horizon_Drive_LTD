@@ -3,18 +3,21 @@
     using System.Security.Cryptography;
     using System.Text;
     using System.Text.RegularExpressions;
-    using Horizon_Drive_LTD.BusinessLogic;
     using Horizon_Drive_LTD.BusinessLogic.Repositories;
+    using Horizon_Drive_LTD.BusinessLogic;
     using Horizon_Drive_LTD.BusinessLogic.Services;
     using Horizon_Drive_LTD.Domain.Entities;
-    using Microsoft.Data.SqlClient;
-    //Using the splashcreen namespace to summon the Login window
     using splashscreen;
+    using Microsoft.Data.SqlClient;
+
     public partial class Signup : Form
     {
         private bool isClosing = false;
 
         private AuthenticationService _authService;
+       // private readonly DatabaseConnection _dbConnection;
+       DatabaseConnection _dbConnection = new DatabaseConnection();
+
         public Signup(AuthenticationService authService)
         {
             InitializeComponent();
@@ -47,19 +50,22 @@
 
         private void Login_button(object sender, EventArgs e)
         {
-            Login login = new Login(); // Pass existing auth service to Login
+
+            Login login = new Login(_authService); 
             login.Show();
             this.Dispose();
         }
 
         private void sign_btn(object sender, EventArgs e)
         {
-            Login login = new Login(); // Pass existing auth service to Login
-            login.Show();
+            
+            BrowseListings browseListing = new BrowseListings();
+            browseListing.Show();
+
             this.Dispose();
         }
 
-
+        /// Event handler for the "Show Password" checkbox
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox1.Checked == true)
@@ -72,6 +78,7 @@
             }
         }
 
+        /// Hashes the password using SHA256
         public static string HashPassword(string password)
         {
             using (SHA256 sha256 = SHA256.Create())
@@ -96,9 +103,12 @@
         {
             Guid guid = Guid.NewGuid();
             int numericPart = Math.Abs(guid.GetHashCode()) % 100000;
-            string UserId = "U" + numericPart.ToString("D5");
-            string CustomerId = "CU" + numericPart.ToString("D5");
-            string LessorId = "L" + numericPart.ToString("D5");
+            string userId = "U" + numericPart.ToString("D5");
+
+            string customerid = "CU" + numericPart.ToString("D5");
+            string lessorid = "L" + numericPart.ToString("D5");
+
+
             string firstName = First_Name.Text.Trim();
             string lastName = Last_Name.Text.Trim();
             string username = Username.Text.Trim();
@@ -152,7 +162,7 @@
 
             // If all validation passes, create the user object
             User newUser = new(
-                UserId,
+                userId,
                 username,
                 firstName,
                 lastName,
@@ -164,26 +174,33 @@
                 string.Empty 
             );
 
+          
 
-            DatabaseConnection _dbConnection = new DatabaseConnection();
 
             bool result = _authService.SignUp(newUser);
             if (result)
             {
-                //InsertCustomerId(customerId, userId);
+                MessageBox.Show("Account created successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                
+                
+                
+
+                UserRepository userRepo = new UserRepository(new DatabaseConnection());
+
 
                 using (SqlConnection conn = _dbConnection.GetConnection())
                 {
                     conn.Open();
 
                     string query = @"INSERT INTO Customer
-                              (CustomerId, UserId)
-                              VALUES 
-                              (@CustomerId, @UserId)";
+                  (CustomerId, UserId)
+                  VALUES 
+                  (@CustomerId, @UserId)";
 
                     SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@CustomerId", CustomerId);
-                    cmd.Parameters.AddWithValue("@UserId", UserId);
+                    cmd.Parameters.AddWithValue("@CustomerId", customerid);
+                    cmd.Parameters.AddWithValue("@UserId", userId);
                     cmd.ExecuteNonQuery();
 
 
@@ -193,32 +210,23 @@
                 {
                     conn.Open();
                     string query = @"INSERT INTO Lessor
-                              (LessorId, UserId)
-                              VALUES 
-                              (@LessorId, @UserId)";
+                  (LessorId, UserId)
+                  VALUES 
+                  (@LessorId, @UserId)";
 
                     SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@LessorId", LessorId);
-                    cmd.Parameters.AddWithValue("@UserId", UserId);
+                    cmd.Parameters.AddWithValue("@LessorId", lessorid);
+                    cmd.Parameters.AddWithValue("@UserId", userId);
                     cmd.ExecuteNonQuery();
                 }
-                DialogResult dialogResult = MessageBox.Show(
-                    "Account created successfully!",
-                    "Success",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
-
-                if (dialogResult == DialogResult.OK)
-                {
-                    Login login = new Login(); // Pass existing auth service to Login
-                    login.Show();
-                    // Optionally, you can close the signup form here
 
 
-                    // Close the current form, if necessary.
-                    this.Hide();
-                }
+                userRepo.StoreActiveUser(username, userId , customerid, lessorid);
+
+                BrowseListings browseListing = new BrowseListings();
+                browseListing.Show();
+                this.Dispose();
+
             }
             else
             {

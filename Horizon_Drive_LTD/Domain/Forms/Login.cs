@@ -3,9 +3,9 @@ using Horizon_Drive_LTD.BusinessLogic.Repositories;
 using Horizon_Drive_LTD.BusinessLogic;
 using Horizon_Drive_LTD.BusinessLogic.Services;
 using Horizon_Drive_LTD.Domain.Entities;
+using Microsoft.Data.SqlClient;
 using System.Text;
 using System.Security.Cryptography;
-using Microsoft.Data.SqlClient;
 namespace splashscreen
 {
     public partial class Login : Form
@@ -14,16 +14,17 @@ namespace splashscreen
         private AuthenticationService _authService;
         private DatabaseConnection _dbConnection;
 
-        public Login(AuthenticationService authService, DatabaseConnection dbConnection)
+        public Login(AuthenticationService authService)
         {
             InitializeComponent();
            _authService = authService ?? throw new ArgumentNullException(nameof(authService));
-           _dbConnection = dbConnection ?? throw new ArgumentNullException(nameof(dbConnection));
+            _dbConnection = new DatabaseConnection(); 
         }
 
         public Login()
         {
             InitializeComponent();
+
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -45,11 +46,21 @@ namespace splashscreen
             }
             else
             {
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+                    string dropTableQuery = "DROP TABLE IF EXISTS ActiveUser;";
+                    using (SqlCommand cmd = new SqlCommand(dropTableQuery, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
                 Application.Exit(); // Properly terminates the application without triggering FormClosing again
             }
         }
 
-       
+
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
@@ -63,6 +74,7 @@ namespace splashscreen
             }
         }
 
+        // Hash the password using SHA256
         public static string HashPassword(string password)
         {
             using (SHA256 sha256 = SHA256.Create())
@@ -77,45 +89,43 @@ namespace splashscreen
             }
         }
 
+        /// Event handler for the "Login" button
         private void LOGIN_btn_Click(object sender, EventArgs e)
         {
             string enteredUsername = Username.Text.Trim();
             string enteredPassword = Password.Text;
 
-            enteredPassword = HashPassword(enteredPassword); // Hash the entered password  // M@he2025
+            enteredPassword = HashPassword(enteredPassword); // Hash the password before sending it to the authentication service
 
-
+            Guid guid = Guid.NewGuid();
+            
 
             if (_authService.Login(enteredUsername, enteredPassword, out User loggedInUser))
             {
 
-                using (SqlConnection conn = _dbConnection.GetConnection())
+
+                UserRepository userRepo = new UserRepository(new DatabaseConnection());
+                CustomerRepository customerRepo = new CustomerRepository(new DatabaseConnection());
+                LessorRepository lessorRepo = new LessorRepository(new DatabaseConnection());
+
+                string userId = userRepo.GetUserIdByUsername(enteredUsername);
+
+                string customerid = customerRepo.GetCustomerIdByUserId(userId);
+
+                string lessorid = lessorRepo.GetLessorIdByUserId(userId);
+
+                if (!string.IsNullOrEmpty(userId))
                 {
-                    conn.Open();
+                    userRepo.StoreActiveUser(enteredUsername, userId, customerid, lessorid);
 
-                    // Create the ActiveUser table if it does not exist
-                    string createTableQuery = @"
-                                IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='ActiveUser' AND xtype='U')
-                                CREATE TABLE ActiveUser (
-                                UserName Varchar(100) NOT NULL
-                                );";
-                    using (SqlCommand cmd = new SqlCommand(createTableQuery, conn))
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
+                    CurrentUser.CurrentUserId = userId;
+                    CurrentUser.Currentuser = loggedInUser;
 
-                    // Insert the current user's username into the ActiveUser table
-                    string insertUserQuery = @"
-                    INSERT INTO ActiveUser (UserName)
-                    VALUES (@UserName);";
-                    using (SqlCommand cmd = new SqlCommand(insertUserQuery, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@UserName", loggedInUser.UserName);
-                        //cmd.Parameters.AddWithValue("@UserId", loggedInUser.UserId);
-                        cmd.ExecuteNonQuery();
-                    }
                 }
-
+                else
+                {
+                    MessageBox.Show("User ID not found.");
+                }
 
 
                 DialogResult result = MessageBox.Show(
@@ -127,27 +137,12 @@ namespace splashscreen
 
                 if (result == DialogResult.OK)
                 {
-                    Options_Personal dashboard = new Options_Personal();
-                    dashboard.FormClosed += (s, args) =>
-                    {
-                        // Delete the ActiveUser table when the dashboard is closed
-                        using (SqlConnection conn = _dbConnection.GetConnection())
-                        {
-                            conn.Open();
-                            string dropTableQuery = "DROP TABLE IF EXISTS ActiveUser;";
-                            using (SqlCommand cmd = new SqlCommand(dropTableQuery, conn))
-                            {
-                                cmd.ExecuteNonQuery();
-                            }
-                        }
-
-                        this.Close(); // Close the login form
-                    };
-
-                    dashboard.Show();
+                    BrowseListings browseListing = new BrowseListings();
+                    browseListing.FormClosed += (s, args) => this.Close();
+                    browseListing.Show();
 
                     // Hide the current form (Login form)
-                    this.Hide();
+                    this.Dispose();
                 }
             }
             else
@@ -157,102 +152,7 @@ namespace splashscreen
         }
 
 
-        // dummy code to find lost password
-
-        //private void LOGIN_btn_Click(object sender, EventArgs e)
-        //{
-        //    string enteredUsername = Username.Text.Trim();
-        //    string enteredPassword = Password.Text;
-
-        //    string actualPasswordFromDB = null;
-        //    //enteredPassword = HashPassword(enteredPassword);
-
-        //    using (SqlConnection conn = _dbConnection.GetConnection())
-        //    {
-        //        conn.Open();
-
-        //        // Step 1: Retrieve actual password for the entered username
-        //        string query = "SELECT Password FROM [User] WHERE UserName = @UserName";
-        //        using (SqlCommand cmd = new SqlCommand(query, conn))
-        //        {
-        //            cmd.Parameters.AddWithValue("@UserName", enteredUsername);
-        //            var result = cmd.ExecuteScalar();
-
-        //            if (result == null)
-        //            {
-        //                MessageBox.Show("Username not found.", "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        //                return;
-        //            }
-
-        //            actualPasswordFromDB = result.ToString();
-        //        }
-        //    }
-
-        //    // Step 2: Display the actual password to the user (for testing only)
-        //    MessageBox.Show($"Password for {enteredUsername} is: {actualPasswordFromDB}", "Debug Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-        //    // Step 3: Check if user typed the correct password (plaintext comparison)
-        //    if (enteredPassword == actualPasswordFromDB)
-        //    {
-        //        // OPTIONAL: proceed to track ActiveUser (same as before)
-        //        using (SqlConnection conn = _dbConnection.GetConnection())
-        //        {
-        //            conn.Open();
-
-        //            string createTableQuery = @"
-        //        IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='ActiveUser' AND xtype='U')
-        //        CREATE TABLE ActiveUser (
-        //            UserName Varchar(100) NOT NULL
-        //        );";
-        //            using (SqlCommand cmd = new SqlCommand(createTableQuery, conn))
-        //            {
-        //                cmd.ExecuteNonQuery();
-        //            }
-
-        //            string insertUserQuery = "INSERT INTO ActiveUser (UserName) VALUES (@UserName);";
-        //            using (SqlCommand cmd = new SqlCommand(insertUserQuery, conn))
-        //            {
-        //                cmd.Parameters.AddWithValue("@UserName", enteredUsername);
-        //                cmd.ExecuteNonQuery();
-        //            }
-        //        }
-
-        //        DialogResult result = MessageBox.Show(
-        //            $"Welcome, {enteredUsername}!",
-        //            "Login Successful",
-        //            MessageBoxButtons.OK,
-        //            MessageBoxIcon.Information
-        //        );
-
-        //        if (result == DialogResult.OK)
-        //        {
-        //            Options_Personal dashboard = new Options_Personal();
-        //            dashboard.FormClosed += (s, args) =>
-        //            {
-        //                using (SqlConnection conn = _dbConnection.GetConnection())
-        //                {
-        //                    conn.Open();
-        //                    string dropTableQuery = "DROP TABLE IF EXISTS ActiveUser;";
-        //                    using (SqlCommand cmd = new SqlCommand(dropTableQuery, conn))
-        //                    {
-        //                        cmd.ExecuteNonQuery();
-        //                    }
-        //                }
-        //                this.Close();
-        //            };
-
-        //            dashboard.Show();
-        //            this.Hide();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Incorrect password entered.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //    }
-        //}
-
-
-
+        // / Event handler for the "Sign Up" button
         private void Signup_btn_Click(object sender, EventArgs e)
         {
             var userRepo = new UserRepository(new DatabaseConnection());

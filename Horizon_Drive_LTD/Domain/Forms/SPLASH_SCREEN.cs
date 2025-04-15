@@ -76,10 +76,10 @@ namespace splashscreen
             var userRepo = new UserRepository(new DatabaseConnection());
             var userHashTable = userRepo.LoadUsersIntoHashTable();
             var authService = new AuthenticationService(userHashTable, userRepo);
-            var dbConnection = new DatabaseConnection();
+            //var dbConnection = new DatabaseConnection();
 
             // Show the Login form with injected authService
-            Login loginForm = new Login(authService, dbConnection);
+            Login loginForm = new Login(authService);
             loginForm.Show();
 
             this.Hide();

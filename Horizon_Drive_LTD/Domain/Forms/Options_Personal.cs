@@ -3,6 +3,9 @@ using Microsoft.Data.SqlClient;
 using Horizon_Drive_LTD.BusinessLogic;
 using System.Text;
 using System.Security.Cryptography;
+using Horizon_Drive_LTD.BusinessLogic.Repositories;
+using Horizon_Drive_LTD.BusinessLogic.Services;
+using splashscreen;
 
 namespace Horizon_Drive_LTD
 {
@@ -139,6 +142,36 @@ namespace Horizon_Drive_LTD
                 // Position the camera button relative to the profile image
                 buttonCamera.Left = panelProfileImage.Left + panelProfileImage.Width - 32;
                 buttonCamera.Top = panelProfileImage.Top + panelProfileImage.Height - 34;
+            }
+        }
+
+        private bool isClosing = false;
+        private void MyForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (isClosing) return;
+            isClosing = true;
+
+            DialogResult result = MessageBox.Show("Do you want to close the Car Hire Application?", "Confirm Exit",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.No)
+            {
+                e.Cancel = true; // Prevent closing
+                isClosing = false;
+            }
+            else
+            {
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+                    string dropTableQuery = "DROP TABLE IF EXISTS ActiveUser;";
+                    using (SqlCommand cmd = new SqlCommand(dropTableQuery, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                Application.Exit(); // Properly terminates the application without triggering FormClosing again
             }
         }
 
@@ -323,75 +356,6 @@ namespace Horizon_Drive_LTD
             }
         }
 
-        //private void btnSaveChanges_Click(object sender, EventArgs e)
-        //{
-        //    // Validate inputs
-        //    if (string.IsNullOrWhiteSpace(textBoxFirstName.Text) ||
-        //        string.IsNullOrWhiteSpace(textBoxLastName.Text) ||
-        //        string.IsNullOrWhiteSpace(textBoxEmail.Text) ||
-        //        //string.IsNullOrWhiteSpace(textBoxPhone.Text) ||
-        //        //string.IsNullOrWhiteSpace(textBoxPassword.Text) ||
-        //        string.IsNullOrWhiteSpace(textBoxAddress.Text))
-        //    {
-        //        MessageBox.Show("Please fill in all fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        //        return;
-        //    }
-        //    else
-        //    {
-        //        try
-        //        {
-        //            using (SqlConnection sqlConnection = _dbConnection.GetConnection())
-        //            {
-        //                sqlConnection.Open();
-
-        //                string query = "UPDATE [User] " +
-        //                               "SET FirstName = @FirstName," +
-        //                               "LastName = @LastName," +
-        //                               "Email = @Email," +
-        //                               "TelephoneNo = @TelephoneNo," +
-        //                               "Address = @Address," +
-        //                               "Password = @Password, " +
-        //                               "ProfilePicture = @ProfilePicture " +
-        //                               "WHERE UserName = @UserName";
-        //                using (SqlCommand sqlCommand = new SqlCommand(query, sqlConnection))
-        //                {
-        //                    textBoxPassword.Text = HashPassword(textBoxPassword.Text);
-        //                    sqlCommand.Parameters.AddWithValue("@FirstName", textBoxFirstName.Text);
-        //                    sqlCommand.Parameters.AddWithValue("@LastName", textBoxLastName.Text);
-        //                    sqlCommand.Parameters.AddWithValue("@Email", textBoxEmail.Text);
-        //                    sqlCommand.Parameters.AddWithValue("@TelephoneNo", textBoxPhone.Text);
-        //                    sqlCommand.Parameters.AddWithValue("@Address", textBoxAddress.Text);
-        //                    sqlCommand.Parameters.AddWithValue("@UserName", Username_Label.Text);
-        //                    //if (sqlCommand.Parameters.AddWithValue("@Password"))
-        //                    sqlCommand.Parameters.AddWithValue("@Password", HashPassword(textBoxPassword.Text));
-        //                    sqlCommand.Parameters.AddWithValue("@ProfilePicture", profileImagePath);
-        //                    int rowsAffected = sqlCommand.ExecuteNonQuery();
-        //                    if (rowsAffected > 0)
-        //                    {
-        //                        MessageBox.Show($"Profile updated successfully. {textBoxPassword.Text}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //                        MessageBox.Show($"{HashPassword(textBoxPassword.Text)}");
-        //                    }
-        //                    else
-        //                    {
-        //                        MessageBox.Show("No changes made or user not found.", "Update Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        catch (SqlException sqlEx)
-        //        {
-        //            MessageBox.Show($"Database error: {sqlEx.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //        }
-
-        //        // Here you would save the user's information to a database or file
-        //        // For now, we'll just show a success message
-        //        MessageBox.Show("Your information has been saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //    }
-        //}
 
         private void btnSaveChanges_Click(object sender, EventArgs e)
         {
@@ -412,7 +376,7 @@ namespace Horizon_Drive_LTD
 
                     string currentPasswordHash = string.Empty;
 
-                    // Step 1: Fetch current password hash from the database
+                    //  Fetch current password hash from the database
                     string fetchQuery = "SELECT Password FROM [User] WHERE UserName = @UserName";
                     using (SqlCommand fetchCommand = new SqlCommand(fetchQuery, sqlConnection))
                     {
@@ -422,7 +386,7 @@ namespace Horizon_Drive_LTD
                             currentPasswordHash = result.ToString();
                     }
 
-                    // Step 2: Determine whether the password needs re-hashing
+                    //  Determine whether the password needs re-hashing
                     string enteredPassword = textBoxPassword.Text.Trim();
                     string finalPassword = currentPasswordHash;
 
@@ -432,16 +396,16 @@ namespace Horizon_Drive_LTD
                         finalPassword = HashPassword(enteredPassword);
                     }
 
-                    // Step 3: Perform update
+                    //  Perform update
                     string updateQuery = @"UPDATE [User]
-                                   SET FirstName = @FirstName,
-                                       LastName = @LastName,
-                                       Email = @Email,
-                                       TelephoneNo = @TelephoneNo,
-                                       Address = @Address,
-                                       Password = @Password,
-                                       ProfilePicture = @ProfilePicture
-                                   WHERE UserName = @UserName";
+                                           SET FirstName = @FirstName,
+                                               LastName = @LastName,
+                                               Email = @Email,
+                                               TelephoneNo = @TelephoneNo,
+                                               Address = @Address,
+                                               Password = @Password,
+                                               ProfilePicture = @ProfilePicture
+                                           WHERE UserName = @UserName";
 
                     using (SqlCommand sqlCommand = new SqlCommand(updateQuery, sqlConnection))
                     {
@@ -503,36 +467,36 @@ namespace Horizon_Drive_LTD
             preferencesForm.Show();
 
             // Hide the current Personal form
-            this.Hide();
+            this.Dispose();
         }
 
         private void btnManageBooking_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Manage Booking functionality would open a form to view and manage bookings.",
-                           "Manage Bookings",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
+            ManageBookings manageBookings = new ManageBookings();
+            manageBookings.Show();
+            this.Dispose();
         }
 
         private void btnListCar_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("List a Car functionality would open a form to add a new listing.",
-                           "List a Car",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
+            ListCarForm listCarForm = new ListCarForm();
+            listCarForm.Show();
+            this.Dispose();
         }
 
         private void btnManageYourListings_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Manage Your Listings functionality would open a form to view and manage your car listings.",
-                           "Manage Your Listings",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
+            ManageYourListings manageYourListings = new ManageYourListings();
+            manageYourListings.Show();
+            this.Dispose();
         }
 
         private void btnOptions_Click(object sender, EventArgs e)
         {
             // Already on the options form, so do nothing or refresh
+            Options_Personal optionsForm = new Options_Personal();
+            optionsForm.Show();
+            this.Dispose();
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
@@ -560,9 +524,30 @@ namespace Horizon_Drive_LTD
                     }
                 }
 
+                OpenLoginUp();
+
                 // Application.Restart(); // Uncomment to restart application
                 this.Close(); // Uncomment to close current form
             }
+            else
+            {
+                return; // User chose not to log out, do nothing
+            }
+        }
+
+        private void OpenLoginUp()
+        {
+
+            var userRepo = new UserRepository(new DatabaseConnection());
+            var userHashTable = userRepo.LoadUsersIntoHashTable();
+            var authService = new AuthenticationService(userHashTable, userRepo);
+            //var dbConnection = new DatabaseConnection();
+
+            // Show the Login form with injected authService
+            Login loginForm = new Login(authService);
+            loginForm.Show();
+
+            this.Dispose();
         }
 
         private void pictureBoxLogo_Click(object sender, EventArgs e)
@@ -578,7 +563,9 @@ namespace Horizon_Drive_LTD
 
         private void btnBrowseListings_Click(object sender, EventArgs e)
         {
-            // Browse listings functionality
+            BrowseListings browseListings = new BrowseListings();
+            browseListings.Show();
+            this.Dispose();
         }
 
         private void panelTabs_Paint(object sender, PaintEventArgs e)
@@ -652,6 +639,8 @@ namespace Horizon_Drive_LTD
 
         private void Options_Personal_Load(object sender, EventArgs e)
         {
+            this.FormClosing += new FormClosingEventHandler(MyForm_FormClosing);
+
             try
             {
                 using (SqlConnection conn = _dbConnection.GetConnection())
@@ -720,38 +709,4 @@ namespace Horizon_Drive_LTD
         }
     }
 
-    // RoundedButton class remains unchanged
-    public class RoundedButton : Button
-    {
-        private int borderRadius = 26;
-
-        public RoundedButton()
-        {
-            this.FlatStyle = FlatStyle.Flat;
-            this.FlatAppearance.BorderSize = 0;
-        }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            // Enable anti-aliasing for smooth edges
-            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-
-            GraphicsPath path = new GraphicsPath();
-            Rectangle rect = new Rectangle(0, 0, this.Width, this.Height);
-
-            // Create rounded rectangle with the specified corner radius
-            int diameter = borderRadius * 2;
-            path.AddArc(rect.X, rect.Y, diameter, diameter, 180, 90);
-            path.AddArc(rect.Width - diameter, rect.Y, diameter, diameter, 270, 90);
-            path.AddArc(rect.Width - diameter, rect.Height - diameter, diameter, diameter, 0, 90);
-            path.AddArc(rect.X, rect.Height - diameter, diameter, diameter, 90, 90);
-            path.CloseAllFigures();
-
-            // Set the button's region to our rounded rectangle
-            this.Region = new Region(path);
-
-            // Draw the button
-            base.OnPaint(e);
-        }
-    }
 }

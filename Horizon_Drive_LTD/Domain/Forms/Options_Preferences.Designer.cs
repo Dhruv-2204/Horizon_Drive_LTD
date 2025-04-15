@@ -381,6 +381,7 @@
             Name = "Options_Preferences";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Horizon Drive - Account Settings";
+            Load += Options_Preferences_Load;
             panelSidebar.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).EndInit();
             mainScrollPanel.ResumeLayout(false);

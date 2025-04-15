@@ -2,7 +2,10 @@
 
 //Options_Preferences.cs
 using Horizon_Drive_LTD.BusinessLogic;
+using Horizon_Drive_LTD.BusinessLogic.Repositories;
+using Horizon_Drive_LTD.BusinessLogic.Services;
 using Microsoft.Data.SqlClient;
+using splashscreen;
 
 namespace Horizon_Drive_LTD
 {
@@ -275,7 +278,7 @@ namespace Horizon_Drive_LTD
             };
 
             personalForm.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void btnPreferences_Click(object sender, EventArgs e)
@@ -286,39 +289,38 @@ namespace Horizon_Drive_LTD
         private void btnBrowseListings_Click(object sender, EventArgs e)
         {
             // Browse listings functionality
-            MessageBox.Show("Browse Listings functionality would open a form to view available car listings.",
-                           "Browse Listings",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
+            BrowseListings browseListingsForm = new BrowseListings();
+            browseListingsForm.Show();
+            this.Dispose();
         }
 
         private void btnManageBooking_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Manage Booking functionality would open a form to view and manage bookings.",
-                           "Manage Bookings",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
+            ManageBookings manageBookingsForm = new ManageBookings();
+            manageBookingsForm.Show();
+            this.Dispose();
         }
 
         private void btnListCar_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("List a Car functionality would open a form to add a new listing.",
-                           "List a Car",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
+            ListCarForm listCarForm = new ListCarForm();
+            listCarForm.Show();
+            this.Dispose();
         }
 
         private void btnManageYourListings_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Manage Your Listings functionality would open a form to view and manage your car listings.",
-                           "Manage Your Listings",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
+            ManageYourListings manageYourListingsForm = new ManageYourListings();
+            manageYourListingsForm.Show();
+            this.Dispose();
         }
 
         private void btnOptions_Click(object sender, EventArgs e)
         {
             // Already on the options form, so do nothing or refresh
+            Options_Preferences optionsForm = new Options_Preferences();
+            optionsForm.Show();
+            this.Dispose();
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
@@ -349,7 +351,28 @@ namespace Horizon_Drive_LTD
 
                 // Application.Restart(); // Uncomment to restart application
                 this.Close(); // Close current form
+                OpenLoginUp(); // Open login form
             }
+
+            else
+            {
+                return; // User chose not to log out, do nothing
+            }
+        }
+
+        private void OpenLoginUp()
+        {
+
+            var userRepo = new UserRepository(new DatabaseConnection());
+            var userHashTable = userRepo.LoadUsersIntoHashTable();
+            var authService = new AuthenticationService(userHashTable, userRepo);
+            //var dbConnection = new DatabaseConnection();
+
+            // Show the Login form with injected authService
+            Login loginForm = new Login(authService);
+            loginForm.Show();
+
+            this.Dispose();
         }
 
         private void pictureBoxLogo_Click(object sender, EventArgs e)
@@ -359,6 +382,41 @@ namespace Horizon_Drive_LTD
                 "Navigation",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
+        }
+
+        private bool isClosing = false;
+        private void MyForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (isClosing) return;
+            isClosing = true;
+
+            DialogResult result = MessageBox.Show("Do you want to close the Car Hire Application?", "Confirm Exit",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.No)
+            {
+                e.Cancel = true; // Prevent closing
+                isClosing = false;
+            }
+            else
+            {
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+                    string dropTableQuery = "DROP TABLE IF EXISTS ActiveUser;";
+                    using (SqlCommand cmd = new SqlCommand(dropTableQuery, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                Application.Exit(); // Properly terminates the application without triggering FormClosing again
+            }
+        }
+
+        private void Options_Preferences_Load(object sender, EventArgs e)
+        {
+            this.FormClosing += new FormClosingEventHandler(MyForm_FormClosing);
         }
     }
 }

@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Horizon_Drive_LTD.DataStructure
+﻿namespace Horizon_Drive_LTD.DataStructure
 {
-   public class HashTable<TKey, TValue>
+    // This is an implementation of a hash table using separate chaining with linked lists.
+    public class HashTable<TKey, TValue>
     {
         private int _capacity;
         private int _size;
         private float _loadFactor;
         private LinkedList<KeyValuePair<TKey, TValue>>[] _buckets;
 
+        // Constructor to initialize the hash table with a specified capacity and load factor
         public HashTable(int capacity, float loadFactor = 0.75f)
         {
             if (capacity <= 0)
@@ -25,7 +21,7 @@ namespace Horizon_Drive_LTD.DataStructure
             _size = 0;
             _buckets = new LinkedList<KeyValuePair<TKey, TValue>>[_capacity];
         }
-
+        // This method is used to calculate the index for a given key using the Fibonacci Hashing method.
         private int GetHash(TKey key)
         {
             int hash = key.GetHashCode();
@@ -33,7 +29,7 @@ namespace Horizon_Drive_LTD.DataStructure
             double fractionalPart = product - Math.Floor(product);
             return (int)(_capacity * fractionalPart);
         }
-
+        // This method is used to insert a key-value pair into the hash table.
         public void Insert(TKey key, TValue value)
         {
             if (ShouldResize())
@@ -43,18 +39,21 @@ namespace Horizon_Drive_LTD.DataStructure
 
             if (_buckets[index] == null)
             {
+                // If the bucket is null, create a new linked list for that index
                 _buckets[index] = new LinkedList<KeyValuePair<TKey, TValue>>();
             }
 
             var bucket = _buckets[index];
             var existingNode = bucket.FirstOrDefault(node => node.Key.Equals(key));
+
+            // Check if the key already exists in the bucket
             if (!EqualityComparer<TKey>.Default.Equals(existingNode.Key, default) && existingNode.Key.Equals(key))
             {
                 // Remove the existing key-value pair
                 bucket.Remove(existingNode);
 
                 // Add a new key-value pair with the updated value
-                bucket.AddLast(new KeyValuePair<TKey, TValue>(key, value));   // It was immutable before that (struct)
+                bucket.AddLast(new KeyValuePair<TKey, TValue>(key, value));  
             }
             else
             {
@@ -64,7 +63,7 @@ namespace Horizon_Drive_LTD.DataStructure
             }
 
         }
-
+        // This method is used to search for a value by its key in the hash table.
         public TValue Search(TKey key)
         {
             int index = GetHash(key);
@@ -83,6 +82,7 @@ namespace Horizon_Drive_LTD.DataStructure
             return default; // Key not found
         }
 
+        // This method is used to remove a key-value pair from the hash table.
         public bool Remove(TKey key)
         {
             int index = GetHash(key);
@@ -100,27 +100,27 @@ namespace Horizon_Drive_LTD.DataStructure
 
             return false; // Key not found
         }
+        // This method checks if the hash table contains a specific key.
+        public bool ContainsKey(TKey key)
+        {
+            int index = GetHash(key);
 
-        //public void GetAllItems()
-        //{
-        //    for (int i = 0; i < _capacity; i++)
-        //    {
-        //        Console.Write($"Index {i}: ");
-        //        if (_buckets[i] != null)
-        //        {
-        //            foreach (var kvp in _buckets[i])
-        //            {
-        //                Console.Write($"[{kvp.Key}: {kvp.Value}] -> ");
-        //            }
-        //            Console.WriteLine("null");
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("null");
-        //        }
-        //    }
-        //}
+            if (_buckets[index] != null)
+            {
+                foreach (var kvp in _buckets[index])
+                {
+                    if (kvp.Key.Equals(key))
+                    {
+                        return true;
+                    }
+                }
+            }
 
+            return false;
+        }
+
+
+        // This method retrieves all key-value pairs in the hash table.
         public IEnumerable<KeyValuePair<TKey, TValue>> GetAllItems()
         {
             for (int i = 0; i < _capacity; i++)
@@ -134,10 +134,42 @@ namespace Horizon_Drive_LTD.DataStructure
                 }
             }
         }
+        // This method retrieves all values in the hash table.
+        public IEnumerable<TValue> Values()
+        {
+            for (int i = 0; i < _capacity; i++)
+            {
+                if (_buckets[i] != null)
+                {
+                    foreach (var kvp in _buckets[i])
+                    {
+                        yield return kvp.Value;
+                    }
+                }
+            }
+        }
+        // This method retrieves all keys in the hash table.
+        public IEnumerable<TKey> Keys()
+        {
+            for (int i = 0; i < _capacity; i++)
+            {
+                if (_buckets[i] != null)
+                {
+                    foreach (var kvp in _buckets[i])
+                    {
+                        yield return kvp.Key;
+                    }
+                }
+            }
 
+
+        }
+        // This method resizes the hash table when the load factor exceeds the threshold.
         private void Resize()
         {
+            // Double the capacity and find the next prime number
             int newCapacity = GetNextPrime(_capacity * 2);
+            // Create a new array of linked lists with the new capacity
             var newBuckets = new LinkedList<KeyValuePair<TKey, TValue>>[newCapacity];
 
             for (int i = 0; i < _capacity; i++)
@@ -159,12 +191,13 @@ namespace Horizon_Drive_LTD.DataStructure
             _buckets = newBuckets;
             _capacity = newCapacity;
         }
-
+        // This method checks if the hash table should be resized based on the load factor 
         private bool ShouldResize()
         {
             return (float)_size / _capacity >= _loadFactor;
         }
 
+        // This method finds the next prime number greater than the given number.
         private int GetNextPrime(int number)
         {
             while (true)
@@ -175,6 +208,7 @@ namespace Horizon_Drive_LTD.DataStructure
             }
         }
 
+        // This method checks if a number is prime.
         private bool IsPrime(int number)
         {
             if (number < 2)
@@ -185,6 +219,15 @@ namespace Horizon_Drive_LTD.DataStructure
                     return false;
             }
             return true;
+        }
+
+        // This property returns the number of key-value pairs in the hash table.
+        public int Count
+        {
+            get
+            {
+                return _size;
+            }
         }
     }
 }

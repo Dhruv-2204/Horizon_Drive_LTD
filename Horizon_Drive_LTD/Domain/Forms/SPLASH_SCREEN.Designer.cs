@@ -1,4 +1,6 @@
-﻿namespace splashscreen
+﻿using Horizon_Drive_LTD.Properties;
+
+namespace splashscreen
 {
     partial class SPLASH_SCREEN
     {
@@ -74,6 +76,7 @@
             // pictureBox1
             // 
             //pictureBox1.Image = Horizon_Drive_LTD.Properties.Resources.HORIZONDRIVE_LOGO;
+            pictureBox1.Image = Resources.Logo;
             pictureBox1.Location = new Point(123, 12);
             pictureBox1.Margin = new Padding(4, 3, 4, 3);
             pictureBox1.Name = "pictureBox1";

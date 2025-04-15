@@ -1,4 +1,6 @@
-﻿namespace splashscreen
+﻿using Horizon_Drive_LTD.Properties;
+
+namespace splashscreen
 {
     partial class Login
     {
@@ -64,7 +66,7 @@
             panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(750, 623);
+            panel1.Size = new Size(750, 583);
             panel1.TabIndex = 0;
             // 
             // label3
@@ -98,22 +100,20 @@
             // 
             LOGIN_btn.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             LOGIN_btn.BackColor = Color.FromArgb(1, 24, 30);
-           
-          
             LOGIN_btn.Cursor = Cursors.Hand;
             LOGIN_btn.FlatAppearance.BorderColor = Color.Navy;
             LOGIN_btn.FlatAppearance.BorderSize = 9;
             LOGIN_btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(128, 128, 255);
             LOGIN_btn.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             LOGIN_btn.ForeColor = Color.White;
-            LOGIN_btn.Location = new Point(473, 476);
+            LOGIN_btn.Location = new Point(475, 419);
             LOGIN_btn.Margin = new Padding(3, 4, 3, 4);
             LOGIN_btn.Name = "LOGIN_btn";
             LOGIN_btn.Size = new Size(119, 49);
             LOGIN_btn.TabIndex = 7;
             LOGIN_btn.Text = "LOGIN";
             LOGIN_btn.UseVisualStyleBackColor = false;
-            LOGIN_btn.Click += new EventHandler(LOGIN_btn_Click);
+            LOGIN_btn.Click += LOGIN_btn_Click;
             // 
             // Password
             // 
@@ -176,12 +176,11 @@
             panel2.Location = new Point(0, -1);
             panel2.Margin = new Padding(3, 4, 3, 4);
             panel2.Name = "panel2";
-            panel2.Size = new Size(329, 624);
+            panel2.Size = new Size(329, 581);
             panel2.TabIndex = 0;
             // 
             // Signup_btn
             // 
-            Signup_btn.Click += new EventHandler(Signup_btn_Click);
             Signup_btn.BackColor = Color.FromArgb(128, 255, 255);
             Signup_btn.Cursor = Cursors.Hand;
             Signup_btn.FlatAppearance.BorderSize = 9;
@@ -195,8 +194,7 @@
             Signup_btn.TabIndex = 3;
             Signup_btn.Text = "SIGN UP";
             Signup_btn.UseVisualStyleBackColor = false;
-            
-
+            Signup_btn.Click += Signup_btn_Click;
             // 
             // label5
             // 
@@ -222,7 +220,8 @@
             // pictureBox1
             // 
             pictureBox1.Anchor = AnchorStyles.Left;
-            pictureBox1.Location = new Point(58, 33);
+            pictureBox1.Image = Resources.Logo;
+            pictureBox1.Location = new Point(58, 11);
             pictureBox1.Margin = new Padding(3, 4, 3, 4);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(210, 212);
@@ -234,7 +233,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(750, 623);
+            ClientSize = new Size(750, 583);
             Controls.Add(panel1);
             Margin = new Padding(5, 4, 5, 4);
             Name = "Login";
