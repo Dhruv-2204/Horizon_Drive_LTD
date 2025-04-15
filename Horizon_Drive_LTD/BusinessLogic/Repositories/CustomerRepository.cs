@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Horizon_Drive_LTD.DataStructure;
+﻿using Horizon_Drive_LTD.DataStructure;
 using Horizon_Drive_LTD.Domain.Entities;
 using Microsoft.Data.SqlClient;
 
 namespace Horizon_Drive_LTD.BusinessLogic.Repositories
 {
+
     public class CustomerRepository
     {
-
+        // DatabaseConnection is a class that manages the database connection
         private readonly DatabaseConnection _dbConnection;
 
         public CustomerRepository(DatabaseConnection dbConnection)
@@ -19,6 +15,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             _dbConnection = dbConnection;
         }
 
+        /// LoadCustomersIntoHashTable is a method that loads customer data from the database into a hash table
         internal HashTable<string, Customer> LoadCustomersIntoHashTable()
         {
             var customerTable = new HashTable<string, Customer>(1000);
@@ -49,6 +46,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             return customerTable;
         }
 
+        
         public void InsertCustomer(Customer customer)
         {
             using (SqlConnection conn = _dbConnection.GetConnection())
@@ -68,7 +66,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             }
         }
 
-
+        // GetCustomerIdByUserId is a method that retrieves the CustomerID based on the UserID
         public string GetCustomerIdByUserId(string userId)
         {
             using (SqlConnection conn = _dbConnection.GetConnection())

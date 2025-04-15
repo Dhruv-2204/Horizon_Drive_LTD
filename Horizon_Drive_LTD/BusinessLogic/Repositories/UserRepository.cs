@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using Horizon_Drive_LTD.DataStructure;
 using Horizon_Drive_LTD.Domain.Entities;
 using Microsoft.Data.SqlClient;
@@ -14,11 +10,13 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
 
         private readonly DatabaseConnection _dbConnection;
 
+        // DatabaseConnection is a class that manages the database connection
         public UserRepository(DatabaseConnection dbConnection)
         {
             _dbConnection = dbConnection;
         }
 
+        /// LoadUsersIntoHashTable is a method that loads user data from the database into a hash table
         internal HashTable<string, User> LoadUsersIntoHashTable()
         {
             var userTable = new HashTable<string, User>(1000);
@@ -54,15 +52,16 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             return userTable;
         }
 
+        
         public void InsertUser(User user)
         {
             using (SqlConnection conn = _dbConnection.GetConnection())
             {
                 conn.Open();
                 string query = @"INSERT INTO [User] 
-                (UserId, UserName, FirstName, LastName, DOB, Email, TelephoneNo, Password, Address)
-                VALUES 
-                (@UserId, @UserName, @FirstName, @LastName, @DOB, @Email, @TelephoneNo, @Password, @Address)";
+                                (UserId, UserName, FirstName, LastName, DOB, Email, TelephoneNo, Password, Address)
+                                VALUES 
+                                (@UserId, @UserName, @FirstName, @LastName, @DOB, @Email, @TelephoneNo, @Password, @Address)";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@UserId", user.UserId);
                 cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
@@ -78,7 +77,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
         }
 
 
-
+        /// This method checks if a user exists in the database by username
         public string GetUserIdByUsername(string username)
         {
             using (SqlConnection conn = _dbConnection.GetConnection())
@@ -95,6 +94,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             }
         }
 
+        /// This method checks if a user exists in the database by email
         public void StoreActiveUser(string username, string userId, string customerid, string lessorid)
         {
             using (SqlConnection conn = _dbConnection.GetConnection())
@@ -103,15 +103,15 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
 
                 // Ensure the table exists
                 string createTableQuery = @"
-            IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='ActiveUser' AND xtype='U')
-            CREATE TABLE ActiveUser (
-                UserName VARCHAR(100) NOT NULL,
-                UserId VARCHAR(10) NOT NULL,
-                CustomerID VARCHAR(10) NOT NULL,
-                LessorID VARCHAR(10) NOT NULL
+                                            IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='ActiveUser' AND xtype='U')
+                                            CREATE TABLE ActiveUser (
+                                                UserName VARCHAR(100) NOT NULL,
+                                                UserId VARCHAR(10) NOT NULL,
+                                                CustomerID VARCHAR(10) NOT NULL,
+                                                LessorID VARCHAR(10) NOT NULL
                 
                 
-            );";
+                                            );";
 
                 using (SqlCommand cmd = new SqlCommand(createTableQuery, conn))
                 {
@@ -139,6 +139,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             }
         }
 
+        /// This method retrieves the active user from the database
         public void GetActiveUser(out string userName, out string customerid)
         {
             userName = null;
@@ -161,6 +162,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             }
         }
 
+        /// This method checks if a user exists in the database by email
         public string GetEmailByCustomerId(string customerId)
         {
             using (SqlConnection connection = _dbConnection.GetConnection())
@@ -168,10 +170,10 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                 connection.Open();
 
                 string query = @"
-            SELECT u.Email 
-            FROM [User] u
-            INNER JOIN Customer c ON u.UserId = c.UserId
-            WHERE c.CustomerId = @CustomerId";
+                                SELECT u.Email 
+                                FROM [User] u
+                                INNER JOIN Customer c ON u.UserId = c.UserId
+                                WHERE c.CustomerId = @CustomerId";
 
                 SqlCommand cmd = new SqlCommand(query, connection);
                 cmd.Parameters.AddWithValue("@CustomerId", customerId);

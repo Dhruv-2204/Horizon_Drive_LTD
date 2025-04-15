@@ -12,11 +12,13 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
 
         private readonly DatabaseConnection _dbConnection;
 
+        // DatabaseConnection is a class that manages the database connection
         public LessorRepository(DatabaseConnection dbConnection)
         {
             _dbConnection = dbConnection;
         }
 
+        /// LoadLessorsIntoHashTable is a method that loads lessor data from the database into a hash table
         public string GetLessorIdByUserId(string userId)
         {
             using (SqlConnection conn = _dbConnection.GetConnection())

@@ -27,6 +27,7 @@ namespace Horizon_Drive_LTD
         private decimal totalPrice;
         private int days;
 
+        // Constructor to initialize the booking confirmation form with car details and rental period.
         public BookingConfirmationForm(
             Cars car,
             DateTime startDate,
@@ -232,9 +233,12 @@ namespace Horizon_Drive_LTD
         // This method handles the booking confirmation process.
         private void buttonBookNow_Click(object sender, EventArgs e)
         {
+            // Check if the user is logged in
+
             UserRepository userRepo = new UserRepository(new DatabaseConnection());
             userRepo.GetActiveUser(out string activeUsername, out string activeCustomerId);
 
+            // Check if the user is logged in
             BookingsRepository bookingRepo = new BookingsRepository(new DatabaseConnection());
             HashTable<string, Booking> bookingHashTable = new HashTable<string, Booking>(1000);
 
@@ -263,6 +267,7 @@ namespace Horizon_Drive_LTD
             }
             else
             {
+                // Check if the user is logged in
                 if (!string.IsNullOrEmpty(activeUsername) && !string.IsNullOrEmpty(activeCustomerId))
                 {
                     Booking booking = new Booking(bookingId, activeCustomerId, car.CarID, formattedDate, startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"), pickupLocation, dropoffLocation,
@@ -274,8 +279,7 @@ namespace Horizon_Drive_LTD
                     carRepo.ChangeCarStatus(car.CarID);
 
                     string userId = CurrentUser.CurrentUserId;
-                    MessageBox.Show($"{userId}");
-
+                    
                     Payment payment = new Payment(paymentId, bookingId, userId, formattedDate, "Online", totalPrice);
                     paymentRepository.LoadPaymentIntoDatabase(payment);
 

@@ -1,5 +1,6 @@
 ﻿namespace Horizon_Drive_LTD.Domain.Entities
 {
+    // This class represents a user in the car rental system.
     public class User
     {
 
@@ -15,8 +16,8 @@
         public string Address { get; set; }
       
         public string ProfilePicture { get; set; }
-        
-        
+
+        //  Constructor to initialize a user object
         public User(string userid, string username, string firstname, string lastname, string email, int phonenum,
             string address, string password, DateOnly dob, string profilepic)
         {

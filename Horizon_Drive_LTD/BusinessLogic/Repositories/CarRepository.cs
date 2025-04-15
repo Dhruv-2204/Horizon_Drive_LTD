@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Horizon_Drive_LTD.DataStructure;
+﻿using Horizon_Drive_LTD.DataStructure;
 using Horizon_Drive_LTD.Domain.Entities;
 using Microsoft.Data.SqlClient;
 
@@ -120,7 +115,8 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
 
             return carHashTable;
         }
-        // 
+
+        // This method loads booking transactions from the database and returns them in a hash table.
         public HashTable<string, Cars> LoadBookingTransactionFromDatabase()
         {
             var carHashTable = new HashTable<string, Cars>(1000);
@@ -169,6 +165,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             return carHashTable;
         }
 
+        // This method adds a new car to the database.
         public void DeleteCarById(string carId)
         {
             using (SqlConnection conn = _dbConnection.GetConnection())
@@ -222,7 +219,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             }
         }
 
-
+        // This method retrieves the car IDs associated with a specific user ID from the database.
         public List<int> GetCarIdsByUserId(string userId)
         {
             List<int> carIds = new List<int>();

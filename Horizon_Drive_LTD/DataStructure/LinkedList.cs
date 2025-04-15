@@ -1,13 +1,10 @@
-﻿using System;
+﻿
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Horizon_Drive_LTD
 {
-
+    /// This class implements a simple linked list to store key-value pairs.
     public class LinkedListNode<TKey, TValue>
     {
         public KeyValuePair<TKey, TValue> Data { get; set; }
@@ -20,6 +17,7 @@ namespace Horizon_Drive_LTD
         }
     }
 
+    /// This class implements a simple linked list to store key-value pairs.
     public class LinkedList<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
     {
         private LinkedListNode<TKey, TValue> head;
@@ -97,6 +95,7 @@ namespace Horizon_Drive_LTD
             }
         }
 
+        // Explicit interface implementation for non-generic IEnumerable
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();

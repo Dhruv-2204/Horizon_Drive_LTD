@@ -8,6 +8,7 @@ namespace Horizon_Drive_LTD.BusinessLogic
     {
         private readonly string connectionString;
 
+        /// Constructor that initializes the connection string from app.config
         public DatabaseConnection()
         {
             connectionString = ConfigurationManager.ConnectionStrings["CarManagementDB"].ConnectionString;
@@ -18,6 +19,7 @@ namespace Horizon_Drive_LTD.BusinessLogic
             }
         }
 
+        /// Method to get a new SQL connection
         public SqlConnection GetConnection()
         {
             return new SqlConnection(connectionString);

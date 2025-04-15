@@ -103,6 +103,7 @@ namespace Horizon_Drive_LTD
             }
         }
 
+        /// Adjust control positions based on the current form size
         private void AdjustControlPositions()
         {
             try
@@ -162,9 +163,11 @@ namespace Horizon_Drive_LTD
             }
         }
 
-
+        /// Event handler for the Save Changes button
         private void btnSaveChanges_Click(object sender, EventArgs e)
         {
+
+            // Validate inputs
             if (string.IsNullOrWhiteSpace(licenseImagePath) ||
                 string.IsNullOrWhiteSpace(textBoxLicenseNumber.Text) ||
                 string.IsNullOrWhiteSpace(textBoxLicenseExpiry.Text))

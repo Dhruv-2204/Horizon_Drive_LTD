@@ -7,13 +7,16 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
     // This class is responsible for managing bookings in the database.
     public class BookingsRepository
     {
+        // Database connection object to interact with the database.
         private readonly DatabaseConnection _dbConnection;
 
-
+        // Constructor that initializes the database connection.
         public BookingsRepository(DatabaseConnection dbConnection)
         {
             _dbConnection = dbConnection;
         }
+
+        // Load all bookings from the database into a hash table.
         public HashTable<string, Booking> LoadBookingsFromDatabase()
         {
             var bookingHashTable = new HashTable<string, Booking>(1000);
@@ -24,6 +27,8 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                 string query = "SELECT * FROM Booking";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
+
+                // Execute the command and read the results.
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -52,6 +57,8 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
 
             return bookingHashTable;
         }
+
+        // Load a specific booking from the database using its ID.
         public void LoadBookingsIntoDatabase(Booking booking)
         {
 
@@ -94,7 +101,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             }
         }
 
-
+        // Check the status of a booking and update it in the database.
         public void CheckBookingStatus(Booking booking)
         {
 
@@ -137,6 +144,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
 
         }
 
+        // Check if a car is available for booking based on the provided dates.
         public bool IsCarAvailable(string carId, DateTime userStartDate, DateTime userEndDate, HashTable<string, Booking> bookingHashTable)
         {
             foreach (var booking in bookingHashTable.Values())
@@ -219,6 +227,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             }
         }
 
+        // Get all bookings for a specific user with car details
         public List<(Booking, string carBrand, string model, string carid, int year, decimal price, string status)> GetBookingsForUserWithCarDetails(string userId)
         {
             var result = new List<(Booking, string, string, string, int, decimal, string)>();
@@ -228,17 +237,17 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                 conn.Open();
 
                 string query = @"
-        SELECT 
-             b.*, 
-             c.CarBrand, 
-             c.CarID,
-             c.Model,
-             YEAR(c.Years) AS Years,   
-             c.CarPrice, 
-             c.Status
-         FROM Booking b
-         INNER JOIN Car c ON b.CarID = c.CarID
-         WHERE c.UserID = @userId";
+                                    SELECT 
+                                         b.*, 
+                                         c.CarBrand, 
+                                         c.CarID,
+                                         c.Model,
+                                         YEAR(c.Years) AS Years,   
+                                         c.CarPrice, 
+                                         c.Status
+                                     FROM Booking b
+                                     INNER JOIN Car c ON b.CarID = c.CarID
+                                     WHERE c.UserID = @userId";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -283,6 +292,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             return result;
         }
 
+        // Get the count of active reservations for a specific user
         public int GetActiveReservationCountForUser(string userId)
         {
             int count = 0;

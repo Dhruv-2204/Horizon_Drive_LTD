@@ -13,15 +13,17 @@ using splashscreen;
 namespace Horizon_Drive_LTD
 {
 
-
+    
     public partial class BrowseListings : Form
     {
 
         private bool isClosing = false;
         DatabaseConnection _dbConnection = new DatabaseConnection();
 
+
         private HashTable<string, Cars> carHashTable;
 
+        //  Constructor
         public BrowseListings()
         {
             InitializeComponent();
@@ -35,7 +37,7 @@ namespace Horizon_Drive_LTD
 
         }
 
-
+        // Method to load car listings from the database
         private void LoadCarListings()
         {
             DatabaseConnection dbConnection = new DatabaseConnection();
@@ -80,6 +82,7 @@ namespace Horizon_Drive_LTD
             }
         }
 
+        //  Method to populate car listings in the UI
         private void PopulateCarListings()
         {
             flowLayoutPanelListings.Controls.Clear();
@@ -92,7 +95,7 @@ namespace Horizon_Drive_LTD
         }
 
 
-
+        // Method to create a panel for each car listing
         private Panel CreateCarListingPanel(Cars car)
         {
 
@@ -192,6 +195,7 @@ namespace Horizon_Drive_LTD
 
         }
 
+        // Event handler for the "View Deal" button
         private void BtnViewDeal_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
@@ -212,7 +216,7 @@ namespace Horizon_Drive_LTD
             }
         }
 
-
+        // Event handler for the "Browse Listings" button
         private void btnBrowseListings_Click(object sender, EventArgs e)
         {
             // Already on the listings page, could refresh or apply filters
@@ -256,6 +260,8 @@ namespace Horizon_Drive_LTD
             this.Dispose();
 
         }
+
+        // Event handler for the "Log Out" button
         private void btnLogout_Click(object sender, EventArgs e)
         {
             // Log out functionality
@@ -295,6 +301,7 @@ namespace Horizon_Drive_LTD
             }
         }
 
+        // Method to open the login form
         private void OpenLoginUp()
         {
 
@@ -310,7 +317,7 @@ namespace Horizon_Drive_LTD
             this.Dispose();
         }
 
-
+        // Event handler for the search text box
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
         {
             string searchText = textBoxSearch.Text.ToLower();
@@ -334,7 +341,7 @@ namespace Horizon_Drive_LTD
         }
 
 
-
+        // Event handler for the "Profile" button
         private void buttonProfile_Click(object sender, EventArgs e)
         {
 
@@ -345,10 +352,13 @@ namespace Horizon_Drive_LTD
 
         }
 
+        // Event handler for the "Home" button
         private void Form2_Load(object sender, EventArgs e)
         {
             this.FormClosing += new FormClosingEventHandler(MyForm_FormClosing);
         }
+
+        // Event handler for the form closing event
         private void MyForm_FormClosing(object? sender, FormClosingEventArgs e)
         {
             if (isClosing) return;

@@ -21,6 +21,8 @@ namespace Horizon_Drive_LTD
         private List<string> uploadedPhotoPaths = new List<string>();
         private List<PictureBox> photoPictureBoxes = new List<PictureBox>();
 
+
+        // Constructor
         public ListCarForm()
         {
             InitializeComponent();
@@ -42,6 +44,7 @@ namespace Horizon_Drive_LTD
             SetupDragAndDrop();
         }
 
+        // Form load event
         private void ListCarForm_Load(object sender, EventArgs e)
         {
             // Display the username
@@ -102,6 +105,8 @@ namespace Horizon_Drive_LTD
 
             return null;
         }
+
+
 
         private void SetupDragAndDrop()
         {
@@ -470,10 +475,10 @@ namespace Horizon_Drive_LTD
 
             try
             {
-                // 1. Save images to project directory
+                // Save images to project directory
                 List<string> imagePaths = SaveCarImages(uploadedPhotoPaths, carBrand, carId);
 
-                // 2. Save to database
+                // Save to database
                 using (SqlConnection conn = _dbConnection.GetConnection())
                 {
                     conn.Open();
@@ -622,13 +627,13 @@ namespace Horizon_Drive_LTD
         {
             // Add panels to list for easy management
             var photoPanels = new List<Panel>
-    {
-        panelPhoto1,
-        panelPhoto2,
-        panelPhoto3,
-        panelPhoto4,
-        panelPhoto5
-    };
+                                {
+                                    panelPhoto1,
+                                    panelPhoto2,
+                                    panelPhoto3,
+                                    panelPhoto4,
+                                    panelPhoto5
+                                };
 
             // Calculate total width needed for all panels with spacing
             int panelWidth = panelPhoto1.Width;

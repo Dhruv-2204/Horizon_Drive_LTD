@@ -19,7 +19,7 @@
         public bool AirportPickupDropoff { get; set;}
         public string Status { get; set; }
 
-
+        /// Constructor to initialize a booking object
         public Booking(string bookingID, string customerID, string carID, string bookingDate, string pickupDate, string dropoffDate, string pickupLocation,
             string dropoffLocation, bool includeDriver, bool babyCarSeat, bool fullInsuranceCoverage, bool roofRack, bool airportPickupDropoff, string status) {
 

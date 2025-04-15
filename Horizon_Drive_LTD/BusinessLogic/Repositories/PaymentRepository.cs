@@ -12,6 +12,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
     {
         private readonly DatabaseConnection _dbConnection;
 
+        // DatabaseConnection is a class that manages the database connection
         public PaymentRepository(DatabaseConnection dbConnection)
         {
             _dbConnection = dbConnection;
@@ -55,6 +56,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             }
         }
 
+        // Get all payments by BookingId
         public decimal GetTotalEarningsByBookingIds(List<string> bookingIds)
         {
             decimal total = 0;

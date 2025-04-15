@@ -6,7 +6,6 @@ using Horizon_Drive_LTD.BusinessLogic.Repositories;
 using Horizon_Drive_LTD.DataStructure;
 using Horizon_Drive_LTD.Domain.Entities;
 using Microsoft.Data.SqlClient;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 
 namespace Horizon_Drive_LTD
@@ -14,7 +13,10 @@ namespace Horizon_Drive_LTD
     
     public partial class ManageYourListings : Form
     {
+
+        /// Flag to prevent multiple closing messages
         private bool isClosing = false;
+
         DatabaseConnection _dbConnection = new DatabaseConnection();
         private HashTable<string, Cars> carHashTable;
        
@@ -36,6 +38,7 @@ namespace Horizon_Drive_LTD
             labelNoMoreListings.Visible = false;
 
         }
+
         // Method to load car listings into the car hash table
         private void LoadCarListingsFromDatabase()
         {
@@ -124,7 +127,6 @@ namespace Horizon_Drive_LTD
             {
                 // Get the directory where images are stored for this car
                 string projectRoot = Path.GetFullPath(Path.Combine(Application.StartupPath, @"..\..\.."));
-                //string carImageDir = Path.Combine(projectRoot, "Media", "Images", "CarTable", car.CarBrand, car.CarID);
                 string cleanedBrand = car.CarBrand.Replace(" ", "");
                 string carImageDir = Path.Combine(projectRoot, "Media", "Images", cleanedBrand, car.CarID);
 

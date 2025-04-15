@@ -22,39 +22,43 @@ namespace Horizon_Drive_LTD.BusinessLogic.Services
                 string subject = "Booking Confirmation - Car Hire Service";
 
                 string body = $@"
-                    Dear Customer,
+                                Dear Customer,
 
-                    Thank you for booking with us! Here are your booking details:
+                                Thank you for booking with us! Here are your booking details:
 
-                    🔹 Booking ID: {booking.BookingID}
-                    🔹 Car ID: {booking.CarID}
-                    🔹 Booking Date: {booking.BookingDate}
-                    🔹 Pickup Location: {booking.PickupLocation}
-                    🔹 Drop-off Location: {booking.DropoffLocation}
-                    🔹 Pickup Date: {booking.PickupDate}
-                    🔹 Drop-off Date: {booking.DropoffDate}
+                                🔹 Booking ID: {booking.BookingID}
+                                🔹 Car ID: {booking.CarID}
+                                🔹 Booking Date: {booking.BookingDate}
+                                🔹 Pickup Location: {booking.PickupLocation}
+                                🔹 Drop-off Location: {booking.DropoffLocation}
+                                🔹 Pickup Date: {booking.PickupDate}
+                                🔹 Drop-off Date: {booking.DropoffDate}
 
-                    Extras:
-                    - Driver Included: {booking.IncludeDriver}
-                    - Baby Car Seat: {booking.BabyCarSeat}
-                    - Full Insurance Coverage: {booking.FullInsuranceCoverage}
-                    - Roof Rack: {booking.RoofRack}
-                    - Airport Pickup/Dropoff: {booking.AirportPickupDropoff}
+                                Extras:
+                                - Driver Included: {booking.IncludeDriver}
+                                - Baby Car Seat: {booking.BabyCarSeat}
+                                - Full Insurance Coverage: {booking.FullInsuranceCoverage}
+                                - Roof Rack: {booking.RoofRack}
+                                - Airport Pickup/Dropoff: {booking.AirportPickupDropoff}
 
-                    If you have any questions, feel free to contact our team.
+                                If you have any questions, feel free to contact our team.
 
-                    Safe travels,
-                    Car Hire Service Team
-                    ";
+                                Safe travels,
+                                Car Hire Service Team
+
+                                 /\_/\
+                                ( o.o )
+                                 > ^ <  
+                                ";
                 // Create the email message
                 MailMessage mail = new MailMessage(senderEmail, customerEmail, subject, body);
                 SmtpClient smtpClient = new SmtpClient(ConfigurationManager.AppSettings["SmtpHost"], int.Parse(ConfigurationManager.AppSettings["SmtpPort"]))
                 {
                     EnableSsl = true,
                     Credentials = new NetworkCredential(
-         ConfigurationManager.AppSettings["SenderEmail"],
-         ConfigurationManager.AppSettings["SenderPassword"]
-     )
+                                        ConfigurationManager.AppSettings["SenderEmail"],
+                                        ConfigurationManager.AppSettings["SenderPassword"]
+                                    )
                 };
                 // Send the email to the user 
                 smtpClient.Send(mail);

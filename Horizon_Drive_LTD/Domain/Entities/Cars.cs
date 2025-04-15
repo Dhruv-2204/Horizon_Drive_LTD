@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace Horizon_Drive_LTD.Domain.Entities
 {
-   public class Cars
+
+    // This class represents a car in the car rental system.
+    // It contains properties related to the car's details and availability.
+    public class Cars
     {
 
         public string CarID { get; set; }
@@ -37,7 +34,7 @@ namespace Horizon_Drive_LTD.Domain.Entities
 
 
 
-
+        /// Constructor to initialize a car object
         public Cars(string carid , string userid, string carBrand, string category, string carImage, string registrationNo, string model, int year,
          string colour, string features, string desc, decimal price, int seat, string engine, decimal rating,
          string power, string drive, string fuel, string transmission, string status, DateTime availabilitystart,DateTime availabilityend)

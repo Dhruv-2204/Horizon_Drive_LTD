@@ -1,5 +1,4 @@
-﻿using Horizon_Drive_LTD;
-using Horizon_Drive_LTD.BusinessLogic.Repositories;
+﻿using Horizon_Drive_LTD.BusinessLogic.Repositories;
 using Horizon_Drive_LTD.BusinessLogic;
 using Horizon_Drive_LTD.BusinessLogic.Services;
 using System.Media; 
@@ -70,6 +69,7 @@ namespace splashscreen
             }
         }
 
+        
         private void OpenLoginUp()
         {
 

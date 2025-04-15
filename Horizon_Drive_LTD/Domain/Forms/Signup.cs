@@ -1,14 +1,17 @@
-﻿namespace Horizon_Drive_LTD
+﻿using System.Security.Cryptography;
+using System.Text;
+using System.Text.RegularExpressions;
+using Horizon_Drive_LTD.BusinessLogic.Repositories;
+using Horizon_Drive_LTD.BusinessLogic;
+using Horizon_Drive_LTD.BusinessLogic.Services;
+using Horizon_Drive_LTD.Domain.Entities;
+using splashscreen;
+using Microsoft.Data.SqlClient;
+
+
+namespace Horizon_Drive_LTD
 {
-    using System.Security.Cryptography;
-    using System.Text;
-    using System.Text.RegularExpressions;
-    using Horizon_Drive_LTD.BusinessLogic.Repositories;
-    using Horizon_Drive_LTD.BusinessLogic;
-    using Horizon_Drive_LTD.BusinessLogic.Services;
-    using Horizon_Drive_LTD.Domain.Entities;
-    using splashscreen;
-    using Microsoft.Data.SqlClient;
+    
 
     public partial class Signup : Form
     {
@@ -29,6 +32,7 @@
             InitializeComponent();
         }
 
+        /// Event handler for the form closing event
         private void Closing_form(object sender, FormClosingEventArgs e)
         {
             if (isClosing) return; // Prevent duplicate message box
@@ -99,6 +103,7 @@
             this.FormClosing += new FormClosingEventHandler(Closing_form);
         }
 
+        /// Event handler for the "Sign Up" button
         private void signup_btn_Click(object sender, EventArgs e)
         {
             Guid guid = Guid.NewGuid();
@@ -162,30 +167,25 @@
 
             // If all validation passes, create the user object
             User newUser = new(
-                userId,
-                username,
-                firstName,
-                lastName,
-                 email,
-                (int)phoneNumber,
-                address,
-                HashPassword(password),
-                DateOnly.FromDateTime(dob),
-                string.Empty 
-            );
+                            userId,
+                            username,
+                            firstName,
+                            lastName,
+                             email,
+                            (int)phoneNumber,
+                            address,
+                            HashPassword(password),
+                            DateOnly.FromDateTime(dob),
+                            string.Empty 
+                        );
 
           
-
-
             bool result = _authService.SignUp(newUser);
             if (result)
             {
                 MessageBox.Show("Account created successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                
-                
-                
-
+                // Store the user in the database
                 UserRepository userRepo = new UserRepository(new DatabaseConnection());
 
 
@@ -194,9 +194,9 @@
                     conn.Open();
 
                     string query = @"INSERT INTO Customer
-                  (CustomerId, UserId)
-                  VALUES 
-                  (@CustomerId, @UserId)";
+                                      (CustomerId, UserId)
+                                      VALUES 
+                                      (@CustomerId, @UserId)";
 
                     SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@CustomerId", customerid);
@@ -210,9 +210,9 @@
                 {
                     conn.Open();
                     string query = @"INSERT INTO Lessor
-                  (LessorId, UserId)
-                  VALUES 
-                  (@LessorId, @UserId)";
+                                    (LessorId, UserId)
+                                    VALUES 
+                                    (@LessorId, @UserId)";
 
                     SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@LessorId", lessorid);

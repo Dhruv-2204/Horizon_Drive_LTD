@@ -17,6 +17,7 @@ namespace Horizon_Drive_LTD
         private Button btnPrevImage;
         private DatabaseConnection _dbConnection = new DatabaseConnection();
 
+        // Constructor
         public CarBookingForm(Cars selectedCar)
         {
             InitializeComponent();
@@ -42,6 +43,7 @@ namespace Horizon_Drive_LTD
             PopulateCarDetails();
         }
 
+        // Initialize slideshow controls
         private void InitializeSlideshowControls()
         {
             // Create next image button
@@ -75,6 +77,7 @@ namespace Horizon_Drive_LTD
             slideshowTimer.Tick += SlideshowTimer_Tick;
         }
 
+        // Load car images from the database
         private void LoadCarImagesFromDatabase()
         {
             carImages.Clear();
@@ -124,6 +127,7 @@ namespace Horizon_Drive_LTD
             }
         }
 
+        // Load image by index
         private void LoadImage(int index)
         {
             if (carImages.Count > 0)
@@ -158,6 +162,7 @@ namespace Horizon_Drive_LTD
             }
         }
 
+        // Timer tick event for slideshow
         private void SlideshowTimer_Tick(object sender, EventArgs e)
         {
             LoadImage(currentImageIndex + 1);
@@ -186,6 +191,8 @@ namespace Horizon_Drive_LTD
             }
         }
 
+
+        // Populate car details in the UI
         private void PopulateCarDetails()
         {
             // Set car title
@@ -206,6 +213,7 @@ namespace Horizon_Drive_LTD
             //ratingCount.Text = $"Rating: {car.Ratings}";
         }
 
+        // Event handler for booking button
         private void btnBookCar_Click(object sender, EventArgs e)
         {
             BookingsRepository bookingRepo = new BookingsRepository(new DatabaseConnection());
@@ -255,6 +263,7 @@ namespace Horizon_Drive_LTD
             }
         }
 
+        // Event handler for closing the form
         protected override void Dispose(bool disposing)
         {
             if (disposing)

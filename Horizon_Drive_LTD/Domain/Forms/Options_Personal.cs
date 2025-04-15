@@ -1,5 +1,4 @@
-﻿using System.Drawing.Drawing2D;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using Horizon_Drive_LTD.BusinessLogic;
 using System.Text;
 using System.Security.Cryptography;
@@ -109,6 +108,7 @@ namespace Horizon_Drive_LTD
             }
         }
 
+        // Adjust control positions based on the current form size
         private void AdjustControlPositions()
         {
             try
@@ -297,13 +297,14 @@ namespace Horizon_Drive_LTD
             }
         }
 
-
+        // Event handler for the camera button
         private void buttonCamera_Click(object sender, EventArgs e)
         {
             // Same functionality as clicking the profile picture
             pictureBoxProfile_Click(sender, e);
         }
 
+        // Event handler for the "Show Password" checkbox
         private void LoadProfilePicture(string username)
         {
             try
@@ -342,6 +343,7 @@ namespace Horizon_Drive_LTD
             }
         }
 
+        // Hash the password using SHA256
         public static string HashPassword(string password)
         {
             using (SHA256 sha256 = SHA256.Create())
@@ -356,7 +358,7 @@ namespace Horizon_Drive_LTD
             }
         }
 
-
+        //  Event handler for the Save Changes button
         private void btnSaveChanges_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(textBoxFirstName.Text) ||
@@ -441,7 +443,7 @@ namespace Horizon_Drive_LTD
             }
         }
 
-
+        // Event handlers for tab buttons
         private void btnPersonal_Click(object sender, EventArgs e)
         {
             btnPersonal.BackColor = Color.FromArgb(173, 216, 230);
@@ -499,6 +501,7 @@ namespace Horizon_Drive_LTD
             this.Dispose();
         }
 
+        // Event handler for the Logout button
         private void btnLogout_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Are you sure you want to log out?",
@@ -637,6 +640,7 @@ namespace Horizon_Drive_LTD
             }
         }
 
+        // Event handler for the form load event
         private void Options_Personal_Load(object sender, EventArgs e)
         {
             this.FormClosing += new FormClosingEventHandler(MyForm_FormClosing);

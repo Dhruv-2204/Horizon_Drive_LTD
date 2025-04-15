@@ -14,6 +14,7 @@ namespace splashscreen
         private AuthenticationService _authService;
         private DatabaseConnection _dbConnection;
 
+        /// Constructor for the Login form
         public Login(AuthenticationService authService)
         {
             InitializeComponent();
@@ -31,6 +32,8 @@ namespace splashscreen
         {
             this.FormClosing += new FormClosingEventHandler(MyForm_FormClosing);
         }
+
+        /// Event handler for the form closing event
         private void MyForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (isClosing) return; 
@@ -61,7 +64,7 @@ namespace splashscreen
         }
 
 
-
+        /// Event handler for the "Show Password" checkbox
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox1.Checked == true)

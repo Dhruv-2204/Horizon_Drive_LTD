@@ -78,6 +78,7 @@ namespace Horizon_Drive_LTD
 
         }
 
+        // Method to load booking data from the database
         private void LoadBookingData()
         {
             bookings.Clear();
@@ -116,6 +117,7 @@ namespace Horizon_Drive_LTD
             }
         }
 
+        // Method to apply filter and highlight selected button
         private void ApplyFilter(string filter)
         {
             currentFilter = filter;
@@ -156,6 +158,7 @@ namespace Horizon_Drive_LTD
             }
         }
 
+        // Method to create a booking panel
         private Panel CreateBookingPanel(BookingInfo booking)
         {
             var car = carHashTable.Search(booking.CarID);
@@ -340,8 +343,8 @@ namespace Horizon_Drive_LTD
             return panel;
         }
 
-        
 
+        // Method to get the car image path from the database
         private string GetCarImagePath(string carId)
         {
             string imagePath = string.Empty;
@@ -430,13 +433,14 @@ namespace Horizon_Drive_LTD
 
 
 
-        // NEW - Safely loads image with fallback
+        // Safely loads image with fallback
         private Image LoadImageSafely(string path)
         {
             try { return File.Exists(path) ? Image.FromFile(path) : Properties.Resources.Logo; }
             catch { return Properties.Resources.Logo; }
         }
 
+        // Event handler for cancel booking button
         private void BtnCancelBooking_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
@@ -598,6 +602,7 @@ namespace Horizon_Drive_LTD
             this.Dispose();
         }
 
+        // Event handler for search text box
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
         {
             string searchText = textBoxSearch.Text.ToLower();
@@ -621,6 +626,8 @@ namespace Horizon_Drive_LTD
         }
 
         private bool isClosing = false;
+
+        // Event handler for form closing
         private void MyForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (isClosing) return;
