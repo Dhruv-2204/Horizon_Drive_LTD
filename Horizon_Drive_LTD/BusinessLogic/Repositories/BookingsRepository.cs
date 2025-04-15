@@ -9,8 +9,10 @@ using Microsoft.Data.SqlClient;
 
 namespace Horizon_Drive_LTD.BusinessLogic.Repositories
 {
+    // This class is responsible for managing bookings in the database.
     public class BookingsRepository
     {
+        // Database connection object to interact with the database.
         private readonly DatabaseConnection _dbConnection;
 
 
@@ -18,6 +20,8 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
         {
             _dbConnection = dbConnection;
         }
+
+        // This method loads all bookings from the database into a hash table.
         public HashTable<string, Booking> LoadBookingsFromDatabase()
         {
             var bookingHashTable = new HashTable<string, Booking>(1000);
