@@ -242,7 +242,7 @@ namespace Horizon_Drive_LTD
            
             return panel;
         }
-
+        // Method to handle delete button clicks to delete car listing of the user
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
@@ -573,14 +573,14 @@ namespace Horizon_Drive_LTD
             return panel;
            
         }
-
+        // Method to handle browse listings button clicks
         private void btnBrowseListings_Click(object sender, EventArgs e)
         {
             BrowseListings browseListings = new BrowseListings();
             browseListings.Show();
             this.Hide();
         }
-
+        // Method to handle manage booking button clicks
         private void btnManageBooking_Click(object sender, EventArgs e)
         {
             ManageBookings manageBookings = new ManageBookings();
@@ -597,15 +597,16 @@ namespace Horizon_Drive_LTD
 
         private void btnManageYourListings_Click(object sender, EventArgs e)
         {
-           
+            ManageYourListings manageYourListings = new ManageYourListings();
+            manageYourListings.Show();
+            this.Hide();
         }
 
         private void btnOptions_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Options functionality would open settings for the application.",
-                           "Options",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
+            Options_Personal options = new Options_Personal();
+            options.Show();
+            this.Hide();
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
