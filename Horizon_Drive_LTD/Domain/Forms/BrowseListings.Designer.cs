@@ -43,6 +43,7 @@
             panelContent = new Panel();
             flowLayoutPanelListings = new FlowLayoutPanel();
             panelHeader = new Panel();
+            labelUsername = new Label();
             panelSearch = new Panel();
             buttonSearch = new Button();
             textBoxSearch = new TextBox();
@@ -216,6 +217,7 @@
             // 
             // panelHeader
             // 
+            panelHeader.Controls.Add(labelUsername);
             panelHeader.Controls.Add(panelSearch);
             panelHeader.Controls.Add(labelBrowseListings);
             panelHeader.Controls.Add(buttonProfile);
@@ -226,6 +228,17 @@
             panelHeader.Size = new Size(1130, 154);
             panelHeader.TabIndex = 0;
             // 
+            // labelUsername
+            // 
+            labelUsername.AutoSize = true;
+            labelUsername.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelUsername.ForeColor = Color.FromArgb(15, 30, 45);
+            labelUsername.Location = new Point(886, 50);
+            labelUsername.Name = "labelUsername";
+            labelUsername.Size = new Size(152, 23);
+            labelUsername.TabIndex = 5;
+            labelUsername.Text = "User not logged in";
+            // 
             // panelSearch
             // 
             panelSearch.AutoSize = true;
@@ -233,7 +246,7 @@
             panelSearch.BorderStyle = BorderStyle.FixedSingle;
             panelSearch.Controls.Add(buttonSearch);
             panelSearch.Controls.Add(textBoxSearch);
-            panelSearch.Location = new Point(623, 62);
+            panelSearch.Location = new Point(832, 97);
             panelSearch.Margin = new Padding(5, 4, 5, 4);
             panelSearch.Name = "panelSearch";
             panelSearch.Size = new Size(271, 57);
@@ -281,7 +294,7 @@
             buttonProfile.FlatAppearance.BorderColor = Color.FromArgb(192, 192, 192);
             buttonProfile.FlatStyle = FlatStyle.Flat;
             buttonProfile.Font = new Font("Segoe UI Symbol", 12F);
-            buttonProfile.Location = new Point(912, 62);
+            buttonProfile.Location = new Point(1046, 31);
             buttonProfile.Margin = new Padding(5, 4, 5, 4);
             buttonProfile.Name = "buttonProfile";
             buttonProfile.Size = new Size(57, 58);
@@ -331,6 +344,7 @@
         private System.Windows.Forms.TextBox textBoxSearch;
         private System.Windows.Forms.Button buttonSearch;
         private RoundedButton btnManageYourListings;
+        private Label labelUsername;
         private RoundedButton btnManageBooking;
     }
 

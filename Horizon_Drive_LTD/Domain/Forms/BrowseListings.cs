@@ -30,6 +30,7 @@ namespace Horizon_Drive_LTD
 
             LoadCarListings();
             PopulateCarListings();
+            DisplayUsername();
 
         }
 
@@ -42,6 +43,40 @@ namespace Horizon_Drive_LTD
             carHashTable = carRepo.LoadCarsFromDatabase();
 
 
+        }
+
+        // Method to fetch and display username
+        private void DisplayUsername()
+        {
+            string username = GetLoggedInUsername();
+
+            if (string.IsNullOrEmpty(username))
+            {
+                labelUsername.Text = "User not logged in";
+                // style the label differently (RED) for non-logged in users
+                labelUsername.ForeColor = Color.Red;
+            }
+            else
+            {
+                labelUsername.Text = username;
+                labelUsername.ForeColor = Color.FromArgb(15, 30, 45); // Colour of logged in users
+            }
+        }
+
+        // Method to get the username from your database
+        private string GetLoggedInUsername()
+        {
+            using (SqlConnection conn = _dbConnection.GetConnection())
+            {
+                conn.Open();
+                string query = "SELECT UserName FROM ActiveUser";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    var result = cmd.ExecuteScalar();
+                    return result?.ToString();
+                }
+            }
         }
 
         private void PopulateCarListings()
