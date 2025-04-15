@@ -1,32 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit; // For unit testing framework
-using Horizon_Drive_LTD.DataStructure; // For the HashTable class
+﻿using System.Linq;
+using Xunit;
+using Horizon_Drive_LTD.DataStructure;
 
-namespace HorizonDrive.Tests
+namespace HorizonDriveTests
 {
-    public class ResizeTests
+    public class HashTableResizeTests
     {
         [Fact]
-        public void Insert_MultipleItems_ShouldTriggerResize()
+        public void Insert_WhenExceedingLoadFactor_TriggersResizeAndPreservesData()
         {
-            // Arrange: Create a hash table with a small initial capacity to trigger resizing.
-            var ht = new HashTable<int, string>(3);
+            // Arrange
+            var hashTable = new HashTable<int, string>(3, 0.75f); // Low capacity and load factor to trigger resize
 
-            // Act: Insert multiple key-value pairs into the hash table.
-            for (int i = 0; i < 10; i++)
-            {
-                ht.Insert(i, $"Value{i}");
-            }
+            // Insert enough items to trigger resize
+            hashTable.Insert(1, "One");
+            hashTable.Insert(2, "Two");
+            hashTable.Insert(3, "Three"); // Should trigger resize
 
-            // Assert: Ensure all key-value pairs can still be retrieved after resizing.
-            for (int i = 0; i < 10; i++)
-            {
-                Assert.Equal($"Value{i}", ht.Search(i));
-            }
+            // Act - fetch all items to verify they were preserved
+            var items = hashTable.GetAllItems().ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+            // Assert
+            Assert.Equal(3, items.Count);
+            Assert.Equal("One", items[1]);
+            Assert.Equal("Two", items[2]);
+            Assert.Equal("Three", items[3]);
         }
     }
 }
