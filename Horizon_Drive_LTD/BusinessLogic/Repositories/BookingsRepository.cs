@@ -158,6 +158,65 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             return true;
         }
 
+        // Get all bookings for a specific car
+        public List<Booking> GetBookingsByCarId(string carId)
+        {
+            List<Booking> bookings = new List<Booking>();
+
+            using (SqlConnection conn = _dbConnection.GetConnection())
+            {
+                conn.Open();
+                string query = "SELECT * FROM Bookings WHERE CarId = @CarId";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@CarID", carId);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Booking booking = new Booking(
+                             reader["BookingID"].ToString(),
+                             reader["CustomerID"].ToString(),
+                             reader["CarID"].ToString(),
+                             reader["BookingDate"].ToString(),
+                             reader["PickupDate"].ToString(),
+                             reader["DropoffDate"].ToString(),
+                             reader["PickupLocation"].ToString(),
+                             reader["DropoffLocation"].ToString(),
+                             Convert.ToBoolean(reader["IncludeDriver"]),
+                             Convert.ToBoolean(reader["BabyCarSeat"]),
+                             Convert.ToBoolean(reader["FullInsuranceCoverage"]),
+                             Convert.ToBoolean(reader["RoofRack"]),
+                             Convert.ToBoolean(reader["AirportPickupDropoff"])
+                         );
+                            bookings.Add(booking);
+                        }
+                    }
+                }
+            }
+
+            return bookings;
+        }
+
+
+        // Delete booking by BookingId
+        public void DeleteBookingById(string bookingId)
+        {
+            using (SqlConnection conn = _dbConnection.GetConnection())
+            {
+                conn.Open();
+                string query = "DELETE FROM Bookings WHERE BookingID = @BookingID";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@BookingID", bookingId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         public List<(Booking, string carBrand, string model, int year, decimal price, string status)> GetBookingsForUserWithCarDetails(string userId)
         {
             var result = new List<(Booking, string, string, int, decimal, string)>();
@@ -215,6 +274,32 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             }
 
             return result;
+        }
+
+        public int GetActiveReservationCountForUser(string userId)
+        {
+            int count = 0;
+
+            using (SqlConnection conn = _dbConnection.GetConnection())
+            {
+                conn.Open();
+
+                string query = @"
+            SELECT COUNT(*) 
+            FROM Booking b
+            INNER JOIN Car c ON b.CarID = c.CarID
+            WHERE c.UserId = @UserId AND b.PickupDate >= @Now";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    cmd.Parameters.AddWithValue("@Now", DateTime.Now);
+
+                    count = (int)cmd.ExecuteScalar();
+                }
+            }
+
+            return count;
         }
 
 

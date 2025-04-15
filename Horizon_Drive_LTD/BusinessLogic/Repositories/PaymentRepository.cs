@@ -39,5 +39,23 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                 }
             }
         }
+        // Delete payment by BookingId
+        public void DeletePaymentByBookingId(string bookingId)
+        {
+            using (SqlConnection conn = _dbConnection.GetConnection())
+            {
+                conn.Open();
+                string query = "DELETE FROM Payments WHERE BookingID = @BookingID";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@BookingID", bookingId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+
     }
+
 }

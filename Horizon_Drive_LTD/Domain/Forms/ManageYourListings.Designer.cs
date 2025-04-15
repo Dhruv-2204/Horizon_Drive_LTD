@@ -329,9 +329,9 @@
             lblTransaction2DateRange.Location = new Point(186, 100);
             lblTransaction2DateRange.Margin = new Padding(4, 0, 4, 0);
             lblTransaction2DateRange.Name = "lblTransaction2DateRange";
-            lblTransaction2DateRange.Size = new Size(429, 34);
+            lblTransaction2DateRange.Size = new Size(500, 34);
             lblTransaction2DateRange.TabIndex = 3;
-            lblTransaction2DateRange.Text = "Booked on: Feb 15, 2025 - Feb 22, 2025";
+           
             // 
             // lblTransaction2Price
             // 
@@ -698,7 +698,7 @@
             lblEarningsAmount.Name = "lblEarningsAmount";
             lblEarningsAmount.Size = new Size(286, 41);
             lblEarningsAmount.TabIndex = 6;
-            lblEarningsAmount.Text = "MUR 150000";
+          
             lblEarningsAmount.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panelReservations
