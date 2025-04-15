@@ -43,6 +43,9 @@ This is a WinForms application a Car Rental System that includes a database conn
 - Run the application (Debug > Start Debugging or F5)
 - The main form will launch, providing access to all system features
 
+## Walkthrough for Examinator
+Step by step...
+
 ## Application Features :
 - Users can create an account to hire a car on the app.
 - Users are able to view all the cars available for renting on the browsing page with their respective photos and details (car name, car year, price per day).
