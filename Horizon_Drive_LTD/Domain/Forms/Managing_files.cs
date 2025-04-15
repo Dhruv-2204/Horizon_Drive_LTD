@@ -63,7 +63,7 @@ namespace Upload_cars
             {
                 var words = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-                if (words.Length != 22)
+                if (words.Length != 21)
                 {
                     MessageBox.Show("Invalid line format. Expected 22 fields.");
                     continue;
@@ -76,24 +76,23 @@ namespace Upload_cars
                         userid: words[1],
                         carBrand: words[2],
                         category: words[3],
-                        carImage: words[4],
-                        registrationNo: words[5],
-                        model: words[6],
-                        year: int.Parse(words[7]),
-                        colour: words[8],
-                        features: words[9],
-                        desc: words[10],
-                        price: decimal.Parse(words[11]),
-                        seat: int.Parse(words[12]),
-                        engine: words[13],
-                        rating: decimal.Parse(words[14]),
-                        power: words[15],
-                        drive: words[16],
-                        fuel: words[17],
-                        transmission: words[18],
-                        status: words[19],
-                        availabilitystart: DateTime.Parse(words[20]),
-                        availabilityend: DateTime.Parse(words[21])
+                        registrationNo: words[4],
+                        model: words[5],
+                        years: int.Parse(words[6]),
+                        colour: words[7],
+                        features: words[8],
+                        desc: words[9],
+                        price: decimal.Parse(words[10]),
+                        seat: int.Parse(words[11]),
+                        engine: words[12],
+                        rating: decimal.Parse(words[13]),
+                        power: words[14],
+                        drive: words[15],
+                        fuel: words[16],
+                        transmission: words[17],
+                        status: words[18],
+                        availabilitystart: DateTime.Parse(words[19]),
+                        availabilityend: DateTime.Parse(words[20])
                     );
 
                     Hashtable carData = new Hashtable
@@ -102,7 +101,6 @@ namespace Upload_cars
                         ["UserID"] = car.UserID,
                         ["CarBrand"] = car.CarBrand,
                         ["Category"] = car.Category,
-                        ["CarImagePath"] = car.CarImagePath,
                         ["RegistrationNo"] = car.RegistrationNo,
                         ["Model"] = car.Model,
                         ["Years"] = car.Year,
@@ -135,7 +133,7 @@ namespace Upload_cars
 
         private void SaveCarToDatabase(Hashtable data)
         {
-            string connStr = "Data Source=LAPTOP-VKDU1VH3\\SQLEXPRESS;Initial Catalog=Car_DBMS;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+            string connStr = "Data Source=LAPTOP-6P9HT3IB\\SQLEXPRESS;Initial Catalog=CarDBMS;Integrated Security=True;Trust Server Certificate=True";
 
             try
             {
@@ -144,9 +142,9 @@ namespace Upload_cars
                     conn.Open();
 
                     string query = @"INSERT INTO Car 
-                (CarID, UserID, CarBrand, Category, CarImagePath, RegistrationNo, Model, Years, Colour, Features, VehicleDescription, CarPrice, SeatNo, EngineCapacity, Ratings, Power, DriveTrain, FuelType, TransmissionType, Status, AvailabilityStart, AvailabilityEnd) 
+                (CarID, UserID, CarBrand, Category, RegistrationNo, Model, Years, Colour, Features, VehicleDescription, CarPrice, SeatNo, EngineCapacity, Ratings, Power, DriveTrain, FuelType, TransmissionType, Status, AvailabilityStart, AvailabilityEnd) 
                 VALUES 
-                (@carid, @userid, @carBrand, @category, @carImage, @registrationNo, @model, @years, @colour, @features, @desc, @price, @seat, @engine, @rating, @power, @drive, @fuel, @transmission, @status, @availabilityStart, @availabilityEnd)";
+                (@carid, @userid, @carBrand, @category, @registrationNo, @model, @years, @colour, @features, @desc, @price, @seat, @engine, @rating, @power, @drive, @fuel, @transmission, @status, @availabilityStart, @availabilityEnd)";
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
@@ -154,7 +152,6 @@ namespace Upload_cars
                         cmd.Parameters.AddWithValue("@userid", data["UserID"]);
                         cmd.Parameters.AddWithValue("@carBrand", data["CarBrand"]);
                         cmd.Parameters.AddWithValue("@category", data["Category"]);
-                        cmd.Parameters.AddWithValue("@carImage", data["CarImagePath"]);
                         cmd.Parameters.AddWithValue("@registrationNo", data["RegistrationNo"]);
                         cmd.Parameters.AddWithValue("@model", data["Model"]);
                         cmd.Parameters.AddWithValue("@years", data["Years"]);

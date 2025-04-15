@@ -15,7 +15,6 @@ namespace Horizon_Drive_LTD.Domain.Entities
         public string UserID { get; set; }
         public string CarBrand { get; set; }
         public string Category { get; set; }
-        public string CarImagePath { get; set; }
         public string RegistrationNo { get; set; }
         public string Model { get; set; }
         public int Year { get; set; }
@@ -38,7 +37,7 @@ namespace Horizon_Drive_LTD.Domain.Entities
 
 
 
-        public Cars(string carid, string userid, string carBrand, string category, string carImage, string registrationNo, string model, int year,
+        public Cars(string carid, string userid, string carBrand, string category, string registrationNo, string model, int years,
          string colour, string features, string desc, decimal price, int seat, string engine, decimal rating,
          string power, string drive, string fuel, string transmission, string status, DateTime availabilitystart, DateTime availabilityend)
         {
@@ -46,7 +45,7 @@ namespace Horizon_Drive_LTD.Domain.Entities
             UserID = userid;
             CarBrand = carBrand;
             Category = category;
-            CarImagePath = carImage;
+            
 
             RegistrationNo = registrationNo;
             Model = model;
@@ -58,7 +57,7 @@ namespace Horizon_Drive_LTD.Domain.Entities
             FuelType = fuel;
             TransmissionType = transmission;
 
-            Year = year;
+            Year = years;
             Colour = colour;
             SeatNo = seat;
             EngineCapacity = engine;
