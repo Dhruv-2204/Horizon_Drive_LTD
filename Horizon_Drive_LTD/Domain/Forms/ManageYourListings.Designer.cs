@@ -101,8 +101,6 @@
             panelReservations.SuspendLayout();
             panelTotalListings.SuspendLayout();
             SuspendLayout();
-
-            this.FormClosing += ManageListing_FormClosing;
             // 
             // panelSidebar
             // 
@@ -323,7 +321,6 @@
             btnDeleteTransaction2.TabIndex = 4;
             btnDeleteTransaction2.Text = "Delete";
             btnDeleteTransaction2.UseVisualStyleBackColor = false;
-            btnDeleteTransaction2.Click += BtnDeleteTransaction_Click;
             // 
             // lblTransaction2DateRange
             // 
@@ -331,29 +328,15 @@
             lblTransaction2DateRange.Location = new Point(186, 100);
             lblTransaction2DateRange.Margin = new Padding(4, 0, 4, 0);
             lblTransaction2DateRange.Name = "lblTransaction2DateRange";
-            lblTransaction2DateRange.Size = new Size(429, 34);
+            lblTransaction2DateRange.Size = new Size(500, 34);
             lblTransaction2DateRange.TabIndex = 3;
-            lblTransaction2DateRange.Text = "Booked on: Feb 15, 2025 - Feb 22, 2025";
+           
             // 
-            // lblTransaction2Price
-            // 
-            lblTransaction2Price.Font = new Font("Segoe UI", 9F);
-            lblTransaction2Price.Location = new Point(186, 59);
-            lblTransaction2Price.Margin = new Padding(4, 0, 4, 0);
-            lblTransaction2Price.Name = "lblTransaction2Price";
-            lblTransaction2Price.Size = new Size(429, 34);
-            lblTransaction2Price.TabIndex = 2;
-            lblTransaction2Price.Text = "MUR 30000 / day";
+         
+           
             // 
             // lblTransaction2Title
             // 
-            lblTransaction2Title.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblTransaction2Title.Location = new Point(186, 16);
-            lblTransaction2Title.Margin = new Padding(4, 0, 4, 0);
-            lblTransaction2Title.Name = "lblTransaction2Title";
-            lblTransaction2Title.Size = new Size(429, 34);
-            lblTransaction2Title.TabIndex = 1;
-            lblTransaction2Title.Text = "BMW XM (2025)";
             // 
             // pictureBoxTransaction2
             // 
@@ -406,7 +389,6 @@
             btnDeleteTransaction1.TabIndex = 4;
             btnDeleteTransaction1.Text = "Delete";
             btnDeleteTransaction1.UseVisualStyleBackColor = false;
-            btnDeleteTransaction1.Click += BtnDeleteTransaction_Click;
             // 
             // lblTransaction1DateRange
             // 
@@ -460,6 +442,8 @@
             labelTransactionHistory.Size = new Size(312, 45);
             labelTransactionHistory.TabIndex = 2;
             labelTransactionHistory.Text = "Transaction History";
+            labelTransactionHistory.Visible = true; // ensure it's visible
+            panelContent.Controls.Add(labelTransactionHistory);
             // 
             // panelCarListing2
             // 
@@ -700,7 +684,7 @@
             lblEarningsAmount.Name = "lblEarningsAmount";
             lblEarningsAmount.Size = new Size(286, 41);
             lblEarningsAmount.TabIndex = 6;
-            lblEarningsAmount.Text = "MUR 150000";
+          
             lblEarningsAmount.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panelReservations
@@ -798,6 +782,7 @@
             Name = "ManageYourListings";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Horizon Drive - Manage Your Listings";
+            FormClosing += ManageListing_FormClosing;
             panelSidebar.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).EndInit();
             panelMain.ResumeLayout(false);

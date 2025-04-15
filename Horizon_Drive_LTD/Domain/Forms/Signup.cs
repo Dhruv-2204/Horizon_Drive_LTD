@@ -105,10 +105,7 @@
             int numericPart = Math.Abs(guid.GetHashCode()) % 100000;
             string userId = "U" + numericPart.ToString("D5");
 
-            numericPart = Math.Abs(guid.GetHashCode()) % 100000;
             string customerid = "CU" + numericPart.ToString("D5");
-
-            numericPart = Math.Abs(guid.GetHashCode()) % 100000;
             string lessorid = "L" + numericPart.ToString("D5");
 
 

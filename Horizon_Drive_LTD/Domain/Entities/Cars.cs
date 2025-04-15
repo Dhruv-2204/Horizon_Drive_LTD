@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Horizon_Drive_LTD.Domain.Entities
 {
-    public class Cars
+   public class Cars
     {
 
         public string CarID { get; set; }
@@ -18,17 +18,17 @@ namespace Horizon_Drive_LTD.Domain.Entities
         public string CarImagePath { get; set; }
         public string RegistrationNo { get; set; }
         public string Model { get; set; }
-        public int Year { get; set; }
+        public int Year { get; set; } 
         public string Colour { get; set; }
         public string Features { get; set; }
         public string VehicleDescription { get; set; }
         public decimal CarPrice { get; set; }
         public int SeatNo { get; set; }
-        public string EngineCapacity { get; set; }
-        public decimal Ratings { get; set; }
+        public string EngineCapacity { get; set; } 
+        public decimal Ratings { get; set; } 
         public string Power { get; set; }
         public string DriveTrain { get; set; }
-        public string FuelType { get; set; }
+        public string FuelType { get; set; } 
         public string TransmissionType { get; set; }
         public string Status { get; set; }
 
@@ -38,9 +38,9 @@ namespace Horizon_Drive_LTD.Domain.Entities
 
 
 
-        public Cars(string carid, string userid, string carBrand, string category, string carImage, string registrationNo, string model, int year,
+        public Cars(string carid , string userid, string carBrand, string category, string carImage, string registrationNo, string model, int year,
          string colour, string features, string desc, decimal price, int seat, string engine, decimal rating,
-         string power, string drive, string fuel, string transmission, string status, DateTime availabilitystart, DateTime availabilityend)
+         string power, string drive, string fuel, string transmission, string status, DateTime availabilitystart,DateTime availabilityend)
         {
             CarID = carid;
             UserID = userid;
@@ -70,6 +70,7 @@ namespace Horizon_Drive_LTD.Domain.Entities
             AvailabilityStart = availabilitystart;
         }
 
-
+        
     }
 }
+
