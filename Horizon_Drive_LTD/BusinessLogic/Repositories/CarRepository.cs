@@ -35,31 +35,30 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                     while (reader.Read())
                     {
                         Cars car = new Cars(
-                            reader["CarID"].ToString(),
-                            reader["UserID"].ToString(),
+                                    reader["CarID"]?.ToString() ?? string.Empty,
+                                    reader["UserID"]?.ToString() ?? string.Empty,
 
-                            reader["CarBrand"].ToString(),
-                            reader["Category"].ToString(),
-                            "",
-                            reader["RegistrationNo"].ToString(),
-                            reader["Model"].ToString(),
-                            Convert.ToInt32(reader["Years"]),
-                            reader["Colour"].ToString(),
-                            reader["Features"].ToString(),
-                            reader["VehicleDescription"].ToString(),
-                            Convert.ToDecimal(reader["CarPrice"]),
-                            Convert.ToInt32(reader["SeatNo"]),
-                            reader["EngineCapacity"].ToString(),
-                            Convert.ToDecimal(reader["Ratings"]),
-                            reader["Power"].ToString(),
-                            reader["DriveTrain"].ToString(),
-                            reader["FuelType"].ToString(),
-                            reader["TransmissionType"].ToString(),
-                            reader["Status"].ToString(),
-                            reader["AvailabilityStart"] != DBNull.Value ? Convert.ToDateTime(reader["AvailabilityStart"]) : DateTime.MinValue, // Default DateTime value.
-                            reader["AvailabilityEnd"] != DBNull.Value ? Convert.ToDateTime(reader["AvailabilityEnd"]) : DateTime.MinValue // Default DateTime value.
-
-                        );
+                                    reader["CarBrand"]?.ToString() ?? string.Empty,
+                                    reader["Category"]?.ToString() ?? string.Empty,
+                                    string.Empty, // Explicitly empty for this field.
+                                    reader["RegistrationNo"]?.ToString() ?? string.Empty,
+                                    reader["Model"]?.ToString() ?? string.Empty,
+                                    reader["Years"] != DBNull.Value ? Convert.ToInt32(reader["Years"]) : 0, // Defaulting to 0.
+                                    reader["Colour"]?.ToString() ?? string.Empty,
+                                    reader["Features"]?.ToString() ?? string.Empty,
+                                    reader["VehicleDescription"]?.ToString() ?? string.Empty,
+                                    reader["CarPrice"] != DBNull.Value ? Convert.ToDecimal(reader["CarPrice"]) : 0m, // Defaulting to 0.0.
+                                    reader["SeatNo"] != DBNull.Value ? Convert.ToInt32(reader["SeatNo"]) : 0, // Defaulting to 0.
+                                    reader["EngineCapacity"]?.ToString() ?? string.Empty,
+                                    reader["Ratings"] != DBNull.Value ? Convert.ToDecimal(reader["Ratings"]) : 0m, // Defaulting to 0.0.
+                                    reader["Power"]?.ToString() ?? string.Empty,
+                                    reader["DriveTrain"]?.ToString() ?? string.Empty,
+                                    reader["FuelType"]?.ToString() ?? string.Empty,
+                                    reader["TransmissionType"]?.ToString() ?? string.Empty,
+                                    reader["Status"]?.ToString() ?? string.Empty,
+                                    reader["AvailabilityStart"] != DBNull.Value ? Convert.ToDateTime(reader["AvailabilityStart"]) : DateTime.MinValue, // Default DateTime value.
+                                    reader["AvailabilityEnd"] != DBNull.Value ? Convert.ToDateTime(reader["AvailabilityEnd"]) : DateTime.MinValue  // Default DateTime value.
+                                );
                         // Insert the car into the hash table using its CarID as the key.
                         carHashTable.Insert(car.CarID, car);
 
