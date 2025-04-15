@@ -59,7 +59,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             try
             {
                 string query = @"INSERT INTO Maintenance (MaintenanceID, CarID, MaintenanceDate, MaintenanceStatus, MaintenanceDescription) 
-                               VALUES (@MaintenanceID, @CarID, @MaintenanceDate, @MaintenanceStatus, @MaintenanceDescription)";
+                       VALUES (@MaintenanceID, @CarID, @MaintenanceDate, @MaintenanceStatus, @MaintenanceDescription)";
 
                 using (SqlConnection connection = _dbConnection.GetConnection())
                 {
@@ -70,15 +70,29 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                         command.Parameters.AddWithValue("@CarID", record.CarID);
                         command.Parameters.AddWithValue("@MaintenanceDate", record.MaintenanceDate);
                         command.Parameters.AddWithValue("@MaintenanceStatus", record.MaintenanceStatus);
-                        command.Parameters.AddWithValue("@MaintenanceDescription", record.MaintenanceDescription ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@MaintenanceDescription",
+                            string.IsNullOrEmpty(record.MaintenanceDescription) ? (object)DBNull.Value : record.MaintenanceDescription);
 
-                        return command.ExecuteNonQuery() > 0;
+                        int result = command.ExecuteNonQuery();
+                        return result > 0;
                     }
                 }
             }
+            catch (SqlException sqlEx)
+            {
+                // Log detailed SQL exception
+                Console.WriteLine($"SQL Error adding maintenance record: {sqlEx.Message}");
+                Console.WriteLine($"Error Number: {sqlEx.Number}");
+                Console.WriteLine($"SQL State: {sqlEx.State}");
+                Console.WriteLine($"Server: {sqlEx.Server}");
+                MessageBox.Show($"Database Error: {sqlEx.Message}", "SQL Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
             catch (Exception ex)
             {
+                // Log general exception
                 Console.WriteLine($"Error adding maintenance record: {ex.Message}");
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }

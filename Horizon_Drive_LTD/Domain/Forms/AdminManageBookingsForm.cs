@@ -1,7 +1,7 @@
 ﻿using Horizon_Drive_LTD.BusinessLogic;
 using Horizon_Drive_LTD.BusinessLogic.Repositories;
 using Horizon_Drive_LTD.Domain.Entities;
-using Horizon_Drive_LTD.Domain.Forms;
+using Horizon_Drive_LTD.DataStructure;
 using Manage_user_search_page;
 using System;
 using System.Collections.Generic;
@@ -12,22 +12,86 @@ using System.Linq;
 using System.Windows.Forms;
 using Upload_cars;
 using User_managing;
+using Horizon_Drive_LTD.Domain.Forms;
+using Microsoft.Data.SqlClient;
 
 namespace WindowsFormsApp1
 {
     public partial class AdminManageBookingsForm : Form
     {
-        private AdminBookingRepository _bookingRepository;
-        private List<AdminBooking> _allBookings;
-        private List<AdminBooking> _filteredBookings;
+        private BookingsRepository _bookingRepository;
+        private List<BookingViewModel> _allBookings;
+        private List<BookingViewModel> _filteredBookings;
+        private DatabaseConnection _dbConnection;
+
+        // View model to help with display and conversion
+        private class BookingViewModel
+        {
+            public string BookingId { get; set; }
+            public string UserId { get; set; }
+            public string CarId { get; set; }
+            public DateTime StartDate { get; set; }
+            public DateTime EndDate { get; set; }
+            public decimal TotalCost { get; set; } // This is calculated
+            public string Status { get; set; }
+            public string UserName { get; set; } // This might need to be fetched separately
+            public string CarModel { get; set; } // This might need to be fetched separately
+
+            // Additional properties from the original Booking
+            public bool IncludeDriver { get; set; }
+            public bool BabyCarSeat { get; set; }
+            public bool FullInsuranceCoverage { get; set; }
+            public bool RoofRack { get; set; }
+            public bool AirportPickupDropoff { get; set; }
+            public string PickupLocation { get; set; }
+            public string DropoffLocation { get; set; }
+
+            // Helper method to create from original Booking
+            public static BookingViewModel FromBooking(Booking booking, string userName, string carModel)
+            {
+                // Calculate a simple total cost (you may want to make this more sophisticated)
+                decimal baseCost = 50.0m; // Example base cost per day
+                int days = (DateTime.Parse(booking.DropoffDate) - DateTime.Parse(booking.PickupDate)).Days;
+                if (days < 1) days = 1;
+
+                decimal totalCost = baseCost * days;
+
+                // Add costs for additional services
+                if (booking.IncludeDriver) totalCost += 25.0m * days;
+                if (booking.BabyCarSeat) totalCost += 5.0m * days;
+                if (booking.FullInsuranceCoverage) totalCost += 15.0m * days;
+                if (booking.RoofRack) totalCost += 10.0m * days;
+                if (booking.AirportPickupDropoff) totalCost += 30.0m;
+
+                return new BookingViewModel
+                {
+                    BookingId = booking.BookingID,
+                    UserId = booking.CustomerID,
+                    CarId = booking.CarID,
+                    StartDate = DateTime.Parse(booking.PickupDate),
+                    EndDate = DateTime.Parse(booking.DropoffDate),
+                    TotalCost = totalCost,
+                    Status = booking.Status,
+                    UserName = userName,
+                    CarModel = carModel,
+                    IncludeDriver = booking.IncludeDriver,
+                    BabyCarSeat = booking.BabyCarSeat,
+                    FullInsuranceCoverage = booking.FullInsuranceCoverage,
+                    RoofRack = booking.RoofRack,
+                    AirportPickupDropoff = booking.AirportPickupDropoff,
+                    PickupLocation = booking.PickupLocation,
+                    DropoffLocation = booking.DropoffLocation
+                };
+            }
+        }
 
         public AdminManageBookingsForm()
         {
             InitializeComponent();
 
             // Initialize repositories
-            DatabaseConnection dbConnection = new DatabaseConnection(); // You'll need to pass the connection string
-            _bookingRepository = new AdminBookingRepository(dbConnection);
+            _dbConnection = new DatabaseConnection();
+            _bookingRepository = new BookingsRepository(_dbConnection);
         }
 
         private void ManageBookingsForm_Load(object sender, EventArgs e)
@@ -50,97 +114,120 @@ namespace WindowsFormsApp1
             // Set up the DataGridView columns
             SetupDataGridView();
 
+            // Initialize status dropdown
+            cmbStatus.Items.Clear();
+            cmbStatus.Items.Add("All");
+            cmbStatus.Items.Add("Confirmed");
+            cmbStatus.Items.Add("Canceled");
+            cmbStatus.Items.Add("Completed");
+            cmbStatus.SelectedIndex = 0;
+
             // Load all bookings
             LoadAllBookings();
         }
 
         private void SetupDataGridView()
-{
-    // Configure the DataGridView
-    dataGridView2.AutoGenerateColumns = false;
-    dataGridView2.ReadOnly = true;
-    dataGridView2.RowHeadersVisible = false;
-    dataGridView2.MultiSelect = false;
-    dataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-    dataGridView2.RowTemplate.Height = 40;
-    dataGridView2.BackgroundColor = Color.White;
+        {
+            // Configure the DataGridView
+            dataGridView2.AutoGenerateColumns = false;
+            dataGridView2.ReadOnly = true;
+            dataGridView2.RowHeadersVisible = false;
+            dataGridView2.MultiSelect = false;
+            dataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView2.RowTemplate.Height = 40;
+            dataGridView2.BackgroundColor = Color.White;
 
-    // Clear existing columns
-    dataGridView2.Columns.Clear();
+            // Clear existing columns
+            dataGridView2.Columns.Clear();
 
-    // Add columns
-    DataGridViewTextBoxColumn bookingIdColumn = new DataGridViewTextBoxColumn();
-    bookingIdColumn.Name = "BookingId";
-    bookingIdColumn.HeaderText = "Booking ID";
-    bookingIdColumn.Width = 80;
-    dataGridView2.Columns.Add(bookingIdColumn);
+            // Add columns
+            DataGridViewTextBoxColumn bookingIdColumn = new DataGridViewTextBoxColumn();
+            bookingIdColumn.Name = "BookingId";
+            bookingIdColumn.HeaderText = "Booking ID";
+            bookingIdColumn.Width = 80;
+            dataGridView2.Columns.Add(bookingIdColumn);
 
-    DataGridViewTextBoxColumn userNameColumn = new DataGridViewTextBoxColumn();
-    userNameColumn.Name = "UserName";
-    userNameColumn.HeaderText = "User";
-    userNameColumn.Width = 100;
-    dataGridView2.Columns.Add(userNameColumn);
+            DataGridViewTextBoxColumn userNameColumn = new DataGridViewTextBoxColumn();
+            userNameColumn.Name = "UserName";
+            userNameColumn.HeaderText = "User";
+            userNameColumn.Width = 100;
+            dataGridView2.Columns.Add(userNameColumn);
 
-    DataGridViewTextBoxColumn carModelColumn = new DataGridViewTextBoxColumn();
-    carModelColumn.Name = "CarModel";
-    carModelColumn.HeaderText = "Car";
-    carModelColumn.Width = 100;
-    dataGridView2.Columns.Add(carModelColumn);
+            DataGridViewTextBoxColumn carModelColumn = new DataGridViewTextBoxColumn();
+            carModelColumn.Name = "CarModel";
+            carModelColumn.HeaderText = "Car";
+            carModelColumn.Width = 100;
+            dataGridView2.Columns.Add(carModelColumn);
 
-    DataGridViewTextBoxColumn startDateColumn = new DataGridViewTextBoxColumn();
-    startDateColumn.Name = "StartDate";
-    startDateColumn.HeaderText = "Start Date";
-    startDateColumn.Width = 100;
-    dataGridView2.Columns.Add(startDateColumn);
+            DataGridViewTextBoxColumn startDateColumn = new DataGridViewTextBoxColumn();
+            startDateColumn.Name = "StartDate";
+            startDateColumn.HeaderText = "Pickup Date";
+            startDateColumn.Width = 100;
+            dataGridView2.Columns.Add(startDateColumn);
 
-    DataGridViewTextBoxColumn endDateColumn = new DataGridViewTextBoxColumn();
-    endDateColumn.Name = "EndDate";
-    endDateColumn.HeaderText = "End Date";
-    endDateColumn.Width = 100;
-    dataGridView2.Columns.Add(endDateColumn);
+            DataGridViewTextBoxColumn endDateColumn = new DataGridViewTextBoxColumn();
+            endDateColumn.Name = "EndDate";
+            endDateColumn.HeaderText = "Dropoff Date";
+            endDateColumn.Width = 100;
+            dataGridView2.Columns.Add(endDateColumn);
 
-    DataGridViewTextBoxColumn totalCostColumn = new DataGridViewTextBoxColumn();
-    totalCostColumn.Name = "TotalCost";
-    totalCostColumn.HeaderText = "Total Cost";
-    totalCostColumn.Width = 80;
-    dataGridView2.Columns.Add(totalCostColumn);
+            DataGridViewTextBoxColumn totalCostColumn = new DataGridViewTextBoxColumn();
+            totalCostColumn.Name = "TotalCost";
+            totalCostColumn.HeaderText = "Total Cost";
+            totalCostColumn.Width = 80;
+            dataGridView2.Columns.Add(totalCostColumn);
 
-    DataGridViewTextBoxColumn statusColumn = new DataGridViewTextBoxColumn();
-    statusColumn.Name = "Status";
-    statusColumn.HeaderText = "Status";
-    statusColumn.Width = 80;
-    dataGridView2.Columns.Add(statusColumn);
+            DataGridViewTextBoxColumn statusColumn = new DataGridViewTextBoxColumn();
+            statusColumn.Name = "Status";
+            statusColumn.HeaderText = "Status";
+            statusColumn.Width = 80;
+            dataGridView2.Columns.Add(statusColumn);
 
-    // Add a cancel button column
-    DataGridViewButtonColumn cancelButtonColumn = new DataGridViewButtonColumn();
-    cancelButtonColumn.Name = "CancelButton";
-    cancelButtonColumn.HeaderText = "Actions";
-    cancelButtonColumn.Text = "Cancel";
-    cancelButtonColumn.UseColumnTextForButtonValue = true;
-    cancelButtonColumn.Width = 70;
-    dataGridView2.Columns.Add(cancelButtonColumn);
+            // Add a cancel button column
+            DataGridViewButtonColumn cancelButtonColumn = new DataGridViewButtonColumn();
+            cancelButtonColumn.Name = "CancelButton";
+            cancelButtonColumn.HeaderText = "Actions";
+            cancelButtonColumn.Text = "Cancel";
+            cancelButtonColumn.UseColumnTextForButtonValue = true;
+            cancelButtonColumn.Width = 70;
+            dataGridView2.Columns.Add(cancelButtonColumn);
 
-    // Apply styling
-    dataGridView2.RowsDefaultCellStyle.BackColor = Color.White;
-    dataGridView2.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(240, 240, 240);
-    dataGridView2.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-    dataGridView2.DefaultCellStyle.SelectionBackColor = Color.FromArgb(45, 68, 135);
-    dataGridView2.DefaultCellStyle.SelectionForeColor = Color.White;
-    
-    // Apply dark blue color to table headers (matching user management page)
-    dataGridView2.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(20, 48, 65);
-    dataGridView2.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-    dataGridView2.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-    dataGridView2.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-    dataGridView2.ColumnHeadersHeight = 40;
-    dataGridView2.EnableHeadersVisualStyles = false;
-}
+            // Apply styling
+            dataGridView2.RowsDefaultCellStyle.BackColor = Color.White;
+            dataGridView2.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(240, 240, 240);
+            dataGridView2.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dataGridView2.DefaultCellStyle.SelectionBackColor = Color.FromArgb(45, 68, 135);
+            dataGridView2.DefaultCellStyle.SelectionForeColor = Color.White;
+
+            // Apply dark blue color to table headers (matching user management page)
+            dataGridView2.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(20, 48, 65);
+            dataGridView2.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dataGridView2.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            dataGridView2.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridView2.ColumnHeadersHeight = 40;
+            dataGridView2.EnableHeadersVisualStyles = false;
+        }
 
         private void LoadAllBookings()
         {
             try
             {
-                _allBookings = _bookingRepository.GetAllBookings();
+                // Load bookings from the hash table
+                HashTable<string, Booking> bookingHashTable = _bookingRepository.LoadBookingsFromDatabase();
+
+                // Convert to a list of BookingViewModel
+                _allBookings = new List<BookingViewModel>();
+
+                foreach (var booking in bookingHashTable.Values())
+                {
+                    // Here you would ideally fetch user and car details from the appropriate repositories
+                    // For now, we'll use placeholder values or data from the booking
+                    string userName = "User " + booking.CustomerID; // Replace with actual user name lookup
+                    string carModel = "Car " + booking.CarID; // Replace with actual car model lookup
+
+                    _allBookings.Add(BookingViewModel.FromBooking(booking, userName, carModel));
+                }
+
                 ApplyFilters();
             }
             catch (Exception ex)
@@ -187,7 +274,7 @@ namespace WindowsFormsApp1
             DisplayBookings(_filteredBookings);
         }
 
-        private void DisplayBookings(List<AdminBooking> bookings)
+        private void DisplayBookings(List<BookingViewModel> bookings)
         {
             // Clear existing rows
             dataGridView2.Rows.Clear();
@@ -225,6 +312,31 @@ namespace WindowsFormsApp1
             Search_Users.Text = $"Manage Bookings ({bookings.Count})";
         }
 
+        // Method to update booking status directly in the database
+        private bool UpdateBookingStatus(string bookingId, string newStatus)
+        {
+            try
+            {
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+                    string query = "UPDATE Booking SET BookingStatus = @Status WHERE BookingID = @BookingID";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@BookingID", bookingId);
+                        cmd.Parameters.AddWithValue("@Status", newStatus);
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        return rowsAffected > 0;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw; // Re-throw to be handled by caller
+            }
+        }
+
         private void DataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // Check if the clicked cell is in the button column and not the header
@@ -251,25 +363,37 @@ namespace WindowsFormsApp1
 
                     if (result == DialogResult.Yes)
                     {
-                        // Cancel the booking
-                        bool success = _bookingRepository.CancelBooking(bookingId);
-
-                        if (success)
+                        try
                         {
-                            MessageBox.Show(
-                                "Booking has been canceled successfully.",
-                                "Success",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Information
-                            );
+                            // Update the booking status directly in the database
+                            bool success = UpdateBookingStatus(bookingId, "Canceled");
 
-                            // Refresh the bookings list
-                            LoadAllBookings();
+                            if (success)
+                            {
+                                MessageBox.Show(
+                                    "Booking has been canceled successfully.",
+                                    "Success",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information
+                                );
+
+                                // Refresh the bookings list
+                                LoadAllBookings();
+                            }
+                            else
+                            {
+                                MessageBox.Show(
+                                    "Failed to cancel the booking. No records were updated.",
+                                    "Error",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error
+                                );
+                            }
                         }
-                        else
+                        catch (Exception ex)
                         {
                             MessageBox.Show(
-                                "Failed to cancel the booking. Please try again.",
+                                "Failed to cancel the booking: " + ex.Message,
                                 "Error",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Error
@@ -283,19 +407,27 @@ namespace WindowsFormsApp1
         private void ShowBookingDetails(string bookingId)
         {
             // Find the booking
-            AdminBooking booking = _allBookings.FirstOrDefault(b => b.BookingId == bookingId);
+            BookingViewModel booking = _allBookings.FirstOrDefault(b => b.BookingId == bookingId);
 
             if (booking != null)
             {
-                // Create a message with all booking details
+                // Build a detailed message with all booking information
                 string message = $"Booking ID: {booking.BookingId}\n" +
                                 $"User: {booking.UserName} (ID: {booking.UserId})\n" +
                                 $"Car: {booking.CarModel} (ID: {booking.CarId})\n" +
-                                $"Start Date: {booking.StartDate}\n" +
-                                $"End Date: {booking.EndDate}\n" +
+                                $"Pickup Date: {booking.StartDate}\n" +
+                                $"Dropoff Date: {booking.EndDate}\n" +
                                 $"Duration: {(booking.EndDate - booking.StartDate).TotalDays} days\n" +
+                                $"Pickup Location: {booking.PickupLocation}\n" +
+                                $"Dropoff Location: {booking.DropoffLocation}\n" +
                                 $"Total Cost: £{booking.TotalCost:F2}\n" +
-                                $"Status: {booking.Status}";
+                                $"Status: {booking.Status}\n\n" +
+                                $"Additional Services:\n" +
+                                $"- Driver Included: {(booking.IncludeDriver ? "Yes" : "No")}\n" +
+                                $"- Baby Car Seat: {(booking.BabyCarSeat ? "Yes" : "No")}\n" +
+                                $"- Full Insurance: {(booking.FullInsuranceCoverage ? "Yes" : "No")}\n" +
+                                $"- Roof Rack: {(booking.RoofRack ? "Yes" : "No")}\n" +
+                                $"- Airport Pickup/Dropoff: {(booking.AirportPickupDropoff ? "Yes" : "No")}";
 
                 MessageBox.Show(
                     message,

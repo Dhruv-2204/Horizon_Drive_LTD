@@ -236,9 +236,12 @@ namespace Horizon_Drive_LTD.Domain.Forms
 
         private string GenerateNewMaintenanceID()
         {
-            // You can implement your own ID generation logic here
-            // For example, a prefix followed by a timestamp
-            return "M" + DateTime.Now.ToString("yyMMddHHmm");
+            // Create a shorter ID format
+            string timestamp = DateTime.Now.ToString("yyMMdd"); // 6 characters
+            string randomDigits = new Random().Next(1000, 9999).ToString(); // 4 characters
+
+            // Total: 10 characters
+            return timestamp + randomDigits;
         }
 
         private void SetRoundedCorner(Button button, int radius)

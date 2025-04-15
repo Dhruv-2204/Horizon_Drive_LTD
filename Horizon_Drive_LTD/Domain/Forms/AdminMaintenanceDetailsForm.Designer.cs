@@ -28,177 +28,174 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.labelID = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.textBoxMaintenanceID = new System.Windows.Forms.TextBox();
-            this.labelCarID = new System.Windows.Forms.Label();
-            this.textBoxCarID = new System.Windows.Forms.TextBox();
-            this.labelDate = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.dateTimePickerMaintenance = new System.Windows.Forms.DateTimePicker();
-            this.labelStatus = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.comboBoxStatus = new System.Windows.Forms.ComboBox();
-            this.labelDescription = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.textBoxDescription = new System.Windows.Forms.TextBox();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.comboBoxCarID = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
-            // labelID
+            // label1
             // 
-            this.labelID.AutoSize = true;
-            this.labelID.Location = new System.Drawing.Point(30, 30);
-            this.labelID.Name = "labelID";
-            this.labelID.Size = new System.Drawing.Size(109, 20);
-            this.labelID.TabIndex = 0;
-            this.labelID.Text = "Maintenance ID:";
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(99, 15);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Maintenance ID:";
             // 
             // textBoxMaintenanceID
             // 
-            this.textBoxMaintenanceID.Location = new System.Drawing.Point(160, 30);
+            this.textBoxMaintenanceID.Location = new System.Drawing.Point(156, 12);
             this.textBoxMaintenanceID.Name = "textBoxMaintenanceID";
-            this.textBoxMaintenanceID.Size = new System.Drawing.Size(280, 27);
-            this.textBoxMaintenanceID.TabIndex = 1;
+            this.textBoxMaintenanceID.Size = new System.Drawing.Size(200, 23);
+            this.textBoxMaintenanceID.TabIndex = 0;
             // 
-            // labelCarID
+            // label2
             // 
-            this.labelCarID.AutoSize = true;
-            this.labelCarID.Location = new System.Drawing.Point(30, 70);
-            this.labelCarID.Name = "labelCarID";
-            this.labelCarID.Size = new System.Drawing.Size(52, 20);
-            this.labelCarID.TabIndex = 2;
-            this.labelCarID.Text = "Car ID:";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 44);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(45, 15);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Car ID:";
             // 
-            // textBoxCarID
+            // comboBoxCarID
             // 
-            this.textBoxCarID.Location = new System.Drawing.Point(160, 70);
-            this.textBoxCarID.Name = "textBoxCarID";
-            this.textBoxCarID.Size = new System.Drawing.Size(280, 27);
-            this.textBoxCarID.TabIndex = 3;
+            this.comboBoxCarID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxCarID.FormattingEnabled = true;
+            this.comboBoxCarID.Location = new System.Drawing.Point(156, 41);
+            this.comboBoxCarID.Name = "comboBoxCarID";
+            this.comboBoxCarID.Size = new System.Drawing.Size(200, 23);
+            this.comboBoxCarID.TabIndex = 1;
             // 
-            // labelDate
+            // label3
             // 
-            this.labelDate.AutoSize = true;
-            this.labelDate.Location = new System.Drawing.Point(30, 110);
-            this.labelDate.Name = "labelDate";
-            this.labelDate.Size = new System.Drawing.Size(124, 20);
-            this.labelDate.TabIndex = 4;
-            this.labelDate.Text = "Maintenance Date:";
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 73);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(106, 15);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Maintenance Date:";
             // 
             // dateTimePickerMaintenance
             // 
-            this.dateTimePickerMaintenance.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePickerMaintenance.Location = new System.Drawing.Point(160, 110);
+            this.dateTimePickerMaintenance.Location = new System.Drawing.Point(156, 70);
             this.dateTimePickerMaintenance.Name = "dateTimePickerMaintenance";
-            this.dateTimePickerMaintenance.Size = new System.Drawing.Size(280, 27);
-            this.dateTimePickerMaintenance.TabIndex = 5;
+            this.dateTimePickerMaintenance.Size = new System.Drawing.Size(200, 23);
+            this.dateTimePickerMaintenance.TabIndex = 2;
             // 
-            // labelStatus
+            // label4
             // 
-            this.labelStatus.AutoSize = true;
-            this.labelStatus.Location = new System.Drawing.Point(30, 150);
-            this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(52, 20);
-            this.labelStatus.TabIndex = 6;
-            this.labelStatus.Text = "Status:";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 102);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(111, 15);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Maintenance Status:";
             // 
             // comboBoxStatus
             // 
             this.comboBoxStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxStatus.FormattingEnabled = true;
-            this.comboBoxStatus.Items.AddRange(new object[] {
-            "Pending",
-            "In Progress",
-            "Completed"});
-            this.comboBoxStatus.Location = new System.Drawing.Point(160, 150);
+            this.comboBoxStatus.Location = new System.Drawing.Point(156, 99);
             this.comboBoxStatus.Name = "comboBoxStatus";
-            this.comboBoxStatus.Size = new System.Drawing.Size(280, 28);
-            this.comboBoxStatus.TabIndex = 7;
+            this.comboBoxStatus.Size = new System.Drawing.Size(200, 23);
+            this.comboBoxStatus.TabIndex = 3;
             // 
-            // labelDescription
+            // label5
             // 
-            this.labelDescription.AutoSize = true;
-            this.labelDescription.Location = new System.Drawing.Point(30, 190);
-            this.labelDescription.Name = "labelDescription";
-            this.labelDescription.Size = new System.Drawing.Size(88, 20);
-            this.labelDescription.TabIndex = 8;
-            this.labelDescription.Text = "Description:";
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 131);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(70, 15);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Description:";
             // 
             // textBoxDescription
             // 
-            this.textBoxDescription.Location = new System.Drawing.Point(160, 190);
+            this.textBoxDescription.Location = new System.Drawing.Point(156, 128);
             this.textBoxDescription.Multiline = true;
             this.textBoxDescription.Name = "textBoxDescription";
-            this.textBoxDescription.Size = new System.Drawing.Size(280, 100);
-            this.textBoxDescription.TabIndex = 9;
+            this.textBoxDescription.Size = new System.Drawing.Size(200, 80);
+            this.textBoxDescription.TabIndex = 4;
             // 
             // buttonSave
             // 
             this.buttonSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(79)))), ((int)(((byte)(95)))));
-            this.buttonSave.FlatAppearance.BorderSize = 0;
             this.buttonSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSave.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.buttonSave.ForeColor = System.Drawing.Color.White;
-            this.buttonSave.Location = new System.Drawing.Point(160, 310);
+            this.buttonSave.Location = new System.Drawing.Point(156, 214);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(100, 30);
-            this.buttonSave.TabIndex = 10;
+            this.buttonSave.Size = new System.Drawing.Size(97, 30);
+            this.buttonSave.TabIndex = 5;
             this.buttonSave.Text = "Save";
             this.buttonSave.UseVisualStyleBackColor = false;
             this.buttonSave.Click += new System.EventHandler(this.ButtonSave_Click);
             // 
             // buttonCancel
             // 
-            this.buttonCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
-            this.buttonCancel.FlatAppearance.BorderSize = 0;
+            this.buttonCancel.BackColor = System.Drawing.Color.Silver;
             this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonCancel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.buttonCancel.ForeColor = System.Drawing.Color.White;
-            this.buttonCancel.Location = new System.Drawing.Point(270, 310);
+            this.buttonCancel.Location = new System.Drawing.Point(259, 214);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(100, 30);
-            this.buttonCancel.TabIndex = 11;
+            this.buttonCancel.Size = new System.Drawing.Size(97, 30);
+            this.buttonCancel.TabIndex = 6;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = false;
             this.buttonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
             // 
-            // MaintenanceDetailsForm
+            // AdminMaintenanceDetailsForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(500, 370);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(384, 261);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.textBoxDescription);
-            this.Controls.Add(this.labelDescription);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.comboBoxStatus);
-            this.Controls.Add(this.labelStatus);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.dateTimePickerMaintenance);
-            this.Controls.Add(this.labelDate);
-            this.Controls.Add(this.textBoxCarID);
-            this.Controls.Add(this.labelCarID);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.comboBoxCarID);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.textBoxMaintenanceID);
-            this.Controls.Add(this.labelID);
+            this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "MaintenanceDetailsForm";
+            this.Name = "AdminMaintenanceDetailsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Maintenance Details";
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
 
-        private System.Windows.Forms.Label labelID;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBoxMaintenanceID;
-        private System.Windows.Forms.Label labelCarID;
-        private System.Windows.Forms.TextBox textBoxCarID;
-        private System.Windows.Forms.Label labelDate;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DateTimePicker dateTimePickerMaintenance;
-        private System.Windows.Forms.Label labelStatus;
+        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox comboBoxStatus;
-        private System.Windows.Forms.Label labelDescription;
+        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBoxDescription;
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.ComboBox comboBoxCarID;
     }
 }
