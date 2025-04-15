@@ -33,19 +33,21 @@ namespace Horizon_Drive_LTD.Domain.Entities
 
         public DateTime AvailabilityStart { get; set; }
         public DateTime AvailabilityEnd { get; set; }
+        public string CarImagePath { get; set; }
 
 
 
 
         public Cars(string carid, string userid, string carBrand, string category, string registrationNo, string model, int years,
          string colour, string features, string desc, decimal price, int seat, string engine, decimal rating,
-         string power, string drive, string fuel, string transmission, string status, DateTime availabilitystart, DateTime availabilityend)
+         string power, string drive, string fuel, string transmission, string status, DateTime availabilitystart, DateTime availabilityend, string carimagepath)
         {
             CarID = carid;
             UserID = userid;
             CarBrand = carBrand;
             Category = category;
-            
+           
+
 
             RegistrationNo = registrationNo;
             Model = model;
@@ -67,6 +69,7 @@ namespace Horizon_Drive_LTD.Domain.Entities
             Status = status;
             AvailabilityEnd = availabilityend;
             AvailabilityStart = availabilitystart;
+            CarImagePath = carimagepath;
         }
 
 
