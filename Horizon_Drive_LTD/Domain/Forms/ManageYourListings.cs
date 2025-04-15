@@ -399,7 +399,7 @@ namespace Horizon_Drive_LTD
                 listingsCount++;
 
                 // Check status of whether the car is booked or not to display number of reservations
-                if (status.Equals("booked", StringComparison.OrdinalIgnoreCase))
+                if (status.Equals("Available", StringComparison.OrdinalIgnoreCase))
                 {
                     reservedCount++;
                 }
