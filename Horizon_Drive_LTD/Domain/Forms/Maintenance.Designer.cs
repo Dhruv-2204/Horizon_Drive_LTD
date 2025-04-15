@@ -29,10 +29,9 @@
         private void InitializeComponent()
         {
             user_background = new Panel();
+            addMaintenanceBtn = new Button();
             panel4 = new Panel();
             label1 = new Label();
-            panel3 = new Panel();
-            Managing_users_click_btn = new Button();
             panel2 = new Panel();
             dataGridView1 = new DataGridView();
             panel1 = new Panel();
@@ -44,7 +43,6 @@
             pictureBox1 = new PictureBox();
             user_background.SuspendLayout();
             panel4.SuspendLayout();
-            panel3.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panel1.SuspendLayout();
@@ -55,24 +53,41 @@
             // 
             user_background.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             user_background.BackColor = Color.FromArgb(224, 224, 224);
+            user_background.Controls.Add(addMaintenanceBtn);
             user_background.Controls.Add(panel4);
-            user_background.Controls.Add(panel3);
             user_background.Controls.Add(panel2);
             user_background.Controls.Add(panel1);
-            user_background.Location = new Point(0, -2);
-            user_background.Margin = new Padding(4, 3, 4, 3);
+            user_background.Location = new Point(0, -3);
+            user_background.Margin = new Padding(5, 4, 5, 4);
             user_background.Name = "user_background";
-            user_background.Size = new Size(863, 560);
+            user_background.Size = new Size(986, 747);
             user_background.TabIndex = 1;
+            // 
+            // addMaintenanceBtn
+            // 
+            addMaintenanceBtn.BackColor = Color.FromArgb(33, 79, 95);
+            addMaintenanceBtn.Cursor = Cursors.Hand;
+            addMaintenanceBtn.FlatAppearance.BorderSize = 0;
+            addMaintenanceBtn.FlatStyle = FlatStyle.Flat;
+            addMaintenanceBtn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
+            addMaintenanceBtn.ForeColor = Color.White;
+            addMaintenanceBtn.Location = new Point(557, 680);
+            addMaintenanceBtn.Name = "addMaintenanceBtn";
+            addMaintenanceBtn.Size = new Size(200, 40);
+            addMaintenanceBtn.TabIndex = 11;
+            addMaintenanceBtn.Text = "Add New Maintenance";
+            addMaintenanceBtn.UseVisualStyleBackColor = false;
+            addMaintenanceBtn.Click += AddMaintenanceButton_Click;
             // 
             // panel4
             // 
             panel4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel4.AutoSize = true;
             panel4.Controls.Add(label1);
-            panel4.Location = new Point(307, 24);
+            panel4.Location = new Point(351, 32);
+            panel4.Margin = new Padding(3, 4, 3, 4);
             panel4.Name = "panel4";
-            panel4.Size = new Size(543, 84);
+            panel4.Size = new Size(621, 112);
             panel4.TabIndex = 10;
             // 
             // label1
@@ -80,51 +95,20 @@
             label1.Anchor = AnchorStyles.None;
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 27.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(54, 21);
+            label1.Location = new Point(62, 28);
             label1.Name = "label1";
-            label1.Size = new Size(442, 50);
+            label1.Size = new Size(559, 62);
             label1.TabIndex = 9;
             label1.Text = "Cars under Maintenance";
-            // 
-            // panel3
-            // 
-            panel3.Anchor = AnchorStyles.None;
-            panel3.AutoSize = true;
-            panel3.Controls.Add(Managing_users_click_btn);
-            panel3.Location = new Point(703, 659);
-            panel3.Margin = new Padding(4, 3, 4, 3);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(428, 115);
-            panel3.TabIndex = 8;
-            // 
-            // Managing_users_click_btn
-            // 
-            Managing_users_click_btn.Anchor = AnchorStyles.None;
-            Managing_users_click_btn.AutoEllipsis = true;
-            Managing_users_click_btn.BackColor = Color.FromArgb(33, 79, 95);
-            Managing_users_click_btn.Cursor = Cursors.Hand;
-            Managing_users_click_btn.FlatAppearance.BorderSize = 0;
-            Managing_users_click_btn.FlatAppearance.MouseOverBackColor = Color.CadetBlue;
-            Managing_users_click_btn.FlatStyle = FlatStyle.Flat;
-            Managing_users_click_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
-            Managing_users_click_btn.ForeColor = SystemColors.ButtonHighlight;
-            Managing_users_click_btn.Location = new Point(164, 29);
-            Managing_users_click_btn.Margin = new Padding(4, 3, 4, 3);
-            Managing_users_click_btn.Name = "Managing_users_click_btn";
-            Managing_users_click_btn.Padding = new Padding(1);
-            Managing_users_click_btn.Size = new Size(334, 80);
-            Managing_users_click_btn.TabIndex = 3;
-            Managing_users_click_btn.Text = "Click to manage users";
-            Managing_users_click_btn.UseVisualStyleBackColor = false;
             // 
             // panel2
             // 
             panel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel2.Controls.Add(dataGridView1);
-            panel2.Location = new Point(329, 149);
-            panel2.Margin = new Padding(4, 3, 4, 3);
+            panel2.Location = new Point(376, 199);
+            panel2.Margin = new Padding(5, 4, 5, 4);
             panel2.Name = "panel2";
-            panel2.Size = new Size(507, 350);
+            panel2.Size = new Size(579, 467);
             panel2.TabIndex = 6;
             // 
             // dataGridView1
@@ -138,11 +122,12 @@
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.None;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(0, 0);
-            dataGridView1.Margin = new Padding(4, 3, 4, 3);
+            dataGridView1.Margin = new Padding(5, 4, 5, 4);
             dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 30;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(507, 350);
+            dataGridView1.Size = new Size(579, 467);
             dataGridView1.TabIndex = 4;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
@@ -157,9 +142,9 @@
             panel1.Controls.Add(Manage_files_btn);
             panel1.Controls.Add(pictureBox1);
             panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(4, 3, 4, 3);
+            panel1.Margin = new Padding(5, 4, 5, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(300, 1020);
+            panel1.Size = new Size(343, 747);
             panel1.TabIndex = 0;
             // 
             // Maintenance_btn
@@ -172,10 +157,10 @@
             Maintenance_btn.FlatStyle = FlatStyle.Flat;
             Maintenance_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Maintenance_btn.ForeColor = SystemColors.ActiveCaptionText;
-            Maintenance_btn.Location = new Point(68, 407);
+            Maintenance_btn.Location = new Point(78, 543);
             Maintenance_btn.Margin = new Padding(0);
             Maintenance_btn.Name = "Maintenance_btn";
-            Maintenance_btn.Size = new Size(156, 52);
+            Maintenance_btn.Size = new Size(178, 69);
             Maintenance_btn.TabIndex = 3;
             Maintenance_btn.Text = "Maintenance";
             Maintenance_btn.UseVisualStyleBackColor = false;
@@ -189,10 +174,10 @@
             Logout_btn.FlatStyle = FlatStyle.Flat;
             Logout_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
             Logout_btn.ForeColor = SystemColors.ButtonHighlight;
-            Logout_btn.Location = new Point(68, 478);
-            Logout_btn.Margin = new Padding(4, 3, 4, 3);
+            Logout_btn.Location = new Point(78, 637);
+            Logout_btn.Margin = new Padding(5, 4, 5, 4);
             Logout_btn.Name = "Logout_btn";
-            Logout_btn.Size = new Size(156, 53);
+            Logout_btn.Size = new Size(178, 71);
             Logout_btn.TabIndex = 2;
             Logout_btn.Text = "Log Out";
             Logout_btn.UseVisualStyleBackColor = false;
@@ -206,10 +191,10 @@
             Manage_bookings_btn.FlatStyle = FlatStyle.Flat;
             Manage_bookings_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
             Manage_bookings_btn.ForeColor = SystemColors.ButtonHighlight;
-            Manage_bookings_btn.Location = new Point(68, 338);
-            Manage_bookings_btn.Margin = new Padding(4, 3, 4, 3);
+            Manage_bookings_btn.Location = new Point(78, 451);
+            Manage_bookings_btn.Margin = new Padding(5, 4, 5, 4);
             Manage_bookings_btn.Name = "Manage_bookings_btn";
-            Manage_bookings_btn.Size = new Size(156, 53);
+            Manage_bookings_btn.Size = new Size(178, 71);
             Manage_bookings_btn.TabIndex = 1;
             Manage_bookings_btn.Text = "Manage Bookings";
             Manage_bookings_btn.UseVisualStyleBackColor = false;
@@ -223,10 +208,10 @@
             Manage_Users.FlatStyle = FlatStyle.Popup;
             Manage_Users.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Manage_Users.ForeColor = SystemColors.ControlLightLight;
-            Manage_Users.Location = new Point(68, 201);
-            Manage_Users.Margin = new Padding(4, 3, 4, 3);
+            Manage_Users.Location = new Point(78, 268);
+            Manage_Users.Margin = new Padding(5, 4, 5, 4);
             Manage_Users.Name = "Manage_Users";
-            Manage_Users.Size = new Size(156, 52);
+            Manage_Users.Size = new Size(178, 69);
             Manage_Users.TabIndex = 1;
             Manage_Users.Text = "Manage Users";
             Manage_Users.UseVisualStyleBackColor = false;
@@ -242,10 +227,10 @@
             Manage_files_btn.FlatStyle = FlatStyle.Flat;
             Manage_files_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Manage_files_btn.ForeColor = SystemColors.ButtonHighlight;
-            Manage_files_btn.Location = new Point(68, 269);
+            Manage_files_btn.Location = new Point(78, 359);
             Manage_files_btn.Margin = new Padding(0);
             Manage_files_btn.Name = "Manage_files_btn";
-            Manage_files_btn.Size = new Size(156, 52);
+            Manage_files_btn.Size = new Size(178, 69);
             Manage_files_btn.TabIndex = 1;
             Manage_files_btn.Text = "Upload Files";
             Manage_files_btn.UseVisualStyleBackColor = false;
@@ -255,20 +240,21 @@
             // 
             pictureBox1.ErrorImage = null;
             pictureBox1.InitialImage = null;
-            pictureBox1.Location = new Point(55, 33);
-            pictureBox1.Margin = new Padding(4, 3, 4, 3);
+            pictureBox1.Location = new Point(63, 44);
+            pictureBox1.Margin = new Padding(5, 4, 5, 4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(181, 162);
+            pictureBox1.Size = new Size(207, 216);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
             // Maintenance
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(862, 557);
+            ClientSize = new Size(985, 743);
             Controls.Add(user_background);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "Maintenance";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Maintenance";
@@ -276,7 +262,6 @@
             user_background.PerformLayout();
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
-            panel3.ResumeLayout(false);
             panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             panel1.ResumeLayout(false);
@@ -287,10 +272,7 @@
         #endregion
 
         private Panel user_background;
-        private Panel panel3;
-        private Button Managing_users_click_btn;
         private Panel panel2;
-        private DataGridView dataGridView1;
         private Panel panel1;
         private Button Maintenance_btn;
         private Button Logout_btn;
@@ -300,5 +282,7 @@
         private PictureBox pictureBox1;
         private Panel panel4;
         private Label label1;
+        private DataGridView dataGridView1;
+        private Button addMaintenanceBtn;
     }
 }
