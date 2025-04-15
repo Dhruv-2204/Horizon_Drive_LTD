@@ -21,7 +21,7 @@
             _size = 0;
             _buckets = new LinkedList<KeyValuePair<TKey, TValue>>[_capacity];
         }
-
+        // This method is used to calculate the index for a given key using the Fibonacci Hashing method.
         private int GetHash(TKey key)
         {
             int hash = key.GetHashCode();
@@ -39,11 +39,14 @@
 
             if (_buckets[index] == null)
             {
+                // If the bucket is null, create a new linked list for that index
                 _buckets[index] = new LinkedList<KeyValuePair<TKey, TValue>>();
             }
 
             var bucket = _buckets[index];
             var existingNode = bucket.FirstOrDefault(node => node.Key.Equals(key));
+
+            // Check if the key already exists in the bucket
             if (!EqualityComparer<TKey>.Default.Equals(existingNode.Key, default) && existingNode.Key.Equals(key))
             {
                 // Remove the existing key-value pair
@@ -79,6 +82,7 @@
             return default; // Key not found
         }
 
+        // This method is used to remove a key-value pair from the hash table.
         public bool Remove(TKey key)
         {
             int index = GetHash(key);
@@ -163,7 +167,9 @@
         // This method resizes the hash table when the load factor exceeds the threshold.
         private void Resize()
         {
+            // Double the capacity and find the next prime number
             int newCapacity = GetNextPrime(_capacity * 2);
+            // Create a new array of linked lists with the new capacity
             var newBuckets = new LinkedList<KeyValuePair<TKey, TValue>>[newCapacity];
 
             for (int i = 0; i < _capacity; i++)
@@ -185,12 +191,13 @@
             _buckets = newBuckets;
             _capacity = newCapacity;
         }
-
+        // This method checks if the hash table should be resized based on the load factor 
         private bool ShouldResize()
         {
             return (float)_size / _capacity >= _loadFactor;
         }
 
+        // This method finds the next prime number greater than the given number.
         private int GetNextPrime(int number)
         {
             while (true)
@@ -201,6 +208,7 @@
             }
         }
 
+        // This method checks if a number is prime.
         private bool IsPrime(int number)
         {
             if (number < 2)
@@ -213,6 +221,7 @@
             return true;
         }
 
+        // This property returns the number of key-value pairs in the hash table.
         public int Count
         {
             get

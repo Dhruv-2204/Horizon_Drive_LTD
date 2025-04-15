@@ -4,6 +4,7 @@ using Microsoft.Data.SqlClient;
 
 namespace Horizon_Drive_LTD.BusinessLogic.Repositories
 {
+    // This class is responsible for managing bookings in the database.
     public class BookingsRepository
     {
         private readonly DatabaseConnection _dbConnection;

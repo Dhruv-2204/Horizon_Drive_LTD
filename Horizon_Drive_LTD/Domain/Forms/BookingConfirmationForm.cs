@@ -9,6 +9,7 @@ using Horizon_Drive_LTD.BusinessLogic.Services;
 
 namespace Horizon_Drive_LTD
 {
+    // This form is used to confirm the booking details before finalizing the reservation.
     public partial class BookingConfirmationForm : Form
     {
         private Cars car;
@@ -59,6 +60,7 @@ namespace Horizon_Drive_LTD
             PopulateBookingDetails();
         }
 
+        // This method populates the booking details on the form.
         private void PopulateBookingDetails()
         {
 
@@ -66,7 +68,7 @@ namespace Horizon_Drive_LTD
             labelCarName.Text = $"{car.CarBrand} {car.Model} {car.Year}";
             labelCarFeatures.Text = $"{car.Features}";
 
-            // Set star rating (example - you can adjust based on your actual data)
+            // Set star rating 
             SetRating(car.Ratings);
 
             // Set rental period
@@ -112,7 +114,7 @@ namespace Horizon_Drive_LTD
         }
 
 
-
+        // This method adds an option to the options panel.
         private void AddOption(ref int yOffset, string optionText)
         {
             CheckBox checkBox = new CheckBox
@@ -166,11 +168,9 @@ namespace Horizon_Drive_LTD
 
                 panelStars.Controls.Add(star);
             }
-
-
         }
 
-
+        // This method calculates the total price based on selected options and rental period.
         private void CalculateAndDisplayPricing()
         {
             // Calculate base price
@@ -229,7 +229,7 @@ namespace Horizon_Drive_LTD
             this.Close();
         }
 
-
+        // This method handles the booking confirmation process.
         private void buttonBookNow_Click(object sender, EventArgs e)
         {
             UserRepository userRepo = new UserRepository(new DatabaseConnection());
@@ -300,9 +300,6 @@ namespace Horizon_Drive_LTD
             }
         }
 
-        private void BookingConfirmationForm_Load(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }
