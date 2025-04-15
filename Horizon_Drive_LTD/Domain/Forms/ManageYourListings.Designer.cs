@@ -333,25 +333,11 @@
             lblTransaction2DateRange.TabIndex = 3;
            
             // 
-            // lblTransaction2Price
-            // 
-            lblTransaction2Price.Font = new Font("Segoe UI", 9F);
-            lblTransaction2Price.Location = new Point(186, 59);
-            lblTransaction2Price.Margin = new Padding(4, 0, 4, 0);
-            lblTransaction2Price.Name = "lblTransaction2Price";
-            lblTransaction2Price.Size = new Size(429, 34);
-            lblTransaction2Price.TabIndex = 2;
-            lblTransaction2Price.Text = "MUR 30000 / day";
+         
+           
             // 
             // lblTransaction2Title
             // 
-            lblTransaction2Title.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblTransaction2Title.Location = new Point(186, 16);
-            lblTransaction2Title.Margin = new Padding(4, 0, 4, 0);
-            lblTransaction2Title.Name = "lblTransaction2Title";
-            lblTransaction2Title.Size = new Size(429, 34);
-            lblTransaction2Title.TabIndex = 1;
-            lblTransaction2Title.Text = "BMW XM (2025)";
             // 
             // pictureBoxTransaction2
             // 
@@ -458,6 +444,8 @@
             labelTransactionHistory.Size = new Size(312, 45);
             labelTransactionHistory.TabIndex = 2;
             labelTransactionHistory.Text = "Transaction History";
+            labelTransactionHistory.Visible = true; // ensure it's visible
+            panelContent.Controls.Add(labelTransactionHistory);
             // 
             // panelCarListing2
             // 
