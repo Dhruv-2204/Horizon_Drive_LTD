@@ -578,35 +578,35 @@ namespace Horizon_Drive_LTD
         {
             BrowseListings browseListings = new BrowseListings();
             browseListings.Show();
-            this.Hide();
+            this.Dispose();
         }
         // Method to handle manage booking button clicks
         private void btnManageBooking_Click(object sender, EventArgs e)
         {
             ManageBookings manageBookings = new ManageBookings();
             manageBookings.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void btnListCar_Click(object sender, EventArgs e)
         {
             ListCarForm listCarForm = new ListCarForm();
             listCarForm.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void btnManageYourListings_Click(object sender, EventArgs e)
         {
             ManageYourListings manageYourListings = new ManageYourListings();
             manageYourListings.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void btnOptions_Click(object sender, EventArgs e)
         {
             Options_Personal options = new Options_Personal();
             options.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
