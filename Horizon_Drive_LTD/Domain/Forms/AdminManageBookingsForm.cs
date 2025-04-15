@@ -17,9 +17,9 @@ namespace WindowsFormsApp1
 {
     public partial class AdminManageBookingsForm : Form
     {
-        private BookingRepository _bookingRepository;
-        private List<Booking> _allBookings;
-        private List<Booking> _filteredBookings;
+        private AdminBookingRepository _bookingRepository;
+        private List<AdminBooking> _allBookings;
+        private List<AdminBooking> _filteredBookings;
 
         public AdminManageBookingsForm()
         {
@@ -27,7 +27,7 @@ namespace WindowsFormsApp1
 
             // Initialize repositories
             DatabaseConnection dbConnection = new DatabaseConnection(); // You'll need to pass the connection string
-            _bookingRepository = new BookingRepository(dbConnection);
+            _bookingRepository = new AdminBookingRepository(dbConnection);
         }
 
         private void ManageBookingsForm_Load(object sender, EventArgs e)
@@ -187,7 +187,7 @@ namespace WindowsFormsApp1
             DisplayBookings(_filteredBookings);
         }
 
-        private void DisplayBookings(List<Booking> bookings)
+        private void DisplayBookings(List<AdminBooking> bookings)
         {
             // Clear existing rows
             dataGridView2.Rows.Clear();
@@ -283,7 +283,7 @@ namespace WindowsFormsApp1
         private void ShowBookingDetails(string bookingId)
         {
             // Find the booking
-            Booking booking = _allBookings.FirstOrDefault(b => b.BookingId == bookingId);
+            AdminBooking booking = _allBookings.FirstOrDefault(b => b.BookingId == bookingId);
 
             if (booking != null)
             {

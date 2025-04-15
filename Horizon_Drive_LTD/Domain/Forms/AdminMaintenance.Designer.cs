@@ -62,6 +62,7 @@
             user_background.Name = "user_background";
             user_background.Size = new Size(986, 747);
             user_background.TabIndex = 1;
+           
             // 
             // addMaintenanceBtn
             // 
@@ -84,10 +85,10 @@
             panel4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel4.AutoSize = true;
             panel4.Controls.Add(label1);
-            panel4.Location = new Point(351, 32);
+            panel4.Location = new Point(388, 79);
             panel4.Margin = new Padding(3, 4, 3, 4);
             panel4.Name = "panel4";
-            panel4.Size = new Size(621, 112);
+            panel4.Size = new Size(558, 112);
             panel4.TabIndex = 10;
             // 
             // label1
@@ -95,7 +96,7 @@
             label1.Anchor = AnchorStyles.None;
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 27.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(62, 28);
+            label1.Location = new Point(3, 27);
             label1.Name = "label1";
             label1.Size = new Size(559, 62);
             label1.TabIndex = 9;
@@ -164,24 +165,7 @@
             Maintenance_btn.TabIndex = 3;
             Maintenance_btn.Text = "Maintenance";
             Maintenance_btn.UseVisualStyleBackColor = false;
-            // 
-            // Logout_btn
-            // 
-            Logout_btn.BackColor = Color.FromArgb(33, 79, 95);
-            Logout_btn.Cursor = Cursors.Hand;
-            Logout_btn.FlatAppearance.BorderSize = 0;
-            Logout_btn.FlatAppearance.MouseOverBackColor = Color.CadetBlue;
-            Logout_btn.FlatStyle = FlatStyle.Flat;
-            Logout_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
-            Logout_btn.ForeColor = SystemColors.ButtonHighlight;
-            Logout_btn.Location = new Point(78, 637);
-            Logout_btn.Margin = new Padding(5, 4, 5, 4);
-            Logout_btn.Name = "Logout_btn";
-            Logout_btn.Size = new Size(178, 71);
-            Logout_btn.TabIndex = 2;
-            Logout_btn.Text = "Log Out";
-            Logout_btn.UseVisualStyleBackColor = false;
-            // 
+            //
             // Manage_bookings_btn
             // 
             Manage_bookings_btn.BackColor = Color.FromArgb(33, 79, 95);
@@ -216,6 +200,23 @@
             Manage_Users.Text = "Manage Users";
             Manage_Users.UseVisualStyleBackColor = false;
             Manage_Users.Click += Manage_Users_Click;
+            //
+            // Logout_btn
+            // 
+            Logout_btn.BackColor = Color.FromArgb(33, 79, 95);
+            Logout_btn.Cursor = Cursors.Hand;
+            Logout_btn.FlatAppearance.BorderSize = 0;
+            Logout_btn.FlatAppearance.MouseOverBackColor = Color.CadetBlue;
+            Logout_btn.FlatStyle = FlatStyle.Flat;
+            Logout_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
+            Logout_btn.ForeColor = SystemColors.ButtonHighlight;
+            Logout_btn.Location = new Point(78, 637);
+            Logout_btn.Margin = new Padding(5, 4, 5, 4);
+            Logout_btn.Name = "Logout_btn";
+            Logout_btn.Size = new Size(178, 71);
+            Logout_btn.TabIndex = 2;
+            Logout_btn.Text = "Log Out";
+            Logout_btn.UseVisualStyleBackColor = false;
             // 
             // Manage_files_btn
             // 
@@ -248,14 +249,14 @@
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
-            // Maintenance
+            // AdminMaintenance
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(985, 743);
             Controls.Add(user_background);
             Margin = new Padding(3, 4, 3, 4);
-            Name = "Maintenance";
+            Name = "AdminMaintenance";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Maintenance";
             user_background.ResumeLayout(false);

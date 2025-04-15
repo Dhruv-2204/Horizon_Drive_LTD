@@ -7,11 +7,11 @@ using Microsoft.Data.SqlClient;
 
 namespace Horizon_Drive_LTD.BusinessLogic.Repositories
 {
-    public class BookingRepository
+    public class AdminBookingRepository
     {
         private readonly DatabaseConnection _dbConnection;
 
-        public BookingRepository(DatabaseConnection dbConnection)
+        public AdminBookingRepository(DatabaseConnection dbConnection)
         {
             _dbConnection = dbConnection;
         }
@@ -19,9 +19,9 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
         /// <summary>
         /// Retrieves all bookings from the database
         /// </summary>
-        public List<Booking> GetAllBookings()
+        public List<AdminBooking> GetAllBookings()
         {
-            List<Booking> bookings = new List<Booking>();
+            List<AdminBooking> bookings = new List<AdminBooking>();
 
             using (SqlConnection conn = _dbConnection.GetConnection())
             {
@@ -40,7 +40,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                 {
                     while (reader.Read())
                     {
-                        Booking booking = new Booking(
+                        AdminBooking booking = new AdminBooking(
                             reader.GetString(0),     // BookingId
                             reader.GetString(1),     // UserId
                             reader.GetString(2),     // CarId
@@ -63,7 +63,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
         /// <summary>
         /// Get a booking by its ID
         /// </summary>
-        public Booking GetBookingById(string bookingId)
+        public AdminBooking GetBookingById(string bookingId)
         {
             using (SqlConnection conn = _dbConnection.GetConnection())
             {
@@ -84,7 +84,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                     {
                         if (reader.Read())
                         {
-                            return new Booking(
+                            return new AdminBooking(
                                 reader.GetString(0),     // BookingId
                                 reader.GetString(1),     // UserId
                                 reader.GetString(2),     // CarId
@@ -106,9 +106,9 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
         /// <summary>
         /// Get all bookings for a specific user
         /// </summary>
-        public List<Booking> GetBookingsByUserId(string userId)
+        public List<AdminBooking> GetBookingsByUserId(string userId)
         {
-            List<Booking> bookings = new List<Booking>();
+            List<AdminBooking> bookings = new List<AdminBooking>();
 
             using (SqlConnection conn = _dbConnection.GetConnection())
             {
@@ -129,7 +129,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                     {
                         while (reader.Read())
                         {
-                            Booking booking = new Booking(
+                            AdminBooking booking = new AdminBooking(
                                 reader.GetString(0),     // BookingId
                                 reader.GetString(1),     // UserId
                                 reader.GetString(2),     // CarId
@@ -210,9 +210,9 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
         /// <summary>
         /// Get all bookings for a specific car
         /// </summary>
-        public List<Booking> GetBookingsByCarId(string carId)
+        public List<AdminBooking> GetBookingsByCarId(string carId)
         {
-            List<Booking> bookings = new List<Booking>();
+            List<AdminBooking> bookings = new List<AdminBooking>();
 
             using (SqlConnection conn = _dbConnection.GetConnection())
             {
@@ -233,7 +233,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                     {
                         while (reader.Read())
                         {
-                            Booking booking = new Booking(
+                            AdminBooking booking = new AdminBooking(
                                 reader.GetString(0),     // BookingId
                                 reader.GetString(1),     // UserId
                                 reader.GetString(2),     // CarId
@@ -288,7 +288,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
         /// <summary>
         /// Create a new booking
         /// </summary>
-        public bool CreateBooking(Booking booking)
+        public bool CreateBooking(AdminBooking booking)
         {
             using (SqlConnection conn = _dbConnection.GetConnection())
             {

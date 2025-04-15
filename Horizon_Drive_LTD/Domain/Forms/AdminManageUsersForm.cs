@@ -12,6 +12,7 @@ using WindowsFormsApp1;
 using Horizon_Drive_LTD.BusinessLogic;
 using Horizon_Drive_LTD.BusinessLogic.Repositories;
 using Horizon_Drive_LTD.Domain.Entities;
+using splashscreen;
 
 namespace Manage_user_search_page
 {
@@ -170,7 +171,7 @@ namespace Manage_user_search_page
             ShowSelectedUserDetails();
         }
 
-        private void ShowSelectedUserDetails()
+        private void ShowSelectedUserDetails() 
         {
             if (dataGridView1.SelectedRows.Count > 0 && dataGridView1.DataSource != null)
             {
@@ -269,8 +270,8 @@ namespace Manage_user_search_page
 
         private void Manage_bookings_click_btn(object sender, EventArgs e)
         {
-            var manage_user_Page = new AdminManageBookingsForm(); // Replace with your actual form name manage booking
-            manage_user_Page.Show();                  // Shows the new form manage user
+            var manage_user_Page = new AdminManageBookingsForm(); 
+            manage_user_Page.Show();               
             this.Hide();
         }
 
@@ -301,32 +302,30 @@ namespace Manage_user_search_page
 
         private void Logout_click_btn(object sender, EventArgs e)
         {
-            // Implement logout functionality here
-            // For example:
-            // var loginForm = new LoginForm();
-            // loginForm.Show();
-            // this.Close();
+            var loginForm = new splashscreen.Login();
+            loginForm.Show();
+            this.Close();
         }
 
         private void Search_Users_Click(object sender, EventArgs e)
         {
-            // This is the label click - you can implement any action if needed
+            
         }
 
         private void Manage_Users_menu_Click_btn(object sender, EventArgs e)
         {
-            // This is already the Manage Users page, so either refresh or do nothing
+            
             LoadUsers();
         }
 
         private void user_background_Paint(object sender, PaintEventArgs e)
         {
-            // Event handler for panel painting
+
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            // Event handler for logo click
+            
         }
     }
 }

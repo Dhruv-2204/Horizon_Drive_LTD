@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            search_box = new TextBox();
             user_background = new Panel();
             panel4 = new Panel();
             Search_Users = new Label();
@@ -43,6 +42,7 @@
             Manage_Users = new Button();
             Manage_Cars_btn = new Button();
             pictureBox1 = new PictureBox();
+            search_box = new TextBox();
             user_background.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
@@ -58,9 +58,9 @@
             search_box.Location = new Point(425, 136);
             search_box.Margin = new Padding(5, 4, 5, 4);
             search_box.Name = "search_box";
+            search_box.PlaceholderText = "Search by name, ID, or email...";
             search_box.Size = new Size(489, 27);
             search_box.TabIndex = 5;
-            search_box.PlaceholderText = "Search by name, ID, or email...";
             search_box.TextAlign = HorizontalAlignment.Center;
             search_box.TextChanged += Manage_users_search_user;
             // 
@@ -85,10 +85,10 @@
             panel4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel4.AutoSize = true;
             panel4.Controls.Add(Search_Users);
-            panel4.Location = new Point(425, 4);
+            panel4.Location = new Point(536, 62);
             panel4.Margin = new Padding(5, 4, 5, 4);
             panel4.Name = "panel4";
-            panel4.Size = new Size(489, 101);
+            panel4.Size = new Size(270, 66);
             panel4.TabIndex = 9;
             // 
             // Search_Users
@@ -96,7 +96,7 @@
             Search_Users.Anchor = AnchorStyles.None;
             Search_Users.AutoSize = true;
             Search_Users.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
-            Search_Users.Location = new Point(102, 11);
+            Search_Users.Location = new Point(8, 11);
             Search_Users.Margin = new Padding(5, 0, 5, 0);
             Search_Users.Name = "Search_Users";
             Search_Users.Size = new Size(262, 46);
@@ -305,6 +305,15 @@
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
+
+
+            welcomeAdminLabel = new Label();
+            welcomeAdminLabel.Text = "Welcome, Admin";
+            welcomeAdminLabel.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            welcomeAdminLabel.ForeColor = Color.FromArgb(33, 79, 95);
+            welcomeAdminLabel.AutoSize = true;
+            welcomeAdminLabel.Location = new Point(365, 15); 
+            user_background.Controls.Add(welcomeAdminLabel);
         }
 
         #endregion
@@ -324,5 +333,7 @@
         private Panel panel3;
         private Button Managing_users_click_btn;
         private TextBox search_box;
+        private Label welcomeAdminLabel;
+
     }
 }

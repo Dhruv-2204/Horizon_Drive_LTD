@@ -2,7 +2,7 @@
 
 namespace Horizon_Drive_LTD.Domain.Entities
 {
-    public class Booking
+    public class AdminBooking
     {
         public string BookingId { get; set; }
         public string UserId { get; set; }
@@ -16,7 +16,7 @@ namespace Horizon_Drive_LTD.Domain.Entities
         public string UserName { get; set; }
         public string CarModel { get; set; }
 
-        public Booking(string bookingId, string userId, string carId,
+        public AdminBooking(string bookingId, string userId, string carId,
                       DateTime startDate, DateTime endDate,
                       decimal totalCost, string status,
                       string userName = null, string carModel = null)
