@@ -223,9 +223,9 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             }
         }
 
-        public List<(Booking, string carBrand, string model, int year, decimal price, string status)> GetBookingsForUserWithCarDetails(string userId)
+        public List<(Booking, string carBrand, string model, string carid ,int year, decimal price, string status)> GetBookingsForUserWithCarDetails(string userId)
         {
-            var result = new List<(Booking, string, string, int, decimal, string)>();
+            var result = new List<(Booking, string, string, string, int, decimal, string)>();
 
             using (SqlConnection conn = _dbConnection.GetConnection())
             {
@@ -235,7 +235,8 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                SELECT 
                     b.*, 
                     c.CarBrand, 
-                    c.Model, 
+                    c.CarID,
+                    c.Model,
                     YEAR(c.Years) AS Years,   
                     c.CarPrice, 
                     c.Status
@@ -270,12 +271,14 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                             );
 
                             string carBrand = reader["CarBrand"].ToString();
-                            string model = reader["Model"].ToString();
+                            string carID = reader["CarID"].ToString();
                             int year = Convert.ToInt32(reader["Years"]);
                             decimal price = Convert.ToDecimal(reader["CarPrice"]);
                             string status = reader["Status"].ToString();
+                            string model = reader["Model"].ToString();
 
-                            result.Add((booking, carBrand, model, year, price, status));
+
+                            result.Add((booking, carBrand, model, carID, year, price, status));
                         }
                     }
                 }

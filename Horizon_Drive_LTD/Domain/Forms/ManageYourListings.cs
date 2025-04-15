@@ -1,10 +1,12 @@
 ﻿using System.Data;
+using System.Diagnostics;
 using System.Globalization;
 using Horizon_Drive_LTD.BusinessLogic;
 using Horizon_Drive_LTD.BusinessLogic.Repositories;
 using Horizon_Drive_LTD.DataStructure;
 using Horizon_Drive_LTD.Domain.Entities;
 using Microsoft.Data.SqlClient;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 
 namespace Horizon_Drive_LTD
@@ -15,7 +17,7 @@ namespace Horizon_Drive_LTD
         private bool isClosing = false;
         DatabaseConnection _dbConnection = new DatabaseConnection();
         private HashTable<string, Cars> carHashTable;
-        private HashTable<string, Booking> bookingHashTable;
+       
 
         public ManageYourListings()
         {
@@ -120,43 +122,34 @@ namespace Horizon_Drive_LTD
 
             try
             {
+                // Get the directory where images are stored for this car
+                string projectRoot = Path.GetFullPath(Path.Combine(Application.StartupPath, @"..\..\.."));
+                //string carImageDir = Path.Combine(projectRoot, "Media", "Images", "CarTable", car.CarBrand, car.CarID);
+                string cleanedBrand = car.CarBrand.Replace(" ", "");
+                string carImageDir = Path.Combine(projectRoot, "Media", "Images", cleanedBrand, car.CarID);
 
-                string brand = car.CarBrand.Replace(" ", "");
-                string model = car.Model.Replace(" ", "");
-                // Navigate to the specific folder for the car
-                string carFolder = Path.Combine(Application.StartupPath, "Images", "BrowseListings", $"{brand}_{model}");
 
-                // Make sure the folder exists
-                if (Directory.Exists(carFolder))
+                // Get all image files in the directory
+                var imageFiles = Directory.GetFiles(carImageDir)
+                    .Where(f => f.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
+                                f.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) ||
+                                f.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
+                                f.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+
+                if (imageFiles.Any())
                 {
-                    // Get all valid image files inside the folder
-                    string[] matchingFiles = Directory.GetFiles(carFolder, "*.*")
-                        .Where(file => file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase)
-                                    || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase)
-                                    || file.EndsWith(".png", StringComparison.OrdinalIgnoreCase)
-                                    || file.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase))
-                        .ToArray();
-
-                    if (matchingFiles.Length > 0)
-                    {
-                        pictureBox.Image = Image.FromFile(matchingFiles[0]);
-                    }
-                    else
-                    {
-                        pictureBox.BackColor = Color.LightGray;
-                        MessageBox.Show("No images found in folder: " + carFolder);
-                    }
+                    pictureBox.Image = Image.FromFile(imageFiles.First());
                 }
                 else
                 {
-                    pictureBox.BackColor = Color.LightGray;
-                    MessageBox.Show("Folder not found: " + carFolder);
+                    pictureBox.Image = Properties.Resources.Logo;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Image load error: " + ex.Message);
-                pictureBox.BackColor = Color.LightGray;
+                pictureBox.Image = Properties.Resources.Logo;
+                Debug.WriteLine($"Image load error: {ex.Message}");
             }
 
 
@@ -367,96 +360,6 @@ namespace Horizon_Drive_LTD
         }
 
 
-        /*  private void BtnDelete_Click(object sender, EventArgs e)
-          {
-              Button btn = (Button)sender;
-              string buttonName = btn.Name;
-              string carId = buttonName.Substring("btnDeleteCar".Length);
-
-              DialogResult result = MessageBox.Show(
-                  "Are you sure you want to delete this car listing?",
-                  "Confirm Deletion",
-                  MessageBoxButtons.YesNo,
-                  MessageBoxIcon.Question);
-
-              if (result == DialogResult.Yes)
-              {
-                  try
-                  {
-                      //Remove from hash table
-                      if (carHashTable.ContainsKey(carId))
-                      {
-                          carHashTable.Remove(carId);
-                      }
-
-                      // Remove from Car table
-                      CarRepository carRepo = new CarRepository(new DatabaseConnection());
-                      carRepo.DeleteCarById(carId);
-
-                      //Remove the panel from UI
-                      Panel panelToHide = (Panel)panelContent.Controls.Find($"panelCarListing{carId}", true)[0];
-                      panelContent.Controls.Remove(panelToHide);
-                      panelToHide.Dispose();
-
-                      // Recalculate visible cars
-                      int visibleCars = panelContent.Controls
-                          .OfType<Panel>()
-                          .Count(p => p.Name.StartsWith("panelCarListing") && p.Visible);
-
-                      lblListingsCount.Text = visibleCars.ToString();
-
-                      // Update reservation count if needed
-                      Label statusLabel = panelToHide.Controls.Find($"lblCar{carId}Status", true).FirstOrDefault() as Label;
-                      if (statusLabel != null && statusLabel.Text == "Reserved")
-                      {
-                          int currentReservations = int.Parse(lblReservationsCount.Text);
-                          lblReservationsCount.Text = (currentReservations - 1).ToString();
-                      }
-
-                      // Show "no listings" message
-                      labelNoMoreListings.Visible = (visibleCars == 0);
-                      if (labelNoMoreListings.Visible)
-                          labelNoMoreListings.Location = new Point(27, 31);
-
-                      // Reposition transaction history
-                      int newTransactionY = 31;
-                      foreach (Control control in panelContent.Controls)
-                      {
-                          if (control is Panel panel && panel.Name.StartsWith("panelCarListing") && panel.Visible)
-                          {
-                              newTransactionY = Math.Max(newTransactionY, panel.Location.Y + panel.Height + 10);
-                          }
-                      }
-
-                      if (visibleCars == 0)
-                          newTransactionY += labelNoMoreListings.Height + 10;
-
-                      labelTransactionHistory.Location = new Point(27, newTransactionY);
-
-                      // Reposition transaction panels
-                      int transactionY = labelTransactionHistory.Location.Y + labelTransactionHistory.Height + 20;
-                      foreach (Control control in panelContent.Controls)
-                      {
-                          if (control is Panel panel && panel.Name.StartsWith("panelTransaction") && panel.Visible)
-                          {
-                              panel.Location = new Point(27, transactionY);
-                              transactionY += panel.Height + 10;
-                          }
-                      }
-
-                      //  Reposition "no history" label
-                      if (labelNoMoreHistory.Visible)
-                      {
-                          labelNoMoreHistory.Location = new Point(27, transactionY);
-                      }
-                  }
-                  catch (Exception ex)
-                  {
-                      MessageBox.Show("Error while deleting the car: " + ex.Message);
-                  }
-              }
-          }*/
-
         // Method to load transactions from database
         private void LoadTransactionsFromDatabase(int transactionStartY)
         {
@@ -487,9 +390,9 @@ namespace Horizon_Drive_LTD
             transactionStartY += labelTransactionHistory.Height + 25;
 
             // Iterate through bookings and create panels for the cars to be displayed on the screen
-            foreach (var (booking, carBrand, model, year, price, status) in bookings)
+            foreach (var (booking, carBrand,model, carid, year, price, status) in bookings)
             {
-                Panel carPanel = CreateTransactionPanel(booking, carBrand, model, year, price, status, transactionStartY);
+                Panel carPanel = CreateTransactionPanel(booking, carBrand, model, carid, year, price, status, transactionStartY);
                 panelContent.Controls.Add(carPanel);
 
                 transactionStartY += carPanel.Height + 10;
@@ -523,7 +426,7 @@ namespace Horizon_Drive_LTD
         
 
         // Method to create a transaction panel
-        private Panel CreateTransactionPanel(Booking booking, string brand, string model, int year, decimal price, string status, int yPosition)
+        private Panel CreateTransactionPanel(Booking booking, string brand, string model ,string carid, int year, decimal price, string status, int yPosition)
         {
 
             // Create main panel
@@ -545,7 +448,41 @@ namespace Horizon_Drive_LTD
                 Name = $"pictureBoxTransaction{booking.BookingID}"
             };
 
+
+
             try
+            {
+                // Get the directory where images are stored for this car
+                string projectRoot = Path.GetFullPath(Path.Combine(Application.StartupPath, @"..\..\.."));
+                //string carImageDir = Path.Combine(projectRoot, "Media", "Images", "CarTable", car.CarBrand, car.CarID);
+                string cleanedBrand = brand.Replace(" ", "");
+                string carImageDir = Path.Combine(projectRoot, "Media", "Images", cleanedBrand, carid);
+
+
+                // Get all image files in the directory
+                var imageFiles = Directory.GetFiles(carImageDir)
+                    .Where(f => f.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
+                                f.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) ||
+                                f.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
+                                f.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+
+                if (imageFiles.Any())
+                {
+                    pictureBox.Image = Image.FromFile(imageFiles.First());
+                }
+                else
+                {
+                    pictureBox.Image = Properties.Resources.Logo;
+                }
+            }
+            catch (Exception ex)
+            {
+                pictureBox.Image = Properties.Resources.Logo;
+                Debug.WriteLine($"Image load error: {ex.Message}");
+            }
+           
+           /*try
             {
                 string cleanedBrand = brand.Replace(" ", "");
                 string cleanedModel = model.Replace(" ", "");
@@ -577,7 +514,7 @@ namespace Horizon_Drive_LTD
             catch (Exception ex)
             {
                 MessageBox.Show("Image load error: " + ex.Message);
-            }
+            }*/
 
             // Create title label
             Label titleLabel = new Label
@@ -684,8 +621,6 @@ namespace Horizon_Drive_LTD
                                "Log Out",
                                MessageBoxButtons.OK,
                                MessageBoxIcon.Information);
-
-              
             }
         }
         
