@@ -1,6 +1,6 @@
 ﻿namespace Upload_cars
 {
-    partial class Managing_files
+    partial class Admin_Managing_files
     {
         /// <summary>
         /// Required designer variable.
@@ -36,12 +36,12 @@
             Upload_Cars_btn = new Button();
             pictureBox1 = new PictureBox();
             panel4 = new Panel();
+            labelfilepath = new Label();
             Upload_File_btn = new Button();
             Search_Users = new Label();
             Save_File_btn = new Button();
             user_background = new Panel();
             DragDropListBox = new ListBox();
-            labelfilepath = new Label();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel4.SuspendLayout();
@@ -81,7 +81,7 @@
             Maintenance_btn.TabIndex = 3;
             Maintenance_btn.Text = "Maintenance";
             Maintenance_btn.UseVisualStyleBackColor = false;
-            Maintenance_btn.Click += Mainteance_click;
+            Maintenance_btn.Click += Maintenance_click;
             // 
             // Logout_btn
             // 
@@ -99,7 +99,6 @@
             Logout_btn.TabIndex = 2;
             Logout_btn.Text = "Log Out";
             Logout_btn.UseVisualStyleBackColor = false;
-            Logout_btn.Click += Logout_btn_Click;
             // 
             // Manage_bookings_btn
             // 
@@ -155,7 +154,6 @@
             Upload_Cars_btn.TabIndex = 1;
             Upload_Cars_btn.Text = "Upload Files";
             Upload_Cars_btn.UseVisualStyleBackColor = false;
-            Upload_Cars_btn.Click += Upload_Cars_btn_Click;
             // 
             // pictureBox1
             // 
@@ -168,7 +166,6 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click;
             // 
             // panel4
             // 
@@ -183,6 +180,16 @@
             panel4.Name = "panel4";
             panel4.Size = new Size(543, 163);
             panel4.TabIndex = 9;
+            // 
+            // labelfilepath
+            // 
+            labelfilepath.AutoSize = true;
+            labelfilepath.Location = new Point(76, 55);
+            labelfilepath.Name = "labelfilepath";
+            labelfilepath.Size = new Size(72, 15);
+            labelfilepath.TabIndex = 13;
+            labelfilepath.Text = "labelfilepath";
+            labelfilepath.Visible = false;
             // 
             // Upload_File_btn
             // 
@@ -214,7 +221,6 @@
             Search_Users.Size = new Size(211, 40);
             Search_Users.TabIndex = 7;
             Search_Users.Text = "UPLOAD FILES";
-            Search_Users.Click += Search_Users_Click;
             // 
             // Save_File_btn
             // 
@@ -252,23 +258,14 @@
             DragDropListBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             DragDropListBox.Font = new Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             DragDropListBox.FormattingEnabled = true;
+            DragDropListBox.HorizontalScrollbar = true;
             DragDropListBox.Location = new Point(356, 172);
             DragDropListBox.Margin = new Padding(4, 3, 4, 3);
             DragDropListBox.Name = "DragDropListBox";
             DragDropListBox.Size = new Size(455, 364);
             DragDropListBox.TabIndex = 12;
             // 
-            // labelfilepath
-            // 
-            labelfilepath.AutoSize = true;
-            labelfilepath.Location = new Point(76, 55);
-            labelfilepath.Name = "labelfilepath";
-            labelfilepath.Size = new Size(72, 15);
-            labelfilepath.TabIndex = 13;
-            labelfilepath.Text = "labelfilepath";
-            labelfilepath.Visible = false;
-            // 
-            // Managing_files
+            // Admin_Managing_files
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -276,7 +273,7 @@
             ClientSize = new Size(862, 557);
             Controls.Add(user_background);
             Margin = new Padding(4, 3, 4, 3);
-            Name = "Managing_files";
+            Name = "Admin_Managing_files";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Managing files";
             panel1.ResumeLayout(false);

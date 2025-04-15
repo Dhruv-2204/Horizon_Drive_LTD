@@ -31,7 +31,7 @@ namespace WindowsFormsApp1
 
         private void Upload_Cars_btn_Click(object sender, EventArgs e)
         {
-            var manage_car_Page = new Managing_files(); // gets form Managing_cars
+            var manage_car_Page = new Admin_Managing_files(); // gets form Managing_cars
             manage_car_Page.Show();                  // Shows the new form manage_cars
             this.Dispose();
         }
