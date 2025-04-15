@@ -24,6 +24,8 @@ namespace splashscreen
         public Login()
         {
             InitializeComponent();
+            //pictureBox1.Image = Horizon_Drive_LTD.Properties.Resources.Logo;
+
         }
 
         private void Form2_Load(object sender, EventArgs e)

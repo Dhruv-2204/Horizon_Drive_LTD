@@ -16,6 +16,7 @@ using System.Data.Common;
 using Horizon_Drive_LTD.BusinessLogic.Services;
 using System.Reflection;
 using System.Diagnostics;
+using splashscreen;
 
 //BrowseListings.cs
 
@@ -50,7 +51,7 @@ namespace Horizon_Drive_LTD
 
             carHashTable = carRepo.LoadCarsFromDatabase();
 
-          
+
         }
 
         private void PopulateCarListings()
@@ -81,57 +82,6 @@ namespace Horizon_Drive_LTD
             pictureBox.Size = new Size(230, 150);
             pictureBox.Location = new Point(10, 10);
             pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-
-            //try
-            //{
-            //    // Replace spaces in brand to ensure folder name consistency
-            //    string brand = car.CarBrand.Replace(" ", "");
-            //    string imagePath = car.CarImagePath;
-
-            //    // Define the project root and car folder paths
-            //    string projectRoot = Path.GetFullPath(Path.Combine(Application.StartupPath, @"..\..\.."));
-            //    string carFolder = Path.Combine(projectRoot, "Media", "Images", "CarTable", brand, imagePath);
-
-            //    // Check if the folder exists
-            //    if (Directory.Exists(carFolder))
-            //    {
-            //        // Retrieve all valid image files within the folder
-            //        string[] matchingFiles = Directory.GetFiles(carFolder, "*.*")
-            //            .Where(file => file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase)
-            //                        || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase)
-            //                        || file.EndsWith(".png", StringComparison.OrdinalIgnoreCase)
-            //                        || file.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase))
-            //            .ToArray();
-
-            //        // Check if images exist and load the first one
-            //        if (matchingFiles.Length > 0)
-            //        {
-            //            pictureBox.Image = Image.FromFile(matchingFiles[0]); // Display the first valid image
-            //        }
-            //        else
-            //        {
-            //            pictureBox.Image = Properties.Resources.Logo; // Use default logo as fallback
-            //                                                          // Optional user feedback (uncomment if needed)
-            //                                                          // pictureBox.BackColor = Color.LightGray;
-            //                                                          // MessageBox.Show($"No images found in folder: {carFolder}");
-            //        }
-            //    }
-            //    else
-            //    {
-            //        pictureBox.Image = Properties.Resources.Logo; // Use default logo if folder not found
-            //                                                      // Optional user feedback (uncomment if needed)
-            //                                                      // pictureBox.BackColor = Color.LightGray;
-            //                                                      // MessageBox.Show($"Folder not found: {carFolder}");
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    // Handle unexpected exceptions gracefully
-            //    MessageBox.Show($"Image load error: {ex.Message}");
-            //    pictureBox.Image = Properties.Resources.Logo; // Default fallback image
-            //                                                  // Optional visual feedback (uncomment if needed)
-            //                                                  // pictureBox.BackColor = Color.LightGray;
-            //}
 
 
             try
@@ -193,7 +143,7 @@ namespace Horizon_Drive_LTD
             lblPrice.Font = new Font("Segoe UI", 9, FontStyle.Bold);
             lblPrice.Text = $"Rs{car.CarPrice}";
 
-          
+
             // View deal button
             Button btnViewDeal = new Button();
             btnViewDeal.Size = new Size(80, 30);
@@ -206,7 +156,7 @@ namespace Horizon_Drive_LTD
             btnViewDeal.Click += BtnViewDeal_Click;
 
             // Add controls to panel
-           
+
             panel.Controls.Add(lblTitle);
             panel.Controls.Add(lblDescription);
             panel.Controls.Add(lblPrice);
@@ -235,7 +185,7 @@ namespace Horizon_Drive_LTD
                 MessageBox.Show("Car details could not be found.");
             }
         }
-        
+
 
         private void btnBrowseListings_Click(object sender, EventArgs e)
         {
@@ -254,14 +204,9 @@ namespace Horizon_Drive_LTD
         private void btnManageYourListings_Click(object sender, EventArgs e)
         {
             // Open form to manage user's listings
-            MessageBox.Show("Manage Your Listings functionality would open a form to view and manage your car listings.",
-                           "Manage Your Listings",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
-
 
             ManageYourListings manageYourListingsForm = new ManageYourListings();
-         
+
             manageYourListingsForm.Show();
 
             this.Hide();
@@ -279,14 +224,11 @@ namespace Horizon_Drive_LTD
         private void btnOptions_Click(object sender, EventArgs e)
         {
             // Open options/settings
-            MessageBox.Show("Options functionality would open settings for the application.",
-                           "Options",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
 
-            // In a real application, you would open a form here
-            // OptionsForm optionsForm = new OptionsForm();
-            // optionsForm.ShowDialog();
+            Options_Personal optionsForm = new Options_Personal();
+            optionsForm.Show();
+            this.Hide();
+
         }
         private void btnLogout_Click(object sender, EventArgs e)
         {
@@ -298,14 +240,48 @@ namespace Horizon_Drive_LTD
 
             if (result == DialogResult.Yes)
             {
-              
+
                 MessageBox.Show("You have been logged out successfully.",
                                "Log Out",
                                MessageBoxButtons.OK,
                                MessageBoxIcon.Information);
+                // Clear the active user session
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+                    string dropTableQuery = "DROP TABLE IF EXISTS ActiveUser;";
+                    using (SqlCommand cmd = new SqlCommand(dropTableQuery, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                
 
-               
+                // how to stop running the code
+                OpenLoginUp();
+
+
             }
+            else
+            {
+                // User chose not to log out
+                return;
+            }
+        }
+
+        private void OpenLoginUp()
+        {
+
+            var userRepo = new UserRepository(new DatabaseConnection());
+            var userHashTable = userRepo.LoadUsersIntoHashTable();
+            var authService = new AuthenticationService(userHashTable, userRepo);
+            //var dbConnection = new DatabaseConnection();
+
+            // Show the Login form with injected authService
+            Login loginForm = new Login(authService);
+            loginForm.Show();
+
+            this.Hide();
         }
 
 
@@ -335,18 +311,19 @@ namespace Horizon_Drive_LTD
 
         private void buttonProfile_Click(object sender, EventArgs e)
         {
-            // Profile functionality
-            MessageBox.Show("Profile functionality would display user information and settings.",
-                           "User Profile",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
+
+
+            Options_Personal optionsForm = new Options_Personal();
+            optionsForm.Show();
+            this.Hide();
+
         }
 
         private void Form2_Load(object sender, EventArgs e)
         {
             this.FormClosing += new FormClosingEventHandler(MyForm_FormClosing);
         }
-        private void MyForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void MyForm_FormClosing(object? sender, FormClosingEventArgs e)
         {
             if (isClosing) return;
             isClosing = true;
@@ -375,7 +352,20 @@ namespace Horizon_Drive_LTD
             }
         }
 
+        private void BrowseListings_Load(object sender, EventArgs e)
+        {
+            this.FormClosing += new FormClosingEventHandler(MyForm_FormClosing);
+        }
 
+        private void btnBrowseListings_Click_1(object sender, EventArgs e)
+        {
+            BrowseListings browseListings = new BrowseListings();
+            browseListings.ShowDialog();
+            this.Hide();
+
+            // Hide the current form (Browse Listings form)
+
+        }
     }
 
 

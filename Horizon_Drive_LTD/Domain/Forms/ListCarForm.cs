@@ -1,6 +1,9 @@
 ﻿using Microsoft.Data.SqlClient;
 using Horizon_Drive_LTD.BusinessLogic;
 using Horizon_Drive_LTD.DataStructure;
+using Horizon_Drive_LTD.BusinessLogic.Repositories;
+using Horizon_Drive_LTD.BusinessLogic.Services;
+using splashscreen;
 
 namespace Horizon_Drive_LTD
 {
@@ -338,19 +341,20 @@ namespace Horizon_Drive_LTD
         private void btnManageYourListings_Click(object sender, EventArgs e)
         {
             // Open form to manage user's listings
-            MessageBox.Show("Manage Your Listings functionality would open a form to view and manage your car listings.",
-                           "Manage Your Listings",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
+
+
+            ManageYourListings manageYourListingsForm = new ManageYourListings();
+            manageYourListingsForm.Show();
+            this.Hide();
+
         }
 
         private void btnOptions_Click(object sender, EventArgs e)
         {
             // Open options/settings
-            MessageBox.Show("Options functionality would open settings for the application.",
-                           "Options",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
+            Options_Personal optionsForm = new Options_Personal();
+            optionsForm.Show();
+            this.Hide();
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
@@ -370,7 +374,39 @@ namespace Horizon_Drive_LTD
 
                 // In a real application, you would handle logout here
                 // Application.Restart();
+                // For this example, we'll just close the form
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+                    string dropTableQuery = "DROP TABLE IF EXISTS ActiveUser;";
+                    using (SqlCommand cmd = new SqlCommand(dropTableQuery, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                OpenLoginUp();
+
             }
+            else
+            {                 // User chose not to log out
+                return;
+            }
+        }
+
+        private void OpenLoginUp()
+        {
+
+            var userRepo = new UserRepository(new DatabaseConnection());
+            var userHashTable = userRepo.LoadUsersIntoHashTable();
+            var authService = new AuthenticationService(userHashTable, userRepo);
+            //var dbConnection = new DatabaseConnection();
+
+            // Show the Login form with injected authService
+            Login loginForm = new Login(authService);
+            loginForm.Show();
+
+            this.Hide();
         }
 
         private void panelUploadPhotos_Click(object sender, EventArgs e)
@@ -421,7 +457,7 @@ namespace Horizon_Drive_LTD
             }
         }
 
-        
+
 
 
         private void btnListMyCar_Click(object sender, EventArgs e)
@@ -533,7 +569,7 @@ namespace Horizon_Drive_LTD
         private string GetProjectImageDirectory()
         {
             string projectRoot = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\.."));
-            return Path.Combine(projectRoot, "Media", "Images","CarTable");
+            return Path.Combine(projectRoot, "Media", "Images", "CarTable");
         }
 
         // Create a subdirectory for the car's images
@@ -987,10 +1023,25 @@ namespace Horizon_Drive_LTD
             return true;
         }
 
-        
-        
+
+
 
         #endregion
+
+        private void btnListCar_Click(object sender, EventArgs e)
+        {
+            ListCarForm_Load(sender, e);
+            // Call the method to list the car
+            btnListMyCar_Click(sender, e);
+
+        }
+
+        private void buttonProfile_Click(object sender, EventArgs e)
+        {
+            Options_Personal optionsForm = new Options_Personal();
+            optionsForm.Show();
+            this.Hide();
+        }
     }
 
     // CarListing class embedded in this file as requested

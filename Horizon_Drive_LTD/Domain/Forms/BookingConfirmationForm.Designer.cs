@@ -471,6 +471,7 @@
             Name = "BookingConfirmationForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Booking Confirmation";
+            Load += BookingConfirmationForm_Load;
             panelMain.ResumeLayout(false);
             panelMain.PerformLayout();
             panelPricing.ResumeLayout(false);

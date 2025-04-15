@@ -170,7 +170,7 @@ namespace Horizon_Drive_LTD
 
         }
 
-       
+
         private void CalculateAndDisplayPricing()
         {
             // Calculate base price
@@ -229,7 +229,7 @@ namespace Horizon_Drive_LTD
             this.Close();
         }
 
-       
+
         private void buttonBookNow_Click(object sender, EventArgs e)
         {
             UserRepository userRepo = new UserRepository(new DatabaseConnection());
@@ -239,7 +239,7 @@ namespace Horizon_Drive_LTD
             HashTable<string, Booking> bookingHashTable = new HashTable<string, Booking>(1000);
 
             PaymentRepository paymentRepository = new PaymentRepository(new DatabaseConnection());
-           
+
 
             CarRepository carRepo = new CarRepository(new DatabaseConnection());
 
@@ -292,16 +292,17 @@ namespace Horizon_Drive_LTD
                 }
             }
 
-
-           
-
-
-        {
+            {
 
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
+        }
+
+        private void BookingConfirmationForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -188,6 +188,7 @@ namespace Horizon_Drive_LTD
             btnListCar.TabIndex = 2;
             btnListCar.Text = "List a car";
             btnListCar.UseVisualStyleBackColor = false;
+            btnListCar.Click += btnListCar_Click;
             // 
             // btnBrowseListings
             // 
@@ -206,6 +207,7 @@ namespace Horizon_Drive_LTD
             // 
             // pictureBoxLogo
             // 
+            pictureBoxLogo.Image = Properties.Resources.Logo;
             pictureBoxLogo.Location = new Point(72, 63);
             pictureBoxLogo.Name = "pictureBoxLogo";
             pictureBoxLogo.Size = new Size(195, 245);
@@ -272,6 +274,7 @@ namespace Horizon_Drive_LTD
             buttonProfile.TabIndex = 4;
             buttonProfile.Text = "👤";
             buttonProfile.UseVisualStyleBackColor = false;
+            buttonProfile.Click += buttonProfile_Click;
             // 
             // lblListYourCar
             // 
