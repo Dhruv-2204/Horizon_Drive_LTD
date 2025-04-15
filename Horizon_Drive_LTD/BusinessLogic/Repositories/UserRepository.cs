@@ -7,6 +7,7 @@ using Horizon_Drive_LTD.DataStructure;
 using Horizon_Drive_LTD.Domain.Entities;
 using Microsoft.Data.SqlClient;
 
+// UserRepository.cs
 namespace Horizon_Drive_LTD.BusinessLogic.Repositories
 {
     public class UserRepository

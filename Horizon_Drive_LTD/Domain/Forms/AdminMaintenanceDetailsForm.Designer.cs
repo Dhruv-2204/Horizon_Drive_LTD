@@ -1,6 +1,6 @@
 ﻿namespace Horizon_Drive_LTD.Domain.Forms
 {
-    partial class MaintenanceDetailsForm
+    partial class AdminMaintenanceDetailsForm
     {
         /// <summary>
         /// Required designer variable.

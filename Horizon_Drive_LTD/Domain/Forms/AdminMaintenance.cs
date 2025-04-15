@@ -14,13 +14,13 @@ using WindowsFormsApp1;
 
 namespace Horizon_Drive_LTD.Domain.Forms
 {
-    public partial class Maintenance : Form
+    public partial class AdminMaintenance : Form
     {
         private readonly DatabaseConnection _dbConnection;
         private readonly MaintenanceRepository _maintenanceRepository;
         private List<MaintenanceRecord> _allMaintenanceRecords;
 
-        public Maintenance()
+        public AdminMaintenance()
         {
             InitializeComponent();
 
@@ -213,7 +213,7 @@ namespace Horizon_Drive_LTD.Domain.Forms
         private void ShowMaintenanceDetailsForm(MaintenanceRecord record, bool isNew)
         {
             // Create and show a dialog to edit the maintenance record
-            using (MaintenanceDetailsForm detailsForm = new MaintenanceDetailsForm(record, _dbConnection, isNew))
+            using (AdminMaintenanceDetailsForm detailsForm = new AdminMaintenanceDetailsForm(record, _dbConnection, isNew))
             {
                 if (detailsForm.ShowDialog() == DialogResult.OK)
                 {
@@ -289,7 +289,7 @@ namespace Horizon_Drive_LTD.Domain.Forms
 
         private void Manage_bookings_btn_Click(object sender, EventArgs e)
         {
-            var manage_booking_Page = new Manage_bookings();
+            var manage_booking_Page = new AdminManageBookingsForm();
             manage_booking_Page.Show();
             this.Dispose();
         }

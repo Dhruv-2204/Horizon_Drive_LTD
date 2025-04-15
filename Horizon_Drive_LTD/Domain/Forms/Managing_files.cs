@@ -97,7 +97,7 @@ namespace Upload_cars
 
         private void Manage_bookings_btn_Click(object sender, EventArgs e)
         {
-            var manage_car_Page = new Manage_bookings(); // gets form Managing_cars
+            var manage_car_Page = new AdminManageBookingsForm(); // gets form Managing_cars
             manage_car_Page.Show();                  // Shows the new form manage_cars
             this.Hide();
         }
@@ -137,7 +137,7 @@ namespace Upload_cars
 
         private void Mainteance_click(object sender, EventArgs e)
         {
-            var manage_car_Page = new Maintenance(); // gets form Managing_cars
+            var manage_car_Page = new AdminMaintenance(); // gets form Managing_cars
             manage_car_Page.Show();                  // Shows the new form manage_cars
             this.Dispose();
         }

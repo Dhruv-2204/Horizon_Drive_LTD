@@ -7,14 +7,14 @@ using Horizon_Drive_LTD.Domain.Entities;
 
 namespace Horizon_Drive_LTD.Domain.Forms
 {
-    public partial class MaintenanceDetailsForm : Form
+    public partial class AdminMaintenanceDetailsForm : Form
     {
         private readonly MaintenanceRecord _record;
         private readonly DatabaseConnection _dbConnection;
         private readonly MaintenanceRepository _maintenanceRepository;
         private readonly bool _isNewRecord;
 
-        public MaintenanceDetailsForm(MaintenanceRecord record, DatabaseConnection dbConnection, bool isNew)
+        public AdminMaintenanceDetailsForm(MaintenanceRecord record, DatabaseConnection dbConnection, bool isNew)
         {
             InitializeComponent();
             _record = record;

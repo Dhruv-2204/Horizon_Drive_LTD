@@ -180,7 +180,7 @@ namespace Manage_user_search_page
                     User selectedUser = (User)((BindingSource)dataGridView1.DataSource)[selectedIndex];
 
                     // Create and show user details dialog
-                    using (var detailsForm = new UserDetailsForm(selectedUser, _dbConnection))
+                    using (var detailsForm = new AdminUserDetailsForm(selectedUser, _dbConnection))
                     {
                         if (detailsForm.ShowDialog() == DialogResult.OK)
                         {
@@ -269,7 +269,7 @@ namespace Manage_user_search_page
 
         private void Manage_bookings_click_btn(object sender, EventArgs e)
         {
-            var manage_user_Page = new Manage_bookings(); // Replace with your actual form name manage booking
+            var manage_user_Page = new AdminManageBookingsForm(); // Replace with your actual form name manage booking
             manage_user_Page.Show();                  // Shows the new form manage user
             this.Hide();
         }
@@ -294,7 +294,7 @@ namespace Manage_user_search_page
 
         private void Maintenance_btn_click(object sender, EventArgs e)
         {
-            var manage_car_Page = new Maintenance(); // gets form Managing_cars
+            var manage_car_Page = new AdminMaintenance(); // gets form Managing_cars
             manage_car_Page.Show();                  // Shows the new form manage_cars
             this.Hide();
         }

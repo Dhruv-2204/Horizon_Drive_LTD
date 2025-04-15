@@ -9,14 +9,14 @@ using Microsoft.Data.SqlClient;
 
 namespace User_managing
 {
-    public partial class UserDetailsForm : Form
+    public partial class AdminUserDetailsForm : Form
     {
         private User _user;
         private readonly DatabaseConnection _dbConnection;
         private bool _isEditMode = false;
         private bool _dataChanged = false;
 
-        public UserDetailsForm(User user, DatabaseConnection dbConnection)
+        public AdminUserDetailsForm(User user, DatabaseConnection dbConnection)
         {
             InitializeComponent();
 

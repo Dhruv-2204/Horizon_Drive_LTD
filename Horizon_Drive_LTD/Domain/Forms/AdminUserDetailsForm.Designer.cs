@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace User_managing
 {
-    partial class UserDetailsForm
+    partial class AdminUserDetailsForm
     {
         /// <summary>
         /// Required designer variable.
