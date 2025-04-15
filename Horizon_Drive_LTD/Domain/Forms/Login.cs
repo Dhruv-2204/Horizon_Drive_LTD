@@ -90,7 +90,7 @@ namespace splashscreen
             string enteredUsername = Username.Text.Trim();
             string enteredPassword = Password.Text;
 
-           // enteredPassword = HashPassword(enteredPassword); 
+            enteredPassword = HashPassword(enteredPassword);
 
             Guid guid = Guid.NewGuid();
             
@@ -132,10 +132,12 @@ namespace splashscreen
 
                 if (result == DialogResult.OK)
                 {
-                    BrowseListings browseListing = new BrowseListings();
-                    browseListing.FormClosed += (s, args) => this.Close();
-                    browseListing.Show();
-
+                    //BrowseListings browseListing = new BrowseListings();
+                    //browseListing.FormClosed += (s, args) => this.Close();
+                    //browseListing.Show();
+                    ManageYourListings manageYourListings = new ManageYourListings();
+                    manageYourListings.FormClosed += (s, args) => this.Close();
+                    manageYourListings.Show();
                     // Hide the current form (Login form)
                     this.Hide();
                 }
