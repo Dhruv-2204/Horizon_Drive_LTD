@@ -58,15 +58,14 @@
 
         private void sign_btn(object sender, EventArgs e)
         {
-            //Login login = new Login(); // Pass existing auth service to Login
-            //login.Show();
+            
             BrowseListings browseListing = new BrowseListings();
             browseListing.Show();
 
             this.Dispose();
         }
 
-
+        /// Event handler for the "Show Password" checkbox
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox1.Checked == true)
@@ -79,6 +78,7 @@
             }
         }
 
+        /// Hashes the password using SHA256
         public static string HashPassword(string password)
         {
             using (SHA256 sha256 = SHA256.Create())

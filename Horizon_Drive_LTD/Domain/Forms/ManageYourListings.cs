@@ -482,39 +482,7 @@ namespace Horizon_Drive_LTD
                 Debug.WriteLine($"Image load error: {ex.Message}");
             }
            
-           /*try
-            {
-                string cleanedBrand = brand.Replace(" ", "");
-                string cleanedModel = model.Replace(" ", "");
-                string carFolder = Path.Combine(Application.StartupPath, "Images", "BrowseListings", $"{cleanedBrand}_{cleanedModel}");
-
-                if (Directory.Exists(carFolder))
-                {
-                    string[] matchingFiles = Directory.GetFiles(carFolder, "*.*")
-                        .Where(file => file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase)
-                                    || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase)
-                                    || file.EndsWith(".png", StringComparison.OrdinalIgnoreCase)
-                                    || file.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase))
-                        .ToArray();
-
-                    if (matchingFiles.Length > 0)
-                    {
-                        pictureBox.Image = Image.FromFile(matchingFiles[0]);
-                    }
-                    else
-                    {
-                        MessageBox.Show("No images found in folder: " + carFolder);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Folder not found: " + carFolder);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Image load error: " + ex.Message);
-            }*/
+           
 
             // Create title label
             Label titleLabel = new Label
@@ -624,12 +592,13 @@ namespace Horizon_Drive_LTD
                                MessageBoxIcon.Information);
             }
         }
-        
 
+        // Method to handle form closing event
         private void Form2_Load(object sender, EventArgs e)
         {
             this.FormClosing += new FormClosingEventHandler(ManageListing_FormClosing);
         }
+
         private void ManageListing_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (isClosing) return;

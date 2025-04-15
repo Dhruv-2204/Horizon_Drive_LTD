@@ -24,7 +24,6 @@ namespace splashscreen
         public Login()
         {
             InitializeComponent();
-            //pictureBox1.Image = Horizon_Drive_LTD.Properties.Resources.Logo;
 
         }
 
@@ -90,6 +89,7 @@ namespace splashscreen
             }
         }
 
+        /// Event handler for the "Login" button
         private void LOGIN_btn_Click(object sender, EventArgs e)
         {
             string enteredUsername = Username.Text.Trim();
@@ -152,6 +152,7 @@ namespace splashscreen
         }
 
 
+        // / Event handler for the "Sign Up" button
         private void Signup_btn_Click(object sender, EventArgs e)
         {
             var userRepo = new UserRepository(new DatabaseConnection());

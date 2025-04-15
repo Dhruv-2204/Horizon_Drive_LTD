@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Horizon_Drive_LTD.DataStructure
+﻿namespace Horizon_Drive_LTD.DataStructure
 {
     // This is an implementation of a hash table using separate chaining with linked lists.
     public class HashTable<TKey, TValue>

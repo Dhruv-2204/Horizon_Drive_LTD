@@ -479,18 +479,17 @@ namespace Horizon_Drive_LTD
                     conn.Open();
 
                     // Insert car data
-                    string carQuery = @"
-                INSERT INTO Car (
-                    CarId, UserId, CarBrand, Model, Years, Category, Colour, 
-                    RegistrationNo, FuelType, TransmissionType, Drivetrain, 
-                    EngineCapacity, Power, SeatNo, VehicleDescription, 
-                    Features, CarPrice, AvailabilityStart, AvailabilityEnd
-                ) VALUES (
-                    @CarId, @UserId, @CarBrand, @Model, @Year, @Category, @Colour,
-                    @RegNo, @FuelType, @Transmission, @Drivetrain,
-                    @EngineCap, @Power, @Seats, @Description,
-                    @Features, @Price, @StartDate, @EndDate
-                )";
+                    string carQuery = @" INSERT INTO Car (
+                                            CarId, UserId, CarBrand, Model, Years, Category, Colour, 
+                                            RegistrationNo, FuelType, TransmissionType, Drivetrain, 
+                                            EngineCapacity, Power, SeatNo, VehicleDescription, 
+                                            Features, CarPrice, AvailabilityStart, AvailabilityEnd
+                                        ) VALUES (
+                                            @CarId, @UserId, @CarBrand, @Model, @Year, @Category, @Colour,
+                                            @RegNo, @FuelType, @Transmission, @Drivetrain,
+                                            @EngineCap, @Power, @Seats, @Description,
+                                            @Features, @Price, @StartDate, @EndDate
+                                        )";
 
                     using (SqlCommand cmd = new SqlCommand(carQuery, conn))
                     {
