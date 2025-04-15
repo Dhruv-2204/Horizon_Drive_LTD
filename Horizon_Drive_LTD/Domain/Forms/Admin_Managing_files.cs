@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
@@ -24,8 +25,9 @@ namespace Upload_cars
     
     public partial class Admin_Managing_files : Form
     {
+        private readonly DatabaseConnection _dbConnection;
         
-        
+
         public Admin_Managing_files()
         {
             InitializeComponent();
@@ -35,6 +37,7 @@ namespace Upload_cars
             SetRoundedCorner(Manage_bookings_btn, 25);
             SetRoundedCorner(Logout_btn, 25);
             SetRoundedCorner(Maintenance_btn, 25);
+            _dbConnection = new DatabaseConnection();
 
 
         }
@@ -185,6 +188,7 @@ namespace Upload_cars
                     );
 
                     userHashTable.Insert(user.UserId, user);
+                    GenerateAndSaveLessor(user.UserId); // Call the method to generate and save Lessor
                 }
                 catch (Exception ex)
                 {
@@ -281,6 +285,45 @@ namespace Upload_cars
             //MessageBox.Show("Cars saved to database successfully.");
 
         }
+
+
+        public void GenerateAndSaveLessor(string userId)
+        {
+            // Assuming that userId exists in the User table and the user is inserted successfully
+            string lessorId = GenerateLessorId();
+
+            // Insert into Lessor table
+            using (SqlConnection conn = _dbConnection.GetConnection())
+            {
+                conn.Open();
+                string query = @"INSERT INTO Lessor
+                            (LessorId, UserId, No_Of_Cars)
+                         VALUES
+                            (@LessorId, @UserId, @No_Of_Cars)";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@LessorId", lessorId);
+                cmd.Parameters.AddWithValue("@UserId", userId);
+                cmd.Parameters.AddWithValue("@No_Of_Cars", 1); // You can set it to 0 or the number of cars the lessor has.
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error inserting Lessor: " + ex.Message);
+                }
+            }
+        }
+
+        private string GenerateLessorId()
+        {
+            Guid guid = Guid.NewGuid();
+            int numericPart = Math.Abs(guid.GetHashCode()) % 100000;
+            return "L" + numericPart.ToString("D4");
+        }
+
 
         private void Upload_File_btn_Click(object sender, EventArgs e)
         {
