@@ -202,7 +202,7 @@ namespace Horizon_Drive_LTD
             passengersSpec.Text = $"Passengers: {car.SeatNo}";
             powerSpec.Text = $"Power: {car.Power}";
             drivetrainSpec.Text = $"Drivetrain: {car.DriveTrain}";
-            ratingCount.Text = $"Rating: {car.Ratings}";
+            //ratingCount.Text = $"Rating: {car.Ratings}";
         }
 
         private void btnBookCar_Click(object sender, EventArgs e)

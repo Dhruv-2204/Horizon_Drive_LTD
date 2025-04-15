@@ -134,7 +134,7 @@
             labelTerms.Name = "labelTerms";
             labelTerms.Size = new Size(469, 27);
             labelTerms.TabIndex = 18;
-            labelTerms.Text = "By clicking \"Book Now\", you agree to our Terms and Conditions and Cancellation Policy.";
+            labelTerms.Text = "By clicking \"Book Car\", you agree to our Terms and Conditions and Cancellation Policy.";
             // 
             // panelPricing
             // 

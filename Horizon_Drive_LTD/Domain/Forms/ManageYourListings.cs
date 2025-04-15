@@ -1,9 +1,11 @@
 ﻿using System.Data;
 using Horizon_Drive_LTD.BusinessLogic;
 using Horizon_Drive_LTD.BusinessLogic.Repositories;
+using Horizon_Drive_LTD.BusinessLogic.Services;
 using Horizon_Drive_LTD.DataStructure;
 using Horizon_Drive_LTD.Domain.Entities;
 using Microsoft.Data.SqlClient;
+using splashscreen;
 
 namespace Horizon_Drive_LTD
 {
@@ -379,34 +381,36 @@ namespace Horizon_Drive_LTD
         {
             BrowseListings browseListings = new BrowseListings();
             browseListings.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void btnManageBooking_Click(object sender, EventArgs e)
         {
             ManageBookings manageBookings = new ManageBookings();
             manageBookings.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void btnListCar_Click(object sender, EventArgs e)
         {
             ListCarForm listCarForm = new ListCarForm();
             listCarForm.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void btnManageYourListings_Click(object sender, EventArgs e)
         {
             // Already on this form, no action needed
+            ManageYourListings manageYourListings = new ManageYourListings();
+            manageYourListings.Show();
+            this.Dispose();
         }
 
         private void btnOptions_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Options functionality would open settings for the application.",
-                           "Options",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
+            Options_Personal optionsForm = new Options_Personal();
+            optionsForm.Show();
+            this.Dispose();
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
@@ -426,9 +430,41 @@ namespace Horizon_Drive_LTD
                 // In a real application, you would handle logout here
                 // Application.Restart(); // Uncomment to restart application
                 // this.Close(); // Uncomment to close current form
+
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+                    string dropTableQuery = "DROP TABLE IF EXISTS ActiveUser;";
+                    using (SqlCommand cmd = new SqlCommand(dropTableQuery, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                OpenLoginUp();
+
+            }
+            else
+            {
+                return;
             }
         }
-        
+
+        private void OpenLoginUp()
+        {
+
+            var userRepo = new UserRepository(new DatabaseConnection());
+            var userHashTable = userRepo.LoadUsersIntoHashTable();
+            var authService = new AuthenticationService(userHashTable, userRepo);
+            //var dbConnection = new DatabaseConnection();
+
+            // Show the Login form with injected authService
+            Login loginForm = new Login(authService);
+            loginForm.Show();
+
+            this.Dispose();
+        }
+
 
         private void Form2_Load(object sender, EventArgs e)
         {

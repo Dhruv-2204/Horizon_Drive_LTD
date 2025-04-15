@@ -1,14 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Windows.Forms;
+﻿using Horizon_Drive_LTD.BusinessLogic;
+using Horizon_Drive_LTD.BusinessLogic.Repositories;
+using Horizon_Drive_LTD.BusinessLogic.Services;
+using Microsoft.Data.SqlClient;
+using splashscreen;
+
 
 //ManageBookings.cs
 namespace Horizon_Drive_LTD
 {
     public partial class ManageBookings : Form
     {
+        DatabaseConnection _dbConnection = new DatabaseConnection();
+
+
         // List to store booking information
         private List<BookingInfo> bookings = new List<BookingInfo>();
         private string currentFilter = "Upcoming"; // Default filter
@@ -211,7 +215,7 @@ namespace Horizon_Drive_LTD
                 Text = "Drop-off:",
                 Font = new Font("Segoe UI", 9, FontStyle.Bold),
                 AutoSize = true,
-                Location = new Point(280, 60) 
+                Location = new Point(280, 60)
             };
 
             Label lblDropOffLocation = new Label
@@ -219,7 +223,7 @@ namespace Horizon_Drive_LTD
                 Text = booking.DropoffLocation,
                 Font = new Font("Segoe UI", 9),
                 AutoSize = true,
-                Location = new Point(352, 60) 
+                Location = new Point(352, 60)
             };
 
             Label lblDropOffDate = new Label
@@ -300,6 +304,13 @@ namespace Horizon_Drive_LTD
                     // Refresh the current filter view
                     ApplyFilter(currentFilter);
                 }
+                else
+                {
+                    MessageBox.Show("Booking not found.",
+                                   "Error",
+                                   MessageBoxButtons.OK,
+                                   MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -325,7 +336,7 @@ namespace Horizon_Drive_LTD
             // Navigate to browse listings form
             BrowseListings browseListingsForm = new BrowseListings();
             browseListingsForm.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void btnManageBooking_Click(object sender, EventArgs e)
@@ -337,26 +348,23 @@ namespace Horizon_Drive_LTD
 
         private void btnListCar_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("List a Car functionality would open a form to add a new listing.",
-                           "List a Car",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
+            ListCarForm listCarForm = new ListCarForm();
+            listCarForm.Show();
+            this.Dispose();
         }
 
         private void btnManageYourListings_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Manage Your Listings functionality would open a form to view and manage your car listings.",
-                           "Manage Your Listings",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
+            ManageYourListings manageYourListingsForm = new ManageYourListings();
+            manageYourListingsForm.Show();
+            this.Dispose();
         }
 
         private void btnOptions_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Options functionality would open settings for the application.",
-                           "Options",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
+            Options_Personal optionsForm = new Options_Personal();
+            optionsForm.Show();
+            this.Dispose();
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
@@ -375,7 +383,35 @@ namespace Horizon_Drive_LTD
 
                 // After logout, update the username display
                 DisplayUsername();
+                // Optionally, you can redirect to a login form or main menu
+
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+                    string dropTableQuery = "DROP TABLE IF EXISTS ActiveUser;";
+                    using (SqlCommand cmd = new SqlCommand(dropTableQuery, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                OpenLoginUp();
             }
+        }
+
+        private void OpenLoginUp()
+        {
+
+            var userRepo = new UserRepository(new DatabaseConnection());
+            var userHashTable = userRepo.LoadUsersIntoHashTable();
+            var authService = new AuthenticationService(userHashTable, userRepo);
+            //var dbConnection = new DatabaseConnection();
+
+            // Show the Login form with injected authService
+            Login loginForm = new Login(authService);
+            loginForm.Show();
+
+            this.Dispose();
         }
 
         private void buttonProfile_Click(object sender, EventArgs e)
@@ -383,7 +419,7 @@ namespace Horizon_Drive_LTD
             // Open the Options_Personal form
             Options_Personal optionsPersonalForm = new Options_Personal();
             optionsPersonalForm.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
@@ -406,6 +442,41 @@ namespace Horizon_Drive_LTD
             );
 
             DisplayBookings(filteredBookings);
+        }
+
+        private bool isClosing = false;
+        private void MyForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (isClosing) return;
+            isClosing = true;
+
+            DialogResult result = MessageBox.Show("Do you want to close the Car Hire Application?", "Confirm Exit",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.No)
+            {
+                e.Cancel = true; // Prevent closing
+                isClosing = false;
+            }
+            else
+            {
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+                    string dropTableQuery = "DROP TABLE IF EXISTS ActiveUser;";
+                    using (SqlCommand cmd = new SqlCommand(dropTableQuery, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                Application.Exit(); // Properly terminates the application without triggering FormClosing again
+            }
+        }
+
+        private void ManageBookings_Load(object sender, EventArgs e)
+        {
+            this.FormClosing += new FormClosingEventHandler(MyForm_FormClosing);
         }
     }
 

@@ -165,8 +165,7 @@
             pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxLogo.TabIndex = 0;
             pictureBoxLogo.TabStop = false;
-            // Load the logo image from the Images folder
-            pictureBoxLogo.Image = Image.FromFile(Path.Combine("Images", "Logo.png"));
+            pictureBoxLogo.Image = Horizon_Drive_LTD.Properties.Resources.Logo;
             // 
             // btnLogout
             // 
@@ -380,6 +379,7 @@
             Name = "ManageBookings";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Horizon Drive - Manage Bookings";
+            Load += ManageBookings_Load;
             panelSidebar.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).EndInit();
             panelMain.ResumeLayout(false);

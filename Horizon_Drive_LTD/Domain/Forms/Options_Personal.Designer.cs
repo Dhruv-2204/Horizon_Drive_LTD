@@ -47,7 +47,6 @@
             textBoxPassword = new TextBox();
             labelPassword = new Label();
             panelPhone = new Panel();
-            buttonCountryCode = new Button();
             textBoxPhone = new TextBox();
             labelPhone = new Label();
             textBoxEmail = new TextBox();
@@ -189,8 +188,6 @@
             // 
             // pictureBoxLogo
             // 
-            // Load the logo image from the Images folder
-            pictureBoxLogo.Image = Image.FromFile(Path.Combine("Images", "Logo.png"));
             pictureBoxLogo.Location = new Point(54, 59);
             pictureBoxLogo.Margin = new Padding(3, 4, 3, 4);
             pictureBoxLogo.Name = "pictureBoxLogo";
@@ -343,7 +340,6 @@
             // panelPhone
             // 
             panelPhone.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panelPhone.Controls.Add(buttonCountryCode);
             panelPhone.Controls.Add(textBoxPhone);
             panelPhone.Location = new Point(70, 620);
             panelPhone.Margin = new Padding(3, 4, 3, 4);
@@ -351,31 +347,15 @@
             panelPhone.Size = new Size(806, 44);
             panelPhone.TabIndex = 13;
             // 
-            // buttonCountryCode
-            // 
-            buttonCountryCode.BackColor = Color.LightGray;
-            buttonCountryCode.Dock = DockStyle.Left;
-            buttonCountryCode.FlatAppearance.BorderColor = Color.Silver;
-            buttonCountryCode.FlatStyle = FlatStyle.Flat;
-            buttonCountryCode.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            buttonCountryCode.Location = new Point(0, 0);
-            buttonCountryCode.Margin = new Padding(3, 4, 3, 4);
-            buttonCountryCode.Name = "buttonCountryCode";
-            buttonCountryCode.Size = new Size(79, 44);
-            buttonCountryCode.TabIndex = 1;
-            buttonCountryCode.Text = "Country";
-            buttonCountryCode.UseVisualStyleBackColor = false;
-            buttonCountryCode.Click += buttonCountryCode_Click;
-            // 
             // textBoxPhone
             // 
             textBoxPhone.BorderStyle = BorderStyle.FixedSingle;
             textBoxPhone.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBoxPhone.Location = new Point(85, 0);
+            textBoxPhone.Location = new Point(0, 0);
             textBoxPhone.Margin = new Padding(3, 4, 3, 4);
             textBoxPhone.Multiline = true;
             textBoxPhone.Name = "textBoxPhone";
-            textBoxPhone.Size = new Size(721, 44);
+            textBoxPhone.Size = new Size(806, 44);
             textBoxPhone.TabIndex = 0;
             textBoxPhone.TextChanged += textBoxPhone_TextChanged;
             // 
@@ -545,6 +525,7 @@
             pictureBoxProfile.TabIndex = 0;
             pictureBoxProfile.TabStop = false;
             pictureBoxProfile.Click += pictureBoxProfile_Click;
+            pictureBoxLogo.Image = Horizon_Drive_LTD.Properties.Resources.Logo;
             // 
             // Options_Personal
             // 
@@ -592,7 +573,6 @@
         private System.Windows.Forms.TextBox textBoxEmail;
         private System.Windows.Forms.Label labelPhone;
         private System.Windows.Forms.Panel panelPhone;
-        private System.Windows.Forms.Button buttonCountryCode;
         private System.Windows.Forms.TextBox textBoxPhone;
         private System.Windows.Forms.Label labelPassword;
         private System.Windows.Forms.TextBox textBoxPassword;

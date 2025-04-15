@@ -327,7 +327,7 @@ namespace Horizon_Drive_LTD
             // Navigate to browse listings form
             BrowseListings browseListings = new BrowseListings();
             browseListings.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void btnManageBooking_Click(object sender, EventArgs e)
@@ -335,7 +335,7 @@ namespace Horizon_Drive_LTD
             // Open the Manage Bookings form
             ManageBookings manageBookingsForm = new ManageBookings();
             manageBookingsForm.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void btnManageYourListings_Click(object sender, EventArgs e)
@@ -345,7 +345,7 @@ namespace Horizon_Drive_LTD
 
             ManageYourListings manageYourListingsForm = new ManageYourListings();
             manageYourListingsForm.Show();
-            this.Hide();
+            this.Dispose();
 
         }
 
@@ -354,7 +354,7 @@ namespace Horizon_Drive_LTD
             // Open options/settings
             Options_Personal optionsForm = new Options_Personal();
             optionsForm.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
@@ -406,7 +406,7 @@ namespace Horizon_Drive_LTD
             Login loginForm = new Login(authService);
             loginForm.Show();
 
-            this.Hide();
+            this.Dispose();
         }
 
         private void panelUploadPhotos_Click(object sender, EventArgs e)
@@ -522,7 +522,6 @@ namespace Horizon_Drive_LTD
                     // Insert image references
                     foreach (string path in imagePaths)
                     {
-                        //string imageId = "IMG" + (imagePaths.IndexOf(path) + 1).ToString("D6"); // Formats as 6-digit number
 
                         // using GUID
                         string imageId = "IMG" + (Math.Abs(Guid.NewGuid().GetHashCode()) % 100000).ToString("D5");
@@ -540,7 +539,10 @@ namespace Horizon_Drive_LTD
                 }
 
                 MessageBox.Show("Car listed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close();
+                
+                ListCarForm listCarForm = new ListCarForm();
+                listCarForm.Show();
+                this.Dispose();
             }
             catch (Exception ex)
             {
@@ -569,7 +571,7 @@ namespace Horizon_Drive_LTD
         private string GetProjectImageDirectory()
         {
             string projectRoot = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\.."));
-            return Path.Combine(projectRoot, "Media", "Images", "CarTable");
+            return Path.Combine(projectRoot, "Media", "Images");
         }
 
         // Create a subdirectory for the car's images
@@ -1040,7 +1042,7 @@ namespace Horizon_Drive_LTD
         {
             Options_Personal optionsForm = new Options_Personal();
             optionsForm.Show();
-            this.Hide();
+            this.Dispose();
         }
     }
 

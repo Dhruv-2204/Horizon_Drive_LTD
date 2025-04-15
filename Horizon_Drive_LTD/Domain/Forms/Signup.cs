@@ -58,8 +58,11 @@
 
         private void sign_btn(object sender, EventArgs e)
         {
-            Login login = new Login(); // Pass existing auth service to Login
-            login.Show();
+            //Login login = new Login(); // Pass existing auth service to Login
+            //login.Show();
+            BrowseListings browseListing = new BrowseListings();
+            browseListing.Show();
+
             this.Dispose();
         }
 
@@ -182,6 +185,9 @@
             {
                 MessageBox.Show("Account created successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                
+                
+                
 
                 UserRepository userRepo = new UserRepository(new DatabaseConnection());
 
@@ -219,6 +225,10 @@
 
 
                 userRepo.StoreActiveUser(username, userId , customerid, lessorid);
+
+                BrowseListings browseListing = new BrowseListings();
+                browseListing.Show();
+                this.Dispose();
 
             }
             else

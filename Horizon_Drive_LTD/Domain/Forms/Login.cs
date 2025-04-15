@@ -142,7 +142,7 @@ namespace splashscreen
                     browseListing.Show();
 
                     // Hide the current form (Login form)
-                    this.Hide();
+                    this.Dispose();
                 }
             }
             else

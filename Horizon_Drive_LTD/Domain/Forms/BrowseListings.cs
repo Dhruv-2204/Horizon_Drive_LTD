@@ -1,20 +1,10 @@
-﻿
-using System.Data;
-using System.Drawing.Drawing2D;
+﻿using System.Data;
 using Horizon_Drive_LTD.BusinessLogic.Repositories;
 using Horizon_Drive_LTD.BusinessLogic;
 using Horizon_Drive_LTD.Domain.Entities;
 using Horizon_Drive_LTD.DataStructure;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Web;
-using System.Windows.Forms;
-using Timer = System.Windows.Forms.Timer;
 using Microsoft.Data.SqlClient;
-using System.Data.Common;
 using Horizon_Drive_LTD.BusinessLogic.Services;
-using System.Reflection;
 using System.Diagnostics;
 using splashscreen;
 
@@ -198,7 +188,7 @@ namespace Horizon_Drive_LTD
             // Open form to list a new car
             ListCarForm listCarForm = new ListCarForm();
             listCarForm.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void btnManageYourListings_Click(object sender, EventArgs e)
@@ -209,7 +199,7 @@ namespace Horizon_Drive_LTD
 
             manageYourListingsForm.Show();
 
-            this.Hide();
+            this.Dispose();
 
         }
 
@@ -218,7 +208,7 @@ namespace Horizon_Drive_LTD
             // Open the Manage Bookings form
             ManageBookings manageBookingsForm = new ManageBookings();
             manageBookingsForm.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void btnOptions_Click(object sender, EventArgs e)
@@ -227,7 +217,7 @@ namespace Horizon_Drive_LTD
 
             Options_Personal optionsForm = new Options_Personal();
             optionsForm.Show();
-            this.Hide();
+            this.Dispose();
 
         }
         private void btnLogout_Click(object sender, EventArgs e)
@@ -281,7 +271,7 @@ namespace Horizon_Drive_LTD
             Login loginForm = new Login(authService);
             loginForm.Show();
 
-            this.Hide();
+            this.Dispose();
         }
 
 
@@ -315,7 +305,7 @@ namespace Horizon_Drive_LTD
 
             Options_Personal optionsForm = new Options_Personal();
             optionsForm.Show();
-            this.Hide();
+            this.Dispose();
 
         }
 
@@ -361,7 +351,7 @@ namespace Horizon_Drive_LTD
         {
             BrowseListings browseListings = new BrowseListings();
             browseListings.ShowDialog();
-            this.Hide();
+            this.Dispose();
 
             // Hide the current form (Browse Listings form)
 
