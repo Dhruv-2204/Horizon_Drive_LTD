@@ -45,7 +45,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             using (SqlConnection conn = _dbConnection.GetConnection())
             {
                 conn.Open();
-                string query = "DELETE FROM Payments WHERE BookingID = @BookingID";
+                string query = "DELETE FROM Payment WHERE BookingID = @BookingID";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {

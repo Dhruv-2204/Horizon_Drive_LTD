@@ -43,13 +43,6 @@
             featuresDetails = new Label();
             featuresLabel = new Label();
             carDetailsPanel = new Panel();
-            ratingPanel = new Panel();
-            ratingCount = new Label();
-            starPictureBox5 = new PictureBox();
-            starPictureBox4 = new PictureBox();
-            starPictureBox3 = new PictureBox();
-            starPictureBox2 = new PictureBox();
-            starPictureBox1 = new PictureBox();
             powerSpec = new Label();
             powerIcon = new Label();
             drivetrainSpec = new Label();
@@ -64,12 +57,6 @@
             mainPanel.SuspendLayout();
             addonsPanel.SuspendLayout();
             carDetailsPanel.SuspendLayout();
-            ratingPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)starPictureBox5).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)starPictureBox4).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)starPictureBox3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)starPictureBox2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)starPictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxCar).BeginInit();
             SuspendLayout();
             // 
@@ -317,7 +304,6 @@
             featuresDetails.Name = "featuresDetails";
             featuresDetails.Size = new Size(871, 50);
             featuresDetails.TabIndex = 3;
-           
             // 
             // featuresLabel
             // 
@@ -331,7 +317,6 @@
             // 
             // carDetailsPanel
             // 
-            carDetailsPanel.Controls.Add(ratingPanel);
             carDetailsPanel.Controls.Add(powerSpec);
             carDetailsPanel.Controls.Add(powerIcon);
             carDetailsPanel.Controls.Add(drivetrainSpec);
@@ -349,81 +334,6 @@
             carDetailsPanel.Name = "carDetailsPanel";
             carDetailsPanel.Size = new Size(846, 358);
             carDetailsPanel.TabIndex = 0;
-            // 
-            // ratingPanel
-            // 
-            ratingPanel.Controls.Add(ratingCount);
-            ratingPanel.Controls.Add(starPictureBox5);
-            ratingPanel.Controls.Add(starPictureBox4);
-            ratingPanel.Controls.Add(starPictureBox3);
-            ratingPanel.Controls.Add(starPictureBox2);
-            ratingPanel.Controls.Add(starPictureBox1);
-            ratingPanel.Location = new Point(400, 305);
-            ratingPanel.Margin = new Padding(4, 5, 4, 5);
-            ratingPanel.Name = "ratingPanel";
-            ratingPanel.Size = new Size(416, 50);
-            ratingPanel.TabIndex = 16;
-            // 
-            // ratingCount
-            // 
-            ratingCount.AutoSize = true;
-            ratingCount.Font = new Font("Segoe UI", 8F);
-            ratingCount.Location = new Point(186, 4);
-            ratingCount.Margin = new Padding(4, 0, 4, 0);
-            ratingCount.Name = "ratingCount";
-            ratingCount.Size = new Size(56, 21);
-            ratingCount.TabIndex = 5;
-            ratingCount.Text = "(4.0/5)";
-            // 
-            // starPictureBox5
-            // 
-            starPictureBox5.BackColor = Color.LightGray;
-            starPictureBox5.Location = new Point(142, 0);
-            starPictureBox5.Margin = new Padding(4, 5, 4, 5);
-            starPictureBox5.Name = "starPictureBox5";
-            starPictureBox5.Size = new Size(29, 34);
-            starPictureBox5.TabIndex = 4;
-            starPictureBox5.TabStop = false;
-            // 
-            // starPictureBox4
-            // 
-            starPictureBox4.BackColor = Color.Gold;
-            starPictureBox4.Location = new Point(108, 0);
-            starPictureBox4.Margin = new Padding(4, 5, 4, 5);
-            starPictureBox4.Name = "starPictureBox4";
-            starPictureBox4.Size = new Size(29, 34);
-            starPictureBox4.TabIndex = 3;
-            starPictureBox4.TabStop = false;
-            // 
-            // starPictureBox3
-            // 
-            starPictureBox3.BackColor = Color.Gold;
-            starPictureBox3.Location = new Point(71, 0);
-            starPictureBox3.Margin = new Padding(4, 5, 4, 5);
-            starPictureBox3.Name = "starPictureBox3";
-            starPictureBox3.Size = new Size(29, 34);
-            starPictureBox3.TabIndex = 2;
-            starPictureBox3.TabStop = false;
-            // 
-            // starPictureBox2
-            // 
-            starPictureBox2.BackColor = Color.Gold;
-            starPictureBox2.Location = new Point(36, 0);
-            starPictureBox2.Margin = new Padding(4, 5, 4, 5);
-            starPictureBox2.Name = "starPictureBox2";
-            starPictureBox2.Size = new Size(29, 34);
-            starPictureBox2.TabIndex = 1;
-            starPictureBox2.TabStop = false;
-            // 
-            // starPictureBox1
-            // 
-            starPictureBox1.BackColor = Color.Gold;
-            starPictureBox1.Location = new Point(0, 0);
-            starPictureBox1.Margin = new Padding(4, 5, 4, 5);
-            starPictureBox1.Name = "starPictureBox1";
-            starPictureBox1.Size = new Size(29, 34);
-            starPictureBox1.TabIndex = 0;
-            starPictureBox1.TabStop = false;
             // 
             // powerSpec
             // 
@@ -548,13 +458,6 @@
             addonsPanel.ResumeLayout(false);
             addonsPanel.PerformLayout();
             carDetailsPanel.ResumeLayout(false);
-            ratingPanel.ResumeLayout(false);
-            ratingPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)starPictureBox5).EndInit();
-            ((System.ComponentModel.ISupportInitialize)starPictureBox4).EndInit();
-            ((System.ComponentModel.ISupportInitialize)starPictureBox3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)starPictureBox2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)starPictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxCar).EndInit();
             ResumeLayout(false);
         }
@@ -575,14 +478,6 @@
         private System.Windows.Forms.Label drivetrainSpec;
         private System.Windows.Forms.Label powerIcon;
         private System.Windows.Forms.Label powerSpec;
-       
-        private System.Windows.Forms.Panel ratingPanel;
-        private System.Windows.Forms.PictureBox starPictureBox1;
-        private System.Windows.Forms.PictureBox starPictureBox2;
-        private System.Windows.Forms.PictureBox starPictureBox3;
-        private System.Windows.Forms.PictureBox starPictureBox4;
-        private System.Windows.Forms.PictureBox starPictureBox5;
-        private System.Windows.Forms.Label ratingCount;
         private System.Windows.Forms.Label featuresLabel;
         private System.Windows.Forms.Label featuresDetails;
         private System.Windows.Forms.Label descLabel;

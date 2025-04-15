@@ -321,7 +321,6 @@
             btnDeleteTransaction2.TabIndex = 4;
             btnDeleteTransaction2.Text = "Delete";
             btnDeleteTransaction2.UseVisualStyleBackColor = false;
-            btnDeleteTransaction2.Click += BtnDeleteTransaction_Click;
             // 
             // lblTransaction2DateRange
             // 
@@ -390,7 +389,6 @@
             btnDeleteTransaction1.TabIndex = 4;
             btnDeleteTransaction1.Text = "Delete";
             btnDeleteTransaction1.UseVisualStyleBackColor = false;
-            btnDeleteTransaction1.Click += BtnDeleteTransaction_Click;
             // 
             // lblTransaction1DateRange
             // 

@@ -7,6 +7,7 @@ using Horizon_Drive_LTD.Domain.Entities;
 using Horizon_Drive_LTD.DataStructure;
 
 using Microsoft.Data.SqlClient;
+using System.Diagnostics;
 
 
 //BrowseListings.cs
@@ -75,43 +76,34 @@ namespace Horizon_Drive_LTD
 
             try
             {
+                // Get the directory where images are stored for this car
+                string projectRoot = Path.GetFullPath(Path.Combine(Application.StartupPath, @"..\..\.."));
+                //string carImageDir = Path.Combine(projectRoot, "Media", "Images", "CarTable", car.CarBrand, car.CarID);
 
-                string brand = car.CarBrand.Replace(" ", "");
-                string model = car.Model.Replace(" ", "");
-                // Navigate to the specific folder for the car
-                string carFolder = Path.Combine(Application.StartupPath, "Images", "BrowseListings", $"{brand}_{model}");
+                string carImageDir = Path.Combine(projectRoot, "Media", "Images", car.CarBrand, car.CarID);
 
-                // Make sure the folder exists
-                if (Directory.Exists(carFolder))
+
+                // Get all image files in the directory
+                var imageFiles = Directory.GetFiles(carImageDir)
+                    .Where(f => f.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
+                                f.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) ||
+                                f.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
+                                f.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+
+                if (imageFiles.Any())
                 {
-                    // Get all valid image files inside the folder
-                    string[] matchingFiles = Directory.GetFiles(carFolder, "*.*")
-                        .Where(file => file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase)
-                                    || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase)
-                                    || file.EndsWith(".png", StringComparison.OrdinalIgnoreCase)
-                                    || file.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase))
-                        .ToArray();
-
-                    if (matchingFiles.Length > 0)
-                    {
-                        pictureBox.Image = Image.FromFile(matchingFiles[0]);
-                    }
-                    else
-                    {
-                        pictureBox.BackColor = Color.LightGray;
-                        MessageBox.Show("No images found in folder: " + carFolder);
-                    }
+                    pictureBox.Image = Image.FromFile(imageFiles.First());
                 }
                 else
                 {
-                    pictureBox.BackColor = Color.LightGray;
-                    MessageBox.Show("Folder not found: " + carFolder);
+                    pictureBox.Image = Properties.Resources.Logo;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Image load error: " + ex.Message);
-                pictureBox.BackColor = Color.LightGray;
+                pictureBox.Image = Properties.Resources.Logo;
+                Debug.WriteLine($"Image load error: {ex.Message}");
             }
 
 
@@ -281,18 +273,19 @@ namespace Horizon_Drive_LTD
 
         private void buttonProfile_Click(object sender, EventArgs e)
         {
-            // Profile functionality
-            MessageBox.Show("Profile functionality would display user information and settings.",
-                           "User Profile",
-                           MessageBoxButtons.OK,
-                           MessageBoxIcon.Information);
+
+
+            Options_Personal optionsForm = new Options_Personal();
+            optionsForm.Show();
+            this.Hide();
+
         }
 
         private void Form2_Load(object sender, EventArgs e)
         {
             this.FormClosing += new FormClosingEventHandler(MyForm_FormClosing);
         }
-        private void MyForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void MyForm_FormClosing(object? sender, FormClosingEventArgs e)
         {
             if (isClosing) return;
             isClosing = true;

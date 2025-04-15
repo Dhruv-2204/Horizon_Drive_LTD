@@ -121,7 +121,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
 
             return carHashTable;
         }
-
+        // 
         public HashTable<string, Cars> LoadBookingTransactionFromDatabase()
         {
             var carHashTable = new HashTable<string, Cars>(1000);

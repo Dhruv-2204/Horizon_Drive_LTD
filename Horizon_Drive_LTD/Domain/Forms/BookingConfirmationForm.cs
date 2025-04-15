@@ -270,7 +270,7 @@ namespace Horizon_Drive_LTD
                 if (!string.IsNullOrEmpty(activeUsername) && !string.IsNullOrEmpty(activeCustomerId))
                 {
                     Booking booking = new Booking(bookingId, activeCustomerId, car.CarID, formattedDate, startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"), pickupLocation, dropoffLocation,
-                     driverIncluded, babyCarSeatIncluded, insuranceIncluded, roofRackIncluded, airportPickupIncluded);
+                     driverIncluded, babyCarSeatIncluded, insuranceIncluded, roofRackIncluded, airportPickupIncluded,"Upcoming");
 
                     bookingHashTable.Insert(bookingId, booking);
 

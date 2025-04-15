@@ -45,7 +45,8 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                             Convert.ToBoolean(reader["BabyCarSeat"]),
                             Convert.ToBoolean(reader["FullInsuranceCoverage"]),
                             Convert.ToBoolean(reader["RoofRack"]),
-                            Convert.ToBoolean(reader["AirportPickupDropoff"])
+                            Convert.ToBoolean(reader["AirportPickupDropoff"]),
+                            reader["BookingStatus"].ToString()
                         );
 
                         bookingHashTable.Insert(booking.BookingID, booking);
@@ -66,11 +67,11 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                     INSERT INTO Booking (
                         BookingID, CustomerID, CarID, BookingDate, PickupDate, DropoffDate,
                         PickupLocation, DropoffLocation, IncludeDriver, BabyCarSeat,
-                        FullInsuranceCoverage, RoofRack, AirportPickupDropoff
+                        FullInsuranceCoverage, RoofRack, AirportPickupDropoff, BookingStatus
                     ) VALUES (
                         @BookingId, @CustomerID, @CarId, @BookingDate, @StartDate, @EndDate,
                         @PickupLocation, @DropoffLocation, @DriverIncluded, @BabyCarSeatIncluded,
-                        @InsuranceIncluded, @RoofRackIncluded, @AirportPickupIncluded
+                        @InsuranceIncluded, @RoofRackIncluded, @AirportPickupIncluded, @BookingStatus
                     )";
 
                 using (SqlCommand cmd = new SqlCommand(insertQuery, conn))
@@ -88,6 +89,8 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                     cmd.Parameters.AddWithValue("@InsuranceIncluded", booking.FullInsuranceCoverage);
                     cmd.Parameters.AddWithValue("@RoofRackIncluded", booking.RoofRack);
                     cmd.Parameters.AddWithValue("@AirportPickupIncluded", booking.AirportPickupDropoff);
+                    cmd.Parameters.AddWithValue("@BookingStatus", booking.Status);
+
 
                     cmd.ExecuteNonQuery();
 
@@ -107,11 +110,11 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                     INSERT INTO Booking (
                         BookingID, CustomerID, CarID, BookingDate, PickupDate, DropoffDate,
                         PickupLocation, DropoffLocation, IncludeDriver, BabyCarSeat,
-                        FullInsuranceCoverage, RoofRack, AirportPickupDropoff
+                        FullInsuranceCoverage, RoofRack, AirportPickupDropoff, BookingStatus
                     ) VALUES (
                         @BookingId, @CustomerID, @CarId, @BookingDate, @StartDate, @EndDate,
                         @PickupLocation, @DropoffLocation, @DriverIncluded, @BabyCarSeatIncluded,
-                        @InsuranceIncluded, @RoofRackIncluded, @AirportPickupIncluded
+                        @InsuranceIncluded, @RoofRackIncluded, @AirportPickupIncluded, @BookingStatus
                     )";
 
                 using (SqlCommand cmd = new SqlCommand(insertQuery, conn))
@@ -129,6 +132,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                     cmd.Parameters.AddWithValue("@InsuranceIncluded", booking.FullInsuranceCoverage);
                     cmd.Parameters.AddWithValue("@RoofRackIncluded", booking.RoofRack);
                     cmd.Parameters.AddWithValue("@AirportPickupIncluded", booking.AirportPickupDropoff);
+                    cmd.Parameters.AddWithValue("@BookingStatus", booking.Status);
 
                     cmd.ExecuteNonQuery();
 
@@ -166,7 +170,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             using (SqlConnection conn = _dbConnection.GetConnection())
             {
                 conn.Open();
-                string query = "SELECT * FROM Bookings WHERE CarId = @CarId";
+                string query = "SELECT * FROM Booking WHERE CarId = @CarId";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -189,7 +193,9 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                              Convert.ToBoolean(reader["BabyCarSeat"]),
                              Convert.ToBoolean(reader["FullInsuranceCoverage"]),
                              Convert.ToBoolean(reader["RoofRack"]),
-                             Convert.ToBoolean(reader["AirportPickupDropoff"])
+                             Convert.ToBoolean(reader["AirportPickupDropoff"]),
+                             reader["BookingStatus"].ToString()
+
                          );
                             bookings.Add(booking);
                         }
@@ -207,7 +213,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             using (SqlConnection conn = _dbConnection.GetConnection())
             {
                 conn.Open();
-                string query = "DELETE FROM Bookings WHERE BookingID = @BookingID";
+                string query = "DELETE FROM Booking WHERE BookingID = @BookingID";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -258,7 +264,9 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                                 Convert.ToBoolean(reader["BabyCarSeat"]),
                                 Convert.ToBoolean(reader["FullInsuranceCoverage"]),
                                 Convert.ToBoolean(reader["RoofRack"]),
-                                Convert.ToBoolean(reader["AirportPickupDropoff"])
+                                Convert.ToBoolean(reader["AirportPickupDropoff"]),
+                                reader["BookingStatus"].ToString()
+
                             );
 
                             string carBrand = reader["CarBrand"].ToString();

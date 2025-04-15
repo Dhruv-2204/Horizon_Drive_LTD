@@ -8,6 +8,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace Horizon_Drive_LTD.Domain.Entities
 {
+    // / This class represents a booking made by a customer.
     public class Booking
     {
 
@@ -24,10 +25,11 @@ namespace Horizon_Drive_LTD.Domain.Entities
         public bool FullInsuranceCoverage { get; set;}
         public bool RoofRack { get;  set; }
         public bool AirportPickupDropoff { get; set;}
+        public string Status { get; set; }
 
 
         public Booking(string bookingID, string customerID, string carID, string bookingDate, string pickupDate, string dropoffDate, string pickupLocation,
-            string dropoffLocation, bool includeDriver, bool babyCarSeat, bool fullInsuranceCoverage, bool roofRack, bool airportPickupDropoff) {
+            string dropoffLocation, bool includeDriver, bool babyCarSeat, bool fullInsuranceCoverage, bool roofRack, bool airportPickupDropoff, string status) {
 
             BookingID = bookingID;
             CustomerID = customerID;
@@ -42,9 +44,11 @@ namespace Horizon_Drive_LTD.Domain.Entities
             FullInsuranceCoverage = fullInsuranceCoverage;
             RoofRack = roofRack;
             AirportPickupDropoff = airportPickupDropoff;
+            AirportPickupDropoff = airportPickupDropoff;
+            Status = status;
 
         }
 
-       
+
     }
 }

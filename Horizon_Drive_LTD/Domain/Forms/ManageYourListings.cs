@@ -1,26 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.Common;
-using System.Drawing;
+﻿using System.Data;
 using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Windows.Forms;
 using Horizon_Drive_LTD.BusinessLogic;
 using Horizon_Drive_LTD.BusinessLogic.Repositories;
-using Horizon_Drive_LTD.BusinessLogic.Services;
 using Horizon_Drive_LTD.DataStructure;
 using Horizon_Drive_LTD.Domain.Entities;
 using Microsoft.Data.SqlClient;
-using System.Globalization;
 
 
 namespace Horizon_Drive_LTD
 {
+    
     public partial class ManageYourListings : Form
     {
         private bool isClosing = false;
@@ -45,25 +34,33 @@ namespace Horizon_Drive_LTD
             labelNoMoreListings.Visible = false;
 
         }
-
+        // Method to load car listings into the car hash table
         private void LoadCarListingsFromDatabase()
         {
             // Clear existing dynamic car listing panels
             panelContent.Controls.Clear();
 
+            
             CarRepository carRepo = new CarRepository(new DatabaseConnection());
             carHashTable = carRepo.LoadCarsFromDatabase();
+
             BookingsRepository bookingsRepo = new BookingsRepository(new DatabaseConnection());
+
             string currentUserId = CurrentUser.CurrentUserId;
+            // Get the current user's active reservations
             int currentReservations = bookingsRepo.GetActiveReservationCountForUser(currentUserId);
+
+            // Set the reservation count label
             lblReservationsCount.Text = currentReservations.ToString();
 
+
+            // get the current user id
             string userid = CurrentUser.CurrentUserId;
 
             int verticalPosition = 31;
             int listingsCount = 0;
 
-
+            // look for the current userid in the car hash table to get all the car they own
             foreach (var kvp in carHashTable.GetAllItems())
             {
                 Cars car = kvp.Value;
@@ -189,7 +186,7 @@ namespace Horizon_Drive_LTD
                 BackColor = car.Status == "unbooked" ? Color.LimeGreen : Color.LightBlue,
                 Font = new Font("Segoe UI", 9F),
                 Location = new Point(941, 13),
-                Size = new Size(130, 27),
+                Size = new Size(130, 35),
                 Text = car.Status,
                 TextAlign = ContentAlignment.MiddleCenter,
                 Name = $"lblCar{car.CarID}Status"
@@ -250,7 +247,6 @@ namespace Horizon_Drive_LTD
             panel.Controls.Add(statusLabel);
             panel.Controls.Add(featuresPanel);
            
-
             return panel;
         }
 
@@ -259,6 +255,7 @@ namespace Horizon_Drive_LTD
             Button btn = (Button)sender;
             string buttonName = btn.Name;
             string carId = buttonName.Substring("btnDeleteCar".Length);
+
 
             DialogResult result = MessageBox.Show(
                 "Are you sure you want to delete this car listing?",
@@ -273,6 +270,7 @@ namespace Horizon_Drive_LTD
                     // Remove related bookings and payments from database
                     BookingsRepository bookingRepo = new BookingsRepository(new DatabaseConnection());
                     var bookingsForCar = bookingRepo.GetBookingsByCarId(carId);
+                    var bookingHashTable = bookingRepo.LoadBookingsFromDatabase();
 
                     PaymentRepository paymentRepo = new PaymentRepository(new DatabaseConnection());
                     foreach (var booking in bookingsForCar)
@@ -355,9 +353,11 @@ namespace Horizon_Drive_LTD
                     if (labelNoMoreHistory.Visible)
                     {
                         labelNoMoreHistory.Location = new Point(27, transactionY);
+                        panelContent.Controls.Add(labelNoMoreHistory);
+
                     }
 
-                    MessageBox.Show("Car and related data deleted successfully.");
+                    MessageBox.Show("Your Car will be no longer be listed in our database");
                 }
                 catch (Exception ex)
                 {
@@ -464,6 +464,7 @@ namespace Horizon_Drive_LTD
             BookingsRepository bookingRepo = new BookingsRepository(new DatabaseConnection());
             PaymentRepository paymentRepo = new PaymentRepository(new DatabaseConnection());
             List<string> bookingIds = new List<string>();
+
             // Clear existing static transaction panels
             if (panelContent.Controls.Contains(panelTransaction1))
                 panelContent.Controls.Remove(panelTransaction1);
@@ -475,7 +476,6 @@ namespace Horizon_Drive_LTD
             // Load bookings for the current user
             var bookings = bookingRepo.GetBookingsForUserWithCarDetails(CurrentUser.CurrentUserId);
 
-          //  int verticalPosition = 31;
             int listingsCount = 0;
             int reservedCount = 0;
 
@@ -495,6 +495,7 @@ namespace Horizon_Drive_LTD
                 transactionStartY += carPanel.Height + 10;
                 listingsCount++;
 
+                // Check status of whether the car is booked or not to display number of reservations
                 if (status.Equals("booked", StringComparison.OrdinalIgnoreCase))
                 {
                     reservedCount++;
@@ -508,6 +509,7 @@ namespace Horizon_Drive_LTD
             {
                 labelNoMoreHistory.Visible = true;
                 labelNoMoreHistory.Location = new Point(27, transactionStartY);
+                panelContent.Controls.Add(labelNoMoreHistory);
             }
             else
             {
@@ -519,78 +521,6 @@ namespace Horizon_Drive_LTD
             lblEarningsAmount.Text = $"MUR {totalEarnings:F2}";
         }
         
-
-        // Method to load transactions from database
-        /*
-        private void LoadTransactionsFromDatabase()
-        {
-            // Clear existing static transaction panels
-            if (panelContent.Controls.Contains(panelTransaction1))
-                panelContent.Controls.Remove(panelTransaction1);
-
-            if (panelContent.Controls.Contains(panelTransaction2))
-                panelContent.Controls.Remove(panelTransaction2);
-
-            string currentuserid = CurrentUser.CurrentUserId;
-
-            BookingsRepository bookingRepo = new BookingsRepository(new DatabaseConnection());
-            bookingHashTable = bookingRepo.LoadBookingsFromDatabase();
-
-            CarRepository carRepo = new CarRepository(new DatabaseConnection());
-            List<int> userCarIds = carRepo.GetCarIdsByUserId(currentuserid);
-
-
-            MessageBox.Show("User car IDs: " + string.Join(",", userCarIds));
-
-            int verticalPosition = 31; 
-            int listingsCount = 0;
-            int reservedCount = 0;
-
-            
-            foreach (var kvp in bookingHashTable.GetAllItems())
-            {
-                Booking booking = kvp.Value;
-
-                if (userCarIds.Select(id => id.ToString()).Contains(booking.CarID))
-
-                {
-                    Cars cardetails = carHashTable.Search(booking.CarID);
-                    Panel carPanel = CreateTransactionPanel(booking, cardetails, verticalPosition);
-
-                    panelContent.Controls.Add(carPanel);
-                    verticalPosition += carPanel.Height + 10;
-
-                    listingsCount++;
-
-                    // Check status from carHashTable using booking.CarID
-                    if (carHashTable.ContainsKey(booking.CarID))
-                    {
-                        Cars car = carHashTable.Search(booking.CarID);
-                        if (car.Status == "booked")
-                            reservedCount++;
-                    }
-                }
-            }
-
-            
-            // Find the position after the transaction history label
-            verticalPosition = labelTransactionHistory.Location.Y + labelTransactionHistory.Height + 20;
-
-            if (listingsCount == 0)
-            {
-                labelNoMoreHistory.Visible = true;
-                labelNoMoreHistory.Location = new Point(27, verticalPosition);
-            }
-            else
-            {
-                labelNoMoreHistory.Visible = false;
-            }
-
-
-            // Update total earnings
-          //  lblEarningsAmount.Text = $"MUR {totalEarnings}";
-        }
-        */
 
         // Method to create a transaction panel
         private Panel CreateTransactionPanel(Booking booking, string brand, string model, int year, decimal price, string status, int yPosition)
@@ -665,7 +595,7 @@ namespace Horizon_Drive_LTD
                 Font = new Font("Segoe UI", 9F),
                 Location = new Point(149, 47),
                 Size = new Size(343, 27),
-                Text = $"MUR {price} / day",
+                Text = $"MUR {price} per day",
                 Name = $"lblTransaction{booking.BookingID}Price"
             };
 
@@ -690,7 +620,7 @@ namespace Horizon_Drive_LTD
                 BackColor = Color.LimeGreen,
                 Font = new Font("Segoe UI", 9F),
                 Location = new Point(941, 13),
-                Size = new Size(91, 27),
+                Size = new Size(130, 35),
                 Text = status,
                 TextAlign = ContentAlignment.MiddleCenter,
                 Name = $"lblTransaction{booking.BookingID}Status"
@@ -730,7 +660,7 @@ namespace Horizon_Drive_LTD
 
         private void btnManageYourListings_Click(object sender, EventArgs e)
         {
-            // Already on this form, no action needed
+           
         }
 
         private void btnOptions_Click(object sender, EventArgs e)
