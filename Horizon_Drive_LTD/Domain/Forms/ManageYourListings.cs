@@ -211,7 +211,7 @@ namespace Horizon_Drive_LTD
 
             featuresPanel.Controls.Add(featureLabel);
 
-            if (car.Status == "unbooked")
+            if (car.Status == "Available")
             {
 
                 // Create delete button
