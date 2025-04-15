@@ -158,6 +158,7 @@
             // 
             // pictureBoxLogo
             // 
+            pictureBoxLogo.Image = Properties.Resources.Logo;
             pictureBoxLogo.Location = new Point(62, 63);
             pictureBoxLogo.Margin = new Padding(5, 4, 5, 4);
             pictureBoxLogo.Name = "pictureBoxLogo";
@@ -165,7 +166,6 @@
             pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxLogo.TabIndex = 0;
             pictureBoxLogo.TabStop = false;
-            pictureBoxLogo.Image = Horizon_Drive_LTD.Properties.Resources.Logo;
             // 
             // btnLogout
             // 
@@ -242,6 +242,7 @@
             labelUsername.Size = new Size(152, 23);
             labelUsername.TabIndex = 6;
             labelUsername.Text = "User not logged in";
+            labelUsername.Click += labelUsername_Click;
             // 
             // filterPanel
             // 

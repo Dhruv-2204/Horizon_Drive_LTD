@@ -19,8 +19,6 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             _dbConnection = dbConnection;
         }
 
-        // this method is used to load users from the database into a hash table
-        // fast lookup for user data   
         internal HashTable<string, User> LoadUsersIntoHashTable()
         {
             var userTable = new HashTable<string, User>(1000);
@@ -62,10 +60,9 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             {
                 conn.Open();
                 string query = @"INSERT INTO [User] 
-                             (UserId, UserName, FirstName, LastName, DOB, Email, TelephoneNo, Password, Address)
-                             VALUES 
-                             (@UserId, @UserName, @FirstName, @LastName, @DOB, @Email, @TelephoneNo, @Password, @Address)";
-
+                (UserId, UserName, FirstName, LastName, DOB, Email, TelephoneNo, Password, Address)
+                VALUES 
+                (@UserId, @UserName, @FirstName, @LastName, @DOB, @Email, @TelephoneNo, @Password, @Address)";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@UserId", user.UserId);
                 cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
@@ -78,8 +75,6 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                 cmd.Parameters.AddWithValue("@Password", user.Password);
                 cmd.ExecuteNonQuery();
             }
-
-
         }
 
 
@@ -123,7 +118,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                     cmd.ExecuteNonQuery();
                 }
 
-                
+
                 string deleteQuery = "DELETE FROM ActiveUser";
                 using (SqlCommand deleteCmd = new SqlCommand(deleteQuery, conn))
                 {
