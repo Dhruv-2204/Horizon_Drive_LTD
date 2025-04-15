@@ -28,6 +28,7 @@ namespace Horizon_Drive_LTD
             this.ClientSize = new Size(1600, 900);
             this.MinimumSize = new Size(1000, 700);
 
+
             LoadCarListings();
             PopulateCarListings();
             DisplayUsername();
