@@ -176,7 +176,7 @@ namespace Horizon_Drive_LTD
             // Create status label
             Label statusLabel = new Label
             {
-                BackColor = car.Status == "unbooked" ? Color.LimeGreen : Color.LightBlue,
+                BackColor = car.Status == "Available" ? Color.LimeGreen : Color.LightBlue,
                 Font = new Font("Segoe UI", 9F),
                 Location = new Point(941, 13),
                 Size = new Size(130, 35),
