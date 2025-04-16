@@ -1,0 +1,17 @@
+DECLARE @sql NVARCHAR(MAX) = '';
+
+SELECT @sql += 'ALTER TABLE [' + OBJECT_NAME(parent_object_id) + '] DROP CONSTRAINT [' + name + ']; ' 
+FROM sys.foreign_keys;
+
+EXEC sp_executesql @sql;
+
+
+DROP TABLE IF EXISTS [dbo].[Admin];
+DROP TABLE IF EXISTS [dbo].[Booking];
+DROP TABLE IF EXISTS [dbo].[Car];
+DROP TABLE IF EXISTS [dbo].[Customer];
+DROP TABLE IF EXISTS [dbo].[Lessor];
+DROP TABLE IF EXISTS [dbo].[Maintenance];
+DROP TABLE IF EXISTS [dbo].[Payment];
+DROP TABLE IF EXISTS [dbo].[User];
+DROP TABLE IF EXISTS [dbo].[CarImages];
