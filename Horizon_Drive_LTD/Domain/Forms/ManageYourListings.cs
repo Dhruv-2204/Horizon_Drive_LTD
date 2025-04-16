@@ -3,9 +3,11 @@ using System.Diagnostics;
 using System.Globalization;
 using Horizon_Drive_LTD.BusinessLogic;
 using Horizon_Drive_LTD.BusinessLogic.Repositories;
+using Horizon_Drive_LTD.BusinessLogic.Services;
 using Horizon_Drive_LTD.DataStructure;
 using Horizon_Drive_LTD.Domain.Entities;
 using Microsoft.Data.SqlClient;
+using splashscreen;
 
 
 namespace Horizon_Drive_LTD
@@ -592,7 +594,42 @@ namespace Horizon_Drive_LTD
                                "Log Out",
                                MessageBoxButtons.OK,
                                MessageBoxIcon.Information);
+
+                // In a real application, you would handle logout here
+                // Application.Restart();
+                // For this example, we'll just close the form
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+                    string dropTableQuery = "DROP TABLE IF EXISTS ActiveUser;";
+                    using (SqlCommand cmd = new SqlCommand(dropTableQuery, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                OpenLoginUp();
+
             }
+            else
+            {                 // User chose not to log out
+                return;
+            }
+        }
+
+        private void OpenLoginUp()
+        {
+
+            var userRepo = new UserRepository(new DatabaseConnection());
+            var userHashTable = userRepo.LoadUsersIntoHashTable();
+            var authService = new AuthenticationService(userHashTable, userRepo);
+            //var dbConnection = new DatabaseConnection();
+
+            // Show the Login form with injected authService
+            Login loginForm = new Login(authService);
+            loginForm.Show();
+
+            this.Dispose();
         }
 
         // Method to handle form closing event
