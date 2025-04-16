@@ -302,17 +302,19 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                 conn.Open();
 
                 string query = @"
-            SELECT COUNT(*) 
-            FROM Booking b
-            INNER JOIN Car c ON b.CarID = c.CarID
-            WHERE c.UserId = @UserId AND b.PickupDate >= @Now";
+                                SELECT COUNT(*) 
+                                FROM Booking b
+                                INNER JOIN Car c ON b.CarID = c.CarID
+                                WHERE c.UserId = @UserId AND b.PickupDate >= @Now";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@UserId", userId);
                     cmd.Parameters.AddWithValue("@Now", DateTime.Now);
 
-                    count = (int)cmd.ExecuteScalar();
+                    object result = cmd.ExecuteScalar();
+                    count = result != null ? Convert.ToInt32(result) : 0;
+
                 }
             }
 
