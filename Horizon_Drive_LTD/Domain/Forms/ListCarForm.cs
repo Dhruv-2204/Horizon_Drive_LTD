@@ -540,6 +540,16 @@ namespace Horizon_Drive_LTD
                             imgCmd.ExecuteNonQuery();
                         }
                     }
+
+                    
+
+                    string updateLessorQuery = "UPDATE Lessor SET No_Of_Cars = (SELECT COUNT(*) FROM Car WHERE Car.UserId = Lessor.UserId)";
+                    using (SqlCommand updateCmd = new SqlCommand(updateLessorQuery, conn))
+                    {
+                        updateCmd.ExecuteNonQuery();
+                    }
+                    // Update the car count for the lessor
+
                 }
 
                 MessageBox.Show("Car listed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
