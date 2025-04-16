@@ -100,6 +100,7 @@
             Logout_btn.TabIndex = 2;
             Logout_btn.Text = "Log Out";
             Logout_btn.UseVisualStyleBackColor = false;
+            Logout_btn.Click += Logout_btn_Click_1;
             // 
             // Manage_bookings_btn
             // 
@@ -289,6 +290,7 @@
             Name = "Admin_Managing_files";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Managing files";
+            Load += Admin_Managing_files_Load;
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel4.ResumeLayout(false);

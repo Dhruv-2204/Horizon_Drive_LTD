@@ -14,6 +14,7 @@ using Upload_cars;
 using User_managing;
 using Horizon_Drive_LTD.Domain.Forms;
 using Microsoft.Data.SqlClient;
+using splashscreen;
 
 namespace WindowsFormsApp1
 {
@@ -502,7 +503,7 @@ namespace WindowsFormsApp1
         {
             var manage_files_Page = new Admin_Managing_files();
             manage_files_Page.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void SetRoundedCorner(Button button, int radius)
@@ -537,7 +538,7 @@ namespace WindowsFormsApp1
         {
             var manage_user_Page = new Manage_User_Page();
             manage_user_Page.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -557,10 +558,10 @@ namespace WindowsFormsApp1
 
             if (result == DialogResult.Yes)
             {
-                // Navigate to login form
-                // LoginForm loginForm = new LoginForm();
-                // loginForm.Show();
-                this.Close();
+                var login = new Login();
+                login.Show();
+                this.Hide();
+                
             }
         }
 
@@ -568,7 +569,7 @@ namespace WindowsFormsApp1
         {
             var maintenance_Page = new AdminMaintenance();
             maintenance_Page.Show();
-            this.Hide();
+            this.Dispose();
         }
     }
 }

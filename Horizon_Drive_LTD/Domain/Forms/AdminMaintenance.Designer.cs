@@ -181,6 +181,7 @@
             Logout_btn.TabIndex = 2;
             Logout_btn.Text = "Log Out";
             Logout_btn.UseVisualStyleBackColor = false;
+            Logout_btn.Click += Logout_btn_Click;
             // 
             // Manage_bookings_btn
             // 

@@ -44,7 +44,9 @@ namespace Upload_cars
             labelfilepath.Visible = false;
 
             // Set up event handlers
-            Logout_btn.Click += Logout_btn_Click;
+            
+
+
         }
 
 
@@ -102,29 +104,24 @@ namespace Upload_cars
         {
             var manage_user_Page = new Manage_User_Page();
             manage_user_Page.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void Manage_bookings_btn_Click(object sender, EventArgs e)
         {
             var manage_booking_Page = new AdminManageBookingsForm();
             manage_booking_Page.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void Maintenance_click(object sender, EventArgs e)
         {
             var maintenance_Page = new AdminMaintenance();
             maintenance_Page.Show();
-            this.Hide();
+            this.Dispose();
         }
 
-        private void Logout_btn_Click(object sender, EventArgs e)
-        {
-            var loginForm = new Login();
-            loginForm.Show();
-            this.Hide();
-        }
+        
 
         private void Upload_File_btn_Click(object sender, EventArgs e)
         {
@@ -620,6 +617,27 @@ namespace Upload_cars
             }
         }
 
-        
+        private void Admin_Managing_files_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Logout_btn_Click_1(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to log out?",
+                "Confirm Logout",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                var login = new Login();
+                login.Show();
+                this.Hide();
+
+            }
+        }
     }
 }

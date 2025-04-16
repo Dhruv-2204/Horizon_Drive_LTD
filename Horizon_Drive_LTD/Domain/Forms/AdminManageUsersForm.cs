@@ -286,14 +286,14 @@ namespace Manage_user_search_page
         {
             var manage_files_Page = new Admin_Managing_files();
             manage_files_Page.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void Manage_bookings_click_btn(object sender, EventArgs e)
         {
             var manage_user_Page = new AdminManageBookingsForm();
             manage_user_Page.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void LoadImage()
@@ -318,14 +318,25 @@ namespace Manage_user_search_page
         {
             var manage_car_Page = new AdminMaintenance(); // gets form Managing_cars
             manage_car_Page.Show();                  // Shows the new form manage_cars
-            this.Hide();
+            this.Dispose();
         }
 
         private void Logout_click_btn(object sender, EventArgs e)
         {
-            var loginForm = new splashscreen.Login();
-            loginForm.Show();
-            this.Close();
+            DialogResult result = MessageBox.Show(
+               "Are you sure you want to log out?",
+               "Confirm Logout",
+               MessageBoxButtons.YesNo,
+               MessageBoxIcon.Question
+           );
+
+            if (result == DialogResult.Yes)
+            {
+                var login = new Login();
+                login.Show();
+                this.Hide();
+
+            }
         }
 
         private void Search_Users_Click(object sender, EventArgs e)

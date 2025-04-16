@@ -76,7 +76,7 @@ namespace User_managing
             lblTitle.ForeColor = Color.White;
             lblTitle.Location = new Point(300, 20);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(245, 46);
+            lblTitle.Size = new Size(196, 37);
             lblTitle.TabIndex = 0;
             lblTitle.Text = "USER DETAILS";
             // 
@@ -87,7 +87,7 @@ namespace User_managing
             txtUserId.Location = new Point(200, 90);
             txtUserId.Name = "txtUserId";
             txtUserId.ReadOnly = true;
-            txtUserId.Size = new Size(250, 34);
+            txtUserId.Size = new Size(250, 29);
             txtUserId.TabIndex = 1;
             // 
             // lblUserId
@@ -98,7 +98,7 @@ namespace User_managing
             lblUserId.ForeColor = Color.White;
             lblUserId.Location = new Point(50, 90);
             lblUserId.Name = "lblUserId";
-            lblUserId.Size = new Size(84, 28);
+            lblUserId.Size = new Size(67, 21);
             lblUserId.TabIndex = 21;
             lblUserId.Text = "User ID:";
             // 
@@ -109,7 +109,7 @@ namespace User_managing
             txtUsername.Location = new Point(200, 130);
             txtUsername.Name = "txtUsername";
             txtUsername.ReadOnly = true;
-            txtUsername.Size = new Size(250, 34);
+            txtUsername.Size = new Size(250, 29);
             txtUsername.TabIndex = 2;
             // 
             // lblUsername
@@ -120,7 +120,7 @@ namespace User_managing
             lblUsername.ForeColor = Color.White;
             lblUsername.Location = new Point(50, 130);
             lblUsername.Name = "lblUsername";
-            lblUsername.Size = new Size(109, 28);
+            lblUsername.Size = new Size(87, 21);
             lblUsername.TabIndex = 20;
             lblUsername.Text = "Username:";
             // 
@@ -131,7 +131,7 @@ namespace User_managing
             txtFirstName.Location = new Point(200, 170);
             txtFirstName.Name = "txtFirstName";
             txtFirstName.ReadOnly = true;
-            txtFirstName.Size = new Size(250, 34);
+            txtFirstName.Size = new Size(250, 29);
             txtFirstName.TabIndex = 3;
             // 
             // lblFirstName
@@ -142,7 +142,7 @@ namespace User_managing
             lblFirstName.ForeColor = Color.White;
             lblFirstName.Location = new Point(50, 170);
             lblFirstName.Name = "lblFirstName";
-            lblFirstName.Size = new Size(115, 28);
+            lblFirstName.Size = new Size(92, 21);
             lblFirstName.TabIndex = 19;
             lblFirstName.Text = "First Name:";
             // 
@@ -153,7 +153,7 @@ namespace User_managing
             txtLastName.Location = new Point(200, 210);
             txtLastName.Name = "txtLastName";
             txtLastName.ReadOnly = true;
-            txtLastName.Size = new Size(250, 34);
+            txtLastName.Size = new Size(250, 29);
             txtLastName.TabIndex = 4;
             // 
             // lblLastName
@@ -164,7 +164,7 @@ namespace User_managing
             lblLastName.ForeColor = Color.White;
             lblLastName.Location = new Point(50, 210);
             lblLastName.Name = "lblLastName";
-            lblLastName.Size = new Size(113, 28);
+            lblLastName.Size = new Size(90, 21);
             lblLastName.TabIndex = 18;
             lblLastName.Text = "Last Name:";
             // 
@@ -175,7 +175,7 @@ namespace User_managing
             txtEmail.Location = new Point(200, 250);
             txtEmail.Name = "txtEmail";
             txtEmail.ReadOnly = true;
-            txtEmail.Size = new Size(250, 34);
+            txtEmail.Size = new Size(250, 29);
             txtEmail.TabIndex = 5;
             // 
             // lblEmail
@@ -186,7 +186,7 @@ namespace User_managing
             lblEmail.ForeColor = Color.White;
             lblEmail.Location = new Point(50, 250);
             lblEmail.Name = "lblEmail";
-            lblEmail.Size = new Size(65, 28);
+            lblEmail.Size = new Size(52, 21);
             lblEmail.TabIndex = 17;
             lblEmail.Text = "Email:";
             // 
@@ -197,7 +197,7 @@ namespace User_managing
             txtPhone.Location = new Point(200, 290);
             txtPhone.Name = "txtPhone";
             txtPhone.ReadOnly = true;
-            txtPhone.Size = new Size(250, 34);
+            txtPhone.Size = new Size(250, 29);
             txtPhone.TabIndex = 6;
             // 
             // lblPhone
@@ -208,7 +208,7 @@ namespace User_managing
             lblPhone.ForeColor = Color.White;
             lblPhone.Location = new Point(50, 290);
             lblPhone.Name = "lblPhone";
-            lblPhone.Size = new Size(76, 28);
+            lblPhone.Size = new Size(60, 21);
             lblPhone.TabIndex = 16;
             lblPhone.Text = "Phone:";
             // 
@@ -231,7 +231,7 @@ namespace User_managing
             lblAddress.ForeColor = Color.White;
             lblAddress.Location = new Point(50, 330);
             lblAddress.Name = "lblAddress";
-            lblAddress.Size = new Size(90, 28);
+            lblAddress.Size = new Size(74, 21);
             lblAddress.TabIndex = 15;
             lblAddress.Text = "Address:";
             // 
@@ -242,7 +242,7 @@ namespace User_managing
             dtpDOB.Format = DateTimePickerFormat.Short;
             dtpDOB.Location = new Point(200, 400);
             dtpDOB.Name = "dtpDOB";
-            dtpDOB.Size = new Size(250, 34);
+            dtpDOB.Size = new Size(250, 29);
             dtpDOB.TabIndex = 8;
             // 
             // lblDOB
@@ -253,7 +253,7 @@ namespace User_managing
             lblDOB.ForeColor = Color.White;
             lblDOB.Location = new Point(50, 400);
             lblDOB.Name = "lblDOB";
-            lblDOB.Size = new Size(134, 28);
+            lblDOB.Size = new Size(107, 21);
             lblDOB.TabIndex = 14;
             lblDOB.Text = "Date of Birth:";
             // 
@@ -330,7 +330,7 @@ namespace User_managing
             btnChangeImage.UseVisualStyleBackColor = false;
             btnChangeImage.Click += BtnChangeImage_Click;
             // 
-            // UserDetailsForm
+            // AdminUserDetailsForm
             // 
             ClientSize = new Size(800, 600);
             Controls.Add(btnClose);
@@ -359,9 +359,10 @@ namespace User_managing
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "UserDetailsForm";
+            Name = "AdminUserDetailsForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "User Details";
+            Load += AdminUserDetailsForm_Load;
             ((System.ComponentModel.ISupportInitialize)picProfile).EndInit();
             ResumeLayout(false);
             PerformLayout();

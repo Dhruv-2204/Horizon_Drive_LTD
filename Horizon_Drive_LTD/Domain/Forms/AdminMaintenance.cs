@@ -8,6 +8,7 @@ using Horizon_Drive_LTD.BusinessLogic;
 using Horizon_Drive_LTD.BusinessLogic.Repositories;
 using Horizon_Drive_LTD.Domain.Entities;
 using Manage_user_search_page;
+using splashscreen;
 using Upload_cars;
 using User_managing;
 using WindowsFormsApp1;
@@ -45,7 +46,7 @@ namespace Horizon_Drive_LTD.Domain.Forms
             LoadMaintenanceRecords();
         }
 
-        
+
         private void Manage_User_Page_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (isClosing) return; // Prevent duplicate message box
@@ -302,25 +303,44 @@ namespace Horizon_Drive_LTD.Domain.Forms
         {
             var manage_user_Page = new Manage_User_Page();
             manage_user_Page.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void Manage_files_btn_Click(object sender, EventArgs e)
         {
             var manage_files_Page = new Admin_Managing_files();
             manage_files_Page.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void Manage_bookings_btn_Click(object sender, EventArgs e)
         {
             var manage_booking_Page = new AdminManageBookingsForm();
             manage_booking_Page.Show();
-            this.Hide();
+            this.Dispose();
         }
 
         private void AdminMaintenance_Load(object sender, EventArgs e)
         {
+
+        }
+
+        private void Logout_btn_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+               "Are you sure you want to log out?",
+               "Confirm Logout",
+               MessageBoxButtons.YesNo,
+               MessageBoxIcon.Question
+           );
+
+            if (result == DialogResult.Yes)
+            {
+                var login = new Login();
+                login.Show();
+                this.Hide();
+
+            }
 
         }
     }

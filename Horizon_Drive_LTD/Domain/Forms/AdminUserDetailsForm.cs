@@ -367,5 +367,10 @@ namespace User_managing
                 }
             }
         }
+
+        private void AdminUserDetailsForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
