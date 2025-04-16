@@ -40,6 +40,8 @@
             pictureBoxLogo = new PictureBox();
             mainScrollPanel = new Panel();
             panelMain = new Panel();
+            label1 = new Label();
+            Username_Label = new Label();
             btnSaveChanges = new RoundedButton();
             textBoxLicenseExpiry = new TextBox();
             labelLicenseExpiry = new Label();
@@ -201,6 +203,8 @@
             panelMain.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelMain.AutoSize = true;
             panelMain.BackColor = Color.White;
+            panelMain.Controls.Add(label1);
+            panelMain.Controls.Add(Username_Label);
             panelMain.Controls.Add(btnSaveChanges);
             panelMain.Controls.Add(textBoxLicenseExpiry);
             panelMain.Controls.Add(labelLicenseExpiry);
@@ -214,8 +218,29 @@
             panelMain.Margin = new Padding(3, 4, 3, 4);
             panelMain.Name = "panelMain";
             panelMain.Padding = new Padding(40, 51, 40, 51);
-            panelMain.Size = new Size(890, 953);
+            panelMain.Size = new Size(902, 953);
             panelMain.TabIndex = 1;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI Semibold", 12.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(636, 74);
+            label1.Name = "label1";
+            label1.Size = new Size(123, 30);
+            label1.TabIndex = 21;
+            label1.Text = "Username :";
+            // 
+            // Username_Label
+            // 
+            Username_Label.AutoSize = true;
+            Username_Label.Font = new Font("Yu Gothic UI", 13.8F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
+            Username_Label.Location = new Point(765, 72);
+            Username_Label.Name = "Username_Label";
+            Username_Label.Size = new Size(94, 31);
+            Username_Label.TabIndex = 20;
+            Username_Label.Text = "________";
+            Username_Label.Click += Username_Label_Click;
             // 
             // btnSaveChanges
             // 
@@ -225,7 +250,7 @@
             btnSaveChanges.FlatStyle = FlatStyle.Flat;
             btnSaveChanges.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSaveChanges.ForeColor = Color.White;
-            btnSaveChanges.Location = new Point(347, 514);
+            btnSaveChanges.Location = new Point(353, 514);
             btnSaveChanges.Margin = new Padding(3, 4, 3, 4);
             btnSaveChanges.Name = "btnSaveChanges";
             btnSaveChanges.Size = new Size(171, 61);
@@ -244,7 +269,7 @@
             textBoxLicenseExpiry.MinimumSize = new Size(754, 43);
             textBoxLicenseExpiry.Name = "textBoxLicenseExpiry";
             textBoxLicenseExpiry.PlaceholderText = "YYYY-MM-DD";
-            textBoxLicenseExpiry.Size = new Size(758, 43);
+            textBoxLicenseExpiry.Size = new Size(770, 43);
             textBoxLicenseExpiry.TabIndex = 17;
             // 
             // labelLicenseExpiry
@@ -266,7 +291,7 @@
             textBoxLicenseNumber.Margin = new Padding(3, 4, 3, 4);
             textBoxLicenseNumber.MinimumSize = new Size(754, 43);
             textBoxLicenseNumber.Name = "textBoxLicenseNumber";
-            textBoxLicenseNumber.Size = new Size(758, 43);
+            textBoxLicenseNumber.Size = new Size(770, 43);
             textBoxLicenseNumber.TabIndex = 15;
             // 
             // labelLicenseNumber
@@ -287,7 +312,7 @@
             panelUploadLicense.Location = new Point(66, 252);
             panelUploadLicense.Margin = new Padding(3, 4, 3, 4);
             panelUploadLicense.Name = "panelUploadLicense";
-            panelUploadLicense.Size = new Size(758, 50);
+            panelUploadLicense.Size = new Size(770, 50);
             panelUploadLicense.TabIndex = 13;
             // 
             // buttonUploadLicense
@@ -417,5 +442,7 @@
         private TextBox textBoxLicenseExpiry;
         private Label labelLicenseExpiry;
         private RoundedButton btnSaveChanges;
+        private Label label1;
+        private Label Username_Label;
     }
 }

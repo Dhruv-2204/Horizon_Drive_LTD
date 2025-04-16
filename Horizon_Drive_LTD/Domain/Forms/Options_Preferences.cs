@@ -420,6 +420,79 @@ namespace Horizon_Drive_LTD
         private void Options_Preferences_Load(object sender, EventArgs e)
         {
             this.FormClosing += new FormClosingEventHandler(MyForm_FormClosing);
+
+            try
+            {
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+                    // Get active username
+                    string getUserQuery = "SELECT UserName FROM ActiveUser";
+                    using (SqlCommand cmd = new SqlCommand(getUserQuery, conn))
+                    {
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        if (reader.Read())
+                        {
+                            string username = reader.GetString(0);
+                            Username_Label.Text = username;
+                        }
+                        reader.Close();
+                    }
+
+                    //string additionalInfoQuery = "SELECT LicenseNo, LicenseExpiryDate, LicensePhoto FROM Customer WHERE UserId = (SELECT UserId FROM ActiveUser)";
+
+                    string getUserDataQuery1 = "SELECT " +
+                           "Customer.LicenseNo, " +
+                           "Customer.LicenseExpiryDate, " +
+                           "Customer.LicensePhoto " +
+                           "FROM Customer " +
+                           "INNER JOIN [User] ON Customer.UserId = [User].UserId " +
+                           "INNER JOIN ActiveUser ON [User].UserName = ActiveUser.UserName;";
+
+                    using (SqlCommand cmd = new SqlCommand(getUserDataQuery1, conn))
+                    {
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                textBoxLicenseNumber.Text = reader["LicenseNo"].ToString();
+                                textBoxLicenseExpiry.Text = reader["LicenseExpiryDate"].ToString();
+                                
+                                string licensePhotoPath = reader["LicensePhoto"].ToString();
+                                if (!string.IsNullOrEmpty(licensePhotoPath))
+                                {
+                                    // Load the image from the path
+                                    string fullPath = Path.Combine(Application.StartupPath, licensePhotoPath);
+                                    if (File.Exists(fullPath))
+                                    {
+                                        panelUploadLicense.Visible = true; // Show the upload panel
+                                    }
+                                    
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("No user data found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+
+                    }
+
+                }
+            }
+            catch
+            {
+                Username_Label.Text = "Loading..";
+            }
+
+            
+
+
+        }
+
+        private void Username_Label_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
