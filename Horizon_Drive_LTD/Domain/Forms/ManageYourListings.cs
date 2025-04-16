@@ -258,106 +258,106 @@ namespace Horizon_Drive_LTD
 
             if (result == DialogResult.Yes)
             {
-                try
-                {
-                    // Remove related bookings and payments from database
-                    BookingsRepository bookingRepo = new BookingsRepository(new DatabaseConnection());
-                    var bookingsForCar = bookingRepo.GetBookingsByCarId(carId);
-                    var bookingHashTable = bookingRepo.LoadBookingsFromDatabase();
-
-                    PaymentRepository paymentRepo = new PaymentRepository(new DatabaseConnection());
-                    foreach (var booking in bookingsForCar)
+                    try
                     {
-                        // Remove from booking hash table if exists
-                        if (bookingHashTable.ContainsKey(booking.BookingID))
+                        // Remove related bookings and payments from database
+                        BookingsRepository bookingRepo = new BookingsRepository(new DatabaseConnection());
+                        var bookingsForCar = bookingRepo.GetBookingsByCarId(carId);
+                        var bookingHashTable = bookingRepo.LoadBookingsFromDatabase();
+
+                        PaymentRepository paymentRepo = new PaymentRepository(new DatabaseConnection());
+                        foreach (var booking in bookingsForCar)
                         {
-                            bookingHashTable.Remove(booking.BookingID);
+                            // Remove from booking hash table if exists
+                            if (bookingHashTable.ContainsKey(booking.BookingID))
+                            {
+                                bookingHashTable.Remove(booking.BookingID);
+                            }
+
+                            // Delete related payment
+                            paymentRepo.DeletePaymentByBookingId(booking.BookingID);
+
+                            // Delete the booking itself
+                            bookingRepo.DeleteBookingById(booking.BookingID);
                         }
 
-                        // Delete related payment
-                        paymentRepo.DeletePaymentByBookingId(booking.BookingID);
-
-                        // Delete the booking itself
-                        bookingRepo.DeleteBookingById(booking.BookingID);
-                    }
-
-                    // Remove car from car hash table
-                    if (carHashTable.ContainsKey(carId))
-                    {
-                        carHashTable.Remove(carId);
-                    }
-
-                    // Delete the car from the Car table
-                    CarRepository carRepo = new CarRepository(new DatabaseConnection());
-                    carRepo.DeleteCarById(carId);
-
-                    // Remove car panel from UI
-                    Panel panelToHide = (Panel)panelContent.Controls.Find($"panelCarListing{carId}", true)[0];
-                    panelContent.Controls.Remove(panelToHide);
-                    panelToHide.Dispose();
-
-                    // Update listings count
-                    int visibleCars = panelContent.Controls
-                        .OfType<Panel>()
-                        .Count(p => p.Name.StartsWith("panelCarListing") && p.Visible);
-
-                    lblListingsCount.Text = visibleCars.ToString();
-
-                    // Update reservation count if needed
-                    Label statusLabel = panelToHide.Controls.Find($"lblCar{carId}Status", true).FirstOrDefault() as Label;
-                    if (statusLabel != null && statusLabel.Text == "Reserved")
-                    {
-                        int currentReservations = int.Parse(lblReservationsCount.Text);
-                        lblReservationsCount.Text = (currentReservations - 1).ToString();
-                    }
-
-                    // Show "no listings" message
-                    labelNoMoreListings.Visible = (visibleCars == 0);
-                    if (labelNoMoreListings.Visible)
-                        labelNoMoreListings.Location = new Point(27, 31);
-
-                    // Reposition transaction header and panels
-                    int newTransactionY = 31;
-                    foreach (Control control in panelContent.Controls)
-                    {
-                        if (control is Panel panel && panel.Name.StartsWith("panelCarListing") && panel.Visible)
+                        // Remove car from car hash table
+                        if (carHashTable.ContainsKey(carId))
                         {
-                            newTransactionY = Math.Max(newTransactionY, panel.Location.Y + panel.Height + 10);
+                            carHashTable.Remove(carId);
                         }
-                    }
 
-                    if (visibleCars == 0)
-                        newTransactionY += labelNoMoreListings.Height + 10;
+                        // Delete the car from the Car table
+                        CarRepository carRepo = new CarRepository(new DatabaseConnection());
+                        carRepo.DeleteCarById(carId);
 
-                    labelTransactionHistory.Location = new Point(27, newTransactionY);
+                        // Remove car panel from UI
+                        Panel panelToHide = (Panel)panelContent.Controls.Find($"panelCarListing{carId}", true)[0];
+                        panelContent.Controls.Remove(panelToHide);
+                        panelToHide.Dispose();
 
-                    // Reposition transaction panels
-                    int transactionY = labelTransactionHistory.Location.Y + labelTransactionHistory.Height + 20;
-                    foreach (Control control in panelContent.Controls)
-                    {
-                        if (control is Panel panel && panel.Name.StartsWith("panelTransaction") && panel.Visible)
+                        // Update listings count
+                        int visibleCars = panelContent.Controls
+                            .OfType<Panel>()
+                            .Count(p => p.Name.StartsWith("panelCarListing") && p.Visible);
+
+                        lblListingsCount.Text = visibleCars.ToString();
+
+                        // Update reservation count if needed
+                        Label statusLabel = panelToHide.Controls.Find($"lblCar{carId}Status", true).FirstOrDefault() as Label;
+                        if (statusLabel != null && statusLabel.Text == "Reserved")
                         {
-                            panel.Location = new Point(27, transactionY);
-                            transactionY += panel.Height + 10;
+                            int currentReservations = int.Parse(lblReservationsCount.Text);
+                            lblReservationsCount.Text = (currentReservations - 1).ToString();
                         }
-                    }
 
-                    // Reposition "no history" label
-                    if (labelNoMoreHistory.Visible)
+                        // Show "no listings" message
+                        labelNoMoreListings.Visible = (visibleCars == 0);
+                        if (labelNoMoreListings.Visible)
+                            labelNoMoreListings.Location = new Point(27, 31);
+
+                        // Reposition transaction header and panels
+                        int newTransactionY = 31;
+                        foreach (Control control in panelContent.Controls)
+                        {
+                            if (control is Panel panel && panel.Name.StartsWith("panelCarListing") && panel.Visible)
+                            {
+                                newTransactionY = Math.Max(newTransactionY, panel.Location.Y + panel.Height + 10);
+                            }
+                        }
+
+                        if (visibleCars == 0)
+                            newTransactionY += labelNoMoreListings.Height + 10;
+
+                        labelTransactionHistory.Location = new Point(27, newTransactionY);
+
+                        // Reposition transaction panels
+                        int transactionY = labelTransactionHistory.Location.Y + labelTransactionHistory.Height + 20;
+                        foreach (Control control in panelContent.Controls)
+                        {
+                            if (control is Panel panel && panel.Name.StartsWith("panelTransaction") && panel.Visible)
+                            {
+                                panel.Location = new Point(27, transactionY);
+                                transactionY += panel.Height + 10;
+                            }
+                        }
+
+                        // Reposition "no history" label
+                        if (labelNoMoreHistory.Visible)
+                        {
+                            labelNoMoreHistory.Location = new Point(27, transactionY);
+                            panelContent.Controls.Add(labelNoMoreHistory);
+
+                        }
+
+                        MessageBox.Show("Your Car will be no longer be listed in our database");
+                    }
+                    catch (Exception ex)
                     {
-                        labelNoMoreHistory.Location = new Point(27, transactionY);
-                        panelContent.Controls.Add(labelNoMoreHistory);
-
+                        MessageBox.Show("Error while deleting the car: " + ex.Message);
                     }
-
-                    MessageBox.Show("Your Car will be no longer be listed in our database");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error while deleting the car: " + ex.Message);
                 }
             }
-        }
 
 
         // Method to load transactions from database
