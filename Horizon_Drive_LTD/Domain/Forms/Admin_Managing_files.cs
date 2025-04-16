@@ -1,32 +1,29 @@
-﻿using Horizon_Drive_LTD;
-using Horizon_Drive_LTD.BusinessLogic;
+﻿using Horizon_Drive_LTD.BusinessLogic;
+using Horizon_Drive_LTD.BusinessLogic.Repositories;
 using Horizon_Drive_LTD.DataStructure;
 using Horizon_Drive_LTD.Domain.Entities;
 using Horizon_Drive_LTD.Domain.Forms;
 using Manage_user_search_page;
 using Microsoft.Data.SqlClient;
+using splashscreen;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
-using System.Net.Mail;
-using System.Text.RegularExpressions;
+using System.Text;
 using System.Windows.Forms;
 using WindowsFormsApp1;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace Upload_cars
 {
-    
     public partial class Admin_Managing_files : Form
     {
         private readonly DatabaseConnection _dbConnection;
-        
+        private readonly Admin_managing_files_repo _adminManagingFiles;
+        private readonly string[] _validFileTypes = { "car.txt", "car.csv", "user.txt", "user.csv", "customer.txt", "customer.csv" };
 
         public Admin_Managing_files()
         {
@@ -38,18 +35,18 @@ namespace Upload_cars
             SetRoundedCorner(Logout_btn, 25);
             SetRoundedCorner(Maintenance_btn, 25);
             _dbConnection = new DatabaseConnection();
+            _adminManagingFiles = new Admin_managing_files_repo(_dbConnection);
 
+            // Initialize the file path label
+            labelfilepath.Text = "";
+            labelfilepath.Visible = false;
 
+            // Set up event handlers
+            Logout_btn.Click += Logout_btn_Click;
         }
-
-
-
-
 
         private void SetRoundedCorner(Button button, int radius)
         {
-            // Code to round the corners of the button
-
             Rectangle bounds = button.ClientRectangle;
             int diameter = radius * 2;
 
@@ -63,13 +60,10 @@ namespace Upload_cars
             button.Region = new Region(path1);
         }
 
-
         private void LoadImage()
         {
-            //Combining folder name and image name to get the full path to display the image
-            string imagePath = Path.Combine(System.Windows.Forms.Application.StartupPath, "Media", "Images", "HORIZONDRIVE_LOGO.png");
+            string imagePath = Path.Combine(Application.StartupPath, "Media", "Images", "HORIZONDRIVE_LOGO.png");
 
-            // condition to check if the image exists
             if (File.Exists(imagePath))
             {
                 pictureBox1.Image = Image.FromFile(imagePath);
@@ -78,44 +72,258 @@ namespace Upload_cars
             else
             {
                 MessageBox.Show("Image not found at: " + imagePath);
-                //error message window pops up if image is not found
             }
         }
 
-
         private void Manage_Users_Click(object sender, EventArgs e)
         {
-            var manage_user_Page = new Manage_User_Page(); // Replace with manage user page
-            manage_user_Page.Show();                  // Shows the new form manage users
+            var manage_user_Page = new Manage_User_Page();
+            manage_user_Page.Show();
             this.Hide();
         }
 
         private void Manage_bookings_btn_Click(object sender, EventArgs e)
         {
-            var manage_car_Page = new Manage_bookings(); // gets form Manage_bookings
-            manage_car_Page.Show();                  // Shows the new form manage_cars
+            var manage_car_Page = new Manage_bookings();
+            manage_car_Page.Show();
             this.Dispose();
         }
 
         private void Maintenance_click(object sender, EventArgs e)
         {
-            var manage_car_Page = new Maintenance(); // gets form  Maintenance 
-            manage_car_Page.Show();                  // Shows the new form manage_cars
+            var manage_car_Page = new Maintenance();
+            manage_car_Page.Show();
             this.Dispose();
         }
 
-
-        private void SaveCars(string filePath)
+        private void Logout_btn_Click(object sender, EventArgs e)
         {
-            var carHashTable = new HashTable<string, Cars>(10000); // Initialize with a large size with user limit of 10 thousand cars
+            var loginForm = new Login();
+            loginForm.Show();
+            this.Dispose();
+        }
 
-            Admin_managing_files_repo admin_Managing_files = new Admin_managing_files_repo(new DatabaseConnection());
+        private void Upload_File_btn_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Text files (*.txt;*.csv)|*.txt;*.csv";
+                openFileDialog.Title = "Select a Data File";
 
-          
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string selectedFile = openFileDialog.FileName;
+                    string fileName = Path.GetFileName(selectedFile).ToLower();
+
+                    // Validate if it's a supported file type
+                    if (!_validFileTypes.Contains(fileName))
+                    {
+                        MessageBox.Show("Unsupported file type. Please upload one of the following files:\n" +
+                                       "- car.txt/car.csv\n" +
+                                       "- user.txt/user.csv\n" +
+                                       "- customer.txt/customer.csv",
+                                       "Invalid File", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    labelfilepath.Text = selectedFile;
+                    labelfilepath.Visible = true;
+
+                    // Update UI to show file selected
+                    DragDropListBox.Items.Clear();
+                    DragDropListBox.Items.Add($"Selected file: {fileName}");
+                    DragDropListBox.Items.Add(""); // Empty line
+
+                    try
+                    {
+                        // Preview the file contents (limited to first 50 lines)
+                        int lineCount = 0;
+                        DragDropListBox.Items.Add("File Preview:");
+                        foreach (var line in File.ReadLines(selectedFile))
+                        {
+                            if (string.IsNullOrWhiteSpace(line)) continue;
+
+                            DragDropListBox.Items.Add(line);
+                            lineCount++;
+
+                            if (lineCount >= 20)
+                            {
+                                DragDropListBox.Items.Add("...");
+                                DragDropListBox.Items.Add($"(Showing first {lineCount} of {File.ReadLines(selectedFile).Count()} lines)");
+                                break;
+                            }
+                        }
+
+                        // Provide guidance based on file type
+                        DragDropListBox.Items.Add("");
+                        if (fileName.StartsWith("user"))
+                        {
+                            DragDropListBox.Items.Add("Ready to process user data. Click 'Save File To Database' to continue.");
+                        }
+                        else if (fileName.StartsWith("car"))
+                        {
+                            DragDropListBox.Items.Add("Ready to process car data. Make sure users are imported first.");
+
+                            // Check if users exist in the database
+                            int userCount = GetUserCount();
+                            if (userCount == 0)
+                            {
+                                DragDropListBox.Items.Add("WARNING: No users found in database. Please import users first.");
+                            }
+                            else
+                            {
+                                DragDropListBox.Items.Add($"Found {userCount} users in the database.");
+                            }
+                        }
+                        else if (fileName.StartsWith("customer"))
+                        {
+                            DragDropListBox.Items.Add("Ready to process customer data. Make sure users are imported first.");
+
+                            // Check if users exist in the database
+                            int userCount = GetUserCount();
+                            if (userCount == 0)
+                            {
+                                DragDropListBox.Items.Add("WARNING: No users found in database. Please import users first.");
+                            }
+                            else
+                            {
+                                DragDropListBox.Items.Add($"Found {userCount} users in the database.");
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error reading file: " + ex.Message, "File Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private int GetUserCount()
+        {
+            try
+            {
+                using (SqlConnection conn = _dbConnection.GetConnection())
+                {
+                    conn.Open();
+                    string query = "SELECT COUNT(*) FROM [User]";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        return (int)cmd.ExecuteScalar();
+                    }
+                }
+            }
+            catch
+            {
+                return 0; // Return 0 on error, which will trigger a warning
+            }
+        }
+
+        private void Save_File_Click(object sender, EventArgs e)
+        {
+            string filePath = labelfilepath.Text;
+
+            if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
+            {
+                MessageBox.Show("Please select a valid file first.", "No File Selected",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string fileName = Path.GetFileName(filePath).ToLower();
+            Cursor = Cursors.WaitCursor; // Change cursor to indicate processing
+
+            try
+            {
+                if (fileName.StartsWith("car"))
+                {
+                    // Check if users exist before processing cars
+                    int userCount = GetUserCount();
+                    if (userCount == 0)
+                    {
+                        DialogResult result = MessageBox.Show(
+                            "No users found in the database. Cars must be associated with existing users.\n\n" +
+                            "Please import user data first before importing cars.\n\n" +
+                            "Do you want to continue anyway?",
+                            "No Users Found",
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Warning);
+
+                        if (result == DialogResult.No)
+                        {
+                            Cursor = Cursors.Default;
+                            return;
+                        }
+                    }
+
+                    ProcessCarFile(filePath);
+                }
+                else if (fileName.StartsWith("user"))
+                {
+                    ProcessUserFile(filePath);
+                }
+                else if (fileName.StartsWith("customer"))
+                {
+                    // Check if users exist before processing customers
+                    int userCount = GetUserCount();
+                    if (userCount == 0)
+                    {
+                        DialogResult result = MessageBox.Show(
+                            "No users found in the database. Customers must be associated with existing users.\n\n" +
+                            "Please import user data first before importing customers.\n\n" +
+                            "Do you want to continue anyway?",
+                            "No Users Found",
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Warning);
+
+                        if (result == DialogResult.No)
+                        {
+                            Cursor = Cursors.Default;
+                            return;
+                        }
+                    }
+
+                    ProcessCustomerFile(filePath);
+                }
+                else
+                {
+                    MessageBox.Show("Unsupported file. Please upload car.txt, customer.txt, or user.txt only.",
+                        "Invalid File", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error processing file: " + ex.Message, "Processing Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Cursor = Cursors.Default; // Restore cursor
+            }
+        }
+
+        private void ProcessCarFile(string filePath)
+        {
+            var carHashTable = new HashTable<string, Cars>(10000);
+            int totalLines = 0;
+            int validLines = 0;
+            int errorLines = 0;
+            StringBuilder errorLog = new StringBuilder();
 
             foreach (var line in File.ReadLines(filePath))
             {
+                totalLines++;
+                if (string.IsNullOrWhiteSpace(line)) continue;
+
                 var words = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+                if (words.Length < 22)
+                {
+                    errorLines++;
+                    errorLog.AppendLine($"Line {totalLines}: Insufficient data columns ({words.Length}/22)");
+                    continue;
+                }
 
                 try
                 {
@@ -142,38 +350,89 @@ namespace Upload_cars
                         availabilitystart: DateTime.Parse(words[19]),
                         availabilityend: DateTime.Parse(words[20]),
                         carimagepath: words[21]
-
                     );
 
                     carHashTable.Insert(car.CarID, car);
-                    
+                    validLines++;
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error processing line:\n" + line + "\n\nDetails:\n" + ex.Message);
+                    errorLines++;
+                    errorLog.AppendLine($"Line {totalLines}: {ex.Message}");
                 }
             }
 
-            admin_Managing_files.SaveCarToDatabase(carHashTable);
+            // Only proceed if we have valid data
+            if (validLines > 0)
+            {
+                _adminManagingFiles.SaveCarToDatabase(carHashTable);
+            }
+            else
+            {
+                MessageBox.Show("No valid car data was found in the file.", "No Valid Data",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            // Show error log if needed
+            if (errorLines > 0)
+            {
+                // Only show first 15 errors to avoid huge message box
+                string errors = errorLog.ToString();
+                if (errors.Split('\n').Length > 15)
+                {
+                    var firstErrors = string.Join("\n", errors.Split('\n').Take(15));
+                    errors = firstErrors + $"\n\n...and {errorLines - 15} more errors.";
+                }
+
+                using (var form = new Form())
+                {
+                    form.Text = "Import Errors";
+                    form.Size = new Size(600, 400);
+                    form.StartPosition = FormStartPosition.CenterParent;
+
+                    var textBox = new TextBox
+                    {
+                        Multiline = true,
+                        ReadOnly = true,
+                        ScrollBars = ScrollBars.Vertical,
+                        Dock = DockStyle.Fill,
+                        Text = $"Import Summary:\n" +
+                               $"Total lines: {totalLines}\n" +
+                               $"Valid entries: {validLines}\n" +
+                               $"Error entries: {errorLines}\n\n" +
+                               $"Error Details:\n{errors}"
+                    };
+
+                    form.Controls.Add(textBox);
+                    form.ShowDialog();
+                }
+            }
         }
 
-       
-
-
-        private void SaveUsers(string filePath)
+        private void ProcessUserFile(string filePath)
         {
-            var userHashTable = new HashTable<string, User>(10000); // Initialize with a large size with user limit of 10 thousand users
-
-            Admin_managing_files_repo admin_Managing_files = new Admin_managing_files_repo(new DatabaseConnection());
+            var userHashTable = new HashTable<string, User>(10000);
+            int totalLines = 0;
+            int validLines = 0;
+            int errorLines = 0;
+            StringBuilder errorLog = new StringBuilder();
 
             foreach (var line in File.ReadLines(filePath))
             {
+                totalLines++;
+                if (string.IsNullOrWhiteSpace(line)) continue;
+
                 var words = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+                if (words.Length < 10)
+                {
+                    errorLines++;
+                    errorLog.AppendLine($"Line {totalLines}: Insufficient data columns ({words.Length}/10)");
+                    continue;
+                }
 
                 try
                 {
-                  
-
                     User user = new User(
                         userid: words[0],
                         username: words[1],
@@ -188,166 +447,125 @@ namespace Upload_cars
                     );
 
                     userHashTable.Insert(user.UserId, user);
-                    GenerateAndSaveLessor(user.UserId); // Call the method to generate and save Lessor
+                    validLines++;
                 }
                 catch (Exception ex)
                 {
-                    
+                    errorLines++;
+                    errorLog.AppendLine($"Line {totalLines}: {ex.Message}");
                 }
             }
 
-            admin_Managing_files.SaveUsersToDatabase(userHashTable);
+            // Only proceed if we have valid data
+            if (validLines > 0)
+            {
+                _adminManagingFiles.SaveUsersToDatabase(userHashTable);
+            }
+            else
+            {
+                MessageBox.Show("No valid user data was found in the file.", "No Valid Data",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            // Show error log if needed
+            if (errorLines > 0)
+            {
+                ShowErrorLog(errorLog.ToString(), totalLines, validLines, errorLines);
+            }
         }
 
-
-       
-
-
-
-
-        private void SaveCustomers(string filePath)
+        private void ProcessCustomerFile(string filePath)
         {
-            var CustomerHashTable = new HashTable<string, Customer>(10000); // Initialize with a large size with user limit of 10 thousand users
-
-            Admin_managing_files_repo admin_Managing_files = new Admin_managing_files_repo(new DatabaseConnection());
-
-
+            var customerHashTable = new HashTable<string, Customer>(10000);
+            int totalLines = 0;
+            int validLines = 0;
+            int errorLines = 0;
+            StringBuilder errorLog = new StringBuilder();
 
             foreach (var line in File.ReadLines(filePath))
             {
+                totalLines++;
+                if (string.IsNullOrWhiteSpace(line)) continue;
+
                 var words = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+                if (words.Length < 5)
+                {
+                    errorLines++;
+                    errorLog.AppendLine($"Line {totalLines}: Insufficient data columns ({words.Length}/5)");
+                    continue;
+                }
 
                 try
                 {
-                    
-                   
-
                     Customer customer = new Customer(
                         customerID: words[0],
                         userID: words[1],
                         licenseNo: words[2],
                         licenseExpiryDate: DateOnly.Parse(words[3]),
                         licensePhoto: words[4]
-                      
                     );
 
-                    CustomerHashTable.Insert(customer.CustomerID, customer );
+                    customerHashTable.Insert(customer.CustomerID, customer);
+                    validLines++;
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error processing line:\n" + line + "\n\nDetails:\n" + ex.Message);
+                    errorLines++;
+                    errorLog.AppendLine($"Line {totalLines}: {ex.Message}");
                 }
             }
 
-            admin_Managing_files.SaveCustomerToDatabase(CustomerHashTable);
-        }
-
-
-       
-
-
-
-
-
-
-
-        private void Save_File_Click(object sender, EventArgs e)
-        {
-            string filePath = labelfilepath.Text;
-
-            if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
+            // Only proceed if we have valid data
+            if (validLines > 0)
             {
-                MessageBox.Show("Please select a valid file first.(.txt or .csv");
-                return;
-            }
-
-            string fileName = Path.GetFileName(filePath).ToLower();
-
-            if (fileName == "car.txt" || fileName == "car.csv")
-            {
-                SaveCars(filePath);
-                MessageBox.Show("Cars saved to database successfully.");
-            }
-            else if (fileName == "user.txt" || fileName == "user.csv")
-            {
-                SaveUsers(filePath);
-                MessageBox.Show("Cars saved to database successfully.");
-            }
-            else if (fileName == "customer.txt" || fileName == "customer.csv")
-            {
-                SaveCustomers(filePath);
-                MessageBox.Show("Cars saved to database successfully.");
+                _adminManagingFiles.SaveCustomerToDatabase(customerHashTable);
             }
             else
             {
-                MessageBox.Show("Unsupported file. Please upload Car.txt, Customer.txt, or User.txt only.");
+                MessageBox.Show("No valid customer data was found in the file.", "No Valid Data",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            //MessageBox.Show("Cars saved to database successfully.");
 
-        }
-
-
-        public void GenerateAndSaveLessor(string userId)
-        {
-            // Assuming that userId exists in the User table and the user is inserted successfully
-            string lessorId = GenerateLessorId();
-
-            // Insert into Lessor table
-            using (SqlConnection conn = _dbConnection.GetConnection())
+            // Show error log if needed
+            if (errorLines > 0)
             {
-                conn.Open();
-                string query = @"INSERT INTO Lessor
-                            (LessorId, UserId, No_Of_Cars)
-                         VALUES
-                            (@LessorId, @UserId, @No_Of_Cars)";
-
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@LessorId", lessorId);
-                cmd.Parameters.AddWithValue("@UserId", userId);
-                cmd.Parameters.AddWithValue("@No_Of_Cars", 1); // You can set it to 0 or the number of cars the lessor has.
-
-                try
-                {
-                    cmd.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error inserting Lessor: " + ex.Message);
-                }
+                ShowErrorLog(errorLog.ToString(), totalLines, validLines, errorLines);
             }
         }
 
-        private string GenerateLessorId()
+        private void ShowErrorLog(string errors, int totalLines, int validLines, int errorLines)
         {
-            Guid guid = Guid.NewGuid();
-            int numericPart = Math.Abs(guid.GetHashCode()) % 100000;
-            return "L" + numericPart.ToString("D4");
-        }
-
-
-        private void Upload_File_btn_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Text files (*.txt;*.csv)|*.txt;*.csv";
-            openFileDialog.Title = "Select a Car Data File";
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            // Only show first 15 errors to avoid huge message box
+            if (errors.Split('\n').Length > 15)
             {
-                string selectedFile = openFileDialog.FileName;
-                labelfilepath.Text = selectedFile; // Temporarily store the path
+                var firstErrors = string.Join("\n", errors.Split('\n').Take(15));
+                errors = firstErrors + $"\n\n...and {errorLines - 15} more errors.";
+            }
 
-                // Clear previous items and load new lines
-                DragDropListBox.Items.Clear();
+            using (var form = new Form())
+            {
+                form.Text = "Import Errors";
+                form.Size = new Size(600, 400);
+                form.StartPosition = FormStartPosition.CenterParent;
+                form.Icon = this.Icon;
 
-                foreach (var line in File.ReadLines(selectedFile))
+                var textBox = new TextBox
                 {
-                    DragDropListBox.Items.Add(line);
-                }
+                    Multiline = true,
+                    ReadOnly = true,
+                    ScrollBars = ScrollBars.Vertical,
+                    Dock = DockStyle.Fill,
+                    Text = $"Import Summary:\n" +
+                           $"Total lines: {totalLines}\n" +
+                           $"Valid entries: {validLines}\n" +
+                           $"Error entries: {errorLines}\n\n" +
+                           $"Error Details:\n{errors}"
+                };
 
-                MessageBox.Show("File selected: " + Path.GetFileName(selectedFile));
+                form.Controls.Add(textBox);
+                form.ShowDialog();
             }
         }
-
-        
     }
 }
