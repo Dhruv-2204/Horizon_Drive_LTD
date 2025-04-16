@@ -36,6 +36,7 @@
             Upload_Cars_btn = new Button();
             pictureBox1 = new PictureBox();
             panel4 = new Panel();
+            instructionLabel = new Label();
             labelfilepath = new Label();
             Upload_File_btn = new Button();
             Search_Users = new Label();
@@ -59,9 +60,9 @@
             panel1.Controls.Add(Upload_Cars_btn);
             panel1.Controls.Add(pictureBox1);
             panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(4, 3, 4, 3);
+            panel1.Margin = new Padding(5, 4, 5, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(300, 558);
+            panel1.Size = new Size(343, 744);
             panel1.TabIndex = 0;
             // 
             // Maintenance_btn
@@ -74,10 +75,10 @@
             Maintenance_btn.FlatStyle = FlatStyle.Flat;
             Maintenance_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
             Maintenance_btn.ForeColor = SystemColors.ButtonHighlight;
-            Maintenance_btn.Location = new Point(68, 421);
-            Maintenance_btn.Margin = new Padding(4, 3, 4, 3);
+            Maintenance_btn.Location = new Point(78, 561);
+            Maintenance_btn.Margin = new Padding(5, 4, 5, 4);
             Maintenance_btn.Name = "Maintenance_btn";
-            Maintenance_btn.Size = new Size(156, 53);
+            Maintenance_btn.Size = new Size(178, 71);
             Maintenance_btn.TabIndex = 3;
             Maintenance_btn.Text = "Maintenance";
             Maintenance_btn.UseVisualStyleBackColor = false;
@@ -92,10 +93,10 @@
             Logout_btn.FlatStyle = FlatStyle.Flat;
             Logout_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
             Logout_btn.ForeColor = SystemColors.ButtonHighlight;
-            Logout_btn.Location = new Point(68, 492);
-            Logout_btn.Margin = new Padding(4, 3, 4, 3);
+            Logout_btn.Location = new Point(78, 656);
+            Logout_btn.Margin = new Padding(5, 4, 5, 4);
             Logout_btn.Name = "Logout_btn";
-            Logout_btn.Size = new Size(156, 53);
+            Logout_btn.Size = new Size(178, 71);
             Logout_btn.TabIndex = 2;
             Logout_btn.Text = "Log Out";
             Logout_btn.UseVisualStyleBackColor = false;
@@ -110,10 +111,10 @@
             Manage_bookings_btn.FlatStyle = FlatStyle.Flat;
             Manage_bookings_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
             Manage_bookings_btn.ForeColor = SystemColors.ButtonHighlight;
-            Manage_bookings_btn.Location = new Point(68, 353);
-            Manage_bookings_btn.Margin = new Padding(4, 3, 4, 3);
+            Manage_bookings_btn.Location = new Point(78, 471);
+            Manage_bookings_btn.Margin = new Padding(5, 4, 5, 4);
             Manage_bookings_btn.Name = "Manage_bookings_btn";
-            Manage_bookings_btn.Size = new Size(156, 53);
+            Manage_bookings_btn.Size = new Size(178, 71);
             Manage_bookings_btn.TabIndex = 1;
             Manage_bookings_btn.Text = "Manage Bookings";
             Manage_bookings_btn.UseVisualStyleBackColor = false;
@@ -128,10 +129,10 @@
             Manage_users.FlatStyle = FlatStyle.Flat;
             Manage_users.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Manage_users.ForeColor = SystemColors.ControlLightLight;
-            Manage_users.Location = new Point(68, 217);
-            Manage_users.Margin = new Padding(4, 3, 4, 3);
+            Manage_users.Location = new Point(78, 289);
+            Manage_users.Margin = new Padding(5, 4, 5, 4);
             Manage_users.Name = "Manage_users";
-            Manage_users.Size = new Size(156, 52);
+            Manage_users.Size = new Size(178, 69);
             Manage_users.TabIndex = 1;
             Manage_users.Text = "Manage Users";
             Manage_users.UseVisualStyleBackColor = false;
@@ -147,10 +148,10 @@
             Upload_Cars_btn.FlatStyle = FlatStyle.Flat;
             Upload_Cars_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Upload_Cars_btn.ForeColor = SystemColors.ControlText;
-            Upload_Cars_btn.Location = new Point(68, 284);
+            Upload_Cars_btn.Location = new Point(78, 379);
             Upload_Cars_btn.Margin = new Padding(0);
             Upload_Cars_btn.Name = "Upload_Cars_btn";
-            Upload_Cars_btn.Size = new Size(156, 52);
+            Upload_Cars_btn.Size = new Size(178, 69);
             Upload_Cars_btn.TabIndex = 1;
             Upload_Cars_btn.Text = "Upload Files";
             Upload_Cars_btn.UseVisualStyleBackColor = false;
@@ -159,10 +160,10 @@
             // 
             pictureBox1.ErrorImage = null;
             pictureBox1.InitialImage = null;
-            pictureBox1.Location = new Point(55, 33);
-            pictureBox1.Margin = new Padding(4, 3, 4, 3);
+            pictureBox1.Location = new Point(63, 44);
+            pictureBox1.Margin = new Padding(5, 4, 5, 4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(181, 162);
+            pictureBox1.Size = new Size(207, 216);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -171,22 +172,34 @@
             // 
             panel4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel4.AutoSize = true;
+            panel4.Controls.Add(instructionLabel);
             panel4.Controls.Add(labelfilepath);
             panel4.Controls.Add(Upload_File_btn);
             panel4.Controls.Add(Search_Users);
             panel4.Controls.Add(Save_File_btn);
-            panel4.Location = new Point(308, 3);
-            panel4.Margin = new Padding(4, 3, 4, 3);
+            panel4.Location = new Point(352, 4);
+            panel4.Margin = new Padding(5, 4, 5, 4);
             panel4.Name = "panel4";
-            panel4.Size = new Size(543, 163);
+            panel4.Size = new Size(620, 217);
             panel4.TabIndex = 9;
+            // 
+            // instructionLabel
+            // 
+            instructionLabel.AutoSize = true;
+            instructionLabel.Font = new Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            instructionLabel.ForeColor = Color.DarkRed;
+            instructionLabel.Location = new Point(49, 73);
+            instructionLabel.Name = "instructionLabel";
+            instructionLabel.Size = new Size(538, 17);
+            instructionLabel.TabIndex = 14;
+            instructionLabel.Text = "IMPORTANT: Please upload user.txt first before uploading car.txt or customer.txt files";
             // 
             // labelfilepath
             // 
             labelfilepath.AutoSize = true;
-            labelfilepath.Location = new Point(76, 55);
+            labelfilepath.Location = new Point(87, 73);
             labelfilepath.Name = "labelfilepath";
-            labelfilepath.Size = new Size(72, 15);
+            labelfilepath.Size = new Size(93, 20);
             labelfilepath.TabIndex = 13;
             labelfilepath.Text = "labelfilepath";
             labelfilepath.Visible = false;
@@ -201,10 +214,10 @@
             Upload_File_btn.FlatStyle = FlatStyle.Popup;
             Upload_File_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Upload_File_btn.ForeColor = SystemColors.ControlLightLight;
-            Upload_File_btn.Location = new Point(13, 82);
-            Upload_File_btn.Margin = new Padding(4, 3, 4, 3);
+            Upload_File_btn.Location = new Point(16, 109);
+            Upload_File_btn.Margin = new Padding(5, 4, 5, 4);
             Upload_File_btn.Name = "Upload_File_btn";
-            Upload_File_btn.Size = new Size(209, 44);
+            Upload_File_btn.Size = new Size(239, 59);
             Upload_File_btn.TabIndex = 12;
             Upload_File_btn.Text = "Upload  File";
             Upload_File_btn.UseVisualStyleBackColor = false;
@@ -215,10 +228,10 @@
             Search_Users.Anchor = AnchorStyles.None;
             Search_Users.AutoSize = true;
             Search_Users.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Search_Users.Location = new Point(167, 7);
-            Search_Users.Margin = new Padding(4, 0, 4, 0);
+            Search_Users.Location = new Point(192, 9);
+            Search_Users.Margin = new Padding(5, 0, 5, 0);
             Search_Users.Name = "Search_Users";
-            Search_Users.Size = new Size(211, 40);
+            Search_Users.Size = new Size(271, 50);
             Search_Users.TabIndex = 7;
             Search_Users.Text = "UPLOAD FILES";
             // 
@@ -231,10 +244,10 @@
             Save_File_btn.FlatStyle = FlatStyle.Popup;
             Save_File_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Save_File_btn.ForeColor = SystemColors.ControlLightLight;
-            Save_File_btn.Location = new Point(318, 82);
-            Save_File_btn.Margin = new Padding(4, 3, 4, 3);
+            Save_File_btn.Location = new Point(364, 109);
+            Save_File_btn.Margin = new Padding(5, 4, 5, 4);
             Save_File_btn.Name = "Save_File_btn";
-            Save_File_btn.Size = new Size(209, 44);
+            Save_File_btn.Size = new Size(239, 59);
             Save_File_btn.TabIndex = 10;
             Save_File_btn.Text = "Save File To Database";
             Save_File_btn.UseVisualStyleBackColor = false;
@@ -248,9 +261,9 @@
             user_background.Controls.Add(panel4);
             user_background.Controls.Add(panel1);
             user_background.Location = new Point(-1, -1);
-            user_background.Margin = new Padding(4, 3, 4, 3);
+            user_background.Margin = new Padding(5, 4, 5, 4);
             user_background.Name = "user_background";
-            user_background.Size = new Size(864, 558);
+            user_background.Size = new Size(987, 744);
             user_background.TabIndex = 1;
             // 
             // DragDropListBox
@@ -259,20 +272,20 @@
             DragDropListBox.Font = new Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             DragDropListBox.FormattingEnabled = true;
             DragDropListBox.HorizontalScrollbar = true;
-            DragDropListBox.Location = new Point(356, 172);
-            DragDropListBox.Margin = new Padding(4, 3, 4, 3);
+            DragDropListBox.Location = new Point(407, 229);
+            DragDropListBox.Margin = new Padding(5, 4, 5, 4);
             DragDropListBox.Name = "DragDropListBox";
-            DragDropListBox.Size = new Size(455, 364);
+            DragDropListBox.Size = new Size(519, 479);
             DragDropListBox.TabIndex = 12;
             // 
             // Admin_Managing_files
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
-            ClientSize = new Size(862, 557);
+            ClientSize = new Size(985, 743);
             Controls.Add(user_background);
-            Margin = new Padding(4, 3, 4, 3);
+            Margin = new Padding(5, 4, 5, 4);
             Name = "Admin_Managing_files";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Managing files";
@@ -301,5 +314,6 @@
         private Button Maintenance_btn;
         private ListBox DragDropListBox;
         private Label labelfilepath;
+        private Label instructionLabel;
     }
 }

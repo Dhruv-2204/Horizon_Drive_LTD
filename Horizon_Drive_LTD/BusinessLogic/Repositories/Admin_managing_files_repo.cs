@@ -85,7 +85,8 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                                             UserID = @userId,
                                             CarBrand = @carBrand,
                                             Category = @category,
-                                            RegistrationNo = @registrationNo,
+                                            CarImagePath = @carImagePath,
+                                            RegistrationNo = @registrationNo,                                           
                                             Model = @model,
                                             Years = @years,
                                             Colour = @colour,
@@ -101,8 +102,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                                             TransmissionType = @transmission,
                                             Status = @status,
                                             AvailabilityStart = @availabilityStart,
-                                            AvailabilityEnd = @availabilityEnd,
-                                            CarImagePath = @carImagePath
+                                            AvailabilityEnd = @availabilityEnd
                                         WHERE CarID = @carId";
 
                                     using (SqlCommand cmd = new SqlCommand(updateQuery, conn, transaction))
@@ -117,15 +117,15 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
                                     // Insert new car
                                     string insertQuery = @"
                                         INSERT INTO Car (
-                                            CarID, UserID, CarBrand, Category, RegistrationNo, Model, Years, Colour,
+                                            CarID, UserID, CarBrand, Category, CarImagePath, RegistrationNo, Model, Years, Colour,
                                             Features, VehicleDescription, CarPrice, SeatNo, EngineCapacity, Ratings,
                                             Power, DriveTrain, FuelType, TransmissionType, Status, AvailabilityStart,
-                                            AvailabilityEnd, CarImagePath
+                                            AvailabilityEnd
                                         )
                                         VALUES (
-                                            @carId, @userId, @carBrand, @category, @registrationNo, @model, @years, @colour,
+                                            @carId, @userId, @carBrand, @category, @carImagePath, @registrationNo, @model, @years, @colour,
                                             @features, @desc, @price, @seat, @engine, @rating, @power, @drive, @fuel,
-                                            @transmission, @status, @availabilityStart, @availabilityEnd, @carImagePath
+                                            @transmission, @status, @availabilityStart, @availabilityEnd
                                         )";
 
                                     using (SqlCommand cmd = new SqlCommand(insertQuery, conn, transaction))
@@ -178,6 +178,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             cmd.Parameters.AddWithValue("@userId", car.UserID);
             cmd.Parameters.AddWithValue("@carBrand", car.CarBrand);
             cmd.Parameters.AddWithValue("@category", car.Category);
+            cmd.Parameters.AddWithValue("@carImagePath", car.CarImagePath);
             cmd.Parameters.AddWithValue("@registrationNo", car.RegistrationNo);
             cmd.Parameters.AddWithValue("@model", car.Model);
             cmd.Parameters.AddWithValue("@years", car.Year);
@@ -195,7 +196,7 @@ namespace Horizon_Drive_LTD.BusinessLogic.Repositories
             cmd.Parameters.AddWithValue("@status", car.Status);
             cmd.Parameters.AddWithValue("@availabilityStart", car.AvailabilityStart);
             cmd.Parameters.AddWithValue("@availabilityEnd", car.AvailabilityEnd);
-            cmd.Parameters.AddWithValue("@carImagePath", car.CarImagePath);
+            
         }
 
         /// <summary>

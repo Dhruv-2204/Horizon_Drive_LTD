@@ -17,8 +17,8 @@ namespace splashscreen
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new SPLASH_SCREEN());
-            Application.Run(new AdminManageBookingsForm());
+            Application.Run(new SPLASH_SCREEN());
+            //Application.Run(new AdminManageBookingsForm());
 
 
         }

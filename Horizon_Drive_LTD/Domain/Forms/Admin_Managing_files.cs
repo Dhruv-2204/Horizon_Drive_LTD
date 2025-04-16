@@ -316,40 +316,98 @@ namespace Upload_cars
                 totalLines++;
                 if (string.IsNullOrWhiteSpace(line)) continue;
 
-                var words = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                // Split by spaces for the initial fields
+                string[] parts = line.Split(' ');
 
-                if (words.Length < 22)
+                // We need at least 22 items
+                if (parts.Length < 22)
                 {
                     errorLines++;
-                    errorLog.AppendLine($"Line {totalLines}: Insufficient data columns ({words.Length}/22)");
+                    errorLog.AppendLine($"Line {totalLines}: Insufficient data columns ({parts.Length}/22)");
                     continue;
                 }
 
                 try
                 {
+                    // Extract values from the array
+                    string carId = parts[0];
+                    string userId = parts[1];
+                    string carBrand = parts[2];
+                    string category = parts[3];
+                    string carImage = parts[4];
+                    string registrationNo = parts[5];
+                    string model = parts[6];
+
+                    // Parse year as int
+                    if (!int.TryParse(parts[7], out int year))
+                    {
+                        throw new FormatException($"Invalid year format: {parts[7]}");
+                    }
+
+                    string colour = parts[8];
+                    string features = parts[9];
+                    string desc = parts[10];
+
+                    // Parse price as decimal
+                    if (!decimal.TryParse(parts[11], out decimal price))
+                    {
+                        throw new FormatException($"Invalid price format: {parts[11]}");
+                    }
+
+                    // Parse seat as int
+                    if (!int.TryParse(parts[12], out int seat))
+                    {
+                        throw new FormatException($"Invalid seat number format: {parts[12]}");
+                    }
+
+                    string engine = parts[13];
+
+                    // Parse rating as decimal
+                    if (!decimal.TryParse(parts[14], out decimal rating))
+                    {
+                        throw new FormatException($"Invalid rating format: {parts[14]}");
+                    }
+
+                    string power = parts[15];
+                    string drive = parts[16];
+                    string fuel = parts[17];
+                    string transmission = parts[18];
+                    string status = parts[19];
+
+                    // Parse dates
+                    if (!DateTime.TryParse(parts[20], out DateTime availabilityStart))
+                    {
+                        throw new FormatException($"Invalid availability start date: {parts[20]}");
+                    }
+
+                    if (!DateTime.TryParse(parts[21], out DateTime availabilityEnd))
+                    {
+                        throw new FormatException($"Invalid availability end date: {parts[21]}");
+                    }
+
                     Cars car = new Cars(
-                        carid: words[0],
-                        userid: words[1],
-                        carBrand: words[2],
-                        category: words[3],
-                        carImage: words[21],
-                        registrationNo: words[4],
-                        model: words[5],
-                        year: int.Parse(words[6]),
-                        colour: words[7],
-                        features: words[8],
-                        desc: words[9],
-                        price: decimal.Parse(words[10]),
-                        seat: int.Parse(words[11]),
-                        engine: words[12],
-                        rating: decimal.Parse(words[13]),
-                        power: words[14],
-                        drive: words[15],
-                        fuel: words[16],
-                        transmission: words[17],
-                        status: words[18],
-                        availabilitystart: DateTime.Parse(words[19]),
-                        availabilityend: DateTime.Parse(words[20])
+                        carId,
+                        userId,
+                        carBrand,
+                        category,
+                        carImage,
+                        registrationNo,
+                        model,
+                        year,
+                        colour,
+                        features,
+                        desc,
+                        price,
+                        seat,
+                        engine,
+                        rating,
+                        power,
+                        drive,
+                        fuel,
+                        transmission,
+                        status,
+                        availabilityStart,
+                        availabilityEnd
                     );
 
                     carHashTable.Insert(car.CarID, car);
@@ -376,36 +434,7 @@ namespace Upload_cars
             // Show error log if needed
             if (errorLines > 0)
             {
-                // Only show first 15 errors to avoid huge message box
-                string errors = errorLog.ToString();
-                if (errors.Split('\n').Length > 15)
-                {
-                    var firstErrors = string.Join("\n", errors.Split('\n').Take(15));
-                    errors = firstErrors + $"\n\n...and {errorLines - 15} more errors.";
-                }
-
-                using (var form = new Form())
-                {
-                    form.Text = "Import Errors";
-                    form.Size = new Size(600, 400);
-                    form.StartPosition = FormStartPosition.CenterParent;
-
-                    var textBox = new TextBox
-                    {
-                        Multiline = true,
-                        ReadOnly = true,
-                        ScrollBars = ScrollBars.Vertical,
-                        Dock = DockStyle.Fill,
-                        Text = $"Import Summary:\n" +
-                               $"Total lines: {totalLines}\n" +
-                               $"Valid entries: {validLines}\n" +
-                               $"Error entries: {errorLines}\n\n" +
-                               $"Error Details:\n{errors}"
-                    };
-
-                    form.Controls.Add(textBox);
-                    form.ShowDialog();
-                }
+                ShowErrorLog(errorLog.ToString(), totalLines, validLines, errorLines);
             }
         }
 
