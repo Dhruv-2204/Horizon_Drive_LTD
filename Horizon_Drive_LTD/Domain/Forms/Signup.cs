@@ -216,7 +216,8 @@
 
 
                 userRepo.StoreActiveUser(username, userId , customerid, lessorid);
-
+                CurrentUser.CurrentUserId = userId;
+                CurrentUser.Currentuser = newUser;
             }
             else
             {
