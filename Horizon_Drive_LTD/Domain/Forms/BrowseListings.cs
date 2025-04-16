@@ -369,8 +369,8 @@ namespace Horizon_Drive_LTD
                     conn.Open();
                     string dropTableQuery = "DROP TABLE IF EXISTS ActiveUser;";
                     using (SqlCommand cmd = new SqlCommand(dropTableQuery, conn))
-                    {
-                        cmd.ExecuteNonQuery();
+                                           cmd.ExecuteNonQuery();
+ {
                     }
                 }
 
