@@ -57,12 +57,11 @@
             user_background.Controls.Add(panel4);
             user_background.Controls.Add(panel2);
             user_background.Controls.Add(panel1);
-            user_background.Location = new Point(0, -3);
-            user_background.Margin = new Padding(5, 4, 5, 4);
+            user_background.Location = new Point(0, -2);
+            user_background.Margin = new Padding(4, 3, 4, 3);
             user_background.Name = "user_background";
-            user_background.Size = new Size(986, 747);
+            user_background.Size = new Size(863, 560);
             user_background.TabIndex = 1;
-           
             // 
             // addMaintenanceBtn
             // 
@@ -72,9 +71,10 @@
             addMaintenanceBtn.FlatStyle = FlatStyle.Flat;
             addMaintenanceBtn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
             addMaintenanceBtn.ForeColor = Color.White;
-            addMaintenanceBtn.Location = new Point(557, 680);
+            addMaintenanceBtn.Location = new Point(487, 510);
+            addMaintenanceBtn.Margin = new Padding(3, 2, 3, 2);
             addMaintenanceBtn.Name = "addMaintenanceBtn";
-            addMaintenanceBtn.Size = new Size(200, 40);
+            addMaintenanceBtn.Size = new Size(175, 30);
             addMaintenanceBtn.TabIndex = 11;
             addMaintenanceBtn.Text = "Add New Maintenance";
             addMaintenanceBtn.UseVisualStyleBackColor = false;
@@ -85,10 +85,9 @@
             panel4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel4.AutoSize = true;
             panel4.Controls.Add(label1);
-            panel4.Location = new Point(388, 79);
-            panel4.Margin = new Padding(3, 4, 3, 4);
+            panel4.Location = new Point(340, 59);
             panel4.Name = "panel4";
-            panel4.Size = new Size(558, 112);
+            panel4.Size = new Size(488, 84);
             panel4.TabIndex = 10;
             // 
             // label1
@@ -96,9 +95,9 @@
             label1.Anchor = AnchorStyles.None;
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 27.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(3, 27);
+            label1.Location = new Point(3, 20);
             label1.Name = "label1";
-            label1.Size = new Size(559, 62);
+            label1.Size = new Size(442, 50);
             label1.TabIndex = 9;
             label1.Text = "Cars under Maintenance";
             // 
@@ -106,10 +105,10 @@
             // 
             panel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel2.Controls.Add(dataGridView1);
-            panel2.Location = new Point(376, 199);
-            panel2.Margin = new Padding(5, 4, 5, 4);
+            panel2.Location = new Point(329, 149);
+            panel2.Margin = new Padding(4, 3, 4, 3);
             panel2.Name = "panel2";
-            panel2.Size = new Size(579, 467);
+            panel2.Size = new Size(507, 350);
             panel2.TabIndex = 6;
             // 
             // dataGridView1
@@ -123,12 +122,12 @@
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.None;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(0, 0);
-            dataGridView1.Margin = new Padding(5, 4, 5, 4);
+            dataGridView1.Margin = new Padding(4, 3, 4, 3);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 30;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(579, 467);
+            dataGridView1.Size = new Size(507, 350);
             dataGridView1.TabIndex = 4;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
@@ -143,9 +142,9 @@
             panel1.Controls.Add(Manage_files_btn);
             panel1.Controls.Add(pictureBox1);
             panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(5, 4, 5, 4);
+            panel1.Margin = new Padding(4, 3, 4, 3);
             panel1.Name = "panel1";
-            panel1.Size = new Size(343, 747);
+            panel1.Size = new Size(300, 560);
             panel1.TabIndex = 0;
             // 
             // Maintenance_btn
@@ -158,14 +157,31 @@
             Maintenance_btn.FlatStyle = FlatStyle.Flat;
             Maintenance_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Maintenance_btn.ForeColor = SystemColors.ActiveCaptionText;
-            Maintenance_btn.Location = new Point(78, 543);
+            Maintenance_btn.Location = new Point(68, 407);
             Maintenance_btn.Margin = new Padding(0);
             Maintenance_btn.Name = "Maintenance_btn";
-            Maintenance_btn.Size = new Size(178, 69);
+            Maintenance_btn.Size = new Size(156, 52);
             Maintenance_btn.TabIndex = 3;
             Maintenance_btn.Text = "Maintenance";
             Maintenance_btn.UseVisualStyleBackColor = false;
-            //
+            // 
+            // Logout_btn
+            // 
+            Logout_btn.BackColor = Color.FromArgb(33, 79, 95);
+            Logout_btn.Cursor = Cursors.Hand;
+            Logout_btn.FlatAppearance.BorderSize = 0;
+            Logout_btn.FlatAppearance.MouseOverBackColor = Color.CadetBlue;
+            Logout_btn.FlatStyle = FlatStyle.Flat;
+            Logout_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
+            Logout_btn.ForeColor = SystemColors.ButtonHighlight;
+            Logout_btn.Location = new Point(68, 478);
+            Logout_btn.Margin = new Padding(4, 3, 4, 3);
+            Logout_btn.Name = "Logout_btn";
+            Logout_btn.Size = new Size(156, 53);
+            Logout_btn.TabIndex = 2;
+            Logout_btn.Text = "Log Out";
+            Logout_btn.UseVisualStyleBackColor = false;
+            // 
             // Manage_bookings_btn
             // 
             Manage_bookings_btn.BackColor = Color.FromArgb(33, 79, 95);
@@ -175,10 +191,10 @@
             Manage_bookings_btn.FlatStyle = FlatStyle.Flat;
             Manage_bookings_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
             Manage_bookings_btn.ForeColor = SystemColors.ButtonHighlight;
-            Manage_bookings_btn.Location = new Point(78, 451);
-            Manage_bookings_btn.Margin = new Padding(5, 4, 5, 4);
+            Manage_bookings_btn.Location = new Point(68, 338);
+            Manage_bookings_btn.Margin = new Padding(4, 3, 4, 3);
             Manage_bookings_btn.Name = "Manage_bookings_btn";
-            Manage_bookings_btn.Size = new Size(178, 71);
+            Manage_bookings_btn.Size = new Size(156, 53);
             Manage_bookings_btn.TabIndex = 1;
             Manage_bookings_btn.Text = "Manage Bookings";
             Manage_bookings_btn.UseVisualStyleBackColor = false;
@@ -192,31 +208,14 @@
             Manage_Users.FlatStyle = FlatStyle.Popup;
             Manage_Users.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Manage_Users.ForeColor = SystemColors.ControlLightLight;
-            Manage_Users.Location = new Point(78, 268);
-            Manage_Users.Margin = new Padding(5, 4, 5, 4);
+            Manage_Users.Location = new Point(68, 201);
+            Manage_Users.Margin = new Padding(4, 3, 4, 3);
             Manage_Users.Name = "Manage_Users";
-            Manage_Users.Size = new Size(178, 69);
+            Manage_Users.Size = new Size(156, 52);
             Manage_Users.TabIndex = 1;
             Manage_Users.Text = "Manage Users";
             Manage_Users.UseVisualStyleBackColor = false;
             Manage_Users.Click += Manage_Users_Click;
-            //
-            // Logout_btn
-            // 
-            Logout_btn.BackColor = Color.FromArgb(33, 79, 95);
-            Logout_btn.Cursor = Cursors.Hand;
-            Logout_btn.FlatAppearance.BorderSize = 0;
-            Logout_btn.FlatAppearance.MouseOverBackColor = Color.CadetBlue;
-            Logout_btn.FlatStyle = FlatStyle.Flat;
-            Logout_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
-            Logout_btn.ForeColor = SystemColors.ButtonHighlight;
-            Logout_btn.Location = new Point(78, 637);
-            Logout_btn.Margin = new Padding(5, 4, 5, 4);
-            Logout_btn.Name = "Logout_btn";
-            Logout_btn.Size = new Size(178, 71);
-            Logout_btn.TabIndex = 2;
-            Logout_btn.Text = "Log Out";
-            Logout_btn.UseVisualStyleBackColor = false;
             // 
             // Manage_files_btn
             // 
@@ -228,10 +227,10 @@
             Manage_files_btn.FlatStyle = FlatStyle.Flat;
             Manage_files_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Manage_files_btn.ForeColor = SystemColors.ButtonHighlight;
-            Manage_files_btn.Location = new Point(78, 359);
+            Manage_files_btn.Location = new Point(68, 269);
             Manage_files_btn.Margin = new Padding(0);
             Manage_files_btn.Name = "Manage_files_btn";
-            Manage_files_btn.Size = new Size(178, 69);
+            Manage_files_btn.Size = new Size(156, 52);
             Manage_files_btn.TabIndex = 1;
             Manage_files_btn.Text = "Upload Files";
             Manage_files_btn.UseVisualStyleBackColor = false;
@@ -241,24 +240,24 @@
             // 
             pictureBox1.ErrorImage = null;
             pictureBox1.InitialImage = null;
-            pictureBox1.Location = new Point(63, 44);
-            pictureBox1.Margin = new Padding(5, 4, 5, 4);
+            pictureBox1.Location = new Point(55, 33);
+            pictureBox1.Margin = new Padding(4, 3, 4, 3);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(207, 216);
+            pictureBox1.Size = new Size(181, 162);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
             // AdminMaintenance
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(985, 743);
+            ClientSize = new Size(862, 557);
             Controls.Add(user_background);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "AdminMaintenance";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Maintenance";
+            Load += AdminMaintenance_Load;
             user_background.ResumeLayout(false);
             user_background.PerformLayout();
             panel4.ResumeLayout(false);

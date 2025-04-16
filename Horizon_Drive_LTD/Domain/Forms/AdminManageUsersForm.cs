@@ -18,6 +18,8 @@ namespace Manage_user_search_page
 {
     public partial class Manage_User_Page : Form
     {
+        private bool isClosing = false;
+        private bool userConfirmedExit = false;
         private readonly DatabaseConnection _dbConnection;
         private readonly UserRepository _userRepository;
         private List<User> _allUsers;
@@ -25,7 +27,7 @@ namespace Manage_user_search_page
         public Manage_User_Page()
         {
             InitializeComponent();
-
+            this.FormClosing += Manage_User_Page_FormClosing;
             // Initialize database connection and repository
             _dbConnection = new DatabaseConnection();
             _userRepository = new UserRepository(_dbConnection);
@@ -47,10 +49,29 @@ namespace Manage_user_search_page
             // Load users into DataGridView
             LoadUsers();
 
-            // Set the text for the search box - make sure it's clear and has placeholder text
-            search_box.Text = "";
-            search_box.PlaceholderText = "Search by name, ID, or email...";
+           
         }
+
+        private void Manage_User_Page_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (isClosing) return; // Prevent duplicate message box
+            isClosing = true;
+
+            DialogResult result = MessageBox.Show("Do you want to close the Car Hire Application?", "Confirm Exit",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.No)
+            {
+                e.Cancel = true; // Prevent closing
+                isClosing = false;
+            }
+            else
+            {
+                Application.Exit(); // Properly terminates the application without triggering FormClosing again
+            }
+        }
+
+
 
         private void ConfigureDataGridView()
         {
@@ -171,7 +192,7 @@ namespace Manage_user_search_page
             ShowSelectedUserDetails();
         }
 
-        private void ShowSelectedUserDetails() 
+        private void ShowSelectedUserDetails()
         {
             if (dataGridView1.SelectedRows.Count > 0 && dataGridView1.DataSource != null)
             {
@@ -270,8 +291,8 @@ namespace Manage_user_search_page
 
         private void Manage_bookings_click_btn(object sender, EventArgs e)
         {
-            var manage_user_Page = new AdminManageBookingsForm(); 
-            manage_user_Page.Show();               
+            var manage_user_Page = new AdminManageBookingsForm();
+            manage_user_Page.Show();
             this.Hide();
         }
 
@@ -309,12 +330,12 @@ namespace Manage_user_search_page
 
         private void Search_Users_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void Manage_Users_menu_Click_btn(object sender, EventArgs e)
         {
-            
+
             LoadUsers();
         }
 
@@ -325,7 +346,12 @@ namespace Manage_user_search_page
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            
+
+        }
+
+        private void Manage_User_Page_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

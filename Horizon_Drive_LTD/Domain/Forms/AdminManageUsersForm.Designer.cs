@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            TextBox search_box;
             user_background = new Panel();
             panel4 = new Panel();
             Search_Users = new Label();
@@ -42,6 +43,7 @@
             Manage_Users = new Button();
             Manage_Cars_btn = new Button();
             pictureBox1 = new PictureBox();
+            welcomeAdminLabel = new Label();
             search_box = new TextBox();
             user_background.SuspendLayout();
             panel4.SuspendLayout();
@@ -52,18 +54,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
-            // search_box
-            // 
-            search_box.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            search_box.Location = new Point(425, 136);
-            search_box.Margin = new Padding(5, 4, 5, 4);
-            search_box.Name = "search_box";
-            search_box.PlaceholderText = "Search by name, ID, or email...";
-            search_box.Size = new Size(489, 27);
-            search_box.TabIndex = 5;
-            search_box.TextAlign = HorizontalAlignment.Center;
-            search_box.TextChanged += Manage_users_search_user;
-            // 
             // user_background
             // 
             user_background.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -73,10 +63,11 @@
             user_background.Controls.Add(search_box);
             user_background.Controls.Add(panel2);
             user_background.Controls.Add(panel1);
+            user_background.Controls.Add(welcomeAdminLabel);
             user_background.Location = new Point(0, -1);
-            user_background.Margin = new Padding(5, 4, 5, 4);
+            user_background.Margin = new Padding(4, 3, 4, 3);
             user_background.Name = "user_background";
-            user_background.Size = new Size(986, 747);
+            user_background.Size = new Size(863, 560);
             user_background.TabIndex = 0;
             user_background.Paint += user_background_Paint;
             // 
@@ -85,10 +76,10 @@
             panel4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel4.AutoSize = true;
             panel4.Controls.Add(Search_Users);
-            panel4.Location = new Point(536, 62);
-            panel4.Margin = new Padding(5, 4, 5, 4);
+            panel4.Location = new Point(469, 46);
+            panel4.Margin = new Padding(4, 3, 4, 3);
             panel4.Name = "panel4";
-            panel4.Size = new Size(270, 66);
+            panel4.Size = new Size(236, 50);
             panel4.TabIndex = 9;
             // 
             // Search_Users
@@ -96,10 +87,10 @@
             Search_Users.Anchor = AnchorStyles.None;
             Search_Users.AutoSize = true;
             Search_Users.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
-            Search_Users.Location = new Point(8, 11);
-            Search_Users.Margin = new Padding(5, 0, 5, 0);
+            Search_Users.Location = new Point(7, 8);
+            Search_Users.Margin = new Padding(4, 0, 4, 0);
             Search_Users.Name = "Search_Users";
-            Search_Users.Size = new Size(262, 46);
+            Search_Users.Size = new Size(210, 37);
             Search_Users.TabIndex = 7;
             Search_Users.Text = "SEARCH USERS";
             Search_Users.Click += Search_Users_Click;
@@ -109,10 +100,10 @@
             panel3.Anchor = AnchorStyles.None;
             panel3.AutoSize = true;
             panel3.Controls.Add(Managing_users_click_btn);
-            panel3.Location = new Point(425, 572);
-            panel3.Margin = new Padding(5, 4, 5, 4);
+            panel3.Location = new Point(372, 429);
+            panel3.Margin = new Padding(4, 3, 4, 3);
             panel3.Name = "panel3";
-            panel3.Size = new Size(489, 153);
+            panel3.Size = new Size(428, 115);
             panel3.TabIndex = 8;
             // 
             // Managing_users_click_btn
@@ -126,24 +117,36 @@
             Managing_users_click_btn.FlatStyle = FlatStyle.Flat;
             Managing_users_click_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
             Managing_users_click_btn.ForeColor = SystemColors.ButtonHighlight;
-            Managing_users_click_btn.Location = new Point(57, 29);
-            Managing_users_click_btn.Margin = new Padding(5, 4, 5, 4);
+            Managing_users_click_btn.Location = new Point(50, 22);
+            Managing_users_click_btn.Margin = new Padding(4, 3, 4, 3);
             Managing_users_click_btn.Name = "Managing_users_click_btn";
             Managing_users_click_btn.Padding = new Padding(1);
-            Managing_users_click_btn.Size = new Size(382, 107);
+            Managing_users_click_btn.Size = new Size(334, 80);
             Managing_users_click_btn.TabIndex = 3;
             Managing_users_click_btn.Text = "View/Edit Selected User";
             Managing_users_click_btn.UseVisualStyleBackColor = false;
             Managing_users_click_btn.Click += Manage_users_click;
             // 
+            // search_box
+            // 
+            search_box.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            search_box.Location = new Point(372, 102);
+            search_box.Margin = new Padding(4, 3, 4, 3);
+            search_box.Name = "search_box";
+            search_box.PlaceholderText = "Search by name, ID, or email...";
+            search_box.Size = new Size(428, 23);
+            search_box.TabIndex = 5;
+            search_box.TextAlign = HorizontalAlignment.Center;
+            search_box.TextChanged += Manage_users_search_user;
+            // 
             // panel2
             // 
             panel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel2.Controls.Add(dataGridView1);
-            panel2.Location = new Point(425, 176);
-            panel2.Margin = new Padding(5, 4, 5, 4);
+            panel2.Location = new Point(372, 132);
+            panel2.Margin = new Padding(4, 3, 4, 3);
             panel2.Name = "panel2";
-            panel2.Size = new Size(489, 363);
+            panel2.Size = new Size(428, 272);
             panel2.TabIndex = 6;
             // 
             // dataGridView1
@@ -157,12 +160,12 @@
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.None;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(0, 0);
-            dataGridView1.Margin = new Padding(5, 4, 5, 4);
+            dataGridView1.Margin = new Padding(4, 3, 4, 3);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 30;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(489, 360);
+            dataGridView1.Size = new Size(428, 270);
             dataGridView1.TabIndex = 4;
             // 
             // panel1
@@ -176,9 +179,9 @@
             panel1.Controls.Add(Manage_Cars_btn);
             panel1.Controls.Add(pictureBox1);
             panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(5, 4, 5, 4);
+            panel1.Margin = new Padding(4, 3, 4, 3);
             panel1.Name = "panel1";
-            panel1.Size = new Size(343, 747);
+            panel1.Size = new Size(300, 560);
             panel1.TabIndex = 0;
             // 
             // Maintenance_btn
@@ -191,10 +194,10 @@
             Maintenance_btn.FlatStyle = FlatStyle.Flat;
             Maintenance_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Maintenance_btn.ForeColor = SystemColors.ButtonHighlight;
-            Maintenance_btn.Location = new Point(78, 543);
+            Maintenance_btn.Location = new Point(68, 407);
             Maintenance_btn.Margin = new Padding(0);
             Maintenance_btn.Name = "Maintenance_btn";
-            Maintenance_btn.Size = new Size(178, 69);
+            Maintenance_btn.Size = new Size(156, 52);
             Maintenance_btn.TabIndex = 3;
             Maintenance_btn.Text = "Maintenance";
             Maintenance_btn.UseVisualStyleBackColor = false;
@@ -209,10 +212,10 @@
             Logout_btn.FlatStyle = FlatStyle.Flat;
             Logout_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
             Logout_btn.ForeColor = SystemColors.ButtonHighlight;
-            Logout_btn.Location = new Point(78, 637);
-            Logout_btn.Margin = new Padding(5, 4, 5, 4);
+            Logout_btn.Location = new Point(68, 478);
+            Logout_btn.Margin = new Padding(4, 3, 4, 3);
             Logout_btn.Name = "Logout_btn";
-            Logout_btn.Size = new Size(178, 71);
+            Logout_btn.Size = new Size(156, 53);
             Logout_btn.TabIndex = 2;
             Logout_btn.Text = "Log Out";
             Logout_btn.UseVisualStyleBackColor = false;
@@ -227,10 +230,10 @@
             Manage_bookings_btn.FlatStyle = FlatStyle.Flat;
             Manage_bookings_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
             Manage_bookings_btn.ForeColor = SystemColors.ButtonHighlight;
-            Manage_bookings_btn.Location = new Point(78, 451);
-            Manage_bookings_btn.Margin = new Padding(5, 4, 5, 4);
+            Manage_bookings_btn.Location = new Point(68, 338);
+            Manage_bookings_btn.Margin = new Padding(4, 3, 4, 3);
             Manage_bookings_btn.Name = "Manage_bookings_btn";
-            Manage_bookings_btn.Size = new Size(178, 71);
+            Manage_bookings_btn.Size = new Size(156, 53);
             Manage_bookings_btn.TabIndex = 1;
             Manage_bookings_btn.Text = "Manage Bookings";
             Manage_bookings_btn.UseVisualStyleBackColor = false;
@@ -243,10 +246,10 @@
             Manage_Users.FlatAppearance.BorderSize = 0;
             Manage_Users.FlatStyle = FlatStyle.Popup;
             Manage_Users.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Manage_Users.Location = new Point(78, 268);
-            Manage_Users.Margin = new Padding(5, 4, 5, 4);
+            Manage_Users.Location = new Point(68, 201);
+            Manage_Users.Margin = new Padding(4, 3, 4, 3);
             Manage_Users.Name = "Manage_Users";
-            Manage_Users.Size = new Size(178, 69);
+            Manage_Users.Size = new Size(156, 52);
             Manage_Users.TabIndex = 1;
             Manage_Users.Text = "Manage Users";
             Manage_Users.UseVisualStyleBackColor = false;
@@ -262,10 +265,10 @@
             Manage_Cars_btn.FlatStyle = FlatStyle.Flat;
             Manage_Cars_btn.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Manage_Cars_btn.ForeColor = SystemColors.ButtonHighlight;
-            Manage_Cars_btn.Location = new Point(78, 359);
+            Manage_Cars_btn.Location = new Point(68, 269);
             Manage_Cars_btn.Margin = new Padding(0);
             Manage_Cars_btn.Name = "Manage_Cars_btn";
-            Manage_Cars_btn.Size = new Size(178, 69);
+            Manage_Cars_btn.Size = new Size(156, 52);
             Manage_Cars_btn.TabIndex = 1;
             Manage_Cars_btn.Text = "Upload Files";
             Manage_Cars_btn.UseVisualStyleBackColor = false;
@@ -275,26 +278,38 @@
             // 
             pictureBox1.ErrorImage = null;
             pictureBox1.InitialImage = null;
-            pictureBox1.Location = new Point(63, 44);
-            pictureBox1.Margin = new Padding(5, 4, 5, 4);
+            pictureBox1.Location = new Point(55, 33);
+            pictureBox1.Margin = new Padding(4, 3, 4, 3);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(207, 216);
+            pictureBox1.Size = new Size(181, 162);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             pictureBox1.Click += pictureBox1_Click;
             // 
+            // welcomeAdminLabel
+            // 
+            welcomeAdminLabel.AutoSize = true;
+            welcomeAdminLabel.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            welcomeAdminLabel.ForeColor = Color.FromArgb(33, 79, 95);
+            welcomeAdminLabel.Location = new Point(319, 11);
+            welcomeAdminLabel.Name = "welcomeAdminLabel";
+            welcomeAdminLabel.Size = new Size(209, 32);
+            welcomeAdminLabel.TabIndex = 10;
+            welcomeAdminLabel.Text = "Welcome, Admin";
+            // 
             // Manage_User_Page
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
-            ClientSize = new Size(985, 743);
+            ClientSize = new Size(862, 557);
             Controls.Add(user_background);
-            Margin = new Padding(5, 4, 5, 4);
+            Margin = new Padding(4, 3, 4, 3);
             Name = "Manage_User_Page";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Search Users";
+            Load += Manage_User_Page_Load;
             user_background.ResumeLayout(false);
             user_background.PerformLayout();
             panel4.ResumeLayout(false);
@@ -305,15 +320,6 @@
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
-
-
-            welcomeAdminLabel = new Label();
-            welcomeAdminLabel.Text = "Welcome, Admin";
-            welcomeAdminLabel.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
-            welcomeAdminLabel.ForeColor = Color.FromArgb(33, 79, 95);
-            welcomeAdminLabel.AutoSize = true;
-            welcomeAdminLabel.Location = new Point(365, 15); 
-            user_background.Controls.Add(welcomeAdminLabel);
         }
 
         #endregion

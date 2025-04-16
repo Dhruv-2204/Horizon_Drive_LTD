@@ -21,6 +21,7 @@ namespace Upload_cars
 {
     public partial class Admin_Managing_files : Form
     {
+        private bool isClosing = false;
         private readonly DatabaseConnection _dbConnection;
         private readonly Admin_managing_files_repo _adminManagingFiles;
         private readonly string[] _validFileTypes = { "car.txt", "car.csv", "user.txt", "user.csv", "customer.txt", "customer.csv" };
@@ -28,6 +29,7 @@ namespace Upload_cars
         public Admin_Managing_files()
         {
             InitializeComponent();
+            this.FormClosing += Manage_User_Page_FormClosing;
             LoadImage();
             SetRoundedCorner(Manage_users, 25);
             SetRoundedCorner(Upload_Cars_btn, 25);
@@ -44,6 +46,27 @@ namespace Upload_cars
             // Set up event handlers
             Logout_btn.Click += Logout_btn_Click;
         }
+
+
+        private void Manage_User_Page_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (isClosing) return; // Prevent duplicate message box
+            isClosing = true;
+
+            DialogResult result = MessageBox.Show("Do you want to close the Car Hire Application?", "Confirm Exit",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.No)
+            {
+                e.Cancel = true; // Prevent closing
+                isClosing = false;
+            }
+            else
+            {
+                Application.Exit(); // Properly terminates the application without triggering FormClosing again
+            }
+        }
+
 
         private void SetRoundedCorner(Button button, int radius)
         {
@@ -596,5 +619,7 @@ namespace Upload_cars
                 form.ShowDialog();
             }
         }
+
+        
     }
 }

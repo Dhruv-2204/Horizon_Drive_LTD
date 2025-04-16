@@ -27,6 +27,7 @@ namespace WindowsFormsApp1
         // View model to help with display and conversion
         private class BookingViewModel
         {
+            
             public string BookingId { get; set; }
             public string UserId { get; set; }
             public string CarId { get; set; }
@@ -86,12 +87,33 @@ namespace WindowsFormsApp1
         }
 
         public AdminManageBookingsForm()
+
         {
             InitializeComponent();
+            this.FormClosing += Manage_User_Page_FormClosing;
 
             // Initialize repositories
             _dbConnection = new DatabaseConnection();
             _bookingRepository = new BookingsRepository(_dbConnection);
+        }
+        private bool isClosing = false;
+        private void Manage_User_Page_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (isClosing) return; // Prevent duplicate message box
+            isClosing = true;
+
+            DialogResult result = MessageBox.Show("Do you want to close the Car Hire Application?", "Confirm Exit",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.No)
+            {
+                e.Cancel = true; // Prevent closing
+                isClosing = false;
+            }
+            else
+            {
+                Application.Exit(); // Properly terminates the application without triggering FormClosing again
+            }
         }
 
         private void ManageBookingsForm_Load(object sender, EventArgs e)

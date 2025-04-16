@@ -16,6 +16,7 @@ namespace Horizon_Drive_LTD.Domain.Forms
 {
     public partial class AdminMaintenance : Form
     {
+        private bool isClosing = false;
         private readonly DatabaseConnection _dbConnection;
         private readonly MaintenanceRepository _maintenanceRepository;
         private List<MaintenanceRecord> _allMaintenanceRecords;
@@ -23,6 +24,7 @@ namespace Horizon_Drive_LTD.Domain.Forms
         public AdminMaintenance()
         {
             InitializeComponent();
+            this.FormClosing += Manage_User_Page_FormClosing;
 
             // Initialize database connection and repository
             _dbConnection = new DatabaseConnection();
@@ -41,6 +43,26 @@ namespace Horizon_Drive_LTD.Domain.Forms
 
             // Load maintenance records
             LoadMaintenanceRecords();
+        }
+
+        
+        private void Manage_User_Page_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (isClosing) return; // Prevent duplicate message box
+            isClosing = true;
+
+            DialogResult result = MessageBox.Show("Do you want to close the Car Hire Application?", "Confirm Exit",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.No)
+            {
+                e.Cancel = true; // Prevent closing
+                isClosing = false;
+            }
+            else
+            {
+                Application.Exit(); // Properly terminates the application without triggering FormClosing again
+            }
         }
 
         private void ConfigureDataGridView()
@@ -295,6 +317,11 @@ namespace Horizon_Drive_LTD.Domain.Forms
             var manage_booking_Page = new AdminManageBookingsForm();
             manage_booking_Page.Show();
             this.Hide();
+        }
+
+        private void AdminMaintenance_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
