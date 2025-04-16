@@ -47,7 +47,7 @@ namespace MsTesting1
             var authService = new AuthenticationService(null, null);
 
             // Act: Attempt to create a Login instance with a null database connection
-            new Login(authService, null);
+            new Login(authService);
 
             // Assert: ExpectedException handles the assertion
         }
