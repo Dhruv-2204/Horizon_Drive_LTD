@@ -263,8 +263,8 @@ namespace Manage_user_search_page
 
         private void Upload_Cars_click_btn(object sender, EventArgs e)
         {
-            var manage_car_Page = new Managing_files(); // gets form Managing_cars
-            manage_car_Page.Show();                  // Shows the new form manage_cars
+            var manage_files_Page = new Admin_Managing_files();
+            manage_files_Page.Show();
             this.Hide();
         }
 

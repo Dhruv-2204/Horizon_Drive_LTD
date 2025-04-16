@@ -283,7 +283,6 @@
             user_background.ResumeLayout(false);
             user_background.PerformLayout();
             ResumeLayout(false);
-
         }
 
         #endregion

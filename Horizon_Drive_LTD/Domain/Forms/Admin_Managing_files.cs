@@ -84,23 +84,23 @@ namespace Upload_cars
 
         private void Manage_bookings_btn_Click(object sender, EventArgs e)
         {
-            var manage_car_Page = new Manage_bookings();
-            manage_car_Page.Show();
-            this.Dispose();
+            var manage_booking_Page = new AdminManageBookingsForm();
+            manage_booking_Page.Show();
+            this.Hide();
         }
 
         private void Maintenance_click(object sender, EventArgs e)
         {
-            var manage_car_Page = new Maintenance();
-            manage_car_Page.Show();
-            this.Dispose();
+            var maintenance_Page = new AdminMaintenance();
+            maintenance_Page.Show();
+            this.Hide();
         }
 
         private void Logout_btn_Click(object sender, EventArgs e)
         {
             var loginForm = new Login();
             loginForm.Show();
-            this.Dispose();
+            this.Hide();
         }
 
         private void Upload_File_btn_Click(object sender, EventArgs e)
@@ -332,9 +332,10 @@ namespace Upload_cars
                         userid: words[1],
                         carBrand: words[2],
                         category: words[3],
+                        carImage: words[21],
                         registrationNo: words[4],
                         model: words[5],
-                        years: int.Parse(words[6]),
+                        year: int.Parse(words[6]),
                         colour: words[7],
                         features: words[8],
                         desc: words[9],
@@ -348,8 +349,7 @@ namespace Upload_cars
                         transmission: words[17],
                         status: words[18],
                         availabilitystart: DateTime.Parse(words[19]),
-                        availabilityend: DateTime.Parse(words[20]),
-                        carimagepath: words[21]
+                        availabilityend: DateTime.Parse(words[20])
                     );
 
                     carHashTable.Insert(car.CarID, car);

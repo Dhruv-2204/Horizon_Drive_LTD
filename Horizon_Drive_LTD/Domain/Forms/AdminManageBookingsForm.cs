@@ -126,6 +126,7 @@ namespace WindowsFormsApp1
             LoadAllBookings();
         }
 
+
         private void SetupDataGridView()
         {
             // Configure the DataGridView
@@ -477,9 +478,9 @@ namespace WindowsFormsApp1
         // Your existing methods
         private void Upload_Cars_btn_Click(object sender, EventArgs e)
         {
-            var manage_car_Page = new Managing_files();
-            manage_car_Page.Show();
-            this.Dispose();
+            var manage_files_Page = new Admin_Managing_files();
+            manage_files_Page.Show();
+            this.Hide();
         }
 
         private void SetRoundedCorner(Button button, int radius)
@@ -514,7 +515,7 @@ namespace WindowsFormsApp1
         {
             var manage_user_Page = new Manage_User_Page();
             manage_user_Page.Show();
-            this.Dispose();
+            this.Hide();
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -545,7 +546,7 @@ namespace WindowsFormsApp1
         {
             var maintenance_Page = new AdminMaintenance();
             maintenance_Page.Show();
-            this.Dispose();
+            this.Hide();
         }
     }
 }
