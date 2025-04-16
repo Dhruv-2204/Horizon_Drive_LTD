@@ -57,21 +57,21 @@ You can click on the Manage Users option on the menu bar to perform actions like
 - Click on a specific user cell on the grid to open another window where you will be able to edit their details. You need to click on the view/edit button to make the fields changeable. Then the editable fields turns yellow, only userid and user's password are uneditable.
 - After changing user's details, you click on save button where the new changes will be updated in the database.
 
-Upload File Page
+Upload File Page :
 Here you can upload more data into our hashtable and database by uploading the User.txt, Car.txt, Customer.txt files.
 - First click on the upload file button and ensure that you SHOULD upload the text files in the order specified below to prevent referential integrity issues in the database.
   1. Upload User.txt, then click on save to database button.
   2. Upload Car.txt, then click on save to database button.
   3. Upload Customer.txt, then click on save to database button.
 
-Manage Bookings Page
+Manage Bookings Page :
 Here you can view all the car bookings made with all their important information such as Booking Date, Duration of Booking etc.
 - You can search for details about the car booking on the search bar and click on go to view the details.
 - You can use the filter functionality to filter cars based on their booking status (Cancelled Bookings, Completed Bookings and Confirmed Bookings).
 - You can use the date range functionality to view bookings made on a specific date range.
 - You can click on the Action field on the grid to cancel specific bookings, after cancelling the booking, the specific cell will turn red.
   
-Maintenance Page
+Maintenance Page :
 Here you can choose specific cars that will need maintenance.
 - You can select the specific car that need maintenace by using the dropdown functionality.
 - For the date selection, make use of the calendar to select a specific date.
