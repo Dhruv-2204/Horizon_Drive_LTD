@@ -43,13 +43,69 @@ This is a WinForms application a Car Rental System that includes a database conn
 - Run the application (Debug > Start Debugging or F5)
 - The main form will launch, providing access to all system features
 
-## Application Features:
+## Walkthrough for Examinator
+Step by step...
 
+## Application Features :
+- Users can create an account to hire a car on the app.
+- Users are able to view all the cars available for renting on the browsing page with their respective photos and details (car name, car year, price per day).
+- User can also view all their previous, upcoming and cancelled bookings on the Manage Bookings Page
+- User can update user profiles such as username, profile pictures, email address, password.
+- User can also upload details about their driving licence such as driving licence photo. 
+- Users can act both as a lessor since registered users can list their own cars for rent by entering their car details and upload pictures.
+- Users can also view all the cars they have listed and how many of them are currently booked with the amount of money they have made. User also have the ability to delete the car they have listed if it is not booked.
+
+
+## App Navigation
+When launching the application, a splash screen with the Horizon Drive Ltd logo is displayed. 
+After that, you are directed to the Login Page. If you already have an account, enter your login credentials.
+If not, click on the Sign Up button to create a new account.
+
+1. Sign up Page
+On the Sign Up page, users can register by entering their personal details such as name, username, date of birth, email address, phone number, password, and address.
+Users must be at least 18 years old to use the system. Input validation ensures all data is correctly formatted—e.g., phone numbers must be 8 digits and passwords must be strong (at least 8 characters, including uppercase, lowercase, a number, and a special character).
+A valid email address is required to receive booking confirmation emails. Passwords are securely hashed before being stored in the database.
+  
+3. Login Page
+Users must enter their registered username and password to log in to the application.
+If the credentials are correct, they will be granted access to the system.
+
+5. Browse Listing Page
+After successful login or registration, users are redirected to the Browse Listings page where all available cars for rent are displayed.
+By clicking on the View button, more detailed information about each car is shown, such as drivetrain, engine capacity, seating, and more.
+Users can choose pickup and drop-off locations and add extra options like a driver, roof rack, baby seat, or airport pickup/drop-off.
+Booking dates can also be selected. If the selected dates are already booked, the system prompts the user to choose different dates. Once a booking is confirmed,
+the user receives an email with all the details.
+
+7. List a Car Page
+Users can list their own cars for rent by filling out a form with car details such as brand, model, rental price, and features.
+They can also upload up to 5 images of the vehicle.
+
+9. Manage Listings Page
+This page shows all the user’s listed cars along with their transaction history.
+Users can view booking dates, number of reservations, and total earnings.
+If a user wants to remove a car from the platform, they can simply click the Delete button.
+
+11. Manage Bookings Page
+Here, users can see all the cars they have booked—categorized as past, upcoming, and cancelled bookings.
+Users also have the option to cancel an upcoming booking directly from this page using the Cancel button.
+
+13. Options Page
+This page allows users to update their profile information, including first name, last name, username, address, phone number, and profile picture.
+
+15. Logout
+Clicking the Logout button from the menu bar will log the user out and redirect them back to the Login Page.
+
+
+If you encounter any issues or have suggestions for improvements, feel free to reach out to the development team.
+
+Contact Email: horizondrivecompany@gmail.com
+Developed by the Horizon Drive LTD Team
 
 
 |\---/|
 | o_o |
- \_^_/
+ \_^_/ 
 
 
 
