@@ -25,7 +25,11 @@ namespace Horizon_Drive_LTD.BusinessLogic.Services
         {
             loggedInUser = null;
 
-            foreach (var kvp in userHashTable.GetAllItems())
+            // Reload the user hash table from the database
+            UserRepository userRepo = new UserRepository(new DatabaseConnection());
+            HashTable<string, User> latestUsers = userRepo.LoadUsersIntoHashTable();
+
+            foreach (var kvp in latestUsers.GetAllItems())
             {
                 if (kvp.Value.UserName == username && kvp.Value.Password == password)
                 {
