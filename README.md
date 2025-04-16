@@ -44,9 +44,41 @@ This is a WinForms application a Car Rental System that includes a database conn
 - The main form will launch, providing access to all system features
 
 ## Walkthrough for Examinator
-Step by step...
+After following the steps to set up your database setup, you will need to use the app as the Admin to populate the hashtable and database by using the text files provided in the repository (user.txt, car.txt, customer.txt)
 
-## Application Features :
+1. On the login page, you will need to enter your username as "Admin" and your password "Adminpassword!". Then you will see a message box saying you have login successfully.
+   
+2. Then you will be greeted by the Admin Dashboard where you can perform several tasks (Manage Users Option, Upload File Option, Manage Bookings Option, Maintenance Option, Logout Option).
+   
+3. Since the database we have provided you with already contains some data,
+You can click on the Manage Users option on the menu bar to perform actions like :
+- Viewing all the users' details found in our database.
+- Use the search bar to search for specif users in our database (search can be done by all the fields).
+- Click on a specific user cell on the grid to open another window where you will be able to edit their details. You need to click on the view/edit button to make the fields changeable. Then the editable fields turns yellow, only userid and user's password are uneditable.
+- After changing user's details, you click on save button where the new changes will be updated in the database.
+
+Upload File Page :
+Here you can upload more data into our hashtable and database by uploading the User.txt, Car.txt, Customer.txt files.
+- First click on the upload file button and ensure that you SHOULD upload the text files in the order specified below to prevent referential integrity issues in the database.
+  1. Upload User.txt, then click on save to database button.
+  2. Upload Car.txt, then click on save to database button.
+  3. Upload Customer.txt, then click on save to database button.
+
+Manage Bookings Page :
+Here you can view all the car bookings made with all their important information such as Booking Date, Duration of Booking etc.
+- You can search for details about the car booking on the search bar and click on go to view the details.
+- You can use the filter functionality to filter cars based on their booking status (Cancelled Bookings, Completed Bookings and Confirmed Bookings).
+- You can use the date range functionality to view bookings made on a specific date range.
+- You can click on the Action field on the grid to cancel specific bookings, after cancelling the booking, the specific cell will turn red.
+  
+Maintenance Page :
+Here you can choose specific cars that will need maintenance.
+- You can select the specific car that need maintenace by using the dropdown functionality.
+- For the date selection, make use of the calendar to select a specific date.
+- Then click on the add maintenance button to add the changes in the maintenance table in the database.
+
+
+## Application Features For Users:
 - Users can create an account to hire a car on the app.
 - Users are able to view all the cars available for renting on the browsing page with their respective photos and details (car name, car year, price per day).
 - User can also view all their previous, upcoming and cancelled bookings on the Manage Bookings Page
