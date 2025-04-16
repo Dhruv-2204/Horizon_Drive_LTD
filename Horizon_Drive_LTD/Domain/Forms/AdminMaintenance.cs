@@ -338,7 +338,7 @@ namespace Horizon_Drive_LTD.Domain.Forms
             {
                 var login = new Login();
                 login.Show();
-                this.Hide();
+                this.Dispose();
 
             }
 

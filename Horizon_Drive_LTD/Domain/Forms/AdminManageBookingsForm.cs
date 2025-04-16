@@ -560,7 +560,7 @@ namespace WindowsFormsApp1
             {
                 var login = new Login();
                 login.Show();
-                this.Hide();
+                this.Dispose();
                 
             }
         }

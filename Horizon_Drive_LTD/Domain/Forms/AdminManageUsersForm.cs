@@ -334,7 +334,7 @@ namespace Manage_user_search_page
             {
                 var login = new Login();
                 login.Show();
-                this.Hide();
+                this.Dispose();
 
             }
         }

@@ -635,7 +635,7 @@ namespace Upload_cars
             {
                 var login = new Login();
                 login.Show();
-                this.Hide();
+                this.Dispose();
 
             }
         }
