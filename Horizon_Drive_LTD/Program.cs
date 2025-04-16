@@ -1,4 +1,8 @@
-﻿namespace splashscreen
+﻿using Horizon_Drive_LTD.Domain.Forms;
+using Manage_user_search_page;
+using WindowsFormsApp1;
+
+namespace splashscreen
 {
     public static class Program
     {
@@ -14,7 +18,8 @@
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new SPLASH_SCREEN());
-            
+            //Application.Run(new AdminManageBookingsForm());
+
 
         }
     }

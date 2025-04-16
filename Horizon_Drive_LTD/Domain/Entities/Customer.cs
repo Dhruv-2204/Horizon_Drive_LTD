@@ -1,4 +1,6 @@
-﻿namespace Horizon_Drive_LTD.Domain.Entities
+﻿using System;
+
+namespace Horizon_Drive_LTD.Domain.Entities
 {
     // This class represents a customer in the car rental system.
     public class Customer

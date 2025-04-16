@@ -222,6 +222,8 @@ namespace Horizon_Drive_LTD
 
 
                 userRepo.StoreActiveUser(username, userId , customerid, lessorid);
+                CurrentUser.CurrentUserId = userId;
+                CurrentUser.Currentuser = newUser;
 
                 BrowseListings browseListing = new BrowseListings();
                 browseListing.Show();
