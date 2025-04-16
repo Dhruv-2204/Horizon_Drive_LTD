@@ -103,3 +103,113 @@ CREATE TABLE Maintenance (
     MaintenanceStatus VARCHAR(60),
     MaintenanceDescription VARCHAR(500)
 );
+
+-- CarImages
+
+CREATE TABLE CarImages (
+	ImageId VARCHAR(10) PRIMARY KEY,
+	CarId VARCHAR(10) FOREIGN KEY REFERENCES Car(CarId),
+	ImagePath VARCHAR(255)
+);
+
+
+
+-- Populate User table
+INSERT INTO [User] (UserId, UserName, FirstName, LastName, DOB, Email, TelephoneNo, Password, ProfilePicture, Address)
+VALUES
+('U02161', 'John22_', 'John', 'Terry', '2002-12-31', 'DR717@live.mdx.ac.uk', '0', '6e49a7fd9c39a275c0e91b6cd734e0a6b23570163d537036...', 'MediaImages\\John22_\\Bumble.jpeg', 'Mahebourg-MRU'),
+('U55812', 'Shrek22__', 'Shrek', 'Green', '1997-03-31', 'ramachundradharuv@gmail.com', '57967861', 'bcc1227dc74449146c769ec0ca2eb82a28cad9da78b967aa...', NULL, 'Goodlands'),
+('U76381', 'Tom1234_', 'Tom', 'Tommy', '2001-04-22', 'aayush810lochun@gmail.com', '67811102', '4c009c64bb3abaa41c0d64c29937dd6f14a7cb05eaa019006...', NULL, 'R.d.r'),
+('U90974', 'Rita123_', 'Rita', 'Hahaa', '2004-12-31', 'sm3992@live.mdx.ac.uk', '56126777', '3db0055888c91bbd2801917d66c20feb8c3e7e93e6806ba7...', NULL, 'VilleNoiree');
+
+-- Populate Lessor table
+INSERT INTO Lessor (LessorID, UserID, No_Of_Cars)
+VALUES
+('L02161', 'U02161', 3),
+('L55812', 'U55812', 2),
+('L76381', 'U76381', 4),
+('L90974', 'U90974', 1);
+
+-- Populate Car table
+INSERT INTO Car (CarID, UserID, CarBrand, Category, CarImagePath, RegistrationNo, Model, Years, Colour, Features, VehicleDescription, CarPrice, SeatNo, EngineCapacity, Ratings, Power, DriveTrain, FuelType, TransmissionType, Status, AvailabilityStart, AvailabilityEnd)
+VALUES
+('C00962', 'U76381', 'Mazda', 'Sedan', NULL, 'Om2025', 'Mazda3', 2012, 'White', 'Interior Comfort + Safety Features', 'Mazda3 is a stylish and versatile compact car', 1800.00, 4, 3.0, NULL, 300, 'FWD', 'Diesel', 'Manual', NULL, '2025-07-01 00:00:00.000', '2025-10-19 00:00:00.000'),
+('C04118', 'U76381', 'Volkswagen', 'Hatchback', NULL, 'M123', 'Passat', 2009, 'Yellow', 'Fuel Efficiency:', 'Volkswagen Passat is a mid-size sedan that offers a balance of performance, comfort, and practicality', 1200.00, 5, 3.1, NULL, 200, 'RWD', 'Diesel', 'Manual', NULL, '2025-04-17 00:00:00.000', '2026-05-25 00:00:00.000'),
+('C04394', 'U76381', 'Audi', 'Hatchback', NULL, 'AUDI+', 'A6', 2016, 'Gray', 'Great audio performance', 'Premium luxury sedan that combines elegance, advanced technology, and dynamic performance', 3900.00, 5, 3.3, NULL, 320, 'AWD', 'Hybrid', 'Semi-Automatic', NULL, '2025-04-17 00:00:00.000', '2026-04-24 00:00:00.000'),
+('C45112', 'U02161', 'BMW', 'Sedan', NULL, 'Bad_8', 'X5', 2019, 'Green', 'High-performance luxury sedan that blends power, elegance, and cutting-edge technology', 'High-performance luxury sedan that blends power, elegance, and cutting-edge technology', 9000.00, 7, 5.4, NULL, 520, 'RWD', 'Gasoline', 'Automatic', 'Booked', '2025-04-17 00:00:00.000', '2025-05-16 00:00:00.000'),
+('C47739', 'U76381', 'Kia', 'SUV', NULL, 'M0m0', 'Sorento', 2021, 'Brown', 'LED headlights and a spacious interior.', 'Big car for your family', 4250.00, 6, 4.0, NULL, 200, 'AWD', 'Electric', 'Automatic', NULL, '2025-04-17 00:00:00.000', '2027-02-28 00:00:00.000'),
+('C58245', 'U90974', 'Hyundai', 'Sedan', NULL, '5621M', 'Sonata', 2018, 'Orange', 'Late night drive audio system', 'Autonomous car', 2900.00, 5, 3.0, NULL, 200, 'RWD', 'Diesel', 'Manual', NULL, '2025-04-17 00:00:00.000', '2027-04-30 00:00:00.000'),
+('C60613', 'U02161', 'Toyota', 'SUV', NULL, 'Rav4', 'RAV4', 2016, 'Black', 'Standard backup camera', 'Car in good condition', 2300.00, 5, 3.2, NULL, 200, 'AWD', 'Hybrid', 'Semi-Automatic', 'Booked', '2025-04-17 00:00:00.000', '2025-09-25 00:00:00.000'),
+('C65923', 'U55812', 'Mercedes', 'SUV', NULL, 'IshoW', 'GLC', 2019, 'Black', 'High-class interior, helpful technology, and a smooth powertrain', 'Luxury car for you', 8700.00, 5, 3.4, NULL, 340, 'AWD', 'Gasoline', 'Automatic', 'Booked', '2025-04-17 00:00:00.000', '2026-01-07 00:00:00.000'),
+('C90346', 'U02161', 'Chevrolet', 'Sedan', NULL, 'Night04', 'Corvette', 2022, 'Red', 'Heated ventilated seats', 'Luxury sports car', 12000.00, 2, 4.2, NULL, 320, 'RWD', 'Diesel', 'Semi-Automatic', 'Booked', '2025-04-17 00:00:00.000', '2025-09-28 00:00:00.000'),
+('C93376', 'U55812', 'Honda', 'Sedan', NULL, 'DR2204', 'Civic', 2022, 'Blue', 'Comfortable + low mileage', 'Your dream car', 4400.00, 4, 4.3, NULL, 480, 'RWD', 'Hybrid', 'Semi-Automatic', NULL, '2025-04-17 00:00:00.000', '2025-12-21 00:00:00.000');
+
+
+
+--Customer Table
+INSERT INTO Customer (CustomerID, UserID, LicenseNo, LicenseExpiryDate, LicensePhoto)
+VALUES
+('CU02161', 'U02161', 'M0922456712', '2019-04-04', 'Media\LicenseImages\U02161\_Vroom.jpeg'),
+('CU55812', 'U55812', NULL, NULL, NULL),
+('CU76381', 'U76381', NULL, NULL, NULL),
+('CU90974', 'U90974', NULL, NULL, NULL);
+
+-- CarImages Table
+INSERT INTO CarImages (ImageId, CarId, ImagePath)
+VALUES
+('IMG05634', 'C90346', 'Media/Images/Chevrolet/C90346/8977b9a3-e2f2-4206-ab52-784508d85c3c.jpg'),
+('IMG06147', 'C04394', 'Media/Images/Audi/C04394/e5c3641c-4b2c-4c10-8b92-903e3583d3c6.jpg'),
+('IMG06616', 'C04118', 'Media/Images/Volkswagen/C04118/fb5bda5a-7fb9-4564-ad93-c10d3d4f41ac.jpeg'),
+('IMG07552', 'C45112', 'Media/Images/BMW/C45112/1bac5399-ab5e-413f-b5aa-8d9981fdfff9.jpeg'),
+('IMG12743', 'C93376', 'Media/Images/Honda/C93376/9010b02a-3a44-4287-8ea1-9325d4e3b940.jpeg'),
+('IMG14325', 'C47739', 'Media/Images/Kia/C47739/89be3ead-d82f-4d0a-b7bd-74d9e4389923.jpeg'),
+('IMG21676', 'C58245', 'Media/Images/Hyundai/C58245/c27ce82b-0709-4ff3-8205-8a7062abe3d9.jpeg'),
+('IMG21782', 'C45112', 'Media/Images/BMW/C45112/a55764e1-09c8-43fe-9f3e-2b56ccd8df85.jpeg'),
+('IMG29948', 'C58245', 'Media/Images/Hyundai/C58245/2780eb85-814f-4654-b93a-933b5265ed1d.jpeg'),
+('IMG30368', 'C04118', 'Media/Images/Volkswagen/C04118/9f154fe5-09a4-43e8-850f-171687d4b71f.jpeg'),
+('IMG30831', 'C58245', 'Media/Images/Hyundai/C58245/54b5e7b3-e768-451a-8390-a0846d73fff7.jpeg'),
+('IMG32336', 'C04118', 'Media/Images/Volkswagen/C04118/b746d385-1763-45d3-8844-99c3672010d4.jpeg'),
+('IMG34576', 'C90346', 'Media/Images/Chevrolet/C90346/59a99807-a9f4-4746-be3a-f1b675d69c3a.jpeg'),
+('IMG36678', 'C93376', 'Media/Images/Honda/C93376/5cfbab50-d6bb-4f42-9c62-a204bc160876.jpeg'),
+('IMG37022', 'C90346', 'Media/Images/Chevrolet/C90346/3e2cfd2d-e532-45c7-ad1f-8de98be51c2c.jpeg'),
+('IMG39229', 'C00962', 'Media/Images/Mazda/C00962/2280c74e-5ad2-408f-b1dc-797df0f641f7.jpeg'),
+('IMG39380', 'C04394', 'Media/Images/Audi/C04394/379ccd95-2f0a-43b9-ab52-bb5f83c1da9a.jpeg'),
+('IMG46403', 'C00962', 'Media/Images/Mazda/C00962/afe25898-8d94-47ec-ad94-f59ffd4dcdf7.jpeg'),
+('IMG50129', 'C93376', 'Media/Images/Honda/C93376/78828e84-ffe8-4fe4-8f5c-bd9b2a25dd02.jpeg'),
+('IMG51590', 'C00962', 'Media/Images/Mazda/C00962/3d7225e4-a035-48fe-975f-1b70f3cdff70.jpeg'),
+('IMG54375', 'C47739', 'Media/Images/Kia/C47739/2eb6212e-4ec9-4623-b3dc-8f3db6abdd3a.jpeg'),
+('IMG58183', 'C04394', 'Media/Images/Audi/C04394/0baa75d2-e4e1-4598-bb11-54c1c6395d0e.jpeg'),
+('IMG61720', 'C93376', 'Media/Images/Honda/C93376/15f343fa-909d-437e-85fb-8b39b3e36f04.jpeg'),
+('IMG62824', 'C60613', 'Media/Images/Toyota/C60613/bca0a08e-bf7b-4d58-a699-b56aa5888c51.jpeg'),
+('IMG62878', 'C65923', 'Media/Images/Mercedes/C65923/4467718d-ac4d-42e1-b0a8-945cc8e91dba.jpeg'),
+('IMG65646', 'C65923', 'Media/Images/Mercedes/C65923/9623ca2b-a3d4-4516-9797-03d4db183dfe.jpg'),
+('IMG75261', 'C60613', 'Media/Images/Toyota/C60613/67ee3ef0-8aee-4cf8-8b9c-d8ffe991b89e.jpeg'),
+('IMG75976', 'C93376', 'Media/Images/Honda/C93376/5d09b839-0fc0-4d51-9bb8-c4edc3b03835.jpeg'),
+('IMG79123', 'C04394', 'Media/Images/Audi/C04394/7bd75b7f-9d75-4144-bc43-32c010c1c20f.jpeg'),
+('IMG79902', 'C60613', 'Media/Images/Toyota/C60613/6e8899a3-bc17-4c0a-a213-1042be93db50.jpg'),
+('IMG81500', 'C60613', 'Media/Images/Toyota/C60613/eb8bf7e7-a5e4-4dde-a405-204e28115855.jpg'),
+('IMG89307', 'C65923', 'Media/Images/Mercedes/C65923/fb4c826a-e3a8-4f63-bcee-4d22245c7d67.jpeg'),
+('IMG96147', 'C45112', 'Media/Images/BMW/C45112/9eb28f1e-e63a-42a0-b69c-a8e9c84c3a80.jpeg'),
+('IMG96747', 'C47739', 'Media/Images/Kia/C47739/a2d2b040-4275-40d5-bdaf-2ff3bee3e0b1.jpeg');
+
+
+--Payment table
+INSERT INTO Payment (PaymentID, BookingID, UserID, PaymentDate, PaymentMethod, PaymentAmount)
+VALUES
+('P24757', 'B24757', 'U55812', '2025-04-16', 'Online', 29900.00),
+('P25974', 'B25974', 'U55812', '2025-04-16', 'Online', 11800.00),
+('P32064', 'B32064', 'U02161', '2025-04-16', 'Online', 30000.00),
+('P60676', 'B60676', 'U55812', '2025-04-16', 'Online', 34400.00),
+('P75884', 'B75884', 'U55812', '2025-04-16', 'Online', 12500.00),
+('P98677', 'B98677', 'U55812', '2025-04-16', 'Online', 32000.00);
+
+--Booking Table
+INSERT INTO Booking (BookingID, CustomerID, CarID, BookingDate, PickupDate, DropoffDate, PickupLocation, DropoffLocation, IncludeDriver, BabyCarSeat, FullInsuranceCoverage, RoofRack, AirportPickupDropoff, BookingStatus)
+VALUES
+('B24757', 'CU76381', 'C90346', '2025-04-16', '2025-08-17', '2025-08-19', 'SSR International Airport', 'Flic en Flac', 1, 0, 1, 1, 1, 'Upcoming'),
+('B25974', 'CU55812', 'C60613', '2025-04-16', '2025-04-17', '2025-04-19', 'Port Louis City Center', 'Port Louis City Center', 1, 1, 0, 1, 0, 'Upcoming'),
+('B32064', 'CU02161', 'C45112', '2025-04-16', '2025-04-17', '2025-04-19', 'Port Louis City Center', 'Port Louis City Center', 0, 1, 1, 0, 0, 'Upcoming'),
+('B41734', 'CU55812', 'C90346', '2025-04-16', '2025-04-17', '2025-04-19', 'SSR International Airport', 'Flic en Flac', 1, 0, 1, 1, 1, 'Cancelled'),
+('B60676', 'CU76381', 'C60613', '2025-04-16', '2025-06-01', '2025-06-11', 'Port Louis City Center', 'Quatre Bornes', 1, 0, 0, 1, 0, 'Upcoming'),
+('B75884', 'CU55812', 'C45112', '2025-04-16', '2025-04-24', '2025-04-25', 'Port Louis City Center', 'Port Louis City Center', 1, 0, 1, 0, 0, 'Upcoming'),
+('B98677', 'CU76381', 'C65923', '2025-04-16', '2025-04-17', '2025-04-19', 'Grand Baie', 'Port Louis City Center', 1, 1, 0, 1, 1, 'Upcoming');
